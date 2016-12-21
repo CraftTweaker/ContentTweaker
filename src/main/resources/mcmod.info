@@ -1,0 +1,20 @@
+[
+  {
+    "modid": "tailoredobjects",
+    "name": "TailoredObjects",
+    "description": "Custom Minecraft Objects created from JSON/MT scripts",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "teamacronymcoders.com",
+    "updateUrl": "",
+    "authorList": [
+      "SkySom"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": [
+      "base"
+    ]
+  }
+]
