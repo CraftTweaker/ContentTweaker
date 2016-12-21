@@ -12,29 +12,40 @@ buildscript {
 }
 
 apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "maven"
 
-version = modVersion
-group = modGroup
-archivesBaseName = modBaseName
+version = "${minecraft_version}-" + getVersion()
+group = "com.teamacronymcoders"
+archivesBaseName = "${mod_name}"
 
 minecraft {
-    version = project.forgeVersion
-    runDir = "run"
+    version = "${minecraft_version}-${forge_version}"
 
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = project.mcpVersion
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    mappings = "${mappings_version}"
+    runDir = "run/"
+    useDepAts = true
+
+    replace "@VERSION@", project.version
+    replaceIn "${mod_name}.java"
+
+    replace "base@[0.0.0,];", "base@[" + base_version +  ",];"
+}
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
 repositories {
     mavenCentral()
+    maven {
+        name "BASE"
+        url "http://maven.blamejared.com"
+    }
 }
 
 dependencies {
+    compile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
 }
 
 processResources {
@@ -54,4 +65,36 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude "mcmod.info"
     }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://" + (System.getenv("local_maven") != null ? System.getenv("local_maven") : System.getenv("bamboo_local_maven")))
+        }
+    }
+}
+
+String getVersion() {
+    String version = "${base_version}"
+    String branch = System.getenv("BRANCH") != null ? System.getenv("BRANCH") : ""
+
+    if(branch != "") {
+        version += "-" + branch
+
+        String buildNumber = getBuildNumber()
+        if(buildNumber != "") {
+            version += "." + buildNumber
+        }
+    }
+
+    return version
+}
+
+static String getBuildNumber() {
+    String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
+    if(buildNumber == "") {
+        buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : ""
+    }
+    return buildNumber
 }
