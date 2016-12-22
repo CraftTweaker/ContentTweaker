@@ -47,7 +47,7 @@ public class Deserializer {
                 objectRepresentations.forEach(objectRepresentation -> {
                     IDeserializer deserializer = this.deserializerRegistry.getDeserializer(objectRepresentation.getType());
                     if(deserializer != null) {
-                        boolean success = deserializer.deserializeObject(this.fileGson, objectRepresentation.getObject());
+                        boolean success = deserializer.deserializeObject(objectRepresentation.getObject());
                         if(!success) {
                             logger.error("Object " + objectRepresentation.getName() + " failed to deserialize");
                         }
