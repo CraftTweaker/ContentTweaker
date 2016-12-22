@@ -1,4 +1,4 @@
-package com.teamacronymcoders.tailoredobjects.deserializer;
+package com.teamacronymcoders.tailoredobjects.api.json;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
@@ -16,7 +16,7 @@ public class JsonRequiredDeserializer<T> implements JsonDeserializer<T> {
         checkClassForRequired(pojo, pojo.getClass());
         return pojo;
     }
-    
+
     private void checkClassForRequired(T object, Class clazz) throws JsonParseException {
         if(clazz != Object.class) {
             Field[] fields = clazz.getDeclaredFields();
