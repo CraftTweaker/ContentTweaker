@@ -4,16 +4,20 @@ import com.teamacronymcoders.tailoredobjects.api.deserializer.DeserializerRegist
 
 public class TailoredObjectsAPI {
     private static TailoredObjectsAPI instance;
-    private DeserializerRegistry deserializers;
+    private DeserializerRegistry deserializerRegistry;
 
     private TailoredObjectsAPI() {
-        this.deserializers = new DeserializerRegistry();
+        this.deserializerRegistry = new DeserializerRegistry();
     }
 
-    private static TailoredObjectsAPI getInstance() {
+    public static TailoredObjectsAPI getInstance() {
         if(instance == null) {
             instance = new TailoredObjectsAPI();
         }
         return instance;
+    }
+
+    public DeserializerRegistry getDeserializerRegistry() {
+        return this.deserializerRegistry;
     }
 }

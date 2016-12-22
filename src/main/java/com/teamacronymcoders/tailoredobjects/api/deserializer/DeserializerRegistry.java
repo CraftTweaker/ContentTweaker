@@ -1,5 +1,7 @@
 package com.teamacronymcoders.tailoredobjects.api.deserializer;
 
+import com.google.common.collect.ImmutableMap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -19,5 +21,9 @@ public class DeserializerRegistry {
 
     public void registerDeserializer(@Nonnull IDeserializer deserializer) {
         this.deserializers.put(deserializer.getName(), deserializer);
+    }
+
+    public Map<String, IDeserializer> getDeserializers() {
+        return ImmutableMap.copyOf(deserializers);
     }
 }

@@ -13,5 +13,5 @@ public interface IDeserializer {
      *
      * @returns a boolean representing if the object successfully deserialized
      */
-    boolean getDeserializedObject(JsonObject jsonObject);
+    boolean deserializeObject(JsonObject jsonObject);
 }
