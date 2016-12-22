@@ -16,11 +16,11 @@ public class DeserializerRegistry {
 
     @Nullable
     public IDeserializer getDeserializer(String name) {
-        return this.deserializers.get(name);
+        return this.deserializers.get(name.toLowerCase());
     }
 
     public void registerDeserializer(@Nonnull IDeserializer deserializer) {
-        this.deserializers.put(deserializer.getName(), deserializer);
+        this.deserializers.put(deserializer.getName().toLowerCase(), deserializer);
     }
 
     public Map<String, IDeserializer> getDeserializers() {
