@@ -1,7 +1,10 @@
 package com.teamacronymcoders.tailoredobjects;
 
 import com.teamacronymcoders.base.BaseModFoundation;
+import com.teamacronymcoders.tailoredobjects.api.TailoredObjectsAPI;
+import com.teamacronymcoders.tailoredobjects.api.deserializer.RegisterDeserializerEvent;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -29,6 +32,11 @@ public class TailoredObjects extends BaseModFoundation<TailoredObjects> {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+    }
+
+    @Override
+    public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.post(new RegisterDeserializerEvent(TailoredObjectsAPI.getInstance().getDeserializerRegistry()));
     }
 
     @EventHandler
