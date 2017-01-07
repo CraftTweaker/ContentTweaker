@@ -4,17 +4,20 @@ import com.teamacronymcoders.tailoredobjects.api.deserializer.DeserializerRegist
 import com.teamacronymcoders.tailoredobjects.api.utils.ResourceList;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 
 public class TailoredObjectsAPI {
     private static TailoredObjectsAPI instance;
     private DeserializerRegistry deserializerRegistry;
     private ResourceList<Material> materialResourceList;
     private ResourceList<SoundType> soundTypeResourceList;
+    private ResourceList<CreativeTabs> creativeTabsResourceList;
 
     private TailoredObjectsAPI() {
         this.deserializerRegistry = new DeserializerRegistry();
-        this.materialResourceList = new ResourceList<>(Material.class, Material.class);
-        this.soundTypeResourceList = new ResourceList<>(SoundType.class, SoundType.class);
+        this.materialResourceList = new ResourceList<>(Material.class);
+        this.soundTypeResourceList = new ResourceList<>(SoundType.class);
+        this.creativeTabsResourceList = new ResourceList<>(CreativeTabs.class);
     }
 
     public static TailoredObjectsAPI getInstance() {
@@ -34,5 +37,9 @@ public class TailoredObjectsAPI {
 
     public ResourceList<SoundType> getSoundTypes() {
         return this.soundTypeResourceList;
+    }
+
+    public ResourceList<CreativeTabs> getCreativeTabs() {
+        return this.creativeTabsResourceList;
     }
 }

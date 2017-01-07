@@ -9,6 +9,7 @@ import com.teamacronymcoders.tailoredobjects.api.json.JsonRequiredDeserializer;
 import com.teamacronymcoders.tailoredobjects.api.json.ResourceDeserializer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -29,6 +30,7 @@ public class DeserializerBase<OBJECT> implements IDeserializer {
         TailoredObjectsAPI api = TailoredObjectsAPI.getInstance();
         builder.registerTypeAdapter(Material.class, new ResourceDeserializer<>(api.getBlockMaterials()));
         builder.registerTypeAdapter(SoundType.class, new ResourceDeserializer<>(api.getSoundTypes()));
+        builder.registerTypeAdapter(CreativeTabs.class, new ResourceDeserializer<>(api.getCreativeTabs()));
         this.gson = builder.create();
         this.registerFunction = registerFunction;
     }

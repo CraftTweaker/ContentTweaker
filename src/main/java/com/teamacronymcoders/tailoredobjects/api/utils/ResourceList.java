@@ -12,6 +12,10 @@ public class ResourceList<RESOURCE> {
     private Class<RESOURCE> resourceClass;
     private List<Class> classesToCheck;
 
+    public ResourceList(@Nonnull Class<RESOURCE> resourceClass) {
+        this(resourceClass, resourceClass);
+    }
+
     public ResourceList(@Nonnull Class<RESOURCE> resourceClass, @Nonnull Class classToCheck) {
         this(resourceClass, Lists.newArrayList(classToCheck));
     }
