@@ -16,6 +16,7 @@ public class VanillaModule extends ModuleBase {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
+        super.preInit(event);
         MinecraftForge.EVENT_BUS.register(new VanillaDeserializers());
     }
 }

@@ -3,7 +3,11 @@ package com.teamacronymcoders.tailoredobjects.api.deserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.teamacronymcoders.tailoredobjects.api.json.ItemStackDeserializer;
 import com.teamacronymcoders.tailoredobjects.api.json.JsonRequiredDeserializer;
+import com.teamacronymcoders.tailoredobjects.api.json.MaterialDeserializer;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.function.Function;
@@ -17,7 +21,11 @@ public class DeserializerBase<OBJECT> implements IDeserializer {
     public DeserializerBase(String name, Class<OBJECT> objectClass, Function<OBJECT, Boolean> registerFunction) {
         this.name = name;
         this.clazz = objectClass;
-        this.gson = new GsonBuilder().registerTypeAdapter(objectClass, new JsonRequiredDeserializer<OBJECT>()).create();
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(objectClass, new JsonRequiredDeserializer<OBJECT>());
+        builder.registerTypeAdapter(ItemStack.class, new ItemStackDeserializer());
+        builder.registerTypeAdapter(Material.class, new MaterialDeserializer());
+        this.gson = builder.create();
         this.registerFunction = registerFunction;
     }
 
