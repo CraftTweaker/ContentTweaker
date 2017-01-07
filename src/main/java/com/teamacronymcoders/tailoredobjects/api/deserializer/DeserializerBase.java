@@ -3,9 +3,11 @@ package com.teamacronymcoders.tailoredobjects.api.deserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.teamacronymcoders.tailoredobjects.api.TailoredObjectsAPI;
 import com.teamacronymcoders.tailoredobjects.api.json.ItemStackDeserializer;
 import com.teamacronymcoders.tailoredobjects.api.json.JsonRequiredDeserializer;
-import com.teamacronymcoders.tailoredobjects.api.json.MaterialDeserializer;
+import com.teamacronymcoders.tailoredobjects.api.json.ResourceDeserializer;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 
@@ -24,7 +26,9 @@ public class DeserializerBase<OBJECT> implements IDeserializer {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(objectClass, new JsonRequiredDeserializer<OBJECT>());
         builder.registerTypeAdapter(ItemStack.class, new ItemStackDeserializer());
-        builder.registerTypeAdapter(Material.class, new MaterialDeserializer());
+        TailoredObjectsAPI api = TailoredObjectsAPI.getInstance();
+        builder.registerTypeAdapter(Material.class, new ResourceDeserializer<>(api.getBlockMaterials()));
+        builder.registerTypeAdapter(SoundType.class, new ResourceDeserializer<>(api.getSoundTypes()));
         this.gson = builder.create();
         this.registerFunction = registerFunction;
     }
