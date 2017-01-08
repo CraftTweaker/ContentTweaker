@@ -40,13 +40,14 @@ public class CommandSenderWrapper implements ICommandSender {
     }
 
     @Override
-    public void addChatMessage(@Nonnull ITextComponent component) {
-        if (sendMessages) parent.addChatMessage(component);
+    public void sendMessage(@Nonnull ITextComponent component) {
+        if (sendMessages) parent.sendMessage(component);
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(int permLevel, @Nonnull String commandName) {
-        return bypassPermissions || parent.canCommandSenderUseCommand(permLevel, commandName);
+    public boolean canUseCommand(int permLevel, @Nonnull String commandName) {
+        return bypassPermissions || parent.canUseCommand(permLevel, commandName);
+
     }
 
     @Nonnull
