@@ -1,5 +1,7 @@
 package com.teamacronymcoders.tailoredobjects.api.utils;
 
+import com.teamacronymcoders.tailoredobjects.api.TailoredObjectsAPI;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -18,12 +20,11 @@ public class Reflection {
                             results.put(field.getName(), fieldClazz.cast(object));
                         }
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        TailoredObjectsAPI.getInstance().getModWrapper().logError("Couldn't get Field: " + field.getName(), e);
                     }
                 }
             }
         }
         return results;
     }
-
 }

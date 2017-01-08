@@ -26,6 +26,7 @@ public class TailoredObjects extends BaseModFoundation<TailoredObjects> {
 
     public TailoredObjects() {
         super(MOD_ID, MOD_NAME, VERSION, CreativeTabs.MISC);
+        TailoredObjectsAPI.setInstance(new TailoredObjectsAPI(new ModWrapper()));
     }
 
     @EventHandler
