@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.api.json;
+package com.teamacronymcoders.contenttweaker.api.json.content;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

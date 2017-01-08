@@ -1,7 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.contenttweaker.api.json.JsonRequired;
-import com.teamacronymcoders.contenttweaker.api.methods.ICallableMethod;
+import com.teamacronymcoders.contenttweaker.api.methods.callables.ICallableMethod;
 import com.teamacronymcoders.contenttweaker.api.methods.returnables.IBooleanMethod;
 import com.teamacronymcoders.contenttweaker.api.methods.returnables.IFloatMethod;
 import com.teamacronymcoders.contenttweaker.api.methods.returnables.IIntegerMethod;
