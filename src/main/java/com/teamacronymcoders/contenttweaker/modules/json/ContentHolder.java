@@ -1,11 +1,11 @@
-package com.teamacronymcoders.contenttweaker.representations;
+package com.teamacronymcoders.contenttweaker.modules.json;
 
 import com.google.gson.JsonObject;
 
-public class ObjectRepresentation {
+public class ContentHolder {
     private String name;
     private String type;
-    private JsonObject object;
+    private JsonObject content;
 
     public String getName() {
         return name;
@@ -23,11 +23,11 @@ public class ObjectRepresentation {
         this.type = type;
     }
 
-    public JsonObject getObject() {
-        return object;
+    public JsonObject getContent() {
+        return content;
     }
 
-    public void setObject(JsonObject object) {
-        this.object = object;
+    public void setContent(JsonObject content) {
+        this.content = content;
     }
 }
