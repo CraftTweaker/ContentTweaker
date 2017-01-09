@@ -66,7 +66,7 @@ public class Deserializer {
     }
 
     public void deserializeObjects(Map<IDeserializer, List<ContentHolder>> deserializersAndContent, boolean isMaterial) {
-        deserializersAndContent.entrySet().stream().filter(entry -> entry.getKey().isMaterial() == isMaterial)
+        deserializersAndContent.entrySet().stream().filter(entry -> entry.getKey().isResource() == isMaterial)
                 .forEach(entry -> entry.getValue().forEach(contentHolder -> {
                     boolean success = entry.getKey().deserializeObject(contentHolder.getContent());
                     if (!success) {

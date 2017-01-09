@@ -12,6 +12,11 @@ public interface IDeserializer {
     String getName();
 
     /*
+     * @returns if deserializer is for a Resource, and thus should load first
+     */
+    boolean isResource();
+
+    /*
      * @param jsonObject a json representation of an object that uses this deserializer
      *
      * @returns a boolean representing if the object successfully deserialized

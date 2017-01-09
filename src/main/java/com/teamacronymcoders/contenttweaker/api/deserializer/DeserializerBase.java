@@ -29,11 +29,17 @@ import java.util.function.Function;
 public class DeserializerBase<OBJECT> implements IDeserializer {
     protected Gson gson;
     private String name;
+    private boolean isResource;
     private Class<OBJECT> clazz;
     private Function<OBJECT, Boolean> registerFunction;
 
     public DeserializerBase(String name, Class<OBJECT> objectClass, Function<OBJECT, Boolean> registerFunction) {
+        this(name, objectClass, false, registerFunction);
+    }
+
+    public DeserializerBase(String name, Class<OBJECT> objectClass, boolean isResource, Function<OBJECT, Boolean> registerFunction) {
         this.name = name;
+        this.isResource = isResource;
         this.clazz = objectClass;
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(objectClass, new JsonRequiredDeserializer<OBJECT>());
@@ -55,6 +61,11 @@ public class DeserializerBase<OBJECT> implements IDeserializer {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public boolean isResource() {
+        return this.isResource;
     }
 
     @Override
