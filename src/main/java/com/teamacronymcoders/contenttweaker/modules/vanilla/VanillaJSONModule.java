@@ -8,10 +8,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.MOD_ID;
 
 @Module(MOD_ID)
-public class VanillaModule extends ModuleBase {
+public class VanillaJSONModule extends ModuleBase {
     @Override
     public String getName() {
-        return "Vanilla";
+        return "Vanilla JSON";
     }
 
     @Override

@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
-import com.teamacronymcoders.contenttweaker.api.json.content.ItemStackDeserializer;
 import com.teamacronymcoders.contenttweaker.api.json.JsonRequiredDeserializer;
+import com.teamacronymcoders.contenttweaker.api.json.content.ItemStackDeserializer;
 import com.teamacronymcoders.contenttweaker.api.json.content.MethodDeserializer;
 import com.teamacronymcoders.contenttweaker.api.json.content.ResourceDeserializer;
 import com.teamacronymcoders.contenttweaker.api.methods.callables.CommandCallable;
@@ -24,20 +24,20 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 public class DeserializerBase<OBJECT> implements IDeserializer {
     protected Gson gson;
     private String name;
     private boolean isResource;
     private Class<OBJECT> clazz;
-    private Function<OBJECT, Boolean> registerFunction;
+    private Consumer<OBJECT>  registerFunction;
 
-    public DeserializerBase(String name, Class<OBJECT> objectClass, Function<OBJECT, Boolean> registerFunction) {
+    public DeserializerBase(String name, Class<OBJECT> objectClass, Consumer<OBJECT> registerFunction) {
         this(name, objectClass, false, registerFunction);
     }
 
-    public DeserializerBase(String name, Class<OBJECT> objectClass, boolean isResource, Function<OBJECT, Boolean> registerFunction) {
+    public DeserializerBase(String name, Class<OBJECT> objectClass, boolean isResource, Consumer<OBJECT> registerFunction) {
         this.name = name;
         this.isResource = isResource;
         this.clazz = objectClass;
@@ -71,6 +71,9 @@ public class DeserializerBase<OBJECT> implements IDeserializer {
     @Override
     public boolean deserializeObject(@Nonnull JsonObject jsonObject) {
         OBJECT object = this.gson.fromJson(jsonObject, this.clazz);
-        return object != null && this.registerFunction.apply(object);
+        if(object != null) {
+            this.registerFunction.accept(object);
+        }
+        return object != null;
     }
 }

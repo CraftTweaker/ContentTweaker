@@ -2,11 +2,13 @@ package com.teamacronymcoders.contenttweaker.modules.json;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.api.deserializer.DeserializerRegistry;
 import com.teamacronymcoders.contenttweaker.api.deserializer.IDeserializer;
+import com.teamacronymcoders.contenttweaker.api.json.JsonRequiredDeserializer;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -25,7 +27,9 @@ public class Deserializer {
     public ILogger logger;
 
     public Deserializer(File file) {
-        this.fileGson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(ContentHolder.class, new JsonRequiredDeserializer<ContentHolder>());
+        this.fileGson = builder.create();
         this.file = file;
         this.logger = ContentTweaker.instance.getLogger();
         this.deserializerRegistry = ContentTweakerAPI.getInstance().getDeserializerRegistry();

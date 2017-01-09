@@ -27,13 +27,12 @@ public class JSONModule extends ModuleBase {
         super.preInit(event);
         jsonFolder = new File(ContentTweaker.instance.contentFolder, "json");
         BaseFileUtils.createFolder(jsonFolder);
-        Deserializer deserializer = new Deserializer(jsonFolder);
-        deserializer.deserialize();
     }
 
     @Override
     public void afterModulesPreInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.post(new RegisterDeserializerEvent(ContentTweakerAPI.getInstance().getDeserializerRegistry()));
-
+        Deserializer deserializer = new Deserializer(jsonFolder);
+        deserializer.deserialize();
     }
 }

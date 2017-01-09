@@ -1,10 +1,14 @@
 package com.teamacronymcoders.contenttweaker.modules.json;
 
 import com.google.gson.JsonObject;
+import com.teamacronymcoders.contenttweaker.api.json.JsonRequired;
 
 public class ContentHolder {
+    @JsonRequired
     private String name;
+    @JsonRequired
     private String type;
+    @JsonRequired
     private JsonObject content;
 
     public String getName() {

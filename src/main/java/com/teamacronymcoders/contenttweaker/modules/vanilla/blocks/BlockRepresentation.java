@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
-import com.teamacronymcoders.contenttweaker.api.json.JsonRequired;
 import com.teamacronymcoders.contenttweaker.api.methods.callables.ICallableMethod;
 import com.teamacronymcoders.contenttweaker.api.methods.returnables.IBooleanMethod;
 import com.teamacronymcoders.contenttweaker.api.methods.returnables.IFloatMethod;
@@ -18,7 +17,6 @@ import java.util.List;
 
 public class BlockRepresentation {
     //Variables
-    @JsonRequired
     private String unlocalizedName;
     private CreativeTabs creativeTabs;
     private IBooleanMethod fullBlock;
@@ -32,7 +30,6 @@ public class BlockRepresentation {
     private Boolean needsRandomTick;
     private SoundType blockSoundType;
     private Float blockParticleGravity;
-    @JsonRequired
     private Material blockMaterial;
     private IFloatMethod slipperiness;
 
@@ -48,7 +45,6 @@ public class BlockRepresentation {
     private Integer tickRate;
     private List<ItemStack> getDrops;
     private BlockRenderLayer getBlockLayer;
-    //TODO Setup for redstone
     private IIntegerMethod redstonePower;
     private Boolean canProvidePower;
     private Boolean canSilkTouch;
