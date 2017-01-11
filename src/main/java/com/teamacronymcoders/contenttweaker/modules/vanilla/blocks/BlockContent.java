@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
+import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.utils.Fields;
 import net.minecraft.block.Block;
@@ -12,7 +13,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockContent extends Block {
+public class BlockContent extends BlockBase {
     private BlockRepresentation blockRepresentation;
 
     private CreativeTabs creativeTab = CreativeTabs.MISC;
