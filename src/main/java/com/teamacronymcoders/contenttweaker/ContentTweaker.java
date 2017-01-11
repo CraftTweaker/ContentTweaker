@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
+import com.teamacronymcoders.contenttweaker.resources.ResourceLoader;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -38,6 +39,7 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        ResourceLoader.assembleResourcePack();
     }
 
     @Override
