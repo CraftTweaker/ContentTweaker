@@ -7,7 +7,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresen
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class VanillaDeserializers {
-    VanillaJSONModule module;
+    private VanillaJSONModule module;
     public VanillaDeserializers(VanillaJSONModule module) {
         this.module = module;
     }
@@ -16,7 +16,6 @@ public class VanillaDeserializers {
     public void registerDeserializers(RegisterDeserializerEvent event) {
         event.register(new DeserializerBase<>("Block", BlockRepresentation.class, blockRepresentation -> {
             this.module.getBlockRegistry().register(new BlockContent(blockRepresentation));
-            return true;
         }));
     }
 }

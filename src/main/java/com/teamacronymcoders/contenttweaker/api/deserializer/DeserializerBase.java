@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
-import com.teamacronymcoders.contenttweaker.api.json.JsonRequiredDeserializer;
 import com.teamacronymcoders.contenttweaker.api.json.content.ItemStackDeserializer;
 import com.teamacronymcoders.contenttweaker.api.json.content.MethodDeserializer;
 import com.teamacronymcoders.contenttweaker.api.json.content.ResourceDeserializer;
@@ -42,7 +41,7 @@ public class DeserializerBase<OBJECT> implements IDeserializer {
         this.isResource = isResource;
         this.clazz = objectClass;
         GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(objectClass, new JsonRequiredDeserializer<OBJECT>());
+        //builder.registerTypeAdapter(objectClass, new JsonRequiredDeserializer<OBJECT>());
         builder.registerTypeAdapter(ItemStack.class, new ItemStackDeserializer());
         builder.registerTypeAdapter(IFloatMethod.class, new MethodDeserializer<>(jsonElement -> new FloatMethod(jsonElement.getAsFloat())));
         builder.registerTypeAdapter(IStringMethod.class, new MethodDeserializer<>(jsonElement -> new StringMethod(jsonElement.getAsString())));

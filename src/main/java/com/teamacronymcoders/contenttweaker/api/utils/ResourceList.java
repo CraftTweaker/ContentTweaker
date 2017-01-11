@@ -23,6 +23,7 @@ public class ResourceList<RESOURCE> {
     public ResourceList(@Nonnull Class<RESOURCE> resourceClass, @Nonnull List<Class> classesToCheck) {
         this.resourceClass = resourceClass;
         this.classesToCheck = classesToCheck;
+        this.loadResources();
     }
 
     public void addClassToCheck(Class classToCheck) {
@@ -41,9 +42,7 @@ public class ResourceList<RESOURCE> {
 
     private void loadResources() {
         this.classesToCheck.forEach(clazz -> {
-            Reflection.getStaticFieldsOfType(this.resourceClass, clazz).forEach((name, resource) -> {
-                resources.put(name, resource);
-            });
+            Reflection.getStaticFieldsOfType(this.resourceClass, clazz).forEach(this::addResource);
         });
     }
 }

@@ -17,6 +17,6 @@ public class VanillaJSONModule extends ModuleBase {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
-        MinecraftForge.EVENT_BUS.register(new VanillaDeserializers());
+        MinecraftForge.EVENT_BUS.register(new VanillaDeserializers(this));
     }
 }
