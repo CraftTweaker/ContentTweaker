@@ -14,7 +14,7 @@ public class BlockRepresentation implements IRepresentation {
     private String unlocalizedName;
     private CreativeTabs creativeTab = CreativeTabs.MISC;
     private boolean fullBlock = true;
-    private int lightOpacity = 0;
+    private int lightOpacity = 255;
     private boolean translucent = false;
     private int lightValue = 0;
     private float blockHardness = 5;
