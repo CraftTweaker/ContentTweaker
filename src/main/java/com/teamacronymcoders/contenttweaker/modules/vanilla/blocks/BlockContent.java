@@ -2,9 +2,8 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
-import com.teamacronymcoders.contenttweaker.api.utils.Fields;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,7 +18,7 @@ public class BlockContent extends BlockBase {
     private CreativeTabs creativeTab = CreativeTabs.MISC;
 
     public BlockContent(BlockRepresentation blockRepresentation) {
-        super(blockRepresentation.getBlockMaterial() != null ? blockRepresentation.getBlockMaterial() : Material.IRON);
+        super(blockRepresentation.getBlockMaterial());
         checkFields(blockRepresentation);
         setFields(blockRepresentation);
     }
@@ -27,9 +26,6 @@ public class BlockContent extends BlockBase {
     /* Beginning of Representation stuff */
     public void checkFields(BlockRepresentation blockRepresentation) {
         List<String> missingFields = new ArrayList<>();
-        if(blockRepresentation.getBlockMaterial() == null) {
-            missingFields.add("blockMaterial");
-        }
         if(blockRepresentation.getUnlocalizedName() == null) {
             missingFields.add("unlocalizedName");
         }
@@ -40,8 +36,13 @@ public class BlockContent extends BlockBase {
 
     public void setFields(BlockRepresentation blockRepresentation) {
         this.setUnlocalizedName(blockRepresentation.getUnlocalizedName());
-        this.setCreativeTab(Fields.getValue(this.getCreativeTab(), blockRepresentation.getCreativeTabs()));
-        this.useNeighborBrightness = Fields.getValue(this.useNeighborBrightness, blockRepresentation.getUseNeighborBrightness());
+        this.setCreativeTab(blockRepresentation.getCreativeTabs());
+        this.setLightOpacity(blockRepresentation.getLightOpacity());
+        this.setLightLevel(blockRepresentation.getLightValue());
+        this.setHardness(blockRepresentation.getBlockHardness());
+        this.setResistance(blockRepresentation.getBlockResistance());
+        this.setHarvestLevel(blockRepresentation.getToolClass(), blockRepresentation.getToolLevel());
+        this.setSoundType(blockRepresentation.getBlockSoundType());
     }
 
     @Nonnull
