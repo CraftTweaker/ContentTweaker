@@ -3,7 +3,6 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,7 +35,7 @@ public class BlockContent extends BlockBase {
 
     public void setFields(BlockRepresentation blockRepresentation) {
         this.setUnlocalizedName(blockRepresentation.getUnlocalizedName());
-        this.setCreativeTab(blockRepresentation.getCreativeTabs());
+        this.setCreativeTab(blockRepresentation.getCreativeTab());
         this.setLightOpacity(blockRepresentation.getLightOpacity());
         this.setLightLevel(blockRepresentation.getLightValue());
         this.setHardness(blockRepresentation.getBlockHardness());

@@ -12,7 +12,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("contenttweaker.content.Block")
 public class BlockRepresentation implements IRepresentation {
     private String unlocalizedName;
-    private CreativeTabs creativeTabs = CreativeTabs.MISC;
+    private CreativeTabs creativeTab = CreativeTabs.MISC;
     private boolean fullBlock = true;
     private int lightOpacity = 0;
     private boolean translucent = false;
@@ -35,13 +35,13 @@ public class BlockRepresentation implements IRepresentation {
     }
 
     @ZenMethod
-    public CreativeTabs getCreativeTabs() {
-        return creativeTabs;
+    public CreativeTabs getCreativeTab() {
+        return creativeTab;
     }
 
     @ZenMethod
-    public void setCreativeTabs(CreativeTabs creativeTabs) {
-        this.creativeTabs = creativeTabs;
+    public void setCreativeTab(CreativeTabs creativeTab) {
+        this.creativeTab = creativeTab;
     }
 
     @ZenMethod
