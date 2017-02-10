@@ -1,8 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
+import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import net.minecraft.item.ItemStack;
 
-public class CreativeTabRepresentation {
+public class CreativeTabRepresentation implements IRepresentation {
     private String unlocalizedName;
     private ItemStack iconStack;
 
@@ -20,5 +21,20 @@ public class CreativeTabRepresentation {
 
     public void setIconStack(ItemStack iconStack) {
         this.iconStack = iconStack;
+    }
+
+    @Override
+    public String getName() {
+        return this.getUnlocalizedName();
+    }
+
+    @Override
+    public String getTypeName() {
+        return "Creative Tab";
+    }
+
+    @Override
+    public void register() {
+        new CreativeTabContent(this);
     }
 }
