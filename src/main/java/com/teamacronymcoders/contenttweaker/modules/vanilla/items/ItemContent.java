@@ -28,7 +28,7 @@ public class ItemContent extends Item {
             missingFields.add("unlocalizedName");
         }
         if(!missingFields.isEmpty()) {
-            throw new MissingFieldsException("Block", missingFields);
+            throw new MissingFieldsException("BlockRepresentation", missingFields);
         }
     }
 

@@ -2,15 +2,13 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
+import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenMethod;
 
-@ZenClass("contenttweaker.content.Block")
-public class BlockRepresentation implements IRepresentation {
+public class BlockRepresentation implements IRepresentation, IBlock {
     private String unlocalizedName;
     private CreativeTabs creativeTab = CreativeTabs.MISC;
     private boolean fullBlock = true;
@@ -24,124 +22,138 @@ public class BlockRepresentation implements IRepresentation {
     private SoundType blockSoundType = SoundType.METAL;
     private Material blockMaterial = Material.IRON;
 
-    @ZenMethod
+    @Override
     public String getUnlocalizedName() {
         return unlocalizedName;
     }
 
-    @ZenMethod
+    @Override
     public void setUnlocalizedName(String unlocalizedName) {
         this.unlocalizedName = unlocalizedName;
     }
 
-    @ZenMethod
     public CreativeTabs getCreativeTab() {
         return creativeTab;
     }
 
-    @ZenMethod
     public void setCreativeTab(CreativeTabs creativeTab) {
         this.creativeTab = creativeTab;
     }
 
-    @ZenMethod
+    @Override
+    public void setCreativeTab(String creativeTabName) {
+        this.creativeTab = ContentTweakerAPI.getInstance().getCreativeTabs().getResource(creativeTabName);
+    }
+
+    @Override
     public boolean isFullBlock() {
         return fullBlock;
     }
 
-    @ZenMethod
+    @Override
     public void setFullBlock(boolean fullBlock) {
         this.fullBlock = fullBlock;
     }
 
-    @ZenMethod
+    @Override
     public int getLightOpacity() {
         return lightOpacity;
     }
 
-    @ZenMethod
+    @Override
     public void setLightOpacity(int lightOpacity) {
         this.lightOpacity = lightOpacity;
     }
 
-    @ZenMethod
+    @Override
     public boolean isTranslucent() {
         return translucent;
     }
 
-    @ZenMethod
+    @Override
     public void setTranslucent(boolean translucent) {
         this.translucent = translucent;
     }
 
-    @ZenMethod
+    @Override
     public int getLightValue() {
         return lightValue;
     }
 
-    @ZenMethod
+    @Override
     public void setLightValue(int lightValue) {
         this.lightValue = lightValue;
     }
 
-    @ZenMethod
+    @Override
     public float getBlockHardness() {
         return blockHardness;
     }
 
-    @ZenMethod
+    @Override
     public void setBlockHardness(float blockHardness) {
         this.blockHardness = blockHardness;
     }
 
-    @ZenMethod
+    @Override
     public float getBlockResistance() {
         return blockResistance;
     }
 
-    @ZenMethod
+    @Override
     public void setBlockResistance(float blockResistance) {
         this.blockResistance = blockResistance;
     }
 
-    @ZenMethod
+    @Override
     public String getToolClass() {
         return toolClass;
     }
 
-    @ZenMethod
+    @Override
     public void setToolClass(String toolClass) {
         this.toolClass = toolClass;
     }
 
-    @ZenMethod
+    @Override
     public int getToolLevel() {
         return toolLevel;
     }
 
-    @ZenMethod
+    @Override
     public void setToolLevel(int toolLevel) {
         this.toolLevel = toolLevel;
     }
 
-    @ZenMethod
     public SoundType getBlockSoundType() {
         return blockSoundType;
     }
 
-    @ZenMethod
     public void setBlockSoundType(SoundType blockSoundType) {
         this.blockSoundType = blockSoundType;
     }
 
-    @ZenMethod
+    @Override
+    public void setBlockSoundType(String blockSoundTypeName) {
+        this.blockSoundType = ContentTweakerAPI.getInstance().getSoundTypes().getResource(blockSoundTypeName);
+    }
+
     public Material getBlockMaterial() {
         return blockMaterial;
     }
 
-    @ZenMethod
     public void setBlockMaterial(Material blockMaterial) {
         this.blockMaterial = blockMaterial;
+    }
+
+    @Override
+    public void setBlockMaterial(String blockMaterialName) {
+        this.blockMaterial = ContentTweakerAPI.getInstance().getBlockMaterials().getResource(blockMaterialName);
+    }
+
+    @Override
+    public Object getInternal() {
+        return this;
     }
 
     @Override
@@ -151,7 +163,7 @@ public class BlockRepresentation implements IRepresentation {
 
     @Override
     public String getTypeName() {
-        return "Block";
+        return "BlockRepresentation";
     }
 
     @Override

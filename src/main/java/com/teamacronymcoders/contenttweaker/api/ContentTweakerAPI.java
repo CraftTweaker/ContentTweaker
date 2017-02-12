@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.api;
 
-import com.teamacronymcoders.contenttweaker.api.deserializer.DeserializerRegistry;
 import com.teamacronymcoders.contenttweaker.api.utils.CreativeTabsResourceList;
 import com.teamacronymcoders.contenttweaker.api.utils.ResourceList;
 import net.minecraft.block.SoundType;
@@ -11,14 +10,12 @@ public class ContentTweakerAPI {
     private static ContentTweakerAPI instance;
 
     private IModWrapper modWrapper;
-    private DeserializerRegistry deserializerRegistry;
     private ResourceList<Material> materialResourceList;
     private ResourceList<SoundType> soundTypeResourceList;
     private ResourceList<CreativeTabs> creativeTabsResourceList;
 
     public ContentTweakerAPI(IModWrapper modWrapper) {
         this.modWrapper = modWrapper;
-        this.deserializerRegistry = new DeserializerRegistry();
         this.materialResourceList = new ResourceList<>(Material.class);
         this.soundTypeResourceList = new ResourceList<>(SoundType.class);
         this.creativeTabsResourceList = new CreativeTabsResourceList();
@@ -35,10 +32,6 @@ public class ContentTweakerAPI {
 
     public static ContentTweakerAPI getInstance() {
         return instance;
-    }
-
-    public DeserializerRegistry getDeserializerRegistry() {
-        return this.deserializerRegistry;
     }
 
     public ResourceList<Material> getBlockMaterials() {
