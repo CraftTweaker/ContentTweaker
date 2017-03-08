@@ -43,8 +43,8 @@ repositories {
 }
 
 dependencies {
-    compile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
-    compile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
+    deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
+    deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
 }
 
 processResources {
