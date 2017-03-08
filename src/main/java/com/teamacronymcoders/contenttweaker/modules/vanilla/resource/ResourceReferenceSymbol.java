@@ -7,18 +7,20 @@ import stanhebben.zenscript.expression.partial.IPartialExpression;
 import stanhebben.zenscript.symbols.IZenSymbol;
 import stanhebben.zenscript.util.ZenPosition;
 
-public class MaterialReferenceSymbol implements IZenSymbol {
+public class ResourceReferenceSymbol implements IZenSymbol {
     private IEnvironmentGlobal environment;
     private String name;
+    private ResourceBracketHandler resourceBracketHandler;
 
-    public MaterialReferenceSymbol(IEnvironmentGlobal environment, String name) {
+    public ResourceReferenceSymbol(IEnvironmentGlobal environment, String name, ResourceBracketHandler handler) {
         this.environment = environment;
         this.name = name;
+        this.resourceBracketHandler = handler;
     }
 
     @Override
     public IPartialExpression instance(ZenPosition position) {
-        return new ExpressionCallStatic(position, environment, MaterialBracketHandler.getMethod(),
+        return new ExpressionCallStatic(position, environment, resourceBracketHandler.getMethod(),
                 new ExpressionString(position, name));
     }
 }

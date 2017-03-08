@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material.IMaterialDefinition;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -148,7 +149,12 @@ public class BlockRepresentation implements IRepresentation, IBlock {
 
     @Override
     public void setBlockMaterial(String blockMaterialName) {
-        this.blockMaterial = ContentTweakerAPI.getInstance().getBlockMaterials().getResource(blockMaterialName);
+        this.setBlockMaterial(ContentTweakerAPI.getInstance().getBlockMaterials().getResource(blockMaterialName));
+    }
+
+    @Override
+    public void setBlockMaterial(IMaterialDefinition material) {
+        this.setBlockMaterial(this.blockMaterial = (Material) material.getInternal());
     }
 
     @Override

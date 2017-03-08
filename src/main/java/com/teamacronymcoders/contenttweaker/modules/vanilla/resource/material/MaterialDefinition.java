@@ -1,9 +1,10 @@
-package com.teamacronymcoders.contenttweaker.modules.vanilla.resource;
+package com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material;
 
 import net.minecraft.block.material.Material;
 
 public class MaterialDefinition implements IMaterialDefinition {
     private Material material;
+
     public MaterialDefinition(Material material) {
         this.material = material;
     }
@@ -56,5 +57,10 @@ public class MaterialDefinition implements IMaterialDefinition {
     @Override
     public String getMobilityFlag() {
         return this.material.getMobilityFlag().name();
+    }
+
+    @Override
+    public Object getInternal() {
+        return material;
     }
 }

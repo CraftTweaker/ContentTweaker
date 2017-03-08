@@ -1,6 +1,4 @@
-package com.teamacronymcoders.contenttweaker.modules.vanilla.resource;
-
-import net.minecraft.block.material.EnumPushReaction;
+package com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material;
 
 public interface IMaterialDefinition {
     String getName();
@@ -22,4 +20,6 @@ public interface IMaterialDefinition {
     boolean isToolNotRequired();
 
     String getMobilityFlag();
+
+    Object getInternal();
 }

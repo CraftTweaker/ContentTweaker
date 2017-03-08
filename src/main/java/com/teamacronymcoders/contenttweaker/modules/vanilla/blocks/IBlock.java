@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material.IMaterialDefinition;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -67,6 +68,9 @@ public interface IBlock {
 
     @ZenMethod
     void setBlockMaterial(String blockMaterialName);
+
+    @ZenMethod
+    void setBlockMaterial(IMaterialDefinition material);
 
     Object getInternal();
 }

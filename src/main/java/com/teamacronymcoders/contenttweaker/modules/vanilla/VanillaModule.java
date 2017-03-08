@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModuleDependency;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material.MaterialBracketHandler;
 import minetweaker.MineTweakerAPI;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -28,6 +29,7 @@ public class VanillaModule extends ModuleBase {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        MineTweakerAPI.registerBracketHandler(new MaterialBracketHandler());
         MineTweakerAPI.registerClass(IBlock.class);
         MineTweakerAPI.registerClass(VanillaFactory.class);
     }
