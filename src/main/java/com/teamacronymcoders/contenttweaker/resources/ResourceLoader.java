@@ -38,7 +38,7 @@ public class ResourceLoader {
         File models = new File(resourceFolder, path);
         BaseFileUtils.createFolder(models);
         File[] modelFiles = models.listFiles(jsonFilter);
-        if(modelFiles != null) {
+        if (modelFiles != null) {
             for (File file : modelFiles) {
                 assembler.addModel(file, modelType);
             }
@@ -49,8 +49,8 @@ public class ResourceLoader {
         File textures = new File(resourceFolder, "textures");
         BaseFileUtils.createFolder(textures);
         File[] textureFiles = textures.listFiles((FileFilter) textureFilter);
-        if(textureFiles != null) {
-            for(File file : textureFiles) {
+        if (textureFiles != null) {
+            for (File file : textureFiles) {
                 assembler.addIcon(file);
             }
         }
@@ -60,7 +60,7 @@ public class ResourceLoader {
         File lang = new File(resourceFolder, "lang");
         BaseFileUtils.createFolder(lang);
         File[] langFiles = lang.listFiles(langFilter);
-        if(langFiles != null) {
+        if (langFiles != null) {
             for (File file : langFiles) {
                 assembler.addLang(file);
             }

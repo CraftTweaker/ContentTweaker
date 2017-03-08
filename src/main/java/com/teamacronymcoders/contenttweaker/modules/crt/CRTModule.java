@@ -1,11 +1,10 @@
 package com.teamacronymcoders.contenttweaker.modules.crt;
 
-import com.teamacronymcoders.base.modulesystem.*;
+import com.teamacronymcoders.base.modulesystem.Module;
+import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
-import minetweaker.*;
-import minetweaker.mc1102.brackets.ItemBracketHandler;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 

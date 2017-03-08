@@ -25,10 +25,10 @@ public class BlockContent extends BlockBase {
     /* Beginning of Representation stuff */
     public void checkFields(BlockRepresentation blockRepresentation) {
         List<String> missingFields = new ArrayList<>();
-        if(blockRepresentation.getUnlocalizedName() == null) {
+        if (blockRepresentation.getUnlocalizedName() == null) {
             missingFields.add("unlocalizedName");
         }
-        if(!missingFields.isEmpty()) {
+        if (!missingFields.isEmpty()) {
             throw new MissingFieldsException("Block", missingFields);
         }
     }

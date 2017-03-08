@@ -12,10 +12,6 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * @author WireSegal
- *         Created at 5:18 PM on 12/12/16.
- */
 public class CommandSenderWrapper implements ICommandSender {
     private final ICommandSender parent;
     private final boolean bypassPermissions;
@@ -41,13 +37,14 @@ public class CommandSenderWrapper implements ICommandSender {
 
     @Override
     public void sendMessage(@Nonnull ITextComponent component) {
-        if (sendMessages) parent.sendMessage(component);
+        if (sendMessages) {
+            parent.sendMessage(component);
+        }
     }
 
     @Override
     public boolean canUseCommand(int permLevel, @Nonnull String commandName) {
         return bypassPermissions || parent.canUseCommand(permLevel, commandName);
-
     }
 
     @Nonnull

@@ -21,7 +21,7 @@ public class VanillaFactory {
 
     @ZenMethod
     public static void registerBlock(IBlock block) {
-        if(block.getInternal() instanceof IRepresentation) {
+        if (block.getInternal() instanceof IRepresentation) {
             ((IRepresentation) block.getInternal()).register();
         }
     }
@@ -30,7 +30,7 @@ public class VanillaFactory {
     public static void createAndRegisterCreativeTab(String unlocalizedName, IItemStack iItemStack) {
         CreativeTabRepresentation creativeTab = new CreativeTabRepresentation();
         creativeTab.setUnlocalizedName(unlocalizedName);
-        if(iItemStack.getInternal() instanceof ItemStack) {
+        if (iItemStack.getInternal() instanceof ItemStack) {
             creativeTab.setIconStack((ItemStack) iItemStack.getInternal());
         }
         new CreativeTabContent(creativeTab);

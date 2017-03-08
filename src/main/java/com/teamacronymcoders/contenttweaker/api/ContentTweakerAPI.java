@@ -23,7 +23,7 @@ public class ContentTweakerAPI {
 
     //ONLY TO BE CALLED BY TAILORED OBJECTS
     public static void setInstance(ContentTweakerAPI contentTweakerAPI) {
-        if(instance == null) {
+        if (instance == null) {
             instance = contentTweakerAPI;
         } else {
             instance.modWrapper.logError("Some other mod tried to set api instance", null);

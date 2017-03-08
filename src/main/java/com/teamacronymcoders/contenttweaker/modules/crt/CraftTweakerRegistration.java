@@ -12,11 +12,11 @@ public class CraftTweakerRegistration {
     public static void init(File scriptsDirectory) {
 
         boolean fileExists = scriptsDirectory.exists();
-        if (!fileExists){
+        if (!fileExists) {
             fileExists = scriptsDirectory.mkdir();
         }
 
-        if(fileExists) {
+        if (fileExists) {
             MineTweakerAPI.registerBracketHandler(new ItemBracketHandler());
             ItemBracketHandler.rebuildItemRegistry();
 

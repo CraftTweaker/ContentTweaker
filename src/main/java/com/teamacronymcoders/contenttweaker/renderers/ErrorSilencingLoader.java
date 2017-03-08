@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.renderers;
 
-import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
@@ -31,7 +30,7 @@ public class ErrorSilencingLoader implements ICustomModelLoader {
 
     @Override
     public void onResourceManagerReload(@Nonnull IResourceManager resourceManager) {
-        if(!firstReload) {
+        if (!firstReload) {
             createdResourcePack = true;
         } else {
             firstReload = false;

@@ -21,10 +21,10 @@ public class CreativeTabsResourceList extends ResourceList<CreativeTabs> {
         CreativeTabs[] creativeTabs = CreativeTabs.CREATIVE_TAB_ARRAY;
 
         Iterator<CreativeTabs> creativeTabsIterable = Arrays.stream(creativeTabs).iterator();
-        while(creativeTabsIterable.hasNext() && resourceCreativeTab == null) {
+        while (creativeTabsIterable.hasNext() && resourceCreativeTab == null) {
             CreativeTabs creativeTab = creativeTabsIterable.next();
             String tabLabel = ReflectionHelper.getPrivateValue(CreativeTabs.class, creativeTab, "tabLabel", "field_78034_o");
-            if(name.equalsIgnoreCase(tabLabel)) {
+            if (name.equalsIgnoreCase(tabLabel)) {
                 resourceCreativeTab = creativeTab;
             }
         }
