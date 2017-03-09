@@ -2,9 +2,11 @@ package com.teamacronymcoders.contenttweaker.api;
 
 import com.teamacronymcoders.contenttweaker.api.utils.CreativeTabsResourceList;
 import com.teamacronymcoders.contenttweaker.api.utils.ResourceList;
+import com.teamacronymcoders.contenttweaker.api.utils.SoundEventsResourceList;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.SoundEvent;
 
 public class ContentTweakerAPI {
     private static ContentTweakerAPI instance;
@@ -12,12 +14,14 @@ public class ContentTweakerAPI {
     private IModWrapper modWrapper;
     private ResourceList<Material> materialResourceList;
     private ResourceList<SoundType> soundTypeResourceList;
+    private ResourceList<SoundEvent> soundEventResourceList;
     private ResourceList<CreativeTabs> creativeTabsResourceList;
 
     public ContentTweakerAPI(IModWrapper modWrapper) {
         this.modWrapper = modWrapper;
         this.materialResourceList = new ResourceList<>(Material.class);
         this.soundTypeResourceList = new ResourceList<>(SoundType.class);
+        this.soundEventResourceList = new SoundEventsResourceList();
         this.creativeTabsResourceList = new CreativeTabsResourceList();
     }
 
@@ -40,6 +44,10 @@ public class ContentTweakerAPI {
 
     public ResourceList<SoundType> getSoundTypes() {
         return this.soundTypeResourceList;
+    }
+
+    public ResourceList<SoundEvent> getSoundEvents() {
+        return this.soundEventResourceList;
     }
 
     public ResourceList<CreativeTabs> getCreativeTabs() {

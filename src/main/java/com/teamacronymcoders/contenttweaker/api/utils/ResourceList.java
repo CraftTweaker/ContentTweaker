@@ -11,6 +11,7 @@ import java.util.Map;
 public class ResourceList<RESOURCE> {
     private Class<RESOURCE> resourceClass;
     private List<Class> classesToCheck;
+    protected Map<String, RESOURCE> resources;
 
     public ResourceList(@Nonnull Class<RESOURCE> resourceClass) {
         this(resourceClass, resourceClass);
@@ -23,14 +24,13 @@ public class ResourceList<RESOURCE> {
     public ResourceList(@Nonnull Class<RESOURCE> resourceClass, @Nonnull List<Class> classesToCheck) {
         this.resourceClass = resourceClass;
         this.classesToCheck = classesToCheck;
+        this.resources = new HashMap<>();
         this.loadResources();
     }
 
     public void addClassToCheck(Class classToCheck) {
         this.classesToCheck.add(classToCheck);
     }
-
-    private Map<String, RESOURCE> resources = new HashMap<>();
 
     public void addResource(String name, RESOURCE resource) {
         resources.put(name.toLowerCase(Locale.US), resource);
@@ -41,8 +41,6 @@ public class ResourceList<RESOURCE> {
     }
 
     private void loadResources() {
-        this.classesToCheck.forEach(clazz -> {
-            Reflection.getStaticFieldsOfType(this.resourceClass, clazz).forEach(this::addResource);
-        });
+        this.classesToCheck.forEach(clazz -> Reflection.getStaticFieldsOfType(this.resourceClass, clazz).forEach(this::addResource));
     }
 }
