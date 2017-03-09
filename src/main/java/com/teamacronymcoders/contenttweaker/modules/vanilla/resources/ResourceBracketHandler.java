@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.modules.vanilla.resource;
+package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 
 import minetweaker.IBracketHandler;
 import minetweaker.MineTweakerAPI;

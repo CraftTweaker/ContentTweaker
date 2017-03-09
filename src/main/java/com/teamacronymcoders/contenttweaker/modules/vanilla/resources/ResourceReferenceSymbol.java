@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.modules.vanilla.resource;
+package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.expression.ExpressionCallStatic;

@@ -4,7 +4,7 @@ import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material.IMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;

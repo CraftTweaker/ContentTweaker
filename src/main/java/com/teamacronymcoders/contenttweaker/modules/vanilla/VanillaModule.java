@@ -5,7 +5,7 @@ import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModuleDependency;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material.MaterialBracketHandler;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialBracketHandler;
 import minetweaker.MineTweakerAPI;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 

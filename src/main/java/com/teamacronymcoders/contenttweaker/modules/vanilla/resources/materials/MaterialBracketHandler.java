@@ -1,7 +1,7 @@
-package com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material;
+package com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials;
 
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resource.ResourceBracketHandler;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.ResourceBracketHandler;
 import minetweaker.MineTweakerAPI;
 import net.minecraft.block.material.Material;
 

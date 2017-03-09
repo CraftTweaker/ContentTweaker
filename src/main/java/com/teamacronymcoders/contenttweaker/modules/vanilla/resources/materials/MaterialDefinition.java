@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.modules.vanilla.resource.material;
+package com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials;
 
 import net.minecraft.block.material.Material;
 
