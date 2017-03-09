@@ -9,14 +9,14 @@ import stanhebben.zenscript.type.natives.IJavaMethod;
 
 import java.util.List;
 
-public abstract class ResourceBracketHandler<T> implements IBracketHandler {
+public abstract class ResourceBracketHandler implements IBracketHandler {
     private final IJavaMethod method;
 
     private String resourceType;
 
-    public ResourceBracketHandler(String resourceType) {
+    public ResourceBracketHandler(String resourceType, Class clazz) {
         this.resourceType = resourceType;
-        method = MineTweakerAPI.getJavaMethod(ResourceBracketHandler.class, "get" + resourceType, String.class);
+        method = MineTweakerAPI.getJavaMethod(clazz, "get" + resourceType, String.class);
     }
 
     @Override
