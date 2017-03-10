@@ -1,8 +1,8 @@
 [
   {
-    "modid": "tailoredobjects",
-    "name": "TailoredObjects",
-    "description": "Custom Minecraft Objects created from JSON/MT scripts",
+    "modid": "contenttweaker",
+    "name": "ContentTweaker",
+    "description": "Custom Minecraft Objects created from CraftTweaker scripts",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "teamacronymcoders.com",
