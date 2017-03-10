@@ -19,12 +19,12 @@ public class CreativeTabContent extends CreativeTabs {
     @Nonnull
     @SideOnly(Side.CLIENT)
     public Item getTabIconItem() {
-        return representation.getIconStack().getItem();
+        return representation.getInternalIconStack().getItem();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getIconItemDamage() {
-        return representation.getIconStack().getItemDamage();
+        return representation.getInternalIconStack().getItemDamage();
     }
 }
