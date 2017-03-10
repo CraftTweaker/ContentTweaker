@@ -75,7 +75,7 @@ uploadArchives {
 }
 
 String getVersion() {
-    String version = "${base_version}"
+    String version = "${mod_version}"
     String branch = System.getenv("BRANCH") != null ? System.getenv("BRANCH") : ""
 
     if(branch != "") {
