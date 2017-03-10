@@ -13,9 +13,15 @@ public abstract class ResourceBracketHandler implements IBracketHandler {
     private final IJavaMethod method;
 
     private String resourceType;
+    private int startIndex;
 
     public ResourceBracketHandler(String resourceType, Class clazz) {
+        this(resourceType, clazz, 2);
+    }
+
+    public ResourceBracketHandler(String resourceType, Class clazz, int startIndex) {
         this.resourceType = resourceType;
+        this.startIndex = startIndex;
         method = MineTweakerAPI.getJavaMethod(clazz, "get" + resourceType, String.class);
     }
 
@@ -23,9 +29,9 @@ public abstract class ResourceBracketHandler implements IBracketHandler {
     public IZenSymbol resolve(IEnvironmentGlobal environment, List<Token> tokens) {
         IZenSymbol zenSymbol = null;
 
-        if (tokens.size() > 2) {
+        if (tokens.size() > startIndex) {
             if (tokens.get(0).getValue().equalsIgnoreCase(resourceType) && tokens.get(1).getValue().equals(":")) {
-                zenSymbol = find(environment, tokens, 2, tokens.size());
+                zenSymbol = find(environment, tokens, startIndex, tokens.size());
             }
         }
 
