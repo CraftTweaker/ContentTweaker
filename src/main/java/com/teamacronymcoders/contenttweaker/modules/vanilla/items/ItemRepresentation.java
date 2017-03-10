@@ -6,7 +6,7 @@ import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 
-public class ItemRepresentation implements IRepresentation {
+public class ItemRepresentation implements IRepresentation, IItem {
     private String unlocalizedName;
     private int maxStackSize = 64;
     private EnumRarity rarity = EnumRarity.COMMON;
