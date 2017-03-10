@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker;
+package com.teamacronymcoders.contenttweaker.modules.vanilla.commands;
 
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;

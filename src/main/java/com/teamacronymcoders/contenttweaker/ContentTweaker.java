@@ -30,7 +30,7 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     public static ContentTweaker instance;
 
     @SidedProxy(clientSide = "com.teamacronymcoders.contenttweaker.proxies.ClientProxy",
-            serverSide = "com.teamacronymcoders.contenttweaker.proxies.CommonProxy")
+            serverSide = "com.teamacronymcoders.contenttweaker.proxies.ServerProxy")
     public static CommonProxy proxy;
 
     public File contentFolder;
