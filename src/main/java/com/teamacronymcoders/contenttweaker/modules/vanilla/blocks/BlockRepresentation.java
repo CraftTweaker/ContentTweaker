@@ -4,6 +4,8 @@ import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.CreativeTabDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.ICreativeTabDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -33,17 +35,20 @@ public class BlockRepresentation implements IRepresentation, IBlock {
         this.unlocalizedName = unlocalizedName;
     }
 
-    public CreativeTabs getCreativeTab() {
+    public CreativeTabs getInternalCreativeTab() {
         return creativeTab;
     }
 
-    public void setCreativeTab(CreativeTabs creativeTab) {
-        this.creativeTab = creativeTab;
+    @Override
+    public void setCreativeTab(ICreativeTabDefinition creativeTab) {
+        if (creativeTab.getInternal() instanceof CreativeTabs) {
+            this.creativeTab = (CreativeTabs) creativeTab.getInternal();
+        }
     }
 
     @Override
-    public void setCreativeTab(String creativeTabName) {
-        this.creativeTab = ContentTweakerAPI.getInstance().getCreativeTabs().getResource(creativeTabName);
+    public ICreativeTabDefinition getCreativeTab() {
+        return new CreativeTabDefinition(creativeTab);
     }
 
     @Override

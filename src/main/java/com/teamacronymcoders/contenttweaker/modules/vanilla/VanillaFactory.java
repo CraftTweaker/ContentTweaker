@@ -1,10 +1,13 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla;
 
-import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabContent;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.IItem;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.CreativeTabDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.ICreativeTabDefinition;
 import minetweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -20,19 +23,19 @@ public class VanillaFactory {
     }
 
     @ZenMethod
-    public static void registerBlock(IBlock block) {
-        if (block.getInternal() instanceof IRepresentation) {
-            ((IRepresentation) block.getInternal()).register();
-        }
+    public static IItem createItem(String unlocalizedName) {
+        ItemRepresentation itemRepresentation = new ItemRepresentation();
+        itemRepresentation.setUnlocalizedName(unlocalizedName);
+        return itemRepresentation;
     }
 
     @ZenMethod
-    public static void createAndRegisterCreativeTab(String unlocalizedName, IItemStack iItemStack) {
+    public static ICreativeTabDefinition createCreativeTab(String unlocalizedName, IItemStack iItemStack) {
         CreativeTabRepresentation creativeTab = new CreativeTabRepresentation();
         creativeTab.setUnlocalizedName(unlocalizedName);
         if (iItemStack.getInternal() instanceof ItemStack) {
             creativeTab.setIconStack((ItemStack) iItemStack.getInternal());
         }
-        new CreativeTabContent(creativeTab);
+        return new CreativeTabDefinition(new CreativeTabContent(creativeTab));
     }
 }

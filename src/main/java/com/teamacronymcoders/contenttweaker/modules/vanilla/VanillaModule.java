@@ -8,7 +8,10 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.commands.Commands;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.IItem;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.CreativeTabBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialBracketHandler;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundEventBracketHandler;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeBracketHandler;
 import minetweaker.MineTweakerAPI;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -33,6 +36,9 @@ public class VanillaModule extends ModuleBase {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         MineTweakerAPI.registerBracketHandler(new MaterialBracketHandler());
+        MineTweakerAPI.registerBracketHandler(new CreativeTabBracketHandler());
+        MineTweakerAPI.registerBracketHandler(new SoundEventBracketHandler());
+        MineTweakerAPI.registerBracketHandler(new SoundTypeBracketHandler());
         MineTweakerAPI.registerClass(IBlock.class);
         MineTweakerAPI.registerClass(IItem.class);
         MineTweakerAPI.registerClass(ICreativeTab.class);
