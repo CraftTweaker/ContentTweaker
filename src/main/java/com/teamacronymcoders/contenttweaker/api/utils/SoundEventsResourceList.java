@@ -3,7 +3,10 @@ package com.teamacronymcoders.contenttweaker.api.utils;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+
+import java.util.Locale;
 
 public class SoundEventsResourceList extends ResourceList<SoundEvent> {
     public SoundEventsResourceList() {
@@ -11,7 +14,11 @@ public class SoundEventsResourceList extends ResourceList<SoundEvent> {
     }
 
     public void addResource(String name, SoundEvent resource) {
-        ResourceLocation resourceLocation = ReflectionHelper.getPrivateValue(SoundEvent.class, null, "soundName", "field_187506_b");
-        resources.put(resourceLocation.toString(), resource);
+
     }
+
+    public SoundEvent getResource(String name) {
+        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(name));
+    }
+
 }
