@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
-import net.minecraft.creativetab.CreativeTabs;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -28,7 +27,7 @@ public interface IItem {
     ICreativeTab getCreativeTab();
 
     @ZenMethod
-    void setCreativeTab(CreativeTabs creativeTab);
+    void setCreativeTab(ICreativeTab creativeTab);
 
     @ZenMethod
     float getSmeltingExperience();

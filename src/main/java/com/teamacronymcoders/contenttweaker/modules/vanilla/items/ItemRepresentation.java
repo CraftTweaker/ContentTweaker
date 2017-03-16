@@ -61,8 +61,10 @@ public class ItemRepresentation implements IRepresentation, IItem {
     }
 
     @Override
-    public void setCreativeTab(CreativeTabs creativeTab) {
-        this.creativeTab = creativeTab;
+    public void setCreativeTab(ICreativeTab creativeTab) {
+        if (creativeTab.getInternal() instanceof CreativeTabs) {
+            this.creativeTab = (CreativeTabs) creativeTab.getInternal();
+        }
     }
 
     @Override
