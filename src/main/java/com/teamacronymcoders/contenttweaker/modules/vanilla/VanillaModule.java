@@ -39,9 +39,9 @@ public class VanillaModule extends ModuleBase {
         MineTweakerAPI.registerBracketHandler(new CreativeTabBracketHandler());
         MineTweakerAPI.registerBracketHandler(new SoundEventBracketHandler());
         MineTweakerAPI.registerBracketHandler(new SoundTypeBracketHandler());
+        MineTweakerAPI.registerClass(ICreativeTab.class);
         MineTweakerAPI.registerClass(IBlock.class);
         MineTweakerAPI.registerClass(IItem.class);
-        MineTweakerAPI.registerClass(ICreativeTab.class);
         MineTweakerAPI.registerClass(VanillaFactory.class);
         MineTweakerAPI.registerClass(Commands.class);
     }

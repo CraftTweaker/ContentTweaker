@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 public class CreativeTabRepresentation implements IRepresentation, ICreativeTab {
     private String unlocalizedName;
     private ItemStack iconStack;
+    private CreativeTabContent creativeTabContent;
 
     public String getUnlocalizedName() {
         return unlocalizedName;
@@ -51,6 +52,17 @@ public class CreativeTabRepresentation implements IRepresentation, ICreativeTab 
 
     @Override
     public void register() {
-        new CreativeTabContent(this);
+        if (creativeTabContent == null) {
+            creativeTabContent = new CreativeTabContent(this);
+        }
+
+    }
+
+    @Override
+    public Object getInternal() {
+        if (creativeTabContent == null) {
+            creativeTabContent = new CreativeTabContent(this);
+        }
+        return creativeTabContent;
     }
 }

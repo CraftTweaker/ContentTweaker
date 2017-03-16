@@ -11,7 +11,7 @@ public class SoundTypeBracketHandler extends ResourceBracketHandler {
         super("SoundType", SoundTypeBracketHandler.class, 3);
     }
 
-    public static ISoundTypeDefinition getSoundEvent(String name) {
+    public static ISoundTypeDefinition getSoundType(String name) {
         SoundType soundType = ContentTweakerAPI.getInstance().getSoundTypes().getResource(name);
         if(soundType == null) {
             MineTweakerAPI.logError("Could not find Sound Event for name: " + name);

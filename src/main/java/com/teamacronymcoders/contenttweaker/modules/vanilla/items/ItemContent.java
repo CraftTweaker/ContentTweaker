@@ -28,13 +28,13 @@ public class ItemContent extends Item {
             missingFields.add("unlocalizedName");
         }
         if (!missingFields.isEmpty()) {
-            throw new MissingFieldsException("BlockRepresentation", missingFields);
+            throw new MissingFieldsException("ItemRepresentation", missingFields);
         }
     }
 
     public void setFields(ItemRepresentation itemRepresentation) {
         this.setUnlocalizedName(itemRepresentation.getUnlocalizedName());
-        this.setCreativeTab(itemRepresentation.getCreativeTab());
+        this.setCreativeTab(itemRepresentation.getInternalCreativeTab());
         this.setMaxStackSize(itemRepresentation.getMaxStackSize());
         this.setHarvestLevel(itemRepresentation.getToolClass(), itemRepresentation.getToolLevel());
     }
@@ -42,7 +42,7 @@ public class ItemContent extends Item {
     @Override
     @Nonnull
     public EnumRarity getRarity(ItemStack itemStack) {
-        return this.itemRepresentation.getRarity();
+        return this.itemRepresentation.getInteralRarity();
     }
 
     @Override

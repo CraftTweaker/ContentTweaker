@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.ICreativeTabDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -14,10 +14,10 @@ public interface IBlock {
     void setUnlocalizedName(String unlocalizedName);
 
     @ZenMethod
-    void setCreativeTab(ICreativeTabDefinition creativeTab);
+    void setCreativeTab(ICreativeTab creativeTab);
 
     @ZenMethod
-    ICreativeTabDefinition getCreativeTab();
+    ICreativeTab getCreativeTab();
 
     @ZenMethod
     boolean isFullBlock();

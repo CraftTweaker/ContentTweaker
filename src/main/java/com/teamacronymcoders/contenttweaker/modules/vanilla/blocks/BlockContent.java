@@ -35,7 +35,7 @@ public class BlockContent extends BlockBase {
 
     public void setFields(BlockRepresentation blockRepresentation) {
         this.setUnlocalizedName(blockRepresentation.getUnlocalizedName());
-        this.setCreativeTab(blockRepresentation.getCreativeTab());
+        this.setCreativeTab(blockRepresentation.getInternalCreativeTab());
         this.setLightOpacity(blockRepresentation.getLightOpacity());
         this.setLightLevel(blockRepresentation.getLightValue());
         this.setHardness(blockRepresentation.getBlockHardness());

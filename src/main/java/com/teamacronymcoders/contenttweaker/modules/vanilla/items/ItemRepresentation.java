@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 
@@ -16,66 +17,90 @@ public class ItemRepresentation implements IRepresentation, IItem {
     private int toolLevel = -1;
     private boolean beaconPayment = false;
 
+    @Override
     public String getUnlocalizedName() {
         return unlocalizedName;
     }
 
+    @Override
     public void setUnlocalizedName(String unlocalizedName) {
         this.unlocalizedName = unlocalizedName;
     }
 
+    @Override
     public int getMaxStackSize() {
         return maxStackSize;
     }
 
+    @Override
     public void setMaxStackSize(int maxStackSize) {
         this.maxStackSize = maxStackSize;
     }
 
-    public EnumRarity getRarity() {
+    @Override
+    public String getRarity() {
+        return rarity.name();
+    }
+
+    public EnumRarity getInteralRarity() {
         return rarity;
     }
 
-    public void setRarity(EnumRarity rarity) {
-        this.rarity = rarity;
+    @Override
+    public void setRarity(String rarity) {
+        this.rarity = EnumRarity.valueOf(rarity);
     }
 
-    public CreativeTabs getCreativeTab() {
+    @Override
+    public ICreativeTab getCreativeTab() {
+        return new MCCreativeTab(creativeTab);
+    }
+
+    public CreativeTabs getInternalCreativeTab() {
         return creativeTab;
     }
 
+    @Override
     public void setCreativeTab(CreativeTabs creativeTab) {
         this.creativeTab = creativeTab;
     }
 
+    @Override
     public float getSmeltingExperience() {
         return smeltingExperience;
     }
 
+    @Override
     public void setSmeltingExperience(float smeltingExperience) {
         this.smeltingExperience = smeltingExperience;
     }
 
+    @Override
     public String getToolClass() {
         return toolClass;
     }
 
+    @Override
     public void setToolClass(String toolClass) {
         this.toolClass = toolClass;
     }
 
+    @Override
     public int getToolLevel() {
         return toolLevel;
     }
 
+    @Override
     public void setToolLevel(int toolLevel) {
         this.toolLevel = toolLevel;
     }
 
+    @Override
     public boolean isBeaconPayment() {
         return beaconPayment;
     }
 
+    @Override
     public void setBeaconPayment(boolean beaconPayment) {
         this.beaconPayment = beaconPayment;
     }

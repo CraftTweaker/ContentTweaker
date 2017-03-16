@@ -1,7 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumRarity;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -20,13 +19,13 @@ public interface IItem {
     void setMaxStackSize(int maxStackSize);
 
     @ZenMethod
-    EnumRarity getRarity();
+    String getRarity();
 
     @ZenMethod
-    void setRarity(EnumRarity rarity);
+    void setRarity(String rarity);
 
     @ZenMethod
-    CreativeTabs getCreativeTab();
+    ICreativeTab getCreativeTab();
 
     @ZenMethod
     void setCreativeTab(CreativeTabs creativeTab);
@@ -54,4 +53,7 @@ public interface IItem {
 
     @ZenMethod
     void setBeaconPayment(boolean beaconPayment);
+
+    @ZenMethod
+    void register();
 }
