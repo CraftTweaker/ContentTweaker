@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.api.utils;
 
+import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -24,6 +25,8 @@ public class CreativeTabsResourceList extends ResourceList<CreativeTabs> {
         while (creativeTabsIterable.hasNext() && resourceCreativeTab == null) {
             CreativeTabs creativeTab = creativeTabsIterable.next();
             String tabLabel = ReflectionHelper.getPrivateValue(CreativeTabs.class, creativeTab, "tabLabel", "field_78034_o");
+            //TODO REMOVE
+            ContentTweaker.instance.getLogger().warning(tabLabel);
             if (name.equalsIgnoreCase(tabLabel)) {
                 resourceCreativeTab = creativeTab;
             }

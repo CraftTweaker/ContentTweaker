@@ -19,8 +19,8 @@ public class ContentTweakerAPI {
 
     public ContentTweakerAPI(IModWrapper modWrapper) {
         this.modWrapper = modWrapper;
-        this.materialResourceList = new ResourceList<>(Material.class);
-        this.soundTypeResourceList = new ResourceList<>(SoundType.class);
+        this.materialResourceList = new ResourceList<>(Material.class, Mappings.getMaterialMappings());
+        this.soundTypeResourceList = new ResourceList<>(SoundType.class, Mappings.getSoundEventMappings());
         this.soundEventResourceList = new SoundEventsResourceList();
         this.creativeTabsResourceList = new CreativeTabsResourceList();
     }
