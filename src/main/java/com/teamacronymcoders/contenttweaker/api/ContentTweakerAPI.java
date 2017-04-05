@@ -25,7 +25,7 @@ public class ContentTweakerAPI {
         this.creativeTabsResourceList = new CreativeTabsResourceList();
     }
 
-    //ONLY TO BE CALLED BY TAILORED OBJECTS
+    //ONLY TO BE CALLED BY CONTENT TWEAKER
     public static void setInstance(ContentTweakerAPI contentTweakerAPI) {
         if (instance == null) {
             instance = contentTweakerAPI;

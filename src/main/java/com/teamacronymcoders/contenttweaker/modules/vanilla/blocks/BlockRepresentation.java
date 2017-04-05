@@ -2,11 +2,11 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
-import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -140,8 +140,8 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     }
 
     @Override
-    public void setBlockSoundType(String blockSoundTypeName) {
-        this.blockSoundType = ContentTweakerAPI.getInstance().getSoundTypes().getResource(blockSoundTypeName);
+    public void setBlockSoundType(ISoundTypeDefinition blockSoundType) {
+        this.setBlockSoundType((SoundType) blockSoundType.getInternal());
     }
 
     public Material getBlockMaterial() {
@@ -153,13 +153,8 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     }
 
     @Override
-    public void setBlockMaterial(String blockMaterialName) {
-        this.setBlockMaterial(ContentTweakerAPI.getInstance().getBlockMaterials().getResource(blockMaterialName));
-    }
-
-    @Override
     public void setBlockMaterial(IMaterialDefinition material) {
-        this.setBlockMaterial(this.blockMaterial = (Material) material.getInternal());
+        this.setBlockMaterial((Material) material.getInternal());
     }
 
     @Override

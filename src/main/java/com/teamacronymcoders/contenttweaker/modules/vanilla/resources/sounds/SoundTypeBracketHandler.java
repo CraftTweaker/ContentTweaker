@@ -8,13 +8,13 @@ import net.minecraft.util.SoundEvent;
 
 public class SoundTypeBracketHandler extends ResourceBracketHandler {
     public SoundTypeBracketHandler() {
-        super("SoundType", SoundTypeBracketHandler.class, 3);
+        super("SoundType", SoundTypeBracketHandler.class, 2);
     }
 
     public static ISoundTypeDefinition getSoundType(String name) {
         SoundType soundType = ContentTweakerAPI.getInstance().getSoundTypes().getResource(name);
         if(soundType == null) {
-            MineTweakerAPI.logError("Could not find Sound Event for name: " + name);
+            MineTweakerAPI.logError("Could not find Sound Type for name: " + name);
         }
         return new SoundTypeDefinition(soundType);
     }

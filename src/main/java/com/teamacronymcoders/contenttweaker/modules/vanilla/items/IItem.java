@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -52,6 +53,12 @@ public interface IItem {
 
     @ZenMethod
     void setBeaconPayment(boolean beaconPayment);
+
+    @ZenMethod
+    IItemRightClick getItemRightClick();
+
+    @ZenMethod
+    void setItemRightClick(IItemRightClick itemRightClick);
 
     @ZenMethod
     void register();

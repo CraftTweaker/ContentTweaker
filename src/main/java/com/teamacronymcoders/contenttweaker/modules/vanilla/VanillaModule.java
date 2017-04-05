@@ -4,8 +4,10 @@ import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModuleDependency;
+import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.commands.Commands;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.IItem;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.CreativeTabBracketHandler;
@@ -35,10 +37,16 @@ public class VanillaModule extends ModuleBase {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+
         MineTweakerAPI.registerBracketHandler(new MaterialBracketHandler());
         MineTweakerAPI.registerBracketHandler(new CreativeTabBracketHandler());
         MineTweakerAPI.registerBracketHandler(new SoundEventBracketHandler());
         MineTweakerAPI.registerBracketHandler(new SoundTypeBracketHandler());
+
+        MineTweakerAPI.registerClass(IWorld.class);
+
+        MineTweakerAPI.registerClass(IItemRightClick.class);
+
         MineTweakerAPI.registerClass(ICreativeTab.class);
         MineTweakerAPI.registerClass(IBlock.class);
         MineTweakerAPI.registerClass(IItem.class);

@@ -43,4 +43,9 @@ public class SoundTypeDefinition implements ISoundTypeDefinition {
     public ISoundEventDefinition getFallSound() {
         return new SoundEventDefinition(soundType.getFallSound());
     }
+
+    @Override
+    public Object getInternal() {
+        return this.soundType;
+    }
 }

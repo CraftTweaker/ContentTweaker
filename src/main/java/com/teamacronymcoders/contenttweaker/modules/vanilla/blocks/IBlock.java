@@ -2,6 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -68,10 +69,7 @@ public interface IBlock {
     void setToolLevel(int toolLevel);
 
     @ZenMethod
-    void setBlockSoundType(String blockSoundTypeName);
-
-    @ZenMethod
-    void setBlockMaterial(String blockMaterialName);
+    void setBlockSoundType(ISoundTypeDefinition blockSoundTypeName);
 
     @ZenMethod
     void setBlockMaterial(IMaterialDefinition material);

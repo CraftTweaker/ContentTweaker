@@ -10,7 +10,7 @@ import net.minecraft.util.SoundEvent;
 
 public class SoundEventBracketHandler extends ResourceBracketHandler {
     public SoundEventBracketHandler() {
-        super("SoundEvent", SoundEventBracketHandler.class, 3);
+        super("SoundEvent", SoundEventBracketHandler.class, 2);
     }
 
     public static ISoundEventDefinition getSoundEvent(String name) {

@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
@@ -16,6 +17,7 @@ public class ItemRepresentation implements IRepresentation, IItem {
     private String toolClass = "";
     private int toolLevel = -1;
     private boolean beaconPayment = false;
+    private IItemRightClick itemRightClick;
 
     @Override
     public String getUnlocalizedName() {
@@ -105,6 +107,16 @@ public class ItemRepresentation implements IRepresentation, IItem {
     @Override
     public void setBeaconPayment(boolean beaconPayment) {
         this.beaconPayment = beaconPayment;
+    }
+
+    @Override
+    public IItemRightClick getItemRightClick() {
+        return this.itemRightClick;
+    }
+
+    @Override
+    public void setItemRightClick(IItemRightClick itemRightClick) {
+        this.itemRightClick = itemRightClick;
     }
 
     @Override

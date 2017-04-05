@@ -25,4 +25,6 @@ public interface ISoundTypeDefinition {
 
     @ZenMethod
     ISoundEventDefinition getFallSound();
+
+    Object getInternal();
 }
