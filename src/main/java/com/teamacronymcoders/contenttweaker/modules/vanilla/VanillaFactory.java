@@ -4,6 +4,9 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresen
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.*;
 import minetweaker.api.item.IItemStack;
+import minetweaker.mc1102.item.MCItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -32,5 +35,15 @@ public class VanillaFactory {
             creativeTab.setIconStack((ItemStack) iItemStack.getInternal());
         }
         return creativeTab;
+    }
+
+    @ZenMethod
+    public static ICreativeTab createCreativeTab(String unlocalizedName, IItem iItem) {
+        return createCreativeTab(unlocalizedName, new MCItemStack(new ItemStack((Item) iItem.getInternal())));
+    }
+
+    @ZenMethod
+    public static ICreativeTab createCreativeTab(String unlocalizedName, IBlock iBlock) {
+        return createCreativeTab(unlocalizedName, new MCItemStack(new ItemStack((Block) iBlock.getInternal())));
     }
 }

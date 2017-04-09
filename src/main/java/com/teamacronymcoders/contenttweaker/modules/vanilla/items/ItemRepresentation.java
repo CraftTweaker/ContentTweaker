@@ -8,6 +8,8 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativeta
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 
+import java.util.Locale;
+
 public class ItemRepresentation implements IRepresentation, IItem {
     private String unlocalizedName;
     private int maxStackSize = 64;
@@ -18,6 +20,8 @@ public class ItemRepresentation implements IRepresentation, IItem {
     private int toolLevel = -1;
     private boolean beaconPayment = false;
     private IItemRightClick itemRightClick;
+
+    private ItemContent itemContent;
 
     @Override
     public String getUnlocalizedName() {
@@ -44,13 +48,13 @@ public class ItemRepresentation implements IRepresentation, IItem {
         return rarity.name();
     }
 
-    public EnumRarity getInteralRarity() {
+    public EnumRarity getInternalRarity() {
         return rarity;
     }
 
     @Override
     public void setRarity(String rarity) {
-        this.rarity = EnumRarity.valueOf(rarity);
+        this.rarity = EnumRarity.valueOf(rarity.toUpperCase(Locale.US));
     }
 
     @Override
@@ -131,6 +135,12 @@ public class ItemRepresentation implements IRepresentation, IItem {
 
     @Override
     public void register() {
-        ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").register(new ItemContent(this));
+        itemContent = new ItemContent(this);
+        ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").register(itemContent);
+    }
+
+    @Override
+    public Object getInternal() {
+        return itemContent;
     }
 }

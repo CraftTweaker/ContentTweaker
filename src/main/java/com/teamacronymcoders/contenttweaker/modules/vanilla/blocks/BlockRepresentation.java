@@ -25,6 +25,8 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     private SoundType blockSoundType = SoundType.METAL;
     private Material blockMaterial = Material.IRON;
 
+    private BlockContent blockContent;
+
     @Override
     public String getUnlocalizedName() {
         return unlocalizedName;
@@ -159,7 +161,7 @@ public class BlockRepresentation implements IRepresentation, IBlock {
 
     @Override
     public Object getInternal() {
-        return this;
+        return this.blockContent;
     }
 
     @Override
@@ -174,6 +176,7 @@ public class BlockRepresentation implements IRepresentation, IBlock {
 
     @Override
     public void register() {
-        ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(new BlockContent(this));
+        this.blockContent = new BlockContent(this);
+        ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(this.blockContent);
     }
 }

@@ -62,4 +62,6 @@ public interface IItem {
 
     @ZenMethod
     void register();
+
+    Object getInternal();
 }
