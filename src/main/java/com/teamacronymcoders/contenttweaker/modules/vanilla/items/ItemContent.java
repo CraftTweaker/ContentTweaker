@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
+import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.wrappers.world.MCWorld;
 import minetweaker.mc1102.item.MCItemStack;
@@ -19,8 +20,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class ItemContent extends Item {
+public class ItemContent extends Item implements IHasModel {
     private ItemRepresentation itemRepresentation;
     private CreativeTabs creativeTab;
 
@@ -51,7 +53,7 @@ public class ItemContent extends Item {
     @Override
     @Nonnull
     public EnumRarity getRarity(@Nonnull ItemStack itemStack) {
-        return this.itemRepresentation.getInteralRarity();
+        return this.itemRepresentation.getInternalRarity();
     }
 
     @Override
@@ -85,11 +87,28 @@ public class ItemContent extends Item {
         EnumActionResult enumActionResult = EnumActionResult.PASS;
         if (itemRepresentation.getItemRightClick() != null) {
             String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCItemStack(itemStack),
-                    new MCWorld(world), new MCPlayer(player), hand);
+                    new MCWorld(world), new MCPlayer(player), hand.name());
             if (stringResult != null) {
-                enumActionResult = EnumActionResult.valueOf(stringResult);
+                enumActionResult = EnumActionResult.valueOf(stringResult.toUpperCase(Locale.US));
             }
         }
         return new ActionResult<>(enumActionResult, itemStack);
+    }
+
+    @Override
+    public List<String> getModelNames(List<String> modelNames) {
+        modelNames.add(this.getUnlocalizedName().substring(5));
+        return modelNames;
+    }
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        itemStacks.add(new ItemStack(this));
+        return itemStacks;
+    }
+
+    @Override
+    public Item getItem() {
+        return this;
     }
 }
