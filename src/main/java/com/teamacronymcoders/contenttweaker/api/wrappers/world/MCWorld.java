@@ -13,4 +13,9 @@ public class MCWorld implements IWorld {
     public boolean isRemote() {
         return world.isRemote;
     }
+
+    @Override
+    public Object getInternal() {
+        return world;
+    }
 }

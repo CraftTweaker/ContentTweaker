@@ -7,4 +7,6 @@ import stanhebben.zenscript.annotations.ZenGetter;
 public interface IWorld {
     @ZenGetter("remote")
     boolean isRemote();
+
+    Object getInternal();
 }
