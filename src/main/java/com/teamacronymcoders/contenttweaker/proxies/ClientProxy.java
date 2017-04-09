@@ -8,9 +8,4 @@ public class ClientProxy extends CommonProxy {
     public void createErrorSilencingLoader() {
         new ErrorSilencingLoader();
     }
-
-    @Override
-    public void callCommand(String command, EntityPlayer entityPlayer) {
-        //No-op on Client
-    }
 }

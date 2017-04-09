@@ -8,4 +8,9 @@ public class MCWorld implements IWorld {
     public MCWorld(World world) {
         this.world = world;
     }
+
+    @Override
+    public boolean isRemote() {
+        return world.isRemote;
+    }
 }

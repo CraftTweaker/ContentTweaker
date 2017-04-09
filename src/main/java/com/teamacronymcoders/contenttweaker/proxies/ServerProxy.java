@@ -13,11 +13,4 @@ public class ServerProxy extends CommonProxy {
     public void createErrorSilencingLoader() {
         //No-op on Server
     }
-
-    @Override
-    public void callCommand(String command, EntityPlayer entityPlayer) {
-        CommandSenderWrapper commandSenderWrapper = new CommandSenderWrapper(entityPlayer, false, true);
-        MinecraftServer server = FMLServerHandler.instance().getServer();
-        server.getCommandManager().executeCommand(commandSenderWrapper, command);
-    }
 }

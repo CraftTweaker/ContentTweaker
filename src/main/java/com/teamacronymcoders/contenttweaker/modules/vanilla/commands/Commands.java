@@ -1,19 +1,25 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.commands;
 
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
+import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
 import minetweaker.api.player.IPlayer;
 import minetweaker.mc1102.player.MCPlayer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.server.FMLServerHandler;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.contenttweaker.Commands")
 public class Commands {
     @ZenMethod
-    public static void call(String command, IPlayer player) {
-        if (player instanceof MCPlayer) {
+    public static void call(String command, IPlayer player, IWorld world) {
+        if (!world.isRemote() && player instanceof MCPlayer) {
             EntityPlayer entityPlayer = ((MCPlayer) player).getInternal();
-            ContentTweaker.proxy.callCommand(command, entityPlayer);
+            CommandSenderWrapper commandSenderWrapper = new CommandSenderWrapper(entityPlayer, true, true);
+            MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+            server.getCommandManager().executeCommand(commandSenderWrapper, command);
         }
     }
 }
