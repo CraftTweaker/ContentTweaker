@@ -3,75 +3,74 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.*;
 
 @ZenClass("mods.contenttweaker.Block")
 public interface IBlock {
-    @ZenMethod
+    @ZenGetter("unlocalizedName")
     String getUnlocalizedName();
 
-    @ZenMethod
+    @ZenSetter("unlocalizedName")
     void setUnlocalizedName(String unlocalizedName);
 
-    @ZenMethod
+    @ZenGetter("creativeTab")
     void setCreativeTab(ICreativeTab creativeTab);
 
-    @ZenMethod
+    @ZenSetter("creativeTab")
     ICreativeTab getCreativeTab();
 
-    @ZenMethod
+    @ZenGetter("fullBlock")
     boolean isFullBlock();
 
-    @ZenMethod
+    @ZenSetter("fullBlock")
     void setFullBlock(boolean fullBlock);
 
-    @ZenMethod
+    @ZenGetter("lightOpacity")
     int getLightOpacity();
 
-    @ZenMethod
+    @ZenSetter("lightOpacity")
     void setLightOpacity(int lightOpacity);
 
-    @ZenMethod
+    @ZenGetter("translucent")
     boolean isTranslucent();
 
-    @ZenMethod
+    @ZenSetter("translucent")
     void setTranslucent(boolean translucent);
 
-    @ZenMethod
+    @ZenGetter("lightValue")
     int getLightValue();
 
-    @ZenMethod
+    @ZenSetter("lightValue")
     void setLightValue(int lightValue);
 
-    @ZenMethod
+    @ZenGetter("blockHardness")
     float getBlockHardness();
 
-    @ZenMethod
+    @ZenSetter("blockHardness")
     void setBlockHardness(float blockHardness);
 
-    @ZenMethod
+    @ZenGetter("blockResistance")
     float getBlockResistance();
 
-    @ZenMethod
+    @ZenSetter("blockResistance")
     void setBlockResistance(float blockResistance);
 
-    @ZenMethod
+    @ZenGetter("toolClass")
     String getToolClass();
 
-    @ZenMethod
+    @ZenSetter("toolClass")
     void setToolClass(String toolClass);
 
-    @ZenMethod
+    @ZenGetter("toolLevel")
     int getToolLevel();
 
-    @ZenMethod
+    @ZenSetter("toolLevel")
     void setToolLevel(int toolLevel);
 
-    @ZenMethod
+    @ZenGetter("blockMaterial")
     void setBlockSoundType(ISoundTypeDefinition blockSoundTypeName);
 
-    @ZenMethod
+    @ZenSetter("blockMaterial")
     void setBlockMaterial(IMaterialDefinition material);
 
     @ZenMethod

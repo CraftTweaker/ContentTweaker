@@ -135,12 +135,12 @@ public class ItemRepresentation implements IRepresentation, IItem {
 
     @Override
     public void register() {
-        itemContent = new ItemContent(this);
-        ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").register(itemContent);
+        this.itemContent = new ItemContent(this);
+        ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").register(this.itemContent);
     }
 
     @Override
     public Object getInternal() {
-        return itemContent;
+        return this.itemContent;
     }
 }

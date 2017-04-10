@@ -2,62 +2,64 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.ZenSetter;
 
 @ZenClass("mods.contenttweaker.Item")
 public interface IItem {
-    @ZenMethod
+    @ZenGetter("unlocalizedName")
     String getUnlocalizedName();
 
-    @ZenMethod
+    @ZenSetter("unlocalizedName")
     void setUnlocalizedName(String unlocalizedName);
 
-    @ZenMethod
+    @ZenGetter("maxStackSize")
     int getMaxStackSize();
 
-    @ZenMethod
+    @ZenSetter("maxStackSize")
     void setMaxStackSize(int maxStackSize);
 
-    @ZenMethod
+    @ZenGetter("rarity")
     String getRarity();
 
-    @ZenMethod
+    @ZenSetter("rarity")
     void setRarity(String rarity);
 
-    @ZenMethod
+    @ZenGetter("creativeTab")
     ICreativeTab getCreativeTab();
 
-    @ZenMethod
+    @ZenSetter("creativeTab")
     void setCreativeTab(ICreativeTab creativeTab);
 
-    @ZenMethod
+    @ZenGetter("smeltingExperience")
     float getSmeltingExperience();
 
-    @ZenMethod
+    @ZenSetter("smeltingExperience")
     void setSmeltingExperience(float smeltingExperience);
 
-    @ZenMethod
+    @ZenGetter("toolClass")
     String getToolClass();
 
-    @ZenMethod
+    @ZenSetter("toolClass")
     void setToolClass(String toolClass);
 
-    @ZenMethod
+    @ZenGetter("toolLevel")
     int getToolLevel();
 
-    @ZenMethod
+    @ZenSetter("toolLevel")
     void setToolLevel(int toolLevel);
 
-    @ZenMethod
+    @ZenGetter("beaconPayment")
     boolean isBeaconPayment();
 
-    @ZenMethod
+    @ZenSetter("beaconPayment")
     void setBeaconPayment(boolean beaconPayment);
 
-    @ZenMethod
+    @ZenGetter("itemRightClick")
     IItemRightClick getItemRightClick();
 
-    @ZenMethod
+    @ZenSetter("itemRightClick")
     void setItemRightClick(IItemRightClick itemRightClick);
 
     @ZenMethod

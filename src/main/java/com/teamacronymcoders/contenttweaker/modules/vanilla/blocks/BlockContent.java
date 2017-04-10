@@ -18,14 +18,15 @@ public class BlockContent extends BlockBase {
 
     public BlockContent(BlockRepresentation blockRepresentation) {
         super(blockRepresentation.getBlockMaterial());
-        checkFields(blockRepresentation);
-        setFields(blockRepresentation);
+        this.blockRepresentation = blockRepresentation;
+        checkFields();
+        setFields();
     }
 
     /* Beginning of Representation stuff */
-    public void checkFields(BlockRepresentation blockRepresentation) {
+    public void checkFields() {
         List<String> missingFields = new ArrayList<>();
-        if (blockRepresentation.getUnlocalizedName() == null) {
+        if (this.blockRepresentation.getUnlocalizedName() == null) {
             missingFields.add("unlocalizedName");
         }
         if (!missingFields.isEmpty()) {
@@ -33,15 +34,15 @@ public class BlockContent extends BlockBase {
         }
     }
 
-    public void setFields(BlockRepresentation blockRepresentation) {
-        this.setUnlocalizedName(blockRepresentation.getUnlocalizedName());
-        this.setCreativeTab(blockRepresentation.getInternalCreativeTab());
-        this.setLightOpacity(blockRepresentation.getLightOpacity());
-        this.setLightLevel(blockRepresentation.getLightValue());
-        this.setHardness(blockRepresentation.getBlockHardness());
-        this.setResistance(blockRepresentation.getBlockResistance());
-        this.setHarvestLevel(blockRepresentation.getToolClass(), blockRepresentation.getToolLevel());
-        this.setSoundType(blockRepresentation.getBlockSoundType());
+    public void setFields() {
+        this.setUnlocalizedName(this.blockRepresentation.getUnlocalizedName());
+        this.setCreativeTab(this.blockRepresentation.getInternalCreativeTab());
+        this.setLightOpacity(this.blockRepresentation.getLightOpacity());
+        this.setLightLevel(this.blockRepresentation.getLightValue());
+        this.setHardness(this.blockRepresentation.getBlockHardness());
+        this.setResistance(this.blockRepresentation.getBlockResistance());
+        this.setHarvestLevel(this.blockRepresentation.getToolClass(), this.blockRepresentation.getToolLevel());
+        this.setSoundType(this.blockRepresentation.getBlockSoundType());
     }
 
     @Nonnull

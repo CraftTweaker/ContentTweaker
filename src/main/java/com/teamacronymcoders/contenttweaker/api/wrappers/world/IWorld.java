@@ -1,11 +1,11 @@
 package com.teamacronymcoders.contenttweaker.api.wrappers.world;
 
 import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
+import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.contenttweaker.World")
 public interface IWorld {
-    @ZenGetter("remote")
+    @ZenMethod
     boolean isRemote();
 
     Object getInternal();

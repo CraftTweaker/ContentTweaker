@@ -2,22 +2,23 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import minetweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.ZenSetter;
 
 @ZenClass("mods.contenttweaker.CreativeTab")
 public interface ICreativeTab {
-    @ZenMethod
+    @ZenGetter("unlocalizedName")
     String getUnlocalizedName();
 
-    @ZenMethod
+    @ZenSetter("unlocalizedName")
     void setUnlocalizedName(String unlocalizedName);
 
-    @ZenMethod
+    @ZenGetter("iconStack")
     IItemStack getIconStack();
 
-    @ZenMethod
+    @ZenSetter("iconStack")
     void setIconStack(IItemStack iconStack);
 
-    @ZenMethod
     Object getInternal();
 }
