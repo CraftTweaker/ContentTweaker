@@ -67,8 +67,14 @@ public interface IBlock {
     @ZenSetter("toolLevel")
     void setToolLevel(int toolLevel);
 
-    @ZenGetter("blockMaterial")
+    @ZenGetter("blockSoundType")
+    ISoundTypeDefinition getBlockSoundType();
+
+    @ZenSetter("blockSoundType")
     void setBlockSoundType(ISoundTypeDefinition blockSoundTypeName);
+
+    @ZenGetter("blockMaterial")
+    IMaterialDefinition getBlockMaterial();
 
     @ZenSetter("blockMaterial")
     void setBlockMaterial(IMaterialDefinition material);

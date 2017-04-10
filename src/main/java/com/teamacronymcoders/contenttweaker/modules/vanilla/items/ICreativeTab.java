@@ -20,5 +20,8 @@ public interface ICreativeTab {
     @ZenSetter("iconStack")
     void setIconStack(IItemStack iconStack);
 
+    @ZenMethod
+    void register();
+
     Object getInternal();
 }

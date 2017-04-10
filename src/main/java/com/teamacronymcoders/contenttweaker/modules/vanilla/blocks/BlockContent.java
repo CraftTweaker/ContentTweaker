@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,21 +18,9 @@ public class BlockContent extends BlockBase {
     private CreativeTabs creativeTab = CreativeTabs.MISC;
 
     public BlockContent(BlockRepresentation blockRepresentation) {
-        super(blockRepresentation.getBlockMaterial());
+        super(blockRepresentation.getInternalBlockMaterial());
         this.blockRepresentation = blockRepresentation;
-        checkFields();
         setFields();
-    }
-
-    /* Beginning of Representation stuff */
-    public void checkFields() {
-        List<String> missingFields = new ArrayList<>();
-        if (this.blockRepresentation.getUnlocalizedName() == null) {
-            missingFields.add("unlocalizedName");
-        }
-        if (!missingFields.isEmpty()) {
-            throw new MissingFieldsException("Block", missingFields);
-        }
     }
 
     public void setFields() {
@@ -42,7 +31,7 @@ public class BlockContent extends BlockBase {
         this.setHardness(this.blockRepresentation.getBlockHardness());
         this.setResistance(this.blockRepresentation.getBlockResistance());
         this.setHarvestLevel(this.blockRepresentation.getToolClass(), this.blockRepresentation.getToolLevel());
-        this.setSoundType(this.blockRepresentation.getBlockSoundType());
+        this.setSoundType(this.blockRepresentation.getInternalBlockSoundType());
     }
 
     @Nonnull

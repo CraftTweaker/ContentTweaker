@@ -32,6 +32,11 @@ public class MCCreativeTab implements ICreativeTab {
     }
 
     @Override
+    public void register() {
+
+    }
+
+    @Override
     public Object getInternal() {
         return this.creativeTabs;
     }

@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.*;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import minetweaker.api.item.IItemStack;
 import minetweaker.mc1102.item.MCItemStack;
 import net.minecraft.block.Block;
@@ -14,9 +15,10 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("mods.contenttweaker.VanillaFactory")
 public class VanillaFactory {
     @ZenMethod
-    public static IBlock createBlock(String unlocalizedName) {
+    public static IBlock createBlock(String unlocalizedName, IMaterialDefinition material) {
         BlockRepresentation blockRepresentation = new BlockRepresentation();
         blockRepresentation.setUnlocalizedName(unlocalizedName);
+        blockRepresentation.setBlockMaterial(material);
         return blockRepresentation;
     }
 

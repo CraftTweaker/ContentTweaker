@@ -133,7 +133,12 @@ public class BlockRepresentation implements IRepresentation, IBlock {
         this.toolLevel = toolLevel;
     }
 
-    public SoundType getBlockSoundType() {
+    @Override
+    public ISoundTypeDefinition getBlockSoundType() {
+        return null;
+    }
+
+    public SoundType getInternalBlockSoundType() {
         return blockSoundType;
     }
 
@@ -146,7 +151,12 @@ public class BlockRepresentation implements IRepresentation, IBlock {
         this.setBlockSoundType((SoundType) blockSoundType.getInternal());
     }
 
-    public Material getBlockMaterial() {
+    @Override
+    public IMaterialDefinition getBlockMaterial() {
+        return null;
+    }
+
+    public Material getInternalBlockMaterial() {
         return blockMaterial;
     }
 

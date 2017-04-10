@@ -55,7 +55,6 @@ public class CreativeTabRepresentation implements IRepresentation, ICreativeTab 
         if (creativeTabContent == null) {
             creativeTabContent = new CreativeTabContent(this);
         }
-
     }
 
     @Override
