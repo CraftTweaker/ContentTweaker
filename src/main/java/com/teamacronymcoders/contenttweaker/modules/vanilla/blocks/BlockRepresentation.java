@@ -17,7 +17,7 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     private boolean fullBlock = true;
     private int lightOpacity = 255;
     private boolean translucent = false;
-    private int lightValue = 0;
+    private float lightValue = 0;
     private float blockHardness = 5;
     private float blockResistance = 5;
     private String toolClass = "pickaxe";
@@ -84,12 +84,12 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     }
 
     @Override
-    public int getLightValue() {
+    public float getLightValue() {
         return lightValue;
     }
 
     @Override
-    public void setLightValue(int lightValue) {
+    public void setLightValue(float lightValue) {
         this.lightValue = lightValue;
     }
 

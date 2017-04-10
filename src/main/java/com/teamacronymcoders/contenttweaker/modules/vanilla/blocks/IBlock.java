@@ -38,10 +38,10 @@ public interface IBlock {
     void setTranslucent(boolean translucent);
 
     @ZenGetter("lightValue")
-    int getLightValue();
+    float getLightValue();
 
     @ZenSetter("lightValue")
-    void setLightValue(int lightValue);
+    void setLightValue(float lightValue);
 
     @ZenGetter("blockHardness")
     float getBlockHardness();
