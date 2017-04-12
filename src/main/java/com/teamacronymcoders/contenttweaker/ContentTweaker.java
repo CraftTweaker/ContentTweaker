@@ -76,6 +76,11 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     }
 
     @Override
+    public boolean addOBJDomain() {
+        return true;
+    }
+
+    @Override
     public ContentTweaker getInstance() {
         return this;
     }

@@ -84,7 +84,7 @@ public interface IBlock {
 
     @ZenGetter("enchantPowerBonus")
     float getEnchantPowerBonus();
-    
+
     @ZenMethod
     void register();
 
