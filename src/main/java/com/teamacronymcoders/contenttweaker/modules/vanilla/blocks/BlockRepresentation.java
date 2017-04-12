@@ -24,6 +24,7 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     private int toolLevel = 2;
     private SoundType blockSoundType = SoundType.METAL;
     private Material blockMaterial = Material.IRON;
+    private float enchantPowerBonus = 0;
 
     private BlockContent blockContent;
 
@@ -170,6 +171,16 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     }
 
     @Override
+    public void setEnchantPowerBonus(float enchantPowerBonus) {
+        this.enchantPowerBonus = enchantPowerBonus;
+    }
+
+    @Override
+    public float getEnchantPowerBonus() {
+        return enchantPowerBonus;
+    }
+
+    @Override
     public Object getInternal() {
         return this.blockContent;
     }
@@ -189,4 +200,6 @@ public class BlockRepresentation implements IRepresentation, IBlock {
         this.blockContent = new BlockContent(this);
         ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(this.blockContent);
     }
+
+
 }

@@ -5,6 +5,8 @@ import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -50,5 +52,11 @@ public class BlockContent extends BlockBase {
     public Block setCreativeTab(@Nonnull CreativeTabs creativeTab) {
         this.creativeTab = creativeTab;
         return this;
+    }
+
+    @Override
+    public float getEnchantPowerBonus(World world, BlockPos pos)
+    {
+        return this.blockRepresentation.getEnchantPowerBonus();
     }
 }

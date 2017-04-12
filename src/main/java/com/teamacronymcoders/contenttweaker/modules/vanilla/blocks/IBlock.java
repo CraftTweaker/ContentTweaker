@@ -79,6 +79,12 @@ public interface IBlock {
     @ZenSetter("blockMaterial")
     void setBlockMaterial(IMaterialDefinition material);
 
+    @ZenSetter("enchantPowerBonus")
+    void setEnchantPowerBonus(float enchantPowerBonus);
+
+    @ZenGetter("enchantPowerBonus")
+    float getEnchantPowerBonus();
+    
     @ZenMethod
     void register();
 
