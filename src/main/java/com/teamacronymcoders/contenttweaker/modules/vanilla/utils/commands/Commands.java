@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.modules.vanilla.commands;
+package com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands;
 
 import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
 import minetweaker.api.player.IPlayer;

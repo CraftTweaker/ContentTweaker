@@ -6,7 +6,7 @@ import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModuleDependency;
 import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.commands.Commands;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands.Commands;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.IItem;
