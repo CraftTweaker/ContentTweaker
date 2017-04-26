@@ -2,7 +2,9 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.base.blocks.BlockBase;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -53,5 +55,12 @@ public class BlockContent extends BlockBase {
     @Override
     public float getEnchantPowerBonus(World world, BlockPos pos) {
         return this.blockRepresentation.getEnchantPowerBonus();
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return this.blockRepresentation.getInternalBlockRenderType();
     }
 }

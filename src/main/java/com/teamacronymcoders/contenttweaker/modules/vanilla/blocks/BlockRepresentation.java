@@ -10,6 +10,10 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISo
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.scoreboard.IScoreCriteria;
+import net.minecraft.util.EnumBlockRenderType;
+
+import java.util.Locale;
 
 public class BlockRepresentation implements IRepresentation, IBlock {
     private String unlocalizedName;
@@ -25,8 +29,10 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     private SoundType blockSoundType = SoundType.METAL;
     private Material blockMaterial = Material.IRON;
     private float enchantPowerBonus = 0;
+    private EnumBlockRenderType enumBlockRenderType = EnumBlockRenderType.MODEL;
 
     private BlockContent blockContent;
+
 
     @Override
     public String getUnlocalizedName() {
@@ -181,6 +187,20 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     }
 
     @Override
+    public void setEnumBlockRenderType(String blockRenderType) {
+        this.enumBlockRenderType = EnumBlockRenderType.valueOf(blockRenderType.toUpperCase(Locale.US));
+    }
+
+    @Override
+    public String getEnumBlockRenderType() {
+        return this.enumBlockRenderType.name();
+    }
+
+    public EnumBlockRenderType getInternalBlockRenderType() {
+        return this.enumBlockRenderType;
+    }
+
+    @Override
     public Object getInternal() {
         return this.blockContent;
     }
@@ -200,6 +220,7 @@ public class BlockRepresentation implements IRepresentation, IBlock {
         this.blockContent = new BlockContent(this);
         ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(this.blockContent);
     }
+
 
 
 }

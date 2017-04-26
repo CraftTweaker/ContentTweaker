@@ -67,23 +67,29 @@ public interface IBlock {
     @ZenSetter("toolLevel")
     void setToolLevel(int toolLevel);
 
-    @ZenGetter("blockSoundType")
-    ISoundTypeDefinition getBlockSoundType();
-
     @ZenSetter("blockSoundType")
     void setBlockSoundType(ISoundTypeDefinition blockSoundTypeName);
 
-    @ZenGetter("blockMaterial")
-    IMaterialDefinition getBlockMaterial();
+    @ZenGetter("blockSoundType")
+    ISoundTypeDefinition getBlockSoundType();
 
     @ZenSetter("blockMaterial")
     void setBlockMaterial(IMaterialDefinition material);
+
+    @ZenGetter("blockMaterial")
+    IMaterialDefinition getBlockMaterial();
 
     @ZenSetter("enchantPowerBonus")
     void setEnchantPowerBonus(float enchantPowerBonus);
 
     @ZenGetter("enchantPowerBonus")
     float getEnchantPowerBonus();
+
+    @ZenSetter("enumBlockRenderType")
+    void setEnumBlockRenderType(String blockRenderType);
+
+    @ZenGetter("enumBlockRenderType")
+    String getEnumBlockRenderType();
 
     @ZenMethod
     void register();
