@@ -1,2 +1,2 @@
 # ContentTweaker
-Custom Minecraft Objects created from JSON/MT scripts
+Custom Minecraft Objects created from MT scripts
