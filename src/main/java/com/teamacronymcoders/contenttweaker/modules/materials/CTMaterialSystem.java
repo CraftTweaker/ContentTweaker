@@ -33,6 +33,11 @@ public class CTMaterialSystem {
     }
 
     @ZenMethod
+    public static IPartType getPartType(String name) {
+        return new CTPartType(MaterialsSystem.getPartType(name));
+    }
+
+    @ZenMethod
     public static IMaterialBuilder getMaterialBuilder() {
         return new CTMaterialBuilder();
     }
