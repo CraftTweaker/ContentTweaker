@@ -14,10 +14,10 @@ public interface IBlock {
     void setUnlocalizedName(String unlocalizedName);
 
     @ZenGetter("creativeTab")
-    void setCreativeTab(ICreativeTab creativeTab);
+    ICreativeTab getCreativeTab();
 
     @ZenSetter("creativeTab")
-    ICreativeTab getCreativeTab();
+    void setCreativeTab(ICreativeTab creativeTab);
 
     @ZenGetter("fullBlock")
     boolean isFullBlock();
