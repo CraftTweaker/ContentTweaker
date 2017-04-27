@@ -33,7 +33,6 @@ public class BlockRepresentation implements IRepresentation, IBlock {
 
     private BlockContent blockContent;
 
-
     @Override
     public String getUnlocalizedName() {
         return unlocalizedName;
