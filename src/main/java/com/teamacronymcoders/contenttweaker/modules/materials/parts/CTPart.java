@@ -1,8 +1,8 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parts;
 
 import com.teamacronymcoders.base.materialsystem.parts.Part;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
+import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.CTPartType;
 
 import java.util.List;
 
@@ -24,8 +24,8 @@ public class CTPart implements IPart {
     }
 
     @Override
-    public PartType getPartType() {
-        return this.getPartType();
+    public CTPartType getPartType() {
+        return new CTPartType(this.part.getPartType());
     }
 
     @Override

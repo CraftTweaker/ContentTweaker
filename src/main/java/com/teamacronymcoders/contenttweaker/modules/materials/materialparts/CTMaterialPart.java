@@ -40,7 +40,7 @@ public class CTMaterialPart implements IMaterialPart {
 
     @Override
     public IPart getPart() {
-        return new CTPart();
+        return new CTPart(this.materialPart.getPart());
     }
 
     @Override
