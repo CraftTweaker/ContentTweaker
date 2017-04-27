@@ -1,4 +1,4 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
-public class IMaterialBuilder {
+public interface IMaterialBuilder {
 }

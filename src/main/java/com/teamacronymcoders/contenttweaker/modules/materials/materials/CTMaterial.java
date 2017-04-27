@@ -22,7 +22,7 @@ public class CTMaterial implements IMaterial {
 
     @Override
     public int getColor() {
-        return this.material.getColor();
+        return this.material.getColor().getRGB();
     }
 
     @Override
