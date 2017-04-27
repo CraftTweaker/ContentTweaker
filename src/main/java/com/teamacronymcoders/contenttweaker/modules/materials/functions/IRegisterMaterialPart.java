@@ -4,6 +4,6 @@ import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMat
 import stanhebben.zenscript.annotations.ZenClass;
 
 @ZenClass("mods.contenttweaker.RegisterMaterialPart")
-public interface RegisterMaterialPart {
+public interface IRegisterMaterialPart {
     void register(IMaterialPart materialPart);
 }

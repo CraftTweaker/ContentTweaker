@@ -3,7 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.materials;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.parts.PartDataPiece;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
-import com.teamacronymcoders.contenttweaker.modules.materials.functions.RegisterMaterialPart;
+import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.CTPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.CTMaterialPart;
@@ -23,7 +23,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("mods.contenttweaker.MaterialSystem")
 public class CTMaterialSystem {
     @ZenMethod
-    public static IPartType createPartType(String name, RegisterMaterialPart registerMaterialPart) {
+    public static IPartType createPartType(String name, IRegisterMaterialPart registerMaterialPart) {
         return new CTPartType(new PartType(name, register -> registerMaterialPart.register(new CTMaterialPart(register))));
     }
 

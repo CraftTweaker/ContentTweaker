@@ -2,6 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
+import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -24,4 +25,7 @@ public interface IMaterial {
 
     @ZenMethod
     List<IMaterialPart> registerPartsFor(String... partNames) throws MaterialException;
+
+    @ZenMethod
+    List<IMaterialPart> registerPartsFor(IPart... parts) throws MaterialException;
 }

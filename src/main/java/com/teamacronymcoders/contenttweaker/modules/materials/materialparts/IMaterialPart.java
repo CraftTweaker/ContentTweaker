@@ -13,10 +13,10 @@ public interface IMaterialPart {
     @ZenGetter("name")
     String getName();
 
-    @ZenGetter("name")
+    @ZenGetter("localizedName")
     String getLocalizedName();
 
-    @ZenGetter("name")
+    @ZenGetter("hasEffect")
     boolean hasEffect();
 
     @ZenGetter("material")
