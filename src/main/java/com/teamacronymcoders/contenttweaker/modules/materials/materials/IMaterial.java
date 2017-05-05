@@ -28,4 +28,10 @@ public interface IMaterial {
 
     @ZenMethod
     List<IMaterialPart> registerParts(IPart... parts) throws MaterialException;
+
+    @ZenMethod
+    IMaterialPart registerPart(String partName) throws MaterialException;
+
+    @ZenMethod
+    IMaterialPart registerPart(IPart part) throws MaterialException;
 }

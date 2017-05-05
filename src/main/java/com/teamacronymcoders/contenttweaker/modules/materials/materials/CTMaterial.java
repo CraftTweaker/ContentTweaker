@@ -51,4 +51,14 @@ public class CTMaterial implements IMaterial {
         List<String> names = Arrays.stream(parts).map(IPart::getName).collect(Collectors.toList());
         return this.registerParts(names.toArray(new String[names.size()]));
     }
+
+    @Override
+    public IMaterialPart registerPart(String partName) throws MaterialException {
+        return this.registerParts(partName).get(0);
+    }
+
+    @Override
+    public IMaterialPart registerPart(IPart part) throws MaterialException {
+        return this.registerParts(part).get(0);
+    }
 }
