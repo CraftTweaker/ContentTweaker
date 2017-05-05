@@ -20,7 +20,7 @@ public class CTMaterialPart implements IMaterialPart {
 
     @Override
     public String getName() {
-        return this.materialPart.getName();
+        return this.materialPart.getLocalizedName();
     }
 
     @Override

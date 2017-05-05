@@ -1,7 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
+import com.teamacronymcoders.contenttweaker.modules.materials.CTMaterialSystem;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.CTMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
@@ -39,13 +41,14 @@ public class CTMaterial implements IMaterial {
     }
 
     @Override
-    public List<IMaterialPart> registerPartsFor(String... partNames) throws MaterialException {
-        return this.material.registerPartsFor(partNames).stream().map(CTMaterialPart::new).collect(Collectors.toList());
+    public List<IMaterialPart> registerParts(String... partNames) throws MaterialException {
+        List<MaterialPart> materialParts = CTMaterialSystem.materialSystem.registerPartsForMaterial(this.material, partNames);
+        return materialParts.stream().map(CTMaterialPart::new).collect(Collectors.toList());
     }
 
     @Override
-    public List<IMaterialPart> registerPartsFor(IPart... parts) throws MaterialException {
+    public List<IMaterialPart> registerParts(IPart... parts) throws MaterialException {
         List<String> names = Arrays.stream(parts).map(IPart::getName).collect(Collectors.toList());
-        return this.registerPartsFor(names.toArray(new String[names.size()]));
+        return this.registerParts(names.toArray(new String[names.size()]));
     }
 }

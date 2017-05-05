@@ -24,8 +24,8 @@ public interface IMaterial {
     String getUnlocalizedName();
 
     @ZenMethod
-    List<IMaterialPart> registerPartsFor(String... partNames) throws MaterialException;
+    List<IMaterialPart> registerParts(String... partNames) throws MaterialException;
 
     @ZenMethod
-    List<IMaterialPart> registerPartsFor(IPart... parts) throws MaterialException;
+    List<IMaterialPart> registerParts(IPart... parts) throws MaterialException;
 }

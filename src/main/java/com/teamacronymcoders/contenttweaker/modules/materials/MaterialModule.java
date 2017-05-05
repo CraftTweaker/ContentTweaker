@@ -25,6 +25,7 @@ public class MaterialModule extends ModuleBase {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
+        CTMaterialSystem.materialSystem = this.getMod().getMaterialSystem();
         super.preInit(event);
 
         MineTweakerAPI.registerClass(IPartType.class);

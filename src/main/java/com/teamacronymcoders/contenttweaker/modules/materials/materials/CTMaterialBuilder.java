@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materials.MaterialBuilder;
 
 import java.awt.*;
@@ -8,8 +9,8 @@ import java.awt.*;
 public class CTMaterialBuilder implements IMaterialBuilder {
     private MaterialBuilder materialBuilder;
 
-    public CTMaterialBuilder() {
-        this.materialBuilder = new MaterialBuilder();
+    public CTMaterialBuilder(MaterialSystem materialSystem) {
+        this.materialBuilder = new MaterialBuilder(materialSystem);
     }
 
     @Override
