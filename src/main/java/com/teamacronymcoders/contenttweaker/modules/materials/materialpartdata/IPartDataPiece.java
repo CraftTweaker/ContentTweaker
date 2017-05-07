@@ -1,14 +1,14 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata;
 
 import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
+import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.contenttweaker.PartDataPiece")
 public interface IPartDataPiece {
-    @ZenGetter("name")
+    @ZenMethod
     String getName();
 
-    @ZenGetter("isRequired")
+    @ZenMethod
     boolean isRequired();
 
     Object getInternal();

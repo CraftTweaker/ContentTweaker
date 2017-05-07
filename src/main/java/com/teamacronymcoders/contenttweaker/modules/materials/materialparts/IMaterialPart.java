@@ -5,44 +5,43 @@ import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMateria
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
 import minetweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
-import stanhebben.zenscript.annotations.ZenSetter;
+import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.contenttweaker.MaterialPart")
 public interface IMaterialPart {
-    @ZenGetter("name")
+    @ZenMethod
     String getName();
 
-    @ZenGetter("localizedName")
+    @ZenMethod
     String getLocalizedName();
 
-    @ZenGetter("hasEffect")
+    @ZenMethod
     boolean hasEffect();
 
-    @ZenGetter("material")
+    @ZenMethod
     IMaterial getMaterial();
 
-    @ZenGetter("part")
+    @ZenMethod
     IPart getPart();
 
-    @ZenGetter("itemStack")
+    @ZenMethod
     IItemStack getItemStack();
 
-    @ZenGetter("textureLocation")
+    @ZenMethod
     String getTextureLocation();
 
-    @ZenSetter("textureLocation")
+    @ZenMethod
     void setTextureLocation(String textureLocation);
 
-    @ZenGetter("color")
+    @ZenMethod
     int getColor();
 
-    @ZenGetter("colorize")
-    boolean isColorize();
+    @ZenMethod
+    boolean isColorized();
 
-    @ZenSetter("colorize")
+    @ZenMethod
     void setColorize(boolean colorize);
 
-    @ZenGetter("data")
+    @ZenMethod
     IMaterialPartData getData();
 }

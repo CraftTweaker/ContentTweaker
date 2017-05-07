@@ -3,27 +3,27 @@ package com.teamacronymcoders.contenttweaker.modules.materials.parts;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
 import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
+import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.List;
 
 @ZenClass("mods.contenttweaker.Part")
 public interface IPart {
-    @ZenGetter("name")
+    @ZenMethod
     String getName();
 
-    @ZenGetter("unlocalizedName")
+    @ZenMethod
     String getUnlocalizedName();
 
-    @ZenGetter("partType")
+    @ZenMethod
     IPartType getPartType();
 
-    @ZenGetter("partTypeName")
+    @ZenMethod
     String getPartTypeName();
 
-    @ZenGetter("oreDictPrefix")
+    @ZenMethod
     String getOreDictPrefix();
 
-    @ZenGetter("data")
+    @ZenMethod
     List<IPartDataPiece> getData();
 }

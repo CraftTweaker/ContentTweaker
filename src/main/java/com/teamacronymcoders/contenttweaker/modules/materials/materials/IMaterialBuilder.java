@@ -3,20 +3,19 @@ package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import stanhebben.zenscript.annotations.ZenSetter;
 
 @ZenClass("mods.contenttweaker.MaterialBuilder")
 public interface IMaterialBuilder {
-    @ZenSetter("name")
+    @ZenMethod
     IMaterialBuilder setName(String name);
 
-    @ZenSetter("unlocalizedName")
+    @ZenMethod
     IMaterialBuilder setUnlocalizedName(String unlocalizedName);
 
-    @ZenSetter("color")
+    @ZenMethod
     IMaterialBuilder setColor(int color);
 
-    @ZenSetter("hasEffect")
+    @ZenMethod
     IMaterialBuilder setHasEffect(boolean hasEffect);
 
     @ZenMethod

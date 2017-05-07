@@ -5,19 +5,18 @@ import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.I
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import stanhebben.zenscript.annotations.ZenSetter;
 
 import java.util.List;
 
 @ZenClass("mods.contenttweaker.PartBuilder")
 public interface IPartBuilder {
-    @ZenSetter("name")
+    @ZenMethod
     IPartBuilder setName(String name);
 
-    @ZenSetter("partType")
+    @ZenMethod
     IPartBuilder setPartType(IPartType partType);
 
-    @ZenSetter("data")
+    @ZenMethod
     IPartBuilder setData(List<IPartDataPiece> data);
 
     @ZenMethod
