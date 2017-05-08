@@ -64,13 +64,13 @@ public class CTMaterialPart implements IMaterialPart {
     }
 
     @Override
-    public boolean isColorize() {
-        return this.materialPart.isColorize();
+    public boolean isColorized() {
+        return this.materialPart.isColorized();
     }
 
     @Override
-    public void setColorize(boolean colorize) {
-        this.materialPart.setColorize(colorize);
+    public void setColorized(boolean colorized) {
+        this.materialPart.setColorized(colorized);
     }
 
     @Override

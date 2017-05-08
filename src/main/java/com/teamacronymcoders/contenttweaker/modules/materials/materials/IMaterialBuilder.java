@@ -19,5 +19,5 @@ public interface IMaterialBuilder {
     IMaterialBuilder setHasEffect(boolean hasEffect);
 
     @ZenMethod
-    IMaterial createMaterial() throws MaterialException;
+    IMaterial build() throws MaterialException;
 }

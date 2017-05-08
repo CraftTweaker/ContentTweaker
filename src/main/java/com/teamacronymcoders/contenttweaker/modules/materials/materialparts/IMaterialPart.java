@@ -40,7 +40,7 @@ public interface IMaterialPart {
     boolean isColorized();
 
     @ZenMethod
-    void setColorize(boolean colorize);
+    void setColorized(boolean colorized);
 
     @ZenMethod
     IMaterialPartData getData();

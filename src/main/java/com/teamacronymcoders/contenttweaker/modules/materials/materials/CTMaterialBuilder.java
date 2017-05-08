@@ -38,7 +38,7 @@ public class CTMaterialBuilder implements IMaterialBuilder {
     }
 
     @Override
-    public IMaterial createMaterial() throws MaterialException {
-        return new CTMaterial(this.materialBuilder.createMaterial());
+    public IMaterial build() throws MaterialException {
+        return new CTMaterial(this.materialBuilder.build());
     }
 }

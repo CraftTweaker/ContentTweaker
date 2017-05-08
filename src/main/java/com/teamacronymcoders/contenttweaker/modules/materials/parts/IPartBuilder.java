@@ -17,11 +17,8 @@ public interface IPartBuilder {
     IPartBuilder setPartType(IPartType partType);
 
     @ZenMethod
-    IPartBuilder setData(List<IPartDataPiece> data);
+    IPartBuilder setData(IPartDataPiece[] data);
 
     @ZenMethod
-    IPartBuilder addData(IPartDataPiece dataPiece);
-
-    @ZenMethod
-    IPart createPart() throws MaterialException;
+    IPart build() throws MaterialException;
 }

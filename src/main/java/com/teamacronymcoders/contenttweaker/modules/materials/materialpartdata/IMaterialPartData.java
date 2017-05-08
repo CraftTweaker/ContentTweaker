@@ -6,5 +6,5 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("mods.contenttweaker.MaterialPartData")
 public interface IMaterialPartData {
     @ZenMethod
-    void addDataPiece(String name, String value);
+    void addDataValue(String name, String value);
 }

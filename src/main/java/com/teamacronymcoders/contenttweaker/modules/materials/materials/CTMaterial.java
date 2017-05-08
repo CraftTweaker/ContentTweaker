@@ -40,24 +40,24 @@ public class CTMaterial implements IMaterial {
     }
 
     @Override
-    public List<IMaterialPart> registerParts(String... partNames) throws MaterialException {
+    public List<IMaterialPart> registerParts(String[] partNames) throws MaterialException {
         List<MaterialPart> materialParts = CTMaterialSystem.materialSystem.registerPartsForMaterial(this.material, partNames);
         return materialParts.stream().map(CTMaterialPart::new).collect(Collectors.toList());
     }
 
     @Override
-    public List<IMaterialPart> registerParts(IPart... parts) throws MaterialException {
+    public List<IMaterialPart> registerParts(IPart[] parts) throws MaterialException {
         List<String> names = Arrays.stream(parts).map(IPart::getName).collect(Collectors.toList());
         return this.registerParts(names.toArray(new String[names.size()]));
     }
 
     @Override
     public IMaterialPart registerPart(String partName) throws MaterialException {
-        return this.registerParts(partName).get(0);
+        return this.registerParts(new String[] {partName}).get(0);
     }
 
     @Override
     public IMaterialPart registerPart(IPart part) throws MaterialException {
-        return this.registerParts(part).get(0);
+        return this.registerParts(new IPart[] {part}).get(0);
     }
 }

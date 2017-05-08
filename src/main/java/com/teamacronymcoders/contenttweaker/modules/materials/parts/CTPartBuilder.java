@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parts;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
@@ -9,6 +10,7 @@ import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CTPartBuilder implements IPartBuilder {
@@ -33,23 +35,21 @@ public class CTPartBuilder implements IPartBuilder {
     }
 
     @Override
-    public IPartBuilder setData(List<IPartDataPiece> data) {
-        data.forEach(this::addData);
+    public IPartBuilder setData(IPartDataPiece[] data) {
+        List<PartDataPiece> dataPieces = Lists.newArrayList();
+        Arrays.stream(data).forEach(dataPiece -> {
+            if (dataPiece.getInternal() instanceof PartDataPiece) {
+                dataPieces.add(((PartDataPiece) dataPiece.getInternal()));
+            } else {
+                ContentTweaker.instance.getLogger().warning("Couldn't find valid PartDataPiece");
+            }
+        });
+        this.partBuilder.setData(dataPieces);
         return this;
     }
 
     @Override
-    public IPartBuilder addData(IPartDataPiece dataPiece) {
-        if (dataPiece.getInternal() instanceof PartDataPiece) {
-            this.partBuilder.addData(((PartDataPiece) dataPiece.getInternal()));
-        } else {
-            ContentTweaker.instance.getLogger().warning("Couldn't find valid PartDataPiece");
-        }
-        return this;
-    }
-
-    @Override
-    public IPart createPart() throws MaterialException {
-        return new CTPart(this.partBuilder.createPart());
+    public IPart build() throws MaterialException {
+        return new CTPart(this.partBuilder.build());
     }
 }

@@ -10,7 +10,7 @@ public class CTMaterialPartData implements IMaterialPartData {
     }
 
     @Override
-    public void addDataPiece(String name, String value) {
-        this.materialPartData.addDataPiece(name, value);
+    public void addDataValue(String name, String value) {
+        this.materialPartData.addDataValue(name, value);
     }
 }
