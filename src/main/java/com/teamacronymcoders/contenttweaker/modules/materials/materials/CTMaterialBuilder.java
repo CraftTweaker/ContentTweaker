@@ -20,12 +20,6 @@ public class CTMaterialBuilder implements IMaterialBuilder {
     }
 
     @Override
-    public IMaterialBuilder setUnlocalizedName(String unlocalizedName) {
-        this.materialBuilder.setUnlocalizedName(unlocalizedName);
-        return this;
-    }
-
-    @Override
     public IMaterialBuilder setColor(int color) {
         this.materialBuilder.setColor(new Color(color));
         return this;

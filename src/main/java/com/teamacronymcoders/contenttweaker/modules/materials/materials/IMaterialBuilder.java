@@ -10,9 +10,6 @@ public interface IMaterialBuilder {
     IMaterialBuilder setName(String name);
 
     @ZenMethod
-    IMaterialBuilder setUnlocalizedName(String unlocalizedName);
-
-    @ZenMethod
     IMaterialBuilder setColor(int color);
 
     @ZenMethod
