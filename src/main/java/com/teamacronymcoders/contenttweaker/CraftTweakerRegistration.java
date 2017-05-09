@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.modules.crt;
+package com.teamacronymcoders.contenttweaker;
 
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import minetweaker.MineTweakerAPI;

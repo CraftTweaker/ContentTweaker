@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.modules.crt;
+package com.teamacronymcoders.contenttweaker.utils;
 
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import minetweaker.IUndoableAction;

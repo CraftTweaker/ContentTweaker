@@ -6,6 +6,10 @@ import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.proxies.CommonProxy;
 import com.teamacronymcoders.contenttweaker.resources.ResourceLoader;
+import minetweaker.MineTweakerAPI;
+import minetweaker.MineTweakerImplementationAPI;
+import minetweaker.mc1102.brackets.ItemBracketHandler;
+import minetweaker.runtime.providers.ScriptProviderDirectory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -56,6 +60,18 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
         BaseFileUtils.createFolder(this.contentFolder);
         BaseFileUtils.createFolder(this.resourceFolder);
         ResourceLoader.assembleResourcePack();
+    }
+
+    @Override
+    public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
+        File scriptDirectory = new File(ContentTweaker.instance.contentFolder, "scripts");
+        BaseFileUtils.createFolder(scriptDirectory);
+
+        MineTweakerAPI.registerBracketHandler(new ItemBracketHandler());
+        ItemBracketHandler.rebuildItemRegistry();
+
+        MineTweakerImplementationAPI.setScriptProvider(new ScriptProviderDirectory(scriptDirectory));
+        MineTweakerImplementationAPI.reload();
     }
 
     @EventHandler

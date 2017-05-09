@@ -29,12 +29,6 @@ public class VanillaModule extends ModuleBase {
     }
 
     @Override
-    public List<IDependency> getDependencies(List<IDependency> dependencies) {
-        dependencies.add(new ModuleDependency("CraftTweaker Support"));
-        return dependencies;
-    }
-
-    @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
