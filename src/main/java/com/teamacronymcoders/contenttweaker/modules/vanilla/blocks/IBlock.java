@@ -93,6 +93,4 @@ public interface IBlock {
 
     @ZenMethod
     void register();
-
-    Object getInternal();
 }

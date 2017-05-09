@@ -6,4 +6,6 @@ public interface IRepresentation {
     String getTypeName();
 
     void register();
+
+    Object getInternal();
 }

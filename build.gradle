@@ -40,11 +40,17 @@ repositories {
         name "BASE"
         url "http://maven.blamejared.com"
     }
+    maven {
+        name 'Tinkers'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
 }
 
 dependencies {
     deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
     deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
+    deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
+    deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
 }
 
 processResources {
