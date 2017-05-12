@@ -1,12 +1,13 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
+import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
 import stanhebben.zenscript.annotations.*;
 
 @ZenClass("mods.contenttweaker.Block")
-public interface IBlock {
+public interface IBlock extends IRepresentation {
     @ZenGetter("unlocalizedName")
     String getUnlocalizedName();
 
