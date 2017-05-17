@@ -5,7 +5,7 @@ import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
 import com.teamacronymcoders.base.materialsystem.parts.PartDataPiece;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;

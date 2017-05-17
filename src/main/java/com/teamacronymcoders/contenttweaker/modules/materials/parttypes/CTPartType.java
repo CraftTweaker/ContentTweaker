@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parttypes;
 
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 
 public class CTPartType implements IPartType {
     private PartType partType;

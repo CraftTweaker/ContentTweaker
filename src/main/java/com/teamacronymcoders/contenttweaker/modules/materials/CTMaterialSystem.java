@@ -2,7 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.parts.PartDataPiece;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.CTPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
