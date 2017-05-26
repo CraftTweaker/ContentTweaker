@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
@@ -10,7 +11,6 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISo
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.scoreboard.IScoreCriteria;
 import net.minecraft.util.EnumBlockRenderType;
 
 import java.util.Locale;
@@ -30,6 +30,8 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     private Material blockMaterial = Material.IRON;
     private float enchantPowerBonus = 0;
     private EnumBlockRenderType enumBlockRenderType = EnumBlockRenderType.MODEL;
+    private IBlockAction onBlockPlace;
+    private IBlockAction onBlockBreak;
 
     private BlockContent blockContent;
 
@@ -193,6 +195,26 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     @Override
     public String getEnumBlockRenderType() {
         return this.enumBlockRenderType.name();
+    }
+
+    @Override
+    public void setOnBlockBreak(IBlockAction iBlockAction) {
+        this.onBlockBreak = iBlockAction;
+    }
+
+    @Override
+    public IBlockAction getOnBlockBreak() {
+        return this.onBlockBreak;
+    }
+
+    @Override
+    public void setOnBlockPlace(IBlockAction iBlockAction) {
+        this.onBlockPlace = iBlockAction;
+    }
+
+    @Override
+    public IBlockAction getOnBlockAdded() {
+        return this.onBlockPlace;
     }
 
     public EnumBlockRenderType getInternalBlockRenderType() {

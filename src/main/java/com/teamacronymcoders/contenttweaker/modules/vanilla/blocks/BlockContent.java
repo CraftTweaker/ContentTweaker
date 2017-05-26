@@ -1,6 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.base.blocks.BlockBase;
+import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.MCBlockPos;
+import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.wrappers.world.MCWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -63,4 +66,23 @@ public class BlockContent extends BlockBase {
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return this.blockRepresentation.getInternalBlockRenderType();
     }
+
+    public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+        super.onBlockAdded(world, pos, state);
+        if (this.blockRepresentation.getOnBlockAdded() != null) {
+            this.blockRepresentation.getOnBlockAdded().onBlockAction(new MCWorld(world), new MCBlockPos(pos), new MCBlockState(state));
+        }
+    }
+
+    /**
+     * Called serverside after this block is replaced with another in Chunk, but before the Tile Entity is updated
+     */
+    public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state)
+    {
+        super.breakBlock(world, pos, state);
+        if (this.blockRepresentation.getOnBlockBreak() != null) {
+            this.blockRepresentation.getOnBlockBreak().onBlockAction(new MCWorld(world), new MCBlockPos(pos), new MCBlockState(state));
+        }
+    }
+
 }

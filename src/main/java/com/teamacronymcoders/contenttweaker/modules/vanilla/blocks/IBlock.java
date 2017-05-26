@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
@@ -91,6 +92,18 @@ public interface IBlock extends IRepresentation {
 
     @ZenGetter("enumBlockRenderType")
     String getEnumBlockRenderType();
+
+    @ZenSetter("onBlockBreak")
+    void setOnBlockBreak(IBlockAction iBlockAction);
+
+    @ZenGetter("onBlockBreak")
+    IBlockAction getOnBlockBreak();
+
+    @ZenSetter("onBlockPlace")
+    void setOnBlockPlace(IBlockAction iBlockAction);
+
+    @ZenGetter("onBlockPlace")
+    IBlockAction getOnBlockAdded();
 
     @ZenMethod
     void register();
