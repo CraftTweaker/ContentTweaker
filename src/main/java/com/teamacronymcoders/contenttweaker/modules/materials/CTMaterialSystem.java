@@ -15,6 +15,7 @@ import com.teamacronymcoders.contenttweaker.modules.materials.parts.CTPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.CTPartBuilder;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPartBuilder;
+import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.CTCreatedPartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.CTPartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -26,7 +27,7 @@ public class CTMaterialSystem {
 
     @ZenMethod
     public static IPartType createPartType(String name, IRegisterMaterialPart registerMaterialPart) {
-        return new CTPartType(new PartType(name, register -> registerMaterialPart.register(new CTMaterialPart(register))));
+        return new CTCreatedPartType(name, materialSystem.getMod(), registerMaterialPart);
     }
 
     @ZenMethod

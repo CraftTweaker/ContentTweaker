@@ -3,7 +3,8 @@ package com.teamacronymcoders.contenttweaker.modules.materials.parttypes;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 
 public class CTPartType implements IPartType {
-    private PartType partType;
+
+    private final PartType partType;
 
     public CTPartType(PartType partType) {
         this.partType = partType;
