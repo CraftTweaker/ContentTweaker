@@ -56,14 +56,14 @@ public class BlockContent extends BlockBase {
     }
 
     @Override
-    public float getEnchantPowerBonus(World world, BlockPos pos) {
+    public float getEnchantPowerBonus(@Nonnull World world, @Nonnull BlockPos pos) {
         return this.blockRepresentation.getEnchantPowerBonus();
     }
 
     @Override
     @Nonnull
     @SuppressWarnings("deprecation")
-    public EnumBlockRenderType getRenderType(IBlockState state) {
+    public EnumBlockRenderType getRenderType(@Nonnull IBlockState state) {
         return this.blockRepresentation.getInternalBlockRenderType();
     }
 
@@ -74,11 +74,7 @@ public class BlockContent extends BlockBase {
         }
     }
 
-    /**
-     * Called serverside after this block is replaced with another in Chunk, but before the Tile Entity is updated
-     */
-    public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state)
-    {
+    public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.breakBlock(world, pos, state);
         if (this.blockRepresentation.getOnBlockBreak() != null) {
             this.blockRepresentation.getOnBlockBreak().onBlockAction(new MCWorld(world), new MCBlockPos(pos), new MCBlockState(state));
