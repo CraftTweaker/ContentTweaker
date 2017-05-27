@@ -1,12 +1,9 @@
 package com.teamacronymcoders.contenttweaker;
 
 import com.teamacronymcoders.base.BaseModFoundation;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
-import com.teamacronymcoders.base.materialsystem.json.MaterialJsonGenerator;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
-import com.teamacronymcoders.contenttweaker.modules.materials.MaterialModule;
 import com.teamacronymcoders.contenttweaker.proxies.CommonProxy;
 import com.teamacronymcoders.contenttweaker.resources.ResourceLoader;
 import minetweaker.MineTweakerAPI;
@@ -75,7 +72,6 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
         MineTweakerImplementationAPI.setScriptProvider(new ScriptProviderDirectory(scriptDirectory));
         MineTweakerImplementationAPI.reload();
 
-        MaterialJsonGenerator.generate(this.getMaterialSystem(), resourceFolder);
         ResourceLoader.assembleResourcePack();
     }
 
