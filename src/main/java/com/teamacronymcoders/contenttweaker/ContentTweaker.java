@@ -98,6 +98,11 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     }
 
     @Override
+    public File getResourceFolder() {
+        return this.resourceFolder;
+    }
+
+    @Override
     public ContentTweaker getInstance() {
         return this;
     }
