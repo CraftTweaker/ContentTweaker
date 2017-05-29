@@ -2,16 +2,13 @@ package com.teamacronymcoders.contenttweaker.resources;
 
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.base.util.files.ResourcePackAssembler;
-import com.teamacronymcoders.base.util.files.ResourcePackAssembler.ModelType;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
-import java.io.FileFilter;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.MOD_ID;
-import static com.teamacronymcoders.contenttweaker.resources.BaseFileFilters.*;
 
 @SideOnly(Side.CLIENT)
 public class ResourceLoader {
@@ -36,7 +33,7 @@ public class ResourceLoader {
                 if (file.isDirectory()) {
                     copyFilesFromFolder(path + "/" + file.getName(), file);
                 } else {
-                    assembler.addCustomFile(path, file);
+                    assembler.addFile(path, file);
                 }
             }
         }

@@ -9,4 +9,9 @@ public class ServerProxy extends CommonProxy {
     public void createErrorSilencingLoader() {
         //No-op on Server
     }
+
+    @Override
+    public void createResourcePack() {
+        //No-op on Server
+    }
 }
