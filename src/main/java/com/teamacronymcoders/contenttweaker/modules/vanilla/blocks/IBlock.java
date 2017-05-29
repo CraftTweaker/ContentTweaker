@@ -93,6 +93,12 @@ public interface IBlock extends IRepresentation {
     @ZenGetter("enumBlockRenderType")
     String getEnumBlockRenderType();
 
+    @ZenSetter("slipperiness")
+    void setSlipperiness(float slipperiness);
+
+    @ZenGetter("slipperiness")
+    float getSlipperiness();
+
     @ZenSetter("onBlockBreak")
     void setOnBlockBreak(IBlockAction iBlockAction);
 

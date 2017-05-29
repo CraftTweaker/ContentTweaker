@@ -12,13 +12,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import slimeknights.mantle.client.CreativeTab;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class BlockContent extends BlockBase {
     private BlockRepresentation blockRepresentation;
 
-    private CreativeTabs creativeTab = CreativeTabs.MISC;
+    private CreativeTabs creativeTab;
 
     public BlockContent(BlockRepresentation blockRepresentation) {
         super(blockRepresentation.getInternalBlockMaterial());
@@ -35,6 +37,7 @@ public class BlockContent extends BlockBase {
         this.setResistance(this.blockRepresentation.getBlockResistance());
         this.setHarvestLevel(this.blockRepresentation.getToolClass(), this.blockRepresentation.getToolLevel());
         this.setSoundType(this.blockRepresentation.getInternalBlockSoundType());
+        this.slipperiness = this.blockRepresentation.getSlipperiness();
     }
 
     @Nonnull
@@ -80,5 +83,4 @@ public class BlockContent extends BlockBase {
             this.blockRepresentation.getOnBlockBreak().onBlockAction(new MCWorld(world), new MCBlockPos(pos), new MCBlockState(state));
         }
     }
-
 }

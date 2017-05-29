@@ -30,6 +30,7 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     private Material blockMaterial = Material.IRON;
     private float enchantPowerBonus = 0;
     private EnumBlockRenderType enumBlockRenderType = EnumBlockRenderType.MODEL;
+    private float slipperiness = 0.6f;
     private IBlockAction onBlockPlace;
     private IBlockAction onBlockBreak;
 
@@ -195,6 +196,16 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     @Override
     public String getEnumBlockRenderType() {
         return this.enumBlockRenderType.name();
+    }
+
+    @Override
+    public void setSlipperiness(float slipperiness) {
+        this.slipperiness = slipperiness;
+    }
+
+    @Override
+    public float getSlipperiness() {
+        return this.slipperiness;
     }
 
     @Override
