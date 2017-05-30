@@ -2,6 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla;
 
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
+import com.teamacronymcoders.contenttweaker.api.wrappers.biome.ICTBiome;
 import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
@@ -38,6 +39,7 @@ public class VanillaModule extends ModuleBase {
         MineTweakerAPI.registerBracketHandler(new SoundTypeBracketHandler());
         MineTweakerAPI.registerBracketHandler(new BlockBracketHandler());
 
+        MineTweakerAPI.registerClass(ICTBiome.class);
         MineTweakerAPI.registerClass(IWorld.class);
         MineTweakerAPI.registerClass(IBlockPos.class);
         MineTweakerAPI.registerClass(ICTBlockState.class);
