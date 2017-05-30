@@ -27,4 +27,9 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            archive 'build/libs/**.jar'
+        }
+    }
 }
