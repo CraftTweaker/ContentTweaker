@@ -7,6 +7,7 @@ import com.teamacronymcoders.contenttweaker.api.wrappers.world.MCWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -68,6 +69,13 @@ public class BlockContent extends BlockBase {
     @SuppressWarnings("deprecation")
     public EnumBlockRenderType getRenderType(@Nonnull IBlockState state) {
         return this.blockRepresentation.getInternalBlockRenderType();
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    @Nonnull
+    public BlockRenderLayer getBlockLayer() {
+        return this.blockRepresentation.getInternalBlockLayer();
     }
 
     public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {

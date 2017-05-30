@@ -5,6 +5,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockActi
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
+import net.minecraft.util.BlockRenderLayer;
 import stanhebben.zenscript.annotations.*;
 
 @ZenClass("mods.contenttweaker.Block")
@@ -110,6 +111,12 @@ public interface IBlock extends IRepresentation {
 
     @ZenGetter("onBlockPlace")
     IBlockAction getOnBlockAdded();
+
+    @ZenSetter("blockLayer")
+    void setBlockLayer(String blockLayer);
+
+    @ZenGetter("blockLayer")
+    String getBlockLayer();
 
     @ZenMethod
     void register();

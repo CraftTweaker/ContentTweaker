@@ -11,6 +11,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISo
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 
 import java.util.Locale;
@@ -33,8 +34,10 @@ public class BlockRepresentation implements IRepresentation, IBlock {
     private float slipperiness = 0.6f;
     private IBlockAction onBlockPlace;
     private IBlockAction onBlockBreak;
+    private BlockRenderLayer blockLayer = BlockRenderLayer.SOLID;
 
     private BlockContent blockContent;
+
 
     @Override
     public String getUnlocalizedName() {
@@ -228,6 +231,20 @@ public class BlockRepresentation implements IRepresentation, IBlock {
         return this.onBlockPlace;
     }
 
+    @Override
+    public void setBlockLayer(String blockLayer) {
+        this.blockLayer = BlockRenderLayer.valueOf(blockLayer.toUpperCase(Locale.US));
+    }
+
+    @Override
+    public String getBlockLayer() {
+        return this.blockLayer.toString();
+    }
+
+    public BlockRenderLayer getInternalBlockLayer() {
+        return this.blockLayer;
+    }
+
     public EnumBlockRenderType getInternalBlockRenderType() {
         return this.enumBlockRenderType;
     }
@@ -252,7 +269,4 @@ public class BlockRepresentation implements IRepresentation, IBlock {
         this.blockContent = new BlockContent(this);
         ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(this.blockContent);
     }
-
-
-
 }
