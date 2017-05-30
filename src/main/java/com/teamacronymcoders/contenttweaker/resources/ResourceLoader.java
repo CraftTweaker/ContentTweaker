@@ -40,7 +40,12 @@ public class ResourceLoader {
     }
 
     private static void createImportantFolders() {
-        BaseFileUtils.createFolder(new File(resourceFolder, "lang"));
+        File lang = new File(resourceFolder, "lang");
+        BaseFileUtils.createFolder(lang);
+        File enUsLang = new File(lang, "en_US.lang");
+        if (!enUsLang.exists()) {
+            BaseFileUtils.writeStringToFile("itemGroup.materials.contenttweaker=ContentTweaker Materials", enUsLang);
+        }
 
         File textures = new File(resourceFolder, "textures");
         BaseFileUtils.createFolder(textures);
