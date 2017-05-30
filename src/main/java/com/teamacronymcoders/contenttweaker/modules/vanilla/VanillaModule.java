@@ -15,7 +15,6 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativeta
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundEventBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeBracketHandler;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.utils.Items;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands.Commands;
 import minetweaker.MineTweakerAPI;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -42,7 +41,7 @@ public class VanillaModule extends ModuleBase {
         MineTweakerAPI.registerClass(IWorld.class);
         MineTweakerAPI.registerClass(IBlockPos.class);
         MineTweakerAPI.registerClass(ICTBlockState.class);
-        
+
         MineTweakerAPI.registerClass(IItemRightClick.class);
         MineTweakerAPI.registerClass(IBlockAction.class);
 

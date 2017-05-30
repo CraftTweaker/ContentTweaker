@@ -49,13 +49,13 @@ public class BlockBracketHandler implements IBracketHandler {
             if ("block".equalsIgnoreCase(tokens.get(0).getValue())) {
                 String blockName;
                 int meta = 0;
-                if (tokens.size() > 3) {
-                    blockName = tokens.get(1).getValue() + ":" + tokens.get(2);
-                    if (tokens.size() > 4) {
-                        meta = Integer.parseInt(tokens.get(4).getValue());
+                if (tokens.size() >= 5) {
+                    blockName = tokens.get(2).getValue() + ":" + tokens.get(4).getValue();
+                    if (tokens.size() > 7) {
+                        meta = Integer.parseInt(tokens.get(7).getValue());
                     }
                 } else {
-                    blockName = tokens.get(1).getValue();
+                    blockName = tokens.get(2).getValue();
                 }
                 zenSymbol = new BlockReferenceSymbol(environment, blockName, meta);
             }
