@@ -41,7 +41,7 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     public File resourceFolder;
 
     public ContentTweaker() {
-        super(MOD_ID, MOD_NAME, VERSION, CreativeTabs.MISC, true);
+        super(MOD_ID, MOD_NAME, VERSION, null, true);
         ContentTweakerAPI.setInstance(new ContentTweakerAPI(new ModWrapper()));
     }
 
