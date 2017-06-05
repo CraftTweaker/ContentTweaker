@@ -28,7 +28,7 @@ minecraft {
     replace "@VERSION@", project.version
     replaceIn "${mod_name}.java"
 
-    replace "base@[0.0.0,];", "base@[" + base_version +  ",];"
+    replace "base@[0.0.0,);", "base@[" + base_version +  ",);"
 }
 
 sourceCompatibility = 1.8
