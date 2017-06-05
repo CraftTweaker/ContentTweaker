@@ -1,8 +1,8 @@
 package com.teamacronymcoders.contenttweaker.api.wrappers.blockstate;
 
-import com.teamacronymcoders.base.registry.BlockRegistry;
+import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import minetweaker.api.block.IBlock;
-import minetweaker.mc1102.block.MCSpecificBlock;
+import minetweaker.mc1112.block.MCSpecificBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;

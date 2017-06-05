@@ -2,7 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands;
 
 import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
 import minetweaker.api.player.IPlayer;
-import minetweaker.mc1102.player.MCPlayer;
+import minetweaker.mc1112.player.MCPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;

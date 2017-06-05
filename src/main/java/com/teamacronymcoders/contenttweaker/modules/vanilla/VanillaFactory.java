@@ -5,7 +5,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.*;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import minetweaker.api.item.IItemStack;
-import minetweaker.mc1102.item.MCItemStack;
+import minetweaker.mc1112.item.MCItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

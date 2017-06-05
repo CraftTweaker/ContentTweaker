@@ -2,6 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,13 +19,7 @@ public class CreativeTabContent extends CreativeTabs {
     @Override
     @Nonnull
     @SideOnly(Side.CLIENT)
-    public Item getTabIconItem() {
-        return representation.getInternalIconStack().getItem();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getIconItemDamage() {
-        return representation.getInternalIconStack().getItemDamage();
+    public ItemStack getTabIconItem() {
+        return representation.getInternalIconStack();
     }
 }

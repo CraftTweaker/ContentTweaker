@@ -4,7 +4,7 @@ import minetweaker.IBracketHandler;
 import minetweaker.MineTweakerAPI;
 import minetweaker.annotations.BracketHandler;
 import minetweaker.api.block.IBlock;
-import minetweaker.mc1102.block.MCSpecificBlock;
+import minetweaker.mc1112.block.MCSpecificBlock;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;

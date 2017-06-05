@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.api.wrappers.biome;
 
-import minetweaker.mc1102.world.MCBiome;
+import minetweaker.mc1112.world.MCBiome;
 import net.minecraft.world.biome.Biome;
 
 public class CTBiome extends MCBiome implements ICTBiome {

@@ -3,8 +3,8 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.wrappers.world.MCWorld;
-import minetweaker.mc1102.item.MCItemStack;
-import minetweaker.mc1102.player.MCPlayer;
+import minetweaker.mc1112.item.MCItemStack;
+import minetweaker.mc1112.player.MCPlayer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -82,9 +83,10 @@ public class ItemContent extends Item implements IHasModel {
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, @Nonnull World world,
-                                                    @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
+    @ParametersAreNonnullByDefault
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         EnumActionResult enumActionResult = EnumActionResult.PASS;
+        ItemStack itemStack = player.getHeldItem(hand);
         if (itemRepresentation.getItemRightClick() != null) {
             String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCItemStack(itemStack),
                     new MCWorld(world), new MCPlayer(player), hand.name());

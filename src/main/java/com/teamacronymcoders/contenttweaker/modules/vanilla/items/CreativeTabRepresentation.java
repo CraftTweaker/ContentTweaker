@@ -3,7 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IItemStack;
-import minetweaker.mc1102.item.MCItemStack;
+import minetweaker.mc1112.item.MCItemStack;
 import net.minecraft.item.ItemStack;
 
 public class CreativeTabRepresentation implements IRepresentation, ICreativeTab {

@@ -8,7 +8,7 @@ import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMateria
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.CTPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
 import minetweaker.api.item.IItemStack;
-import minetweaker.mc1102.item.MCItemStack;
+import minetweaker.mc1112.item.MCItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class CTMaterialPart implements IMaterialPart {
