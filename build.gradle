@@ -47,8 +47,8 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
-    deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
+    deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}"
+    deobfCompile "MineTweaker3:MineTweaker3-MC1112-Main:${minecraft_version}-${minetweaker_version}"
     deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
     deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
 }
