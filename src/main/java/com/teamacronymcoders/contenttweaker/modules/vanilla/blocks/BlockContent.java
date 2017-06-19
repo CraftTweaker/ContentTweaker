@@ -24,7 +24,7 @@ public class BlockContent extends BlockBase {
     private CreativeTabs creativeTab;
 
     public BlockContent(BlockRepresentation blockRepresentation) {
-        super(blockRepresentation.getInternalBlockMaterial());
+        super(blockRepresentation.getInternalBlockMaterial(), blockRepresentation.getUnlocalizedName());
         this.blockRepresentation = blockRepresentation;
         setFields();
     }
@@ -78,6 +78,7 @@ public class BlockContent extends BlockBase {
         return this.blockRepresentation.getInternalBlockLayer();
     }
 
+    @Override
     public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.onBlockAdded(world, pos, state);
         if (this.blockRepresentation.getOnBlockAdded() != null) {
@@ -85,6 +86,7 @@ public class BlockContent extends BlockBase {
         }
     }
 
+    @Override
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.breakBlock(world, pos, state);
         if (this.blockRepresentation.getOnBlockBreak() != null) {
