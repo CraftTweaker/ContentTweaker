@@ -7,6 +7,7 @@ import minetweaker.mc1112.item.MCItemStack;
 import minetweaker.mc1112.player.MCPlayer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -95,6 +96,12 @@ public class ItemContent extends Item implements IHasModel {
             }
         }
         return new ActionResult<>(enumActionResult, itemStack);
+    }
+
+    @Override
+    @Nonnull
+    public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
+        return this.itemRepresentation.getInternalItemUseAction();
     }
 
     @Override

@@ -63,6 +63,12 @@ public interface IItem extends IRepresentation {
     @ZenSetter("itemRightClick")
     void setItemRightClick(IItemRightClick itemRightClick);
 
+    @ZenGetter("itemUseAction")
+    String getItemUseAction();
+
+    @ZenSetter("itemUseAction")
+    void setItemUseAction(String itemUseAction);
+
     @ZenMethod
     void register();
 }

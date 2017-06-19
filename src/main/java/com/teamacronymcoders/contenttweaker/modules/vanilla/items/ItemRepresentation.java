@@ -6,6 +6,7 @@ import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 
 import java.util.Locale;
@@ -19,7 +20,8 @@ public class ItemRepresentation implements IRepresentation, IItem {
     private String toolClass = "";
     private int toolLevel = -1;
     private boolean beaconPayment = false;
-    private IItemRightClick itemRightClick;
+    private IItemRightClick itemRightClick = null;
+    private EnumAction itemUseAction = EnumAction.NONE;
 
     private ItemContent itemContent;
 
@@ -124,6 +126,20 @@ public class ItemRepresentation implements IRepresentation, IItem {
     }
 
     @Override
+    public String getItemUseAction() {
+        return itemUseAction.name();
+    }
+
+    @Override
+    public void setItemUseAction(String itemUseAction) {
+        this.itemUseAction = EnumAction.valueOf(itemUseAction.toUpperCase(Locale.US));
+    }
+
+    public EnumAction getInternalItemUseAction() {
+        return this.itemUseAction;
+    }
+
+    @Override
     public String getName() {
         return this.getUnlocalizedName();
     }
@@ -143,4 +159,6 @@ public class ItemRepresentation implements IRepresentation, IItem {
     public Object getInternal() {
         return this.itemContent;
     }
+
+
 }
