@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parttypes;
 
-import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
@@ -12,8 +11,8 @@ public class CTCreatedPartType extends PartType implements IPartType {
 
     private final IRegisterMaterialPart materialPartRegister;
 
-    public CTCreatedPartType(String name, IBaseMod mod, IRegisterMaterialPart materialPartRegister) {
-        super(name, mod);
+    public CTCreatedPartType(String name, IRegisterMaterialPart materialPartRegister) {
+        super(name);
         this.materialPartRegister = materialPartRegister;
     }
 

@@ -9,8 +9,8 @@ import java.awt.*;
 public class CTMaterialBuilder implements IMaterialBuilder {
     private MaterialBuilder materialBuilder;
 
-    public CTMaterialBuilder(MaterialSystem materialSystem) {
-        this.materialBuilder = new MaterialBuilder(materialSystem);
+    public CTMaterialBuilder() {
+        this.materialBuilder = new MaterialBuilder();
     }
 
     @Override
