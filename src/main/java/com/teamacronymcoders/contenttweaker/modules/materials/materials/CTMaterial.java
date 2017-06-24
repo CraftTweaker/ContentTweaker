@@ -41,8 +41,7 @@ public class CTMaterial implements IMaterial {
 
     @Override
     public List<IMaterialPart> registerParts(String[] partNames) throws MaterialException {
-        List<MaterialPart> materialParts = CTMaterialSystem.registerPartsForMaterial(this.material, partNames);
-        return materialParts.stream().map(CTMaterialPart::new).collect(Collectors.toList());
+        return CTMaterialSystem.registerPartsForMaterial(this.material, partNames);
     }
 
     @Override

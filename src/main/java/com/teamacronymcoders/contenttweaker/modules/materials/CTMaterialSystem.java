@@ -1,7 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.materials;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parttype.PartDataPiece;
@@ -9,6 +11,8 @@ import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.CTPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
+import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.CTMaterialPart;
+import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.CTMaterial;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.CTMaterialBuilder;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMaterial;
@@ -25,6 +29,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenSetter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ZenClass("mods.contenttweaker.MaterialSystem")
 public class CTMaterialSystem {
@@ -64,7 +69,13 @@ public class CTMaterialSystem {
     }
 
     @ZenMethod
-    public static List<MaterialPart> registerPartsForMaterial(Material material, String[] partNames) throws MaterialException {
-        return ContentTweaker.instance.getMaterialUser().registerPartsForMaterial(material, partNames);
+    public static List<IMaterialPart> registerPartsForMaterial(Material material, String[] partNames) throws MaterialException {
+        List<IMaterialPart> materialParts = Lists.newArrayList();
+        MaterialUser materialUser = ContentTweaker.instance.getMaterialUser();
+        if (materialUser != null) {
+            materialParts.addAll(materialUser.registerPartsForMaterial(material, partNames).stream()
+                    .map(CTMaterialPart::new).collect(Collectors.toList()));
+        }
+        return materialParts;
     }
 }
