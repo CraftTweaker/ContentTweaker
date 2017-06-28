@@ -10,112 +10,112 @@ import stanhebben.zenscript.annotations.*;
 
 @ZenClass("mods.contenttweaker.Block")
 public interface IBlock extends IRepresentation {
-    @ZenGetter("unlocalizedName")
+    @ZenMethod
     String getUnlocalizedName();
 
-    @ZenSetter("unlocalizedName")
+    @ZenMethod
     void setUnlocalizedName(String unlocalizedName);
 
-    @ZenGetter("creativeTab")
+    @ZenMethod
     ICreativeTab getCreativeTab();
 
-    @ZenSetter("creativeTab")
+    @ZenMethod
     void setCreativeTab(ICreativeTab creativeTab);
 
-    @ZenGetter("fullBlock")
+    @ZenMethod
     boolean isFullBlock();
 
-    @ZenSetter("fullBlock")
+    @ZenMethod
     void setFullBlock(boolean fullBlock);
 
-    @ZenGetter("lightOpacity")
+    @ZenMethod
     int getLightOpacity();
 
-    @ZenSetter("lightOpacity")
+    @ZenMethod
     void setLightOpacity(int lightOpacity);
 
-    @ZenGetter("translucent")
+    @ZenMethod
     boolean isTranslucent();
 
-    @ZenSetter("translucent")
+    @ZenMethod
     void setTranslucent(boolean translucent);
 
-    @ZenGetter("lightValue")
+    @ZenMethod
     float getLightValue();
 
-    @ZenSetter("lightValue")
+    @ZenMethod
     void setLightValue(float lightValue);
 
-    @ZenGetter("blockHardness")
+    @ZenMethod
     float getBlockHardness();
 
-    @ZenSetter("blockHardness")
+    @ZenMethod
     void setBlockHardness(float blockHardness);
 
-    @ZenGetter("blockResistance")
+    @ZenMethod
     float getBlockResistance();
 
-    @ZenSetter("blockResistance")
+    @ZenMethod
     void setBlockResistance(float blockResistance);
 
-    @ZenGetter("toolClass")
+    @ZenMethod
     String getToolClass();
 
-    @ZenSetter("toolClass")
+    @ZenMethod
     void setToolClass(String toolClass);
 
-    @ZenGetter("toolLevel")
+    @ZenMethod
     int getToolLevel();
 
-    @ZenSetter("toolLevel")
+    @ZenMethod
     void setToolLevel(int toolLevel);
 
-    @ZenSetter("blockSoundType")
+    @ZenMethod
     void setBlockSoundType(ISoundTypeDefinition blockSoundTypeName);
 
-    @ZenGetter("blockSoundType")
+    @ZenMethod
     ISoundTypeDefinition getBlockSoundType();
 
-    @ZenSetter("blockMaterial")
+    @ZenMethod
     void setBlockMaterial(IMaterialDefinition material);
 
-    @ZenGetter("blockMaterial")
+    @ZenMethod
     IMaterialDefinition getBlockMaterial();
 
-    @ZenSetter("enchantPowerBonus")
+    @ZenMethod
     void setEnchantPowerBonus(float enchantPowerBonus);
 
-    @ZenGetter("enchantPowerBonus")
+    @ZenMethod
     float getEnchantPowerBonus();
 
-    @ZenSetter("enumBlockRenderType")
+    @ZenMethod
     void setEnumBlockRenderType(String blockRenderType);
 
-    @ZenGetter("enumBlockRenderType")
+    @ZenMethod
     String getEnumBlockRenderType();
 
-    @ZenSetter("slipperiness")
+    @ZenMethod
     void setSlipperiness(float slipperiness);
 
-    @ZenGetter("slipperiness")
+    @ZenMethod
     float getSlipperiness();
 
-    @ZenSetter("onBlockBreak")
+    @ZenMethod
     void setOnBlockBreak(IBlockAction iBlockAction);
 
-    @ZenGetter("onBlockBreak")
+    @ZenMethod
     IBlockAction getOnBlockBreak();
 
-    @ZenSetter("onBlockPlace")
+    @ZenMethod
     void setOnBlockPlace(IBlockAction iBlockAction);
 
-    @ZenGetter("onBlockPlace")
+    @ZenMethod
     IBlockAction getOnBlockAdded();
 
-    @ZenSetter("blockLayer")
+    @ZenMethod
     void setBlockLayer(String blockLayer);
 
-    @ZenGetter("blockLayer")
+    @ZenMethod
     String getBlockLayer();
 
     @ZenMethod
