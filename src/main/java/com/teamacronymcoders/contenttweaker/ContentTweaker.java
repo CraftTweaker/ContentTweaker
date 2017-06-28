@@ -85,11 +85,6 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     }
 
     @Override
-    public String getConfigFolderName() {
-        return this.getName();
-    }
-
-    @Override
     public boolean addOBJDomain() {
         return true;
     }
