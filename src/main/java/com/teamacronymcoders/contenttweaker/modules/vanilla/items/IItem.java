@@ -66,7 +66,7 @@ public interface IItem extends IRepresentation {
     @ZenMethod
     String getItemUseAction();
 
-    @@ZenMethod
+    @ZenMethod
     void setItemUseAction(String itemUseAction);
 
     @ZenMethod
