@@ -9,59 +9,65 @@ import stanhebben.zenscript.annotations.ZenSetter;
 
 @ZenClass("mods.contenttweaker.Item")
 public interface IItem extends IRepresentation {
-    @ZenGetter("unlocalizedName")
+    @ZenMethod
     String getUnlocalizedName();
 
-    @ZenSetter("unlocalizedName")
+    @ZenMethod
     void setUnlocalizedName(String unlocalizedName);
 
-    @ZenGetter("maxStackSize")
+    @ZenMethod
     int getMaxStackSize();
 
-    @ZenSetter("maxStackSize")
+    @ZenMethod
     void setMaxStackSize(int maxStackSize);
 
-    @ZenGetter("rarity")
+    @ZenMethod
     String getRarity();
 
-    @ZenSetter("rarity")
+    @ZenMethod
     void setRarity(String rarity);
 
-    @ZenGetter("creativeTab")
+    @ZenMethod
     ICreativeTab getCreativeTab();
 
-    @ZenSetter("creativeTab")
+    @ZenMethod
     void setCreativeTab(ICreativeTab creativeTab);
 
-    @ZenGetter("smeltingExperience")
+    @ZenMethod
     float getSmeltingExperience();
 
-    @ZenSetter("smeltingExperience")
+    @ZenMethod
     void setSmeltingExperience(float smeltingExperience);
 
-    @ZenGetter("toolClass")
+    @ZenMethod
     String getToolClass();
 
-    @ZenSetter("toolClass")
+    @ZenMethod
     void setToolClass(String toolClass);
 
-    @ZenGetter("toolLevel")
+    @ZenMethod
     int getToolLevel();
 
-    @ZenSetter("toolLevel")
+    @ZenMethod
     void setToolLevel(int toolLevel);
 
-    @ZenGetter("beaconPayment")
+    @ZenMethod
     boolean isBeaconPayment();
 
-    @ZenSetter("beaconPayment")
+    @ZenMethod
     void setBeaconPayment(boolean beaconPayment);
 
-    @ZenGetter("itemRightClick")
+    @ZenMethod
     IItemRightClick getItemRightClick();
 
-    @ZenSetter("itemRightClick")
+    @ZenMethod
     void setItemRightClick(IItemRightClick itemRightClick);
+
+    @ZenMethod
+    String getItemUseAction();
+
+    @ZenMethod
+    void setItemUseAction(String itemUseAction);
 
     @ZenMethod
     void register();

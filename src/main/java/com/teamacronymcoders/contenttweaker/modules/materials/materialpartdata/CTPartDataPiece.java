@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata;
 
-import com.teamacronymcoders.base.materialsystem.parts.PartDataPiece;
+import com.teamacronymcoders.base.materialsystem.parttype.PartDataPiece;
 
 public class CTPartDataPiece implements IPartDataPiece {
     private PartDataPiece partDataPiece;
