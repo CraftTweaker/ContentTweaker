@@ -6,14 +6,14 @@ import minetweaker.MineTweakerAPI;
 import net.minecraft.block.material.Material;
 
 public class MaterialBracketHandler extends ResourceBracketHandler {
-    public MaterialBracketHandler() {
-        super("Material", MaterialBracketHandler.class);
+    public MaterialBracketHandler(String name) {
+        super(name, MaterialBracketHandler.class);
     }
 
     public static IMaterialDefinition getMaterial(String name) {
         Material material = ContentTweakerAPI.getInstance().getBlockMaterials().getResource(name);
         if(material == null) {
-            MineTweakerAPI.logError("Could not find Material for name: " + name);
+            MineTweakerAPI.logError("Could not find Block Material for name: " + name);
         }
         return new MaterialDefinition(material);
     }
