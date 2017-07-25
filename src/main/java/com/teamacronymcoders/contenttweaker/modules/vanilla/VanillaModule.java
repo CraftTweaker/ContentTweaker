@@ -67,7 +67,7 @@ public class VanillaModule extends ModuleBase {
     @Override
     public void configure(ConfigRegistry configRegistry) {
         int numberOfFiles = 0;
-        File[] files = ContentTweaker.instance.contentFolder.listFiles();
+        String[] files = ContentTweaker.instance.contentFolder.list();
         if (files != null) {
             numberOfFiles = files.length;
         }
