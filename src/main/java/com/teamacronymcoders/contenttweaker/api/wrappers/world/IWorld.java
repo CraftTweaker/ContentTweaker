@@ -1,8 +1,8 @@
 package com.teamacronymcoders.contenttweaker.api.wrappers.world;
 
 import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.IBlockPos;
-import minetweaker.api.block.IBlock;
-import minetweaker.api.world.IBiome;
+import crafttweaker.api.block.IBlock;
+import crafttweaker.api.world.IBiome;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 

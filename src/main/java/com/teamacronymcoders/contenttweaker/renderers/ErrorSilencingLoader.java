@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.renderers;
 
-import com.teamacronymcoders.base.client.models.wrapped.WrappedModelLoader;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
@@ -23,13 +22,13 @@ public class ErrorSilencingLoader implements ICustomModelLoader {
     }
 
     @Override
-    public boolean accepts(ResourceLocation modelLocation) {
-        return !createdResourcePack && modelLocation.getResourceDomain().equals(MOD_ID) &&
-                !WrappedModelLoader.getInstance().accepts(modelLocation);
+    public boolean accepts(@Nonnull ResourceLocation modelLocation) {
+        return !createdResourcePack && modelLocation.getResourceDomain().equals(MOD_ID);
     }
 
     @Override
-    public IModel loadModel(ResourceLocation modelLocation) throws Exception {
+    @Nonnull
+    public IModel loadModel(@Nonnull ResourceLocation modelLocation) throws Exception {
         return new EmptyModel();
     }
 

@@ -4,8 +4,8 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresen
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.*;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
-import minetweaker.api.item.IItemStack;
-import minetweaker.mc1112.item.MCItemStack;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

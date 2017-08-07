@@ -5,7 +5,7 @@ import com.teamacronymcoders.contenttweaker.api.wrappers.biome.ICTBiome;
 import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.MCBlockState;
-import minetweaker.api.block.IBlock;
+import crafttweaker.api.block.IBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

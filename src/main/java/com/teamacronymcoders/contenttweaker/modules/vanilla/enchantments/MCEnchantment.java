@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.enchantments;
 
-import minetweaker.api.item.IItemStack;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 

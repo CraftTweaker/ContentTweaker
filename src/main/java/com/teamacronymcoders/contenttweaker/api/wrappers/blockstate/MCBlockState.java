@@ -1,8 +1,7 @@
 package com.teamacronymcoders.contenttweaker.api.wrappers.blockstate;
 
-import com.teamacronymcoders.base.registrysystem.BlockRegistry;
-import minetweaker.api.block.IBlock;
-import minetweaker.mc1112.block.MCSpecificBlock;
+import crafttweaker.api.block.IBlock;
+import crafttweaker.mc1120.block.MCSpecificBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +15,9 @@ public class MCBlockState implements ICTBlockState {
     public MCBlockState(IBlock block) {
         this.block = block;
         Block actualBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(block.getDefinition().getId()));
-        this.blockState = actualBlock.getStateFromMeta(block.getMeta());
+        if (actualBlock != null) {
+            this.blockState = actualBlock.getStateFromMeta(block.getMeta());
+        }
     }
 
     public MCBlockState(IBlockState blockState) {

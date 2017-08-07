@@ -1,9 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IItemStack;
-import minetweaker.mc1112.item.MCItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.item.ItemStack;
 
 public class CreativeTabRepresentation implements IRepresentation, ICreativeTab {
@@ -32,7 +32,7 @@ public class CreativeTabRepresentation implements IRepresentation, ICreativeTab 
         if(iconStack.getInternal() instanceof ItemStack) {
             this.setIconStack((ItemStack) iconStack.getInternal());
         } else {
-            MineTweakerAPI.logError("Could not get ItemStack");
+            CraftTweakerAPI.logError("Could not get ItemStack");
         }
     }
 

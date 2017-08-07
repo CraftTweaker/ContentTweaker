@@ -1,9 +1,9 @@
 package com.teamacronymcoders.contenttweaker.utils;
 
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
-import minetweaker.IUndoableAction;
+import crafttweaker.IAction;
 
-public class RepresentationUndoableAction implements IUndoableAction {
+public class RepresentationUndoableAction implements IAction {
     private IRepresentation representation;
 
     public RepresentationUndoableAction(IRepresentation representation) {
@@ -16,27 +16,7 @@ public class RepresentationUndoableAction implements IUndoableAction {
     }
 
     @Override
-    public boolean canUndo() {
-        return false;
-    }
-
-    @Override
-    public void undo() {
-
-    }
-
-    @Override
     public String describe() {
         return "Adding Content: " + representation.getName() + " with Type: " + representation.getTypeName();
-    }
-
-    @Override
-    public String describeUndo() {
-        return null;
-    }
-
-    @Override
-    public Object getOverrideKey() {
-        return null;
     }
 }

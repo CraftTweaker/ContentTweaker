@@ -1,7 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.enchantments;
 
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.util.ResourceLocation;
 

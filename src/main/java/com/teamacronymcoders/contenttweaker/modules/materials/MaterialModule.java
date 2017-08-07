@@ -11,7 +11,7 @@ import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMateria
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPartBuilder;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
-import minetweaker.MineTweakerAPI;
+import crafttweaker.CraftTweakerAPI;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.MOD_ID;
@@ -27,15 +27,15 @@ public class MaterialModule extends ModuleBase {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
-        MineTweakerAPI.registerClass(IPartType.class);
-        MineTweakerAPI.registerClass(IPartDataPiece.class);
-        MineTweakerAPI.registerClass(IMaterialPartData.class);
-        MineTweakerAPI.registerClass(IPart.class);
-        MineTweakerAPI.registerClass(IPartBuilder.class);
-        MineTweakerAPI.registerClass(IMaterial.class);
-        MineTweakerAPI.registerClass(IMaterialBuilder.class);
-        MineTweakerAPI.registerClass(IMaterialPart.class);
-        MineTweakerAPI.registerClass(IRegisterMaterialPart .class);
-        MineTweakerAPI.registerClass(CTMaterialSystem.class);
+        CraftTweakerAPI.registerClass(IPartType.class);
+        CraftTweakerAPI.registerClass(IPartDataPiece.class);
+        CraftTweakerAPI.registerClass(IMaterialPartData.class);
+        CraftTweakerAPI.registerClass(IPart.class);
+        CraftTweakerAPI.registerClass(IPartBuilder.class);
+        CraftTweakerAPI.registerClass(IMaterial.class);
+        CraftTweakerAPI.registerClass(IMaterialBuilder.class);
+        CraftTweakerAPI.registerClass(IMaterialPart.class);
+        CraftTweakerAPI.registerClass(IRegisterMaterialPart .class);
+        CraftTweakerAPI.registerClass(CTMaterialSystem.class);
     }
 }

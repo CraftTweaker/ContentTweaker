@@ -1,8 +1,8 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.functions;
 
 import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
-import minetweaker.api.item.IItemStack;
-import minetweaker.api.player.IPlayer;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.player.IPlayer;
 import stanhebben.zenscript.annotations.ZenClass;
 
 @ZenClass("mods.contenttweaker.IItemRightClick")

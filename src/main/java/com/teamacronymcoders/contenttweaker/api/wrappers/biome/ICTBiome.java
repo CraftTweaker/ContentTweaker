@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.api.wrappers.biome;
 
-import minetweaker.api.world.IBiome;
+import crafttweaker.api.world.IBiome;
 
 public interface ICTBiome extends IBiome {
     float getTemperature();

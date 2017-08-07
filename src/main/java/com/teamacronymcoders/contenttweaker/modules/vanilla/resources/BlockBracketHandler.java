@@ -1,10 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 
-import minetweaker.IBracketHandler;
-import minetweaker.MineTweakerAPI;
-import minetweaker.annotations.BracketHandler;
-import minetweaker.api.block.IBlock;
-import minetweaker.mc1112.block.MCSpecificBlock;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.block.IBlock;
+import crafttweaker.mc1120.block.MCSpecificBlock;
+import crafttweaker.zenscript.IBracketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -21,15 +20,12 @@ import stanhebben.zenscript.util.ZenPosition;
 
 import java.util.List;
 
-/**
- * @author Stan
- */
-@BracketHandler(priority = 100)
+
 public class BlockBracketHandler implements IBracketHandler {
     private final IJavaMethod method;
 
     public BlockBracketHandler() {
-        method = MineTweakerAPI.getJavaMethod(BlockBracketHandler.class, "getBlock", String.class, int.class);
+        method = CraftTweakerAPI.getJavaMethod(BlockBracketHandler.class, "getBlock", String.class, int.class);
     }
 
     public static IBlock getBlock(String name, int meta) {

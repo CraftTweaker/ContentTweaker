@@ -3,7 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.materials.materialparts;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IMaterialPartData;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMaterial;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 

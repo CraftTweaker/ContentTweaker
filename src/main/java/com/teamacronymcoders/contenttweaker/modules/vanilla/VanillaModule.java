@@ -17,7 +17,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundEventBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands.Commands;
-import minetweaker.MineTweakerAPI;
+import crafttweaker.CraftTweakerAPI;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.MOD_ID;
@@ -33,24 +33,24 @@ public class VanillaModule extends ModuleBase {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
-        MineTweakerAPI.registerBracketHandler(new MaterialBracketHandler());
-        MineTweakerAPI.registerBracketHandler(new CreativeTabBracketHandler());
-        MineTweakerAPI.registerBracketHandler(new SoundEventBracketHandler());
-        MineTweakerAPI.registerBracketHandler(new SoundTypeBracketHandler());
-        MineTweakerAPI.registerBracketHandler(new BlockBracketHandler());
+        CraftTweakerAPI.registerBracketHandler(new MaterialBracketHandler());
+        CraftTweakerAPI.registerBracketHandler(new CreativeTabBracketHandler());
+        CraftTweakerAPI.registerBracketHandler(new SoundEventBracketHandler());
+        CraftTweakerAPI.registerBracketHandler(new SoundTypeBracketHandler());
+        CraftTweakerAPI.registerBracketHandler(new BlockBracketHandler());
 
-        MineTweakerAPI.registerClass(ICTBiome.class);
-        MineTweakerAPI.registerClass(IWorld.class);
-        MineTweakerAPI.registerClass(IBlockPos.class);
-        MineTweakerAPI.registerClass(ICTBlockState.class);
+        CraftTweakerAPI.registerClass(ICTBiome.class);
+        CraftTweakerAPI.registerClass(IWorld.class);
+        CraftTweakerAPI.registerClass(IBlockPos.class);
+        CraftTweakerAPI.registerClass(ICTBlockState.class);
 
-        MineTweakerAPI.registerClass(IItemRightClick.class);
-        MineTweakerAPI.registerClass(IBlockAction.class);
+        CraftTweakerAPI.registerClass(IItemRightClick.class);
+        CraftTweakerAPI.registerClass(IBlockAction.class);
 
-        MineTweakerAPI.registerClass(ICreativeTab.class);
-        MineTweakerAPI.registerClass(IBlock.class);
-        MineTweakerAPI.registerClass(IItem.class);
-        MineTweakerAPI.registerClass(VanillaFactory.class);
-        MineTweakerAPI.registerClass(Commands.class);
+        CraftTweakerAPI.registerClass(ICreativeTab.class);
+        CraftTweakerAPI.registerClass(IBlock.class);
+        CraftTweakerAPI.registerClass(IItem.class);
+        CraftTweakerAPI.registerClass(VanillaFactory.class);
+        CraftTweakerAPI.registerClass(Commands.class);
     }
 }

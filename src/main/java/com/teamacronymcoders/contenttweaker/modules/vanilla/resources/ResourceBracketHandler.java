@@ -1,7 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 
-import minetweaker.IBracketHandler;
-import minetweaker.MineTweakerAPI;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.zenscript.IBracketHandler;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.parser.Token;
 import stanhebben.zenscript.symbols.IZenSymbol;
@@ -22,7 +22,7 @@ public abstract class ResourceBracketHandler implements IBracketHandler {
     public ResourceBracketHandler(String resourceType, Class clazz, int startIndex) {
         this.resourceType = resourceType;
         this.startIndex = startIndex;
-        method = MineTweakerAPI.getJavaMethod(clazz, "get" + resourceType, String.class);
+        method = CraftTweakerAPI.getJavaMethod(clazz, "get" + resourceType, String.class);
     }
 
     @Override

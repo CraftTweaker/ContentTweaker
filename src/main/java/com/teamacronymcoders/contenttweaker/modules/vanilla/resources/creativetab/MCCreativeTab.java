@@ -1,7 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab;
 
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 
 public class MCCreativeTab implements ICreativeTab {

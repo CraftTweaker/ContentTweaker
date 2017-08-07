@@ -3,7 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativet
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.ResourceBracketHandler;
-import minetweaker.MineTweakerAPI;
+import crafttweaker.CraftTweakerAPI;
 import net.minecraft.creativetab.CreativeTabs;
 
 public class CreativeTabBracketHandler extends ResourceBracketHandler {
@@ -14,7 +14,7 @@ public class CreativeTabBracketHandler extends ResourceBracketHandler {
     public static ICreativeTab getCreativeTab(String name) {
         CreativeTabs creativeTab = ContentTweakerAPI.getInstance().getCreativeTabs().getResource(name);
         if (creativeTab == null) {
-            MineTweakerAPI.logError("Could not find Material for name: " + name);
+            CraftTweakerAPI.logError("Could not find Material for name: " + name);
         }
         return new MCCreativeTab(creativeTab);
     }
