@@ -44,7 +44,6 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         proxy.createErrorSilencingLoader();
-        proxy.createResourcePack();
     }
 
     @Override
