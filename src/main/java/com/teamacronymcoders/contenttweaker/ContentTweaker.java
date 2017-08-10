@@ -46,15 +46,6 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
         proxy.createErrorSilencingLoader();
     }
 
-    @Override
-    public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
-        File modFolder = this.getRegistry(ConfigRegistry.class, "CONFIG").getConfigFolder();
-        this.contentFolder = new File(modFolder, "content");
-        this.resourceFolder = new File(modFolder, "resources");
-        BaseFileUtils.createFolder(this.contentFolder);
-        BaseFileUtils.createFolder(this.resourceFolder);
-    }
-
     @EventHandler
     @Override
     public void init(FMLInitializationEvent event) {
@@ -73,8 +64,8 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     }
 
     @Override
-    public File getResourceFolder() {
-        return this.resourceFolder;
+    public boolean hasExternalResources() {
+        return true;
     }
 
     @Override
