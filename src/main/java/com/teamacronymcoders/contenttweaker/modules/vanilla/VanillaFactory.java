@@ -2,7 +2,10 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla;
 
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.items.*;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.IItem;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;

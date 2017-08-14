@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parttype.PartDataPiece;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
@@ -26,7 +25,6 @@ import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.CTPartTy
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import stanhebben.zenscript.annotations.ZenSetter;
 
 import java.util.List;
 import java.util.stream.Collectors;

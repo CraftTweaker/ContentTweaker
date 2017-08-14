@@ -4,9 +4,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-
-import java.util.Locale;
 
 public class SoundEventsResourceList extends ResourceList<SoundEvent> {
     public SoundEventsResourceList() {

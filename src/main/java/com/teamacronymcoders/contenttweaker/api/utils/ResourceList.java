@@ -1,7 +1,6 @@
 package com.teamacronymcoders.contenttweaker.api.utils;
 
 import com.google.common.collect.Lists;
-import com.teamacronymcoders.contenttweaker.ContentTweaker;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;

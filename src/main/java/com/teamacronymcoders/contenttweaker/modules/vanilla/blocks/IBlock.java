@@ -5,8 +5,8 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockActi
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
-import net.minecraft.util.BlockRenderLayer;
-import stanhebben.zenscript.annotations.*;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.contenttweaker.Block")
 public interface IBlock extends IRepresentation {

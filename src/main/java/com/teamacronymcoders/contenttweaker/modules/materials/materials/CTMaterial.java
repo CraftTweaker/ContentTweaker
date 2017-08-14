@@ -1,10 +1,8 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.contenttweaker.modules.materials.CTMaterialSystem;
-import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.CTMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
 

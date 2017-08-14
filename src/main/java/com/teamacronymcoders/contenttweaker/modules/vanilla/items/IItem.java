@@ -3,9 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
-import stanhebben.zenscript.annotations.ZenSetter;
 
 @ZenClass("mods.contenttweaker.Item")
 public interface IItem extends IRepresentation {

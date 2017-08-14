@@ -1,16 +1,12 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parttypes;
 
-import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.materialsystem.parttype.PartDataPiece;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.CTMaterialPart;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
-import java.util.List;
 
 public class CTCreatedPartType extends PartType implements IPartType {
 

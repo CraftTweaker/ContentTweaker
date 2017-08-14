@@ -7,7 +7,6 @@ import com.teamacronymcoders.contenttweaker.modules.materials.materials.CTMateri
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMaterial;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.CTPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
-
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.util.ResourceLocation;

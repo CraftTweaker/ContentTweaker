@@ -1,8 +1,6 @@
 package com.teamacronymcoders.contenttweaker;
 
 import com.teamacronymcoders.base.BaseModFoundation;
-import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
-import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.proxies.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
@@ -12,8 +10,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
-import java.io.File;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.*;
 
@@ -30,9 +26,6 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     @SidedProxy(clientSide = "com.teamacronymcoders.contenttweaker.proxies.ClientProxy",
             serverSide = "com.teamacronymcoders.contenttweaker.proxies.ServerProxy")
     public static CommonProxy proxy;
-
-    public File contentFolder;
-    public File resourceFolder;
 
     public ContentTweaker() {
         super(MOD_ID, MOD_NAME, VERSION, null, true);

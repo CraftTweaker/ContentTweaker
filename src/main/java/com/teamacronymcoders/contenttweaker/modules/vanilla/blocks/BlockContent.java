@@ -13,10 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import slimeknights.mantle.client.CreativeTab;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class BlockContent extends BlockBase {
     private BlockRepresentation blockRepresentation;

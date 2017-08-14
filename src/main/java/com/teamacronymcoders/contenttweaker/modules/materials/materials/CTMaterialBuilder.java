@@ -1,7 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materials.MaterialBuilder;
 
 import java.awt.*;
