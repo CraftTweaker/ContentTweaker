@@ -39,6 +39,11 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
         ContentTweakerAPI.setInstance(new ContentTweakerAPI(new ModWrapper()));
     }
 
+    @Override
+    public boolean useDefaultRegistryEventHandler(){
+        return false;
+    }
+
     @EventHandler
     @Override
     public void preInit(FMLPreInitializationEvent event) {
