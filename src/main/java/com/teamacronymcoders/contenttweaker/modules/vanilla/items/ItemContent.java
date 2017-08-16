@@ -1,6 +1,8 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
+import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.wrappers.world.MCWorld;
 import crafttweaker.mc1120.item.MCItemStack;
@@ -27,11 +29,22 @@ import java.util.Locale;
 public class ItemContent extends Item implements IHasModel {
     private ItemRepresentation itemRepresentation;
     private CreativeTabs creativeTab;
+    private IBaseMod mod;
 
     public ItemContent(ItemRepresentation itemRepresentation) {
         this.itemRepresentation = itemRepresentation;
         checkFields();
         setFields();
+    }
+
+    @Override
+    public IBaseMod getMod() {
+        return mod;
+    }
+
+    @Override
+    public void setMod(IBaseMod mod) {
+        this.mod = mod;
     }
 
     /* Beginning of Representation stuff */
