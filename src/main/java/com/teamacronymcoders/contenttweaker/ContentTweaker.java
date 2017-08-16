@@ -67,6 +67,11 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     }
 
     @Override
+    public void finalizeOptionalSystems() {
+
+    }
+
+    @Override
     public ContentTweaker getInstance() {
         return this;
     }
