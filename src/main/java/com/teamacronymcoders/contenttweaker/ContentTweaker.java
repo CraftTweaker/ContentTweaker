@@ -1,8 +1,12 @@
 package com.teamacronymcoders.contenttweaker;
 
 import com.teamacronymcoders.base.BaseModFoundation;
+import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.proxies.CommonProxy;
+import crafttweaker.runtime.CrTTweaker;
+import crafttweaker.runtime.ITweaker;
+import crafttweaker.runtime.providers.ScriptProviderDirectory;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -10,6 +14,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+import java.io.File;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.*;
 
@@ -19,6 +25,8 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     public static final String MOD_NAME = "ContentTweaker";
     public static final String VERSION = "@VERSION@";
     public static final String DEPENDS = "required-after:base@[0.0.0,);required-after:crafttweaker;";
+
+    private ITweaker scriptHandler = new CrTTweaker();
 
     @Instance(MOD_ID)
     public static ContentTweaker instance;
@@ -32,16 +40,25 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
         ContentTweakerAPI.setInstance(new ContentTweakerAPI(new ModWrapper()));
     }
 
-    @Override
-    public boolean useDefaultRegistryEventHandler(){
-        return false;
-    }
-
     @EventHandler
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         proxy.createErrorSilencingLoader();
+    }
+
+    @Override
+    public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
+        File resourceFolder = this.getResourceFolder();
+        if (resourceFolder != null && resourceFolder.isDirectory()) {
+            File minecraftFolder = resourceFolder.getParentFile();
+            File contentTweakerScripts = new File(minecraftFolder, "scripts-contenttweaker");
+            BaseFileUtils.createFolder(contentTweakerScripts);
+            scriptHandler.setScriptProvider(new ScriptProviderDirectory(contentTweakerScripts));
+            scriptHandler.load();
+        } else {
+            this.getLogger().fatal("Couldn't create folder for scripts");
+        }
     }
 
     @EventHandler
@@ -64,11 +81,6 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     @Override
     public boolean hasExternalResources() {
         return true;
-    }
-
-    @Override
-    public void finalizeOptionalSystems() {
-
     }
 
     @Override
