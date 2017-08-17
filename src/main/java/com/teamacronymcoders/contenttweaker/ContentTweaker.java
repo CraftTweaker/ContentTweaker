@@ -49,16 +49,10 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
 
     @Override
     public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
-        File resourceFolder = this.getResourceFolder();
-        if (resourceFolder != null && resourceFolder.isDirectory()) {
-            File minecraftFolder = resourceFolder.getParentFile();
-            File contentTweakerScripts = new File(minecraftFolder, "scripts-contenttweaker");
-            BaseFileUtils.createFolder(contentTweakerScripts);
-            scriptHandler.setScriptProvider(new ScriptProviderDirectory(contentTweakerScripts));
-            scriptHandler.load();
-        } else {
-            this.getLogger().fatal("Couldn't create folder for scripts");
-        }
+        File contentTweakerScripts = new File(this.getMinecraftFolder(), "scripts-contenttweaker");
+        BaseFileUtils.createFolder(contentTweakerScripts);
+        scriptHandler.setScriptProvider(new ScriptProviderDirectory(contentTweakerScripts));
+        scriptHandler.load();
     }
 
     @EventHandler
