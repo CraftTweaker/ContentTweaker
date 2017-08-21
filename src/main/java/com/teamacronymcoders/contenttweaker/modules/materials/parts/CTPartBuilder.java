@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parts;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
@@ -8,8 +9,8 @@ import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartTyp
 public class CTPartBuilder implements IPartBuilder {
     private PartBuilder partBuilder;
     
-    public CTPartBuilder() {
-        this.partBuilder = new PartBuilder();
+    public CTPartBuilder(MaterialUser user) {
+        this.partBuilder = new PartBuilder(user);
     }
     
     @Override
