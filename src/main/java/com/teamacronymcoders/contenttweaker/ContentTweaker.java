@@ -3,14 +3,12 @@ package com.teamacronymcoders.contenttweaker;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
-import com.teamacronymcoders.contenttweaker.proxies.CommonProxy;
 import crafttweaker.runtime.CrTTweaker;
 import crafttweaker.runtime.ITweaker;
 import crafttweaker.runtime.providers.ScriptProviderDirectory;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -31,10 +29,6 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     @Instance(MOD_ID)
     public static ContentTweaker instance;
 
-    @SidedProxy(clientSide = "com.teamacronymcoders.contenttweaker.proxies.ClientProxy",
-            serverSide = "com.teamacronymcoders.contenttweaker.proxies.ServerProxy")
-    public static CommonProxy proxy;
-
     public ContentTweaker() {
         super(MOD_ID, MOD_NAME, VERSION, null, true);
         ContentTweakerAPI.setInstance(new ContentTweakerAPI(new ModWrapper()));
@@ -44,12 +38,11 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
-        proxy.createErrorSilencingLoader();
     }
 
     @Override
     public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
-        File contentTweakerScripts = new File(this.getMinecraftFolder(), "scripts-contenttweaker");
+        File contentTweakerScripts = new File(this.getMinecraftFolder(), "cot-scripts");
         BaseFileUtils.createFolder(contentTweakerScripts);
         scriptHandler.setScriptProvider(new ScriptProviderDirectory(contentTweakerScripts));
         scriptHandler.load();
