@@ -53,7 +53,7 @@ public class CTMaterialSystem {
 
     @ZenMethod
     public static IPartBuilder getPartBuilder() {
-        return new CTPartBuilder(ContentTweaker.instance.getMaterialUser());
+        return new CTPartBuilder();
     }
 
     @ZenMethod

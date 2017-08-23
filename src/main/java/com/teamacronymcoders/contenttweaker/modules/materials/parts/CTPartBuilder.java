@@ -9,8 +9,8 @@ import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartTyp
 public class CTPartBuilder implements IPartBuilder {
     private PartBuilder partBuilder;
     
-    public CTPartBuilder(MaterialUser user) {
-        this.partBuilder = new PartBuilder(user);
+    public CTPartBuilder() {
+        this.partBuilder = new PartBuilder();
     }
     
     @Override
