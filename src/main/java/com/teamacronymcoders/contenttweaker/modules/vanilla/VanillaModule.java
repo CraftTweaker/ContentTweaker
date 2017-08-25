@@ -2,10 +2,10 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla;
 
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
-import com.teamacronymcoders.contenttweaker.api.wrappers.biome.ICTBiome;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.IBlockPos;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.ICTBlockState;
-import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.biome.ICTBiome;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;

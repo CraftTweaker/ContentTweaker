@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.blockpos;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;

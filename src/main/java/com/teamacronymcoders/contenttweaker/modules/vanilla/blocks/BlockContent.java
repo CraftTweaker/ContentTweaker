@@ -1,9 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
 import com.teamacronymcoders.base.blocks.BlockBase;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.MCBlockPos;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.MCBlockState;
-import com.teamacronymcoders.contenttweaker.api.wrappers.world.MCWorld;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;

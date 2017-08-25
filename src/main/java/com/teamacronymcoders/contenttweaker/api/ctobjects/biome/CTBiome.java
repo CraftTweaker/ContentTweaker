@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.biome;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.biome;
 
 import crafttweaker.mc1120.world.MCBiome;
 import net.minecraft.world.biome.Biome;

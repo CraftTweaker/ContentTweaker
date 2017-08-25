@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.functions;
 
-import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.player.IPlayer;
 import stanhebben.zenscript.annotations.ZenClass;

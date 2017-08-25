@@ -1,6 +1,6 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.world;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.world;
 
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.IBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import crafttweaker.api.block.IBlock;
 import crafttweaker.api.world.IBiome;
 import stanhebben.zenscript.annotations.ZenClass;

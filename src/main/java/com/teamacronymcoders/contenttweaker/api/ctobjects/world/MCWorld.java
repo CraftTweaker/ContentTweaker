@@ -1,10 +1,10 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.world;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.world;
 
-import com.teamacronymcoders.contenttweaker.api.wrappers.biome.CTBiome;
-import com.teamacronymcoders.contenttweaker.api.wrappers.biome.ICTBiome;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.IBlockPos;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.ICTBlockState;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.biome.CTBiome;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.biome.ICTBiome;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import crafttweaker.api.block.IBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;

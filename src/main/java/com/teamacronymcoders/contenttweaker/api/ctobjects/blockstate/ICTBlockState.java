@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.blockstate;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate;
 
 import crafttweaker.api.block.IBlock;
 import stanhebben.zenscript.annotations.ZenClass;

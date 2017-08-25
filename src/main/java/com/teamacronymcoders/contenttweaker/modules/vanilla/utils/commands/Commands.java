@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands;
 
-import com.teamacronymcoders.contenttweaker.api.wrappers.world.IWorld;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
 import crafttweaker.api.player.IPlayer;
 import crafttweaker.mc1120.player.MCPlayer;
 import net.minecraft.entity.player.EntityPlayer;

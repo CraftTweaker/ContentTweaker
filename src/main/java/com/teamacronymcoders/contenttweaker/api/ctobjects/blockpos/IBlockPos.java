@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.blockpos;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos;
 
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
