@@ -74,4 +74,8 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     public ContentTweaker getInstance() {
         return this;
     }
+
+    public ITweaker getScriptHandler() {
+        return scriptHandler;
+    }
 }
