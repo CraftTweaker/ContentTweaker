@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
+import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
@@ -8,135 +9,133 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativeta
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.ZenProperty;
 
 import java.util.Locale;
 
-public class ItemRepresentation implements IRepresentation, IItem {
-    private String unlocalizedName;
-    private int maxStackSize = 64;
-    private EnumRarity rarity = EnumRarity.COMMON;
-    private CreativeTabs creativeTab = CreativeTabs.MISC;
-    private float smeltingExperience = -1;
-    private String toolClass = "";
-    private int toolLevel = -1;
-    private boolean beaconPayment = false;
-    private IItemRightClick itemRightClick = null;
-    private EnumAction itemUseAction = EnumAction.NONE;
+public class ItemRepresentation implements IRepresentation<Item> {
+    @ZenProperty
+    public String unlocalizedName;
+    @ZenProperty
+    public int maxStackSize = 64;
+    @ZenProperty
+    public String rarity = EnumRarity.COMMON.toString();
+    @ZenProperty
+    public ICreativeTab creativeTab = new MCCreativeTab(CreativeTabs.MISC);
+    @ZenProperty
+    public float smeltingExperience = -1;
+    @ZenProperty
+    public String toolClass = "";
+    @ZenProperty
+    public int toolLevel = -1;
+    @ZenProperty
+    public boolean beaconPayment = false;
+    @ZenProperty
+    public IItemRightClick itemRightClick = null;
+    @ZenProperty
+    public String itemUseAction = EnumAction.NONE.toString();
 
-    private ItemContent itemContent;
-
-    @Override
+    @ZenMethod
     public String getUnlocalizedName() {
         return unlocalizedName;
     }
 
-    @Override
+    @ZenMethod
     public void setUnlocalizedName(String unlocalizedName) {
         this.unlocalizedName = unlocalizedName;
     }
 
-    @Override
+    @ZenMethod
     public int getMaxStackSize() {
         return maxStackSize;
     }
 
-    @Override
+    @ZenMethod
     public void setMaxStackSize(int maxStackSize) {
         this.maxStackSize = maxStackSize;
     }
 
-    @Override
+    @ZenMethod
     public String getRarity() {
-        return rarity.name();
-    }
-
-    public EnumRarity getInternalRarity() {
         return rarity;
     }
 
-    @Override
+    @ZenMethod
     public void setRarity(String rarity) {
-        this.rarity = EnumRarity.valueOf(rarity.toUpperCase(Locale.US));
+        this.rarity = rarity;
     }
 
-    @Override
+    @ZenMethod
     public ICreativeTab getCreativeTab() {
-        return new MCCreativeTab(creativeTab);
-    }
-
-    public CreativeTabs getInternalCreativeTab() {
         return creativeTab;
     }
-
-    @Override
+    
+    @ZenMethod
     public void setCreativeTab(ICreativeTab creativeTab) {
-        if (creativeTab.getInternal() instanceof CreativeTabs) {
-            this.creativeTab = (CreativeTabs) creativeTab.getInternal();
-        }
+        this.creativeTab = creativeTab;
     }
 
-    @Override
+    @ZenMethod
     public float getSmeltingExperience() {
         return smeltingExperience;
     }
 
-    @Override
+    @ZenMethod
     public void setSmeltingExperience(float smeltingExperience) {
         this.smeltingExperience = smeltingExperience;
     }
 
-    @Override
+    @ZenMethod
     public String getToolClass() {
         return toolClass;
     }
 
-    @Override
+    @ZenMethod
     public void setToolClass(String toolClass) {
         this.toolClass = toolClass;
     }
 
-    @Override
+    @ZenMethod
     public int getToolLevel() {
         return toolLevel;
     }
 
-    @Override
+    @ZenMethod
     public void setToolLevel(int toolLevel) {
         this.toolLevel = toolLevel;
     }
 
-    @Override
+    @ZenMethod
     public boolean isBeaconPayment() {
         return beaconPayment;
     }
 
-    @Override
+    @ZenMethod
     public void setBeaconPayment(boolean beaconPayment) {
         this.beaconPayment = beaconPayment;
     }
 
-    @Override
+    @ZenMethod
     public IItemRightClick getItemRightClick() {
         return this.itemRightClick;
     }
 
-    @Override
+    @ZenMethod
     public void setItemRightClick(IItemRightClick itemRightClick) {
         this.itemRightClick = itemRightClick;
     }
 
-    @Override
+    @ZenMethod
     public String getItemUseAction() {
-        return itemUseAction.name();
+        return itemUseAction;
     }
 
-    @Override
+    @ZenMethod
     public void setItemUseAction(String itemUseAction) {
-        this.itemUseAction = EnumAction.valueOf(itemUseAction.toUpperCase(Locale.US));
-    }
-
-    public EnumAction getInternalItemUseAction() {
-        return this.itemUseAction;
+        this.itemUseAction = itemUseAction;
     }
 
     @Override
@@ -149,15 +148,16 @@ public class ItemRepresentation implements IRepresentation, IItem {
         return "Item";
     }
 
-    @Override
+    @ZenMethod
     public void register() {
-        this.itemContent = new ItemContent(this);
-        ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").register(this.itemContent);
+        ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").register(new ItemContent(this));
     }
 
     @Override
-    public Object getInternal() {
-        return this.itemContent;
+    public Item getInternal() {
+        return ContentTweaker.instance.getRegistry(ItemRegistry.class, "BLOCK").get(new ResourceLocation(
+                ContentTweaker.MOD_ID, this.getUnlocalizedName()));
+
     }
 
 

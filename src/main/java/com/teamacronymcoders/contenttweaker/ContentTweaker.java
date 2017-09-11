@@ -3,6 +3,9 @@ package com.teamacronymcoders.contenttweaker;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.mc1120.CraftTweaker;
 import crafttweaker.runtime.CrTTweaker;
 import crafttweaker.runtime.ITweaker;
 import crafttweaker.runtime.providers.ScriptProviderDirectory;
@@ -24,8 +27,6 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     public static final String VERSION = "@VERSION@";
     public static final String DEPENDS = "required-after:base@[0.0.0,);required-after:crafttweaker;";
 
-    private ITweaker scriptHandler = new CrTTweaker();
-
     @Instance(MOD_ID)
     public static ContentTweaker instance;
 
@@ -42,10 +43,7 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
 
     @Override
     public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
-        File contentTweakerScripts = new File(this.getMinecraftFolder(), "cot-scripts");
-        BaseFileUtils.createFolder(contentTweakerScripts);
-        scriptHandler.setScriptProvider(new ScriptProviderDirectory(contentTweakerScripts));
-        scriptHandler.load();
+        CraftTweakerAPI.tweaker.loadScript(false, "contenttweaker");
     }
 
     @EventHandler
@@ -73,9 +71,5 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     @Override
     public ContentTweaker getInstance() {
         return this;
-    }
-
-    public ITweaker getScriptHandler() {
-        return scriptHandler;
     }
 }

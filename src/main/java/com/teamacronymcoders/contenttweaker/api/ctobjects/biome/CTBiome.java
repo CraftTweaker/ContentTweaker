@@ -35,4 +35,9 @@ public class CTBiome extends MCBiome implements ICTBiome {
     public float getHeightVariance() {
         return this.biome.getHeightVariation();
     }
+
+    @Override
+    public Biome getInternal() {
+        return this.biome;
+    }
 }

@@ -8,11 +8,10 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.ResourceListCommand;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.IBlock;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.items.IItem;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.BlockBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.CreativeTabBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialBracketHandler;
@@ -21,7 +20,6 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.Sou
 import com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands.Commands;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.mc1120.commands.CTChatCommand;
-import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.MOD_ID;
@@ -60,7 +58,7 @@ public class VanillaModule extends ModuleBase {
         CraftTweakerAPI.registerClass(IBlockAction.class);
 
         CraftTweakerAPI.registerClass(ICreativeTab.class);
-        CraftTweakerAPI.registerClass(IBlock.class);
+        CraftTweakerAPI.registerClass(BlockRepresentation.class);
         CraftTweakerAPI.registerClass(IItem.class);
         CraftTweakerAPI.registerClass(VanillaFactory.class);
         CraftTweakerAPI.registerClass(Commands.class);

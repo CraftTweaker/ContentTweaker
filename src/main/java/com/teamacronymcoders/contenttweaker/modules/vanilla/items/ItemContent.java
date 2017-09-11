@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
+import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.player.MCPlayer;
 import net.minecraft.creativetab.CreativeTabs;
@@ -29,6 +30,8 @@ public class ItemContent extends Item implements IHasModel {
     private ItemRepresentation itemRepresentation;
     private CreativeTabs creativeTab;
     private IBaseMod mod;
+    private EnumAction itemUseAction;
+    private EnumRarity rarity;
 
     public ItemContent(ItemRepresentation itemRepresentation) {
         this.itemRepresentation = itemRepresentation;
@@ -59,15 +62,17 @@ public class ItemContent extends Item implements IHasModel {
 
     public void setFields() {
         this.setUnlocalizedName(this.itemRepresentation.getUnlocalizedName());
-        this.setCreativeTab(this.itemRepresentation.getInternalCreativeTab());
+        this.setCreativeTab(this.itemRepresentation.getCreativeTab().getInternal());
         this.setMaxStackSize(this.itemRepresentation.getMaxStackSize());
         this.setHarvestLevel(this.itemRepresentation.getToolClass(), this.itemRepresentation.getToolLevel());
+        this.itemUseAction = CTUtils.getEnum(this.itemRepresentation.getItemUseAction(), EnumAction.class);
+        this.rarity = CTUtils.getEnum(this.itemRepresentation.getRarity(), EnumRarity.class);
     }
 
     @Override
     @Nonnull
     public EnumRarity getRarity(@Nonnull ItemStack itemStack) {
-        return this.itemRepresentation.getInternalRarity();
+        return this.rarity;
     }
 
     @Override
@@ -113,7 +118,7 @@ public class ItemContent extends Item implements IHasModel {
     @Override
     @Nonnull
     public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
-        return this.itemRepresentation.getInternalItemUseAction();
+        return this.itemUseAction;
     }
 
     @Override

@@ -38,7 +38,7 @@ public class MCBlockState implements ICTBlockState {
     }
 
     @Override
-    public Object getInternal() {
+    public IBlockState getInternal() {
         return this.blockState;
     }
 }

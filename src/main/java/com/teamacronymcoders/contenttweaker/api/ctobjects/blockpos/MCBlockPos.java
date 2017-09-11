@@ -31,7 +31,7 @@ public class MCBlockPos implements IBlockPos {
     }
 
     @Override
-    public Object getInternal() {
+    public BlockPos getInternal() {
         return blockPos;
     }
 }

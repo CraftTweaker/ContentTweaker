@@ -60,7 +60,7 @@ public class MaterialDefinition implements IMaterialDefinition {
     }
 
     @Override
-    public Object getInternal() {
+    public Material getInternal() {
         return material;
     }
 }

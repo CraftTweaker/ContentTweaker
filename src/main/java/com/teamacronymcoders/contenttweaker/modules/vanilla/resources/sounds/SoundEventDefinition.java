@@ -20,7 +20,7 @@ public class SoundEventDefinition implements ISoundEventDefinition {
     }
 
     @Override
-    public Object getInternal() {
+    public SoundEvent getInternal() {
         return soundEvent;
     }
 }
