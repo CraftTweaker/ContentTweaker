@@ -23,7 +23,7 @@ public class VanillaFactory {
     }
 
     @ZenMethod
-    public static IItem createItem(String unlocalizedName) {
+    public static ItemRepresentation createItem(String unlocalizedName) {
         ItemRepresentation itemRepresentation = new ItemRepresentation();
         itemRepresentation.setUnlocalizedName(unlocalizedName);
         return itemRepresentation;
@@ -40,8 +40,8 @@ public class VanillaFactory {
     }
 
     @ZenMethod
-    public static ICreativeTab createCreativeTab(String unlocalizedName, IItem iItem) {
-        return createCreativeTab(unlocalizedName, new MCItemStack(new ItemStack((Item) iItem.getInternal())));
+    public static ICreativeTab createCreativeTab(String unlocalizedName, ItemRepresentation iItem) {
+        return createCreativeTab(unlocalizedName, new MCItemStack(new ItemStack(iItem.getInternal())));
     }
 
     @ZenMethod
