@@ -8,6 +8,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.ResourceListCommand;
+import com.teamacronymcoders.contenttweaker.moudles.vanilla.items.ItemRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
@@ -59,7 +60,7 @@ public class VanillaModule extends ModuleBase {
 
         CraftTweakerAPI.registerClass(ICreativeTab.class);
         CraftTweakerAPI.registerClass(BlockRepresentation.class);
-        CraftTweakerAPI.registerClass(IItem.class);
+        CraftTweakerAPI.registerClass(ItemRepresentation.class);
         CraftTweakerAPI.registerClass(VanillaFactory.class);
         CraftTweakerAPI.registerClass(Commands.class);
     }
