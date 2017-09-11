@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata;
 
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
+import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 
 public class CTMaterialPartData implements IMaterialPartData {
     private MaterialPartData materialPartData;

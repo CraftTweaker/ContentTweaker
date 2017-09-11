@@ -1,6 +1,8 @@
 package com.teamacronymcoders.contenttweaker;
 
 import com.teamacronymcoders.base.BaseModFoundation;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
+import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import crafttweaker.CraftTweakerAPI;
@@ -31,8 +33,15 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     public static ContentTweaker instance;
 
     public ContentTweaker() {
-        super(MOD_ID, MOD_NAME, VERSION, null, true);
+        super(MOD_ID, MOD_NAME, VERSION, null, false);
         ContentTweakerAPI.setInstance(new ContentTweakerAPI(new ModWrapper()));
+        this.subBlockSystem = new SubBlockSystem(this);
+        this.materialUser = new MaterialUser(this) {
+            public void logError(String message) {
+                CraftTweakerAPI.logError(message);
+                super.logError(message);
+            }
+        };
     }
 
     @EventHandler
