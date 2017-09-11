@@ -7,251 +7,243 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockActi
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeDefinition;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.ResourceLocation;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.ZenProperty;
 
-import java.util.Locale;
+@ZenClass("mods.contenttweaker.Block")
+public class BlockRepresentation implements IRepresentation<Block> {
+    @ZenProperty
+    public String unlocalizedName;
+    @ZenProperty
+    public ICreativeTab creativeTab = new MCCreativeTab(CreativeTabs.MISC);
+    @ZenProperty
+    public boolean fullBlock = true;
+    @ZenProperty
+    public int lightOpacity = 255;
+    @ZenProperty
+    public boolean translucent = false;
+    @ZenProperty
+    public float lightValue = 0;
+    @ZenProperty
+    public float blockHardness = 5;
+    @ZenProperty
+    public float blockResistance = 5;
+    @ZenProperty
+    public String toolClass = "pickaxe";
+    @ZenProperty
+    public int toolLevel = 2;
+    @ZenProperty
+    public ISoundTypeDefinition blockSoundType = new SoundTypeDefinition(SoundType.METAL);
+    @ZenProperty
+    public IMaterialDefinition blockMaterial = new MaterialDefinition(Material.IRON);
+    @ZenProperty
+    public float enchantPowerBonus = 0;
+    @ZenProperty
+    public String enumBlockRenderType = EnumBlockRenderType.MODEL.toString();
+    @ZenProperty
+    public float slipperiness = 0.6f;
+    @ZenProperty
+    public IBlockAction onBlockPlace;
+    @ZenProperty
+    public IBlockAction onBlockBreak;
+    @ZenProperty
+    public String blockLayer = BlockRenderLayer.SOLID.toString();
 
-public class BlockRepresentation implements IRepresentation, IBlock {
-    private String unlocalizedName;
-    private CreativeTabs creativeTab = CreativeTabs.MISC;
-    private boolean fullBlock = true;
-    private int lightOpacity = 255;
-    private boolean translucent = false;
-    private float lightValue = 0;
-    private float blockHardness = 5;
-    private float blockResistance = 5;
-    private String toolClass = "pickaxe";
-    private int toolLevel = 2;
-    private SoundType blockSoundType = SoundType.METAL;
-    private Material blockMaterial = Material.IRON;
-    private float enchantPowerBonus = 0;
-    private EnumBlockRenderType enumBlockRenderType = EnumBlockRenderType.MODEL;
-    private float slipperiness = 0.6f;
-    private IBlockAction onBlockPlace;
-    private IBlockAction onBlockBreak;
-    private BlockRenderLayer blockLayer = BlockRenderLayer.SOLID;
-
-    private BlockContent blockContent;
-
-
-    @Override
+    @ZenMethod
     public String getUnlocalizedName() {
         return unlocalizedName;
     }
 
-    @Override
+    @ZenMethod
     public void setUnlocalizedName(String unlocalizedName) {
         this.unlocalizedName = unlocalizedName;
     }
 
-    public CreativeTabs getInternalCreativeTab() {
+    @ZenMethod
+    public void setCreativeTab(ICreativeTab creativeTab) {
+        this.creativeTab = creativeTab;
+    }
+
+    @ZenMethod
+    public ICreativeTab getCreativeTab() {
         return creativeTab;
     }
 
-    @Override
-    public void setCreativeTab(ICreativeTab creativeTab) {
-        if (creativeTab.getInternal() instanceof CreativeTabs) {
-            this.creativeTab = (CreativeTabs) creativeTab.getInternal();
-        }
-    }
-
-    @Override
-    public ICreativeTab getCreativeTab() {
-        return new MCCreativeTab(creativeTab);
-    }
-
-    @Override
+    @ZenMethod
     public boolean isFullBlock() {
         return fullBlock;
     }
 
-    @Override
+    @ZenMethod
     public void setFullBlock(boolean fullBlock) {
         this.fullBlock = fullBlock;
     }
 
-    @Override
+    @ZenMethod
     public int getLightOpacity() {
         return lightOpacity;
     }
 
-    @Override
+    @ZenMethod
     public void setLightOpacity(int lightOpacity) {
         this.lightOpacity = lightOpacity;
     }
 
-    @Override
+    @ZenMethod
     public boolean isTranslucent() {
         return translucent;
     }
 
-    @Override
+    @ZenMethod
     public void setTranslucent(boolean translucent) {
         this.translucent = translucent;
     }
 
-    @Override
+    @ZenMethod
     public float getLightValue() {
         return lightValue;
     }
 
-    @Override
+    @ZenMethod
     public void setLightValue(float lightValue) {
         this.lightValue = lightValue;
     }
 
-    @Override
+    @ZenMethod
     public float getBlockHardness() {
         return blockHardness;
     }
 
-    @Override
+    @ZenMethod
     public void setBlockHardness(float blockHardness) {
         this.blockHardness = blockHardness;
     }
 
-    @Override
+    @ZenMethod
     public float getBlockResistance() {
         return blockResistance;
     }
 
-    @Override
+    @ZenMethod
     public void setBlockResistance(float blockResistance) {
         this.blockResistance = blockResistance;
     }
 
-    @Override
+    @ZenMethod
     public String getToolClass() {
         return toolClass;
     }
 
-    @Override
+    @ZenMethod
     public void setToolClass(String toolClass) {
         this.toolClass = toolClass;
     }
 
-    @Override
+    @ZenMethod
     public int getToolLevel() {
         return toolLevel;
     }
 
-    @Override
+    @ZenMethod
     public void setToolLevel(int toolLevel) {
         this.toolLevel = toolLevel;
     }
 
-    @Override
+    @ZenMethod
     public ISoundTypeDefinition getBlockSoundType() {
-        return null;
+        return this.blockSoundType;
     }
 
-    public SoundType getInternalBlockSoundType() {
-        return blockSoundType;
-    }
-
-    public void setBlockSoundType(SoundType blockSoundType) {
+    @ZenMethod
+    public void setBlockSoundType(ISoundTypeDefinition blockSoundType) {
         this.blockSoundType = blockSoundType;
     }
 
-    @Override
-    public void setBlockSoundType(ISoundTypeDefinition blockSoundType) {
-        this.setBlockSoundType((SoundType) blockSoundType.getInternal());
-    }
-
-    @Override
+    @ZenMethod
     public IMaterialDefinition getBlockMaterial() {
-        return null;
+        return this.blockMaterial;
     }
 
-    public Material getInternalBlockMaterial() {
-        return blockMaterial;
-    }
-
-    public void setBlockMaterial(Material blockMaterial) {
-        this.blockMaterial = blockMaterial;
-    }
-
-    @Override
+    @ZenMethod
     public void setBlockMaterial(IMaterialDefinition material) {
-        this.setBlockMaterial((Material) material.getInternal());
+        this.blockMaterial = material;
     }
 
-    @Override
+    @ZenMethod
     public void setEnchantPowerBonus(float enchantPowerBonus) {
         this.enchantPowerBonus = enchantPowerBonus;
     }
 
-    @Override
+    @ZenMethod
     public float getEnchantPowerBonus() {
         return enchantPowerBonus;
     }
 
-    @Override
+    @ZenMethod
     public void setEnumBlockRenderType(String blockRenderType) {
-        this.enumBlockRenderType = EnumBlockRenderType.valueOf(blockRenderType.toUpperCase(Locale.US));
+        this.enumBlockRenderType = blockRenderType;
     }
 
-    @Override
+    @ZenMethod
     public String getEnumBlockRenderType() {
-        return this.enumBlockRenderType.name();
+        return this.enumBlockRenderType;
     }
 
-    @Override
+    @ZenMethod
     public void setSlipperiness(float slipperiness) {
         this.slipperiness = slipperiness;
     }
 
-    @Override
+    @ZenMethod
     public float getSlipperiness() {
         return this.slipperiness;
     }
 
-    @Override
+    @ZenMethod
     public void setOnBlockBreak(IBlockAction iBlockAction) {
         this.onBlockBreak = iBlockAction;
     }
 
-    @Override
+    @ZenMethod
     public IBlockAction getOnBlockBreak() {
         return this.onBlockBreak;
     }
 
-    @Override
+    @ZenMethod
     public void setOnBlockPlace(IBlockAction iBlockAction) {
         this.onBlockPlace = iBlockAction;
     }
 
-    @Override
-    public IBlockAction getOnBlockAdded() {
+    @ZenMethod
+    public IBlockAction getOnBlockPlace() {
         return this.onBlockPlace;
     }
 
-    @Override
+    @ZenMethod
     public void setBlockLayer(String blockLayer) {
-        this.blockLayer = BlockRenderLayer.valueOf(blockLayer.toUpperCase(Locale.US));
+        this.blockLayer = blockLayer;
     }
 
-    @Override
+    @ZenMethod
     public String getBlockLayer() {
-        return this.blockLayer.toString();
-    }
-
-    public BlockRenderLayer getInternalBlockLayer() {
         return this.blockLayer;
     }
 
-    public EnumBlockRenderType getInternalBlockRenderType() {
-        return this.enumBlockRenderType;
-    }
-
     @Override
-    public Object getInternal() {
-        return this.blockContent;
+    public Block getInternal() {
+        return ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").get(new ResourceLocation(
+                ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
 
     @Override
@@ -264,9 +256,8 @@ public class BlockRepresentation implements IRepresentation, IBlock {
         return "BlockRepresentation";
     }
 
-    @Override
+    @ZenMethod
     public void register() {
-        this.blockContent = new BlockContent(this);
-        ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(this.blockContent);
+        ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(new BlockContent(this));
     }
 }

@@ -4,9 +4,10 @@ import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-public class CreativeTabRepresentation implements IRepresentation, ICreativeTab {
+public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>, ICreativeTab {
     private String unlocalizedName;
     private ItemStack iconStack;
     private CreativeTabContent creativeTabContent;
@@ -58,7 +59,7 @@ public class CreativeTabRepresentation implements IRepresentation, ICreativeTab 
     }
 
     @Override
-    public Object getInternal() {
+    public CreativeTabs getInternal() {
         if (creativeTabContent == null) {
             creativeTabContent = new CreativeTabContent(this);
         }

@@ -3,10 +3,7 @@ package com.teamacronymcoders.contenttweaker.api.utils;
 import com.google.common.collect.Lists;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class ResourceList<RESOURCE> {
     private Class<RESOURCE> resourceClass;
@@ -55,6 +52,14 @@ public class ResourceList<RESOURCE> {
 
     public RESOURCE getResource(String name) {
         return resources.get(name.toLowerCase(Locale.US));
+    }
+
+    public Collection<RESOURCE> getAllResources() {
+        return this.resources.values();
+    }
+
+    public Collection<String> getAllNames() {
+        return this.resources.keySet();
     }
 
     private void loadResources() {

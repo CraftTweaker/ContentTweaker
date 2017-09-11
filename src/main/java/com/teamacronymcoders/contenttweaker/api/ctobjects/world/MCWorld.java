@@ -1,13 +1,9 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.world;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.world;
 
-import com.teamacronymcoders.contenttweaker.api.wrappers.biome.CTBiome;
-import com.teamacronymcoders.contenttweaker.api.wrappers.biome.ICTBiome;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockpos.IBlockPos;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.ICTBlockState;
-import com.teamacronymcoders.contenttweaker.api.wrappers.blockstate.MCBlockState;
-import crafttweaker.api.block.IBlock;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.biome.CTBiome;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.biome.ICTBiome;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import net.minecraft.world.World;
 
 public class MCWorld implements IWorld {
@@ -33,22 +29,13 @@ public class MCWorld implements IWorld {
     }
 
     @Override
-    public boolean setBlockState(IBlock blockState, IBlockPos blockPos) {
-        ICTBlockState ictBlockState = new MCBlockState(blockState);
-        boolean setBlock = false;
-        if (ictBlockState.getInternal() instanceof IBlockState && blockPos.getInternal() instanceof BlockPos) {
-            setBlock = this.world.setBlockState((BlockPos) blockPos.getInternal(), (IBlockState)ictBlockState.getInternal(), 2);
-        }
-        return setBlock;
+    public boolean setBlockState(ICTBlockState blockState, IBlockPos blockPos) {
+        return this.world.setBlockState(blockPos.getInternal(), blockState.getInternal(), 2);
     }
 
     @Override
     public ICTBiome getBiome(IBlockPos blockPos) {
-        ICTBiome biome = null;
-        if (blockPos.getInternal() instanceof BlockPos) {
-            biome = new CTBiome(world.getBiome((BlockPos) blockPos.getInternal()));
-        }
-        return biome;
+        return new CTBiome(world.getBiome(blockPos.getInternal()));
     }
 
     @Override
@@ -87,7 +74,7 @@ public class MCWorld implements IWorld {
     }
 
     @Override
-    public Object getInternal() {
+    public World getInternal() {
         return world;
     }
 }

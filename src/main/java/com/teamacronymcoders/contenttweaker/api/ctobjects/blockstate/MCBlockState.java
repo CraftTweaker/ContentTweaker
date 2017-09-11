@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.blockstate;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate;
 
 import crafttweaker.api.block.IBlock;
 import crafttweaker.mc1120.block.MCSpecificBlock;
@@ -38,7 +38,7 @@ public class MCBlockState implements ICTBlockState {
     }
 
     @Override
-    public Object getInternal() {
+    public IBlockState getInternal() {
         return this.blockState;
     }
 }

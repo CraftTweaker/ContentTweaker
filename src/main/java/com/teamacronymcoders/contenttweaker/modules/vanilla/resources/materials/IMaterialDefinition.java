@@ -1,6 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials;
 
-public interface IMaterialDefinition {
+import com.teamacronymcoders.contenttweaker.api.ICTObject;
+import net.minecraft.block.material.Material;
+
+public interface IMaterialDefinition extends ICTObject<Material> {
     String getName();
 
     boolean isLiquid();
@@ -21,5 +24,5 @@ public interface IMaterialDefinition {
 
     String getMobilityFlag();
 
-    Object getInternal();
+    Material getInternal();
 }

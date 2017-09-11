@@ -45,7 +45,7 @@ public class SoundTypeDefinition implements ISoundTypeDefinition {
     }
 
     @Override
-    public Object getInternal() {
+    public SoundType getInternal() {
         return this.soundType;
     }
 }

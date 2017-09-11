@@ -1,10 +1,12 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.blockpos;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos;
 
+import com.teamacronymcoders.contenttweaker.api.ICTObject;
+import net.minecraft.util.math.BlockPos;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.contenttweaker.BlockPos")
-public interface IBlockPos {
+public interface IBlockPos extends ICTObject<BlockPos> {
     @ZenMethod
     int getX();
 
@@ -16,6 +18,4 @@ public interface IBlockPos {
 
     @ZenMethod
     IBlockPos getOffset(String directionName, int offset);
-
-    Object getInternal();
 }

@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.api.wrappers.biome;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.biome;
 
 import crafttweaker.mc1120.world.MCBiome;
 import net.minecraft.world.biome.Biome;
@@ -34,5 +34,10 @@ public class CTBiome extends MCBiome implements ICTBiome {
     @Override
     public float getHeightVariance() {
         return this.biome.getHeightVariation();
+    }
+
+    @Override
+    public Biome getInternal() {
+        return this.biome;
     }
 }
