@@ -37,6 +37,8 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public IItemRightClick itemRightClick = null;
     @ZenProperty
     public String itemUseAction = EnumAction.NONE.toString();
+    @ZenProperty
+    public boolean glowing;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -138,6 +140,16 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.itemUseAction = itemUseAction;
     }
 
+    @ZenMethod
+    public boolean isGlowing() {
+        return glowing;
+    }
+
+    @ZenMethod
+    public void setGlowing(boolean glowing) {
+        this.glowing = glowing;
+    }
+    
     @Override
     public String getName() {
         return this.getUnlocalizedName();
@@ -159,6 +171,7 @@ public class ItemRepresentation implements IRepresentation<Item> {
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
 
     }
+
 
 
 }

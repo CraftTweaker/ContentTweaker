@@ -1,5 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.api.block.IBlock;
 import crafttweaker.mc1120.block.MCSpecificBlock;
@@ -25,14 +27,14 @@ public class BlockBracketHandler implements IBracketHandler {
     private final IJavaMethod method;
 
     public BlockBracketHandler() {
-        method = CraftTweakerAPI.getJavaMethod(BlockBracketHandler.class, "getBlock", String.class, int.class);
+        method = CraftTweakerAPI.getJavaMethod(BlockBracketHandler.class, "getBlockState", String.class, int.class);
     }
 
-    public static IBlock getBlock(String name, int meta) {
-        IBlock iBlock = null;
+    public static ICTBlockState getBlockState(String name, int meta) {
+        ICTBlockState iBlock = null;
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(name));
         if (block != null) {
-            iBlock = new MCSpecificBlock(block, meta);
+            iBlock = new MCBlockState(new MCSpecificBlock(block, meta));
         }
         return iBlock;
     }

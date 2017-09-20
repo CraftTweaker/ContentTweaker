@@ -99,6 +99,11 @@ public class ItemContent extends Item implements IHasModel {
         return this;
     }
 
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack) {
+        return this.itemRepresentation.isGlowing() || super.hasEffect(stack);
+    }
+
     @Override
     @Nonnull
     @ParametersAreNonnullByDefault
