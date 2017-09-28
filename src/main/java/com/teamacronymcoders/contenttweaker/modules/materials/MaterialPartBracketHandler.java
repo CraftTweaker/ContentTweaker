@@ -51,7 +51,7 @@ public class MaterialPartBracketHandler implements IBracketHandler {
 
         if (tokens.size() == 5) {
             if ("materialpart".equalsIgnoreCase(tokens.get(0).getValue())) {
-                String partName = String.join("", tokens.subList(1, 4)
+                String partName = String.join("", tokens.subList(2, 4)
                         .stream()
                         .map(Token::getValue)
                         .collect(Collectors.toList())
