@@ -40,7 +40,7 @@ public class MaterialPartBracketHandler implements IBracketHandler {
         MaterialPart materialPart = MaterialSystem.getMaterialPart(name);
         IMaterialPart zenMaterialPart = null;
         if (materialPart != null) {
-            zenMaterialPart = new CTMaterialPart(materialPart);
+            //zenMaterialPart = new CTMaterialPart(materialPart);
         }
         return zenMaterialPart;
     }
