@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
-import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
@@ -11,11 +10,11 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
-import java.util.Locale;
-
+@ZenClass("mods.contenttweaker.Item")
 public class ItemRepresentation implements IRepresentation<Item> {
     @ZenProperty
     public String unlocalizedName;

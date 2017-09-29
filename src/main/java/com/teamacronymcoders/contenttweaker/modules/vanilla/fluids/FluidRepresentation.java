@@ -17,7 +17,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
-@ZenClass("mod.contenttweaker.Fluid")
+@ZenClass("mods.contenttweaker.Fluid")
 public class FluidRepresentation implements IRepresentation<Fluid> {
     @ZenProperty
     public String unlocalizedName;
