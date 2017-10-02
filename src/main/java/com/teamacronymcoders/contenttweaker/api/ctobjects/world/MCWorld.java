@@ -1,9 +1,9 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.world;
 
-import com.teamacronymcoders.contenttweaker.api.ctobjects.biome.CTBiome;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.biome.ICTBiome;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
+import crafttweaker.api.world.IBiome;
+import crafttweaker.mc1120.world.MCBiome;
 import net.minecraft.world.World;
 
 public class MCWorld implements IWorld {
@@ -34,8 +34,8 @@ public class MCWorld implements IWorld {
     }
 
     @Override
-    public ICTBiome getBiome(IBlockPos blockPos) {
-        return new CTBiome(world.getBiome(blockPos.getInternal()));
+    public IBiome getBiome(IBlockPos blockPos) {
+        return new MCBiome(world.getBiome(blockPos.getInternal()));
     }
 
     @Override
