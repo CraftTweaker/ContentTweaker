@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -29,6 +30,7 @@ public class BlockContent extends BlockBase {
     private EnumBlockRenderType enumBlockRenderType;
     private CreativeTabs creativeTab;
     private BlockRenderLayer blockRenderLayer;
+    private AxisAlignedBB blockShape;
 
     public BlockContent(BlockRepresentation blockRepresentation) {
         super(blockRepresentation.getBlockMaterial().getInternal(), blockRepresentation.getUnlocalizedName());
@@ -47,6 +49,7 @@ public class BlockContent extends BlockBase {
         this.setSoundType(this.blockRepresentation.getBlockSoundType().getInternal());
         this.enumBlockRenderType = CTUtils.getEnum(this.blockRepresentation.getEnumBlockRenderType(), EnumBlockRenderType.class);
         this.blockRenderLayer = CTUtils.getEnum(this.blockRepresentation.getBlockLayer(), BlockRenderLayer.class);
+        this.blockShape = this.blockRepresentation.getAxisAlignedBB().getInternal();
     }
 
     @Override
@@ -112,5 +115,12 @@ public class BlockContent extends BlockBase {
     @Override
     public float getSlipperiness(IBlockState state, IBlockAccess world, BlockPos pos, @Nullable Entity entity) {
         return this.blockRepresentation.getSlipperiness();
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return this.blockShape;
     }
 }

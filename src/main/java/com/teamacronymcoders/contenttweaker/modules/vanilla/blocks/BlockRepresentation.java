@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.aabb.MCAxisAlignedBB;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
@@ -59,6 +60,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public IBlockAction onBlockBreak;
     @ZenProperty
     public String blockLayer = BlockRenderLayer.SOLID.toString();
+    @ZenProperty
+    public MCAxisAlignedBB axisAlignedBB = MCAxisAlignedBB.create(0, 0, 0,1,1,1);
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -259,5 +262,15 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void register() {
         ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(new BlockContent(this));
+    }
+
+    @ZenMethod
+    public MCAxisAlignedBB getAxisAlignedBB() {
+        return axisAlignedBB;
+    }
+
+    @ZenMethod
+    public void setAxisAlignedBB(MCAxisAlignedBB axisAlignedBB) {
+        this.axisAlignedBB = axisAlignedBB;
     }
 }
