@@ -32,16 +32,13 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
     @Instance(MOD_ID)
     public static ContentTweaker instance;
 
+    public static boolean scriptsSuccessful;
+
     public ContentTweaker() {
         super(MOD_ID, MOD_NAME, VERSION, null, false);
         ContentTweakerAPI.setInstance(new ContentTweakerAPI(new ModWrapper()));
         this.subBlockSystem = new SubBlockSystem(this);
-        this.materialUser = new MaterialUser(this) {
-            public void logError(String message) {
-                CraftTweakerAPI.logError(message);
-                super.logError(message);
-            }
-        };
+        this.materialUser = new CTMaterialUser(this);
     }
 
     @EventHandler
@@ -52,7 +49,7 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
 
     @Override
     public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
-        CraftTweakerAPI.tweaker.loadScript(false, "contenttweaker");
+        scriptsSuccessful = CraftTweakerAPI.tweaker.loadScript(false, "contenttweaker");
     }
 
     @EventHandler

@@ -37,7 +37,7 @@ public class MaterialPartBracketHandler implements IBracketHandler {
     }
 
     public static IMaterialPart getMaterialPart(String name) {
-        MaterialPart materialPart = null; //MaterialSystem.getMaterialPart(name);
+        MaterialPart materialPart = MaterialSystem.getMaterialPart(name);
         IMaterialPart zenMaterialPart = null;
         if (materialPart != null) {
             zenMaterialPart = new CTMaterialPart(materialPart);
