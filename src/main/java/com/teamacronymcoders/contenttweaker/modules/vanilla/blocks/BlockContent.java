@@ -17,7 +17,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -127,15 +126,12 @@ public class BlockContent extends BlockBase {
 
     @Override
     @ParametersAreNonnullByDefault
-    public void randomTick(World world, BlockPos pos, IBlockState state, Random random)
-    {
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
         activateBlockAction(this.blockRepresentation.getOnRandomTick(), world, pos, state);
-
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
-    {
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         activateBlockAction(this.blockRepresentation.getOnUpdateTick(), world, pos, state);
     }
 
