@@ -5,6 +5,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
 
 public class BlockContent extends BlockBase {
     private BlockRepresentation blockRepresentation;
@@ -50,6 +52,9 @@ public class BlockContent extends BlockBase {
         this.enumBlockRenderType = CTUtils.getEnum(this.blockRepresentation.getEnumBlockRenderType(), EnumBlockRenderType.class);
         this.blockRenderLayer = CTUtils.getEnum(this.blockRepresentation.getBlockLayer(), BlockRenderLayer.class);
         this.blockShape = this.blockRepresentation.getAxisAlignedBB().getInternal();
+        if (this.blockRepresentation.getOnRandomTick() != null) {
+            this.setTickRandomly(true);
+        }
     }
 
     @Override
@@ -99,17 +104,13 @@ public class BlockContent extends BlockBase {
     @Override
     public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.onBlockAdded(world, pos, state);
-        if (this.blockRepresentation.getOnBlockPlace() != null) {
-            this.blockRepresentation.getOnBlockPlace().onBlockAction(new MCWorld(world), new MCBlockPos(pos), new MCBlockState(state));
-        }
+        activateBlockAction(this.blockRepresentation.getOnBlockPlace(), world, pos, state);
     }
 
     @Override
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.breakBlock(world, pos, state);
-        if (this.blockRepresentation.getOnBlockBreak() != null) {
-            this.blockRepresentation.getOnBlockBreak().onBlockAction(new MCWorld(world), new MCBlockPos(pos), new MCBlockState(state));
-        }
+        activateBlockAction(this.blockRepresentation.getOnBlockBreak(), world, pos, state);
     }
 
     @Override
@@ -122,5 +123,25 @@ public class BlockContent extends BlockBase {
     @SuppressWarnings("deprecation")
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return this.blockShape;
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random)
+    {
+        activateBlockAction(this.blockRepresentation.getOnRandomTick(), world, pos, state);
+
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
+    {
+        activateBlockAction(this.blockRepresentation.getOnUpdateTick(), world, pos, state);
+    }
+
+    public void activateBlockAction(IBlockAction blockAction, World world, BlockPos blockPos, IBlockState blockState) {
+        if (blockAction != null) {
+            blockAction.onBlockAction(new MCWorld(world), new MCBlockPos(blockPos), new MCBlockState(blockState));
+        }
     }
 }

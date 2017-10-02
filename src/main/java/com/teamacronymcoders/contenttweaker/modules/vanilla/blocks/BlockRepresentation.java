@@ -61,7 +61,11 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
     public String blockLayer = BlockRenderLayer.SOLID.toString();
     @ZenProperty
-    public MCAxisAlignedBB axisAlignedBB = MCAxisAlignedBB.create(0, 0, 0,1,1,1);
+    public MCAxisAlignedBB axisAlignedBB = MCAxisAlignedBB.create(0, 0, 0, 1, 1, 1);
+    @ZenProperty
+    public IBlockAction onUpdateTick;
+    @ZenProperty
+    public IBlockAction onRandomTick;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -243,6 +247,36 @@ public class BlockRepresentation implements IRepresentation<Block> {
         return this.blockLayer;
     }
 
+    @ZenMethod
+    public MCAxisAlignedBB getAxisAlignedBB() {
+        return axisAlignedBB;
+    }
+
+    @ZenMethod
+    public void setAxisAlignedBB(MCAxisAlignedBB axisAlignedBB) {
+        this.axisAlignedBB = axisAlignedBB;
+    }
+
+    @ZenMethod
+    public IBlockAction getOnUpdateTick() {
+        return onUpdateTick;
+    }
+
+    @ZenMethod
+    public void setOnUpdateTick(IBlockAction onUpdateTick) {
+        this.onUpdateTick = onUpdateTick;
+    }
+
+    @ZenMethod
+    public IBlockAction getOnRandomTick() {
+        return onRandomTick;
+    }
+
+    @ZenMethod
+    public void setOnRandomTick(IBlockAction onRandomTick) {
+        this.onRandomTick = onRandomTick;
+    }
+
     @Override
     public Block getInternal() {
         return ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").get(new ResourceLocation(
@@ -264,13 +298,5 @@ public class BlockRepresentation implements IRepresentation<Block> {
         ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(new BlockContent(this));
     }
 
-    @ZenMethod
-    public MCAxisAlignedBB getAxisAlignedBB() {
-        return axisAlignedBB;
-    }
 
-    @ZenMethod
-    public void setAxisAlignedBB(MCAxisAlignedBB axisAlignedBB) {
-        this.axisAlignedBB = axisAlignedBB;
-    }
 }
