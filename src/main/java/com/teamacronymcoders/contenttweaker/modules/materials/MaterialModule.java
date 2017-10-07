@@ -37,5 +37,7 @@ public class MaterialModule extends ModuleBase {
         CraftTweakerAPI.registerClass(IMaterialPart.class);
         CraftTweakerAPI.registerClass(IRegisterMaterialPart .class);
         CraftTweakerAPI.registerClass(CTMaterialSystem.class);
+
+        CraftTweakerAPI.registerBracketHandler(new MaterialPartBracketHandler());
     }
 }

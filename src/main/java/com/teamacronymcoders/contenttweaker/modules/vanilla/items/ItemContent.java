@@ -2,6 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ItemContent extends Item implements IHasModel {
+public class ItemContent extends ItemBase implements IHasModel {
     private ItemRepresentation itemRepresentation;
     private CreativeTabs creativeTab;
     private IBaseMod mod;
@@ -34,6 +35,7 @@ public class ItemContent extends Item implements IHasModel {
     private EnumRarity rarity;
 
     public ItemContent(ItemRepresentation itemRepresentation) {
+        super(itemRepresentation.getUnlocalizedName());
         this.itemRepresentation = itemRepresentation;
         checkFields();
         setFields();
