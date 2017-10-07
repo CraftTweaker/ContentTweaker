@@ -33,7 +33,7 @@ public class MaterialPartBracketHandler implements IBracketHandler {
     private final IJavaMethod method;
 
     public MaterialPartBracketHandler() {
-        method = CraftTweakerAPI.getJavaMethod(MaterialPartBracketHandler.class, "geMaterialPart", String.class);
+        method = CraftTweakerAPI.getJavaMethod(MaterialPartBracketHandler.class, "getMaterialPart", String.class);
     }
 
     public static IMaterialPart getMaterialPart(String name) {
