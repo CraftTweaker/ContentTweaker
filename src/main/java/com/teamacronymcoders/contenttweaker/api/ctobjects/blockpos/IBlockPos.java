@@ -12,7 +12,7 @@ import stanhebben.zenscript.annotations.ZenSetter;
 @ZenClass("mods.contenttweaker.BlockPos")
 public interface IBlockPos extends ICTObject<BlockPos> {
     @ZenMethod
-    @ZenSetter("x")
+    @ZenGetter("x")
     int getX();
 
     @ZenMethod
