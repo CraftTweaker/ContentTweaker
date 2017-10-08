@@ -23,14 +23,14 @@ public interface IMaterial {
     String getUnlocalizedName();
 
     @ZenMethod
-    List<IMaterialPart> registerParts(String[] partNames) throws MaterialException;
+    List<IMaterialPart> registerParts(String[] partNames);
 
     @ZenMethod
-    List<IMaterialPart> registerParts(IPart[] parts) throws MaterialException;
+    List<IMaterialPart> registerParts(IPart[] parts);
 
     @ZenMethod
-    IMaterialPart registerPart(String partName) throws MaterialException;
+    IMaterialPart registerPart(String partName);
 
     @ZenMethod
-    IMaterialPart registerPart(IPart part) throws MaterialException;
+    IMaterialPart registerPart(IPart part);
 }

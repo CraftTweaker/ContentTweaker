@@ -67,7 +67,7 @@ public class CTMaterialSystem {
     }
 
     @ZenMethod
-    public static List<IMaterialPart> registerPartsForMaterial(Material material, String[] partNames) throws MaterialException {
+    public static List<IMaterialPart> registerPartsForMaterial(Material material, String[] partNames) {
         List<IMaterialPart> materialParts = Lists.newArrayList();
         MaterialUser materialUser = ContentTweaker.instance.getMaterialUser();
         if (materialUser != null) {
