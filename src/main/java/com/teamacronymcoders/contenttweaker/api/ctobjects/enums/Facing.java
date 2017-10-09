@@ -1,4 +1,4 @@
-package com.teamacronymcoders.contenttweaker.api.ctobjects;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.enums;
 
 import com.teamacronymcoders.contenttweaker.api.ICTObject;
 import crafttweaker.annotations.ZenRegister;
