@@ -5,6 +5,7 @@ import crafttweaker.annotations.ZenRegister;
 import net.minecraft.util.EnumHand;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
+import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.Hand")
@@ -19,12 +20,12 @@ public class Hand implements ICTObject<EnumHand> {
         return new Hand(enumHand);
     }
 
-    @ZenGetter
+    @ZenMethod
     public static Hand main() {
         return new Hand(EnumHand.MAIN_HAND);
     }
 
-    @ZenGetter
+    @ZenMethod
     public static Hand off() {
         return new Hand(EnumHand.OFF_HAND);
     }

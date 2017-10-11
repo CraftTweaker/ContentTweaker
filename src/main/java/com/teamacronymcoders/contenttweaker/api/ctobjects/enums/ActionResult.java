@@ -3,10 +3,7 @@ package com.teamacronymcoders.contenttweaker.api.ctobjects.enums;
 import com.teamacronymcoders.contenttweaker.api.ICTObject;
 import crafttweaker.annotations.ZenRegister;
 import net.minecraft.util.EnumActionResult;
-import stanhebben.zenscript.annotations.OperatorType;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
-import stanhebben.zenscript.annotations.ZenOperator;
+import stanhebben.zenscript.annotations.*;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.ActionResult")
@@ -17,17 +14,17 @@ public class ActionResult implements ICTObject<EnumActionResult> {
         this.actionResult = actionResult;
     }
 
-    @ZenGetter
+    @ZenMethod
     public static ActionResult fail() {
         return new ActionResult(EnumActionResult.FAIL);
     }
 
-    @ZenGetter
+    @ZenMethod
     public static ActionResult pass() {
         return new ActionResult(EnumActionResult.PASS);
     }
 
-    @ZenGetter
+    @ZenMethod
     public static ActionResult success() {
         return new ActionResult(EnumActionResult.SUCCESS);
     }
