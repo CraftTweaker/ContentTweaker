@@ -33,7 +33,7 @@ public class MCAxisAlignedBB implements ICTObject<AxisAlignedBB> {
         this.maxZ = maxZ;
     }
 
-    @ZenMethodStatic
+    @ZenMethod
     public static MCAxisAlignedBB create(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         return new MCAxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ);
     }
