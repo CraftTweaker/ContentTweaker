@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos;
 
 import com.teamacronymcoders.contenttweaker.api.ICTObject;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import crafttweaker.annotations.ZenRegister;
 import net.minecraft.util.math.BlockPos;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -25,4 +26,7 @@ public interface IBlockPos extends ICTObject<BlockPos> {
 
     @ZenMethod
     IBlockPos getOffset(String directionName, int offset);
+
+    @ZenMethod
+    IBlockPos getOffset(Facing facing, int offset);
 }
