@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemUse;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumAction;
@@ -38,6 +39,10 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public String itemUseAction = EnumAction.NONE.toString();
     @ZenProperty
     public boolean glowing;
+    @ZenProperty
+    public IItemUse onItemUse = null;
+    @ZenProperty
+    public int maxDamage = -1;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -148,7 +153,27 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public void setGlowing(boolean glowing) {
         this.glowing = glowing;
     }
-    
+
+    @ZenMethod
+    public IItemUse getOnItemUse() {
+        return onItemUse;
+    }
+
+    @ZenMethod
+    public void setOnItemUse(IItemUse itemUse) {
+        this.onItemUse = itemUse;
+    }
+
+    @ZenMethod
+    public int getMaxDamage() {
+        return maxDamage;
+    }
+
+    @ZenMethod
+    public void setMaxDamage(int maxDamage) {
+        this.maxDamage = maxDamage;
+    }
+
     @Override
     public String getName() {
         return this.getUnlocalizedName();
@@ -168,9 +193,6 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public Item getInternal() {
         return ContentTweaker.instance.getRegistry(ItemRegistry.class, "BLOCK").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
-
     }
-
-
 
 }

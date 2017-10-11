@@ -4,9 +4,12 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.ActionResult;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.ICTPlayer;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
-import crafttweaker.api.player.IPlayer;
+import crafttweaker.api.util.Position3f;
+import stanhebben.zenscript.annotations.ZenClass;
 
-public interface IItemUseFunction {
-    ActionResult useItem(IPlayer player, IWorld world, IBlockPos pos, Hand hand, Facing facing, float hitX, float hitY, float hitZ);
+@ZenClass("mods.contenttweaker.IItemUse")
+public interface IItemUse {
+    ActionResult useItem(ICTPlayer player, IWorld world, IBlockPos pos, Hand hand, Facing facing, Position3f blockHit);
 }

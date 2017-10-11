@@ -8,6 +8,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresen
 import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemUse;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.BlockBracketHandler;
@@ -48,6 +49,7 @@ public class VanillaModule extends ModuleBase {
         CraftTweakerAPI.registerBracketHandler(new BlockBracketHandler());
 
         CraftTweakerAPI.registerClass(IItemRightClick.class);
+        CraftTweakerAPI.registerClass(IItemUse.class);
         CraftTweakerAPI.registerClass(IBlockAction.class);
 
         CraftTweakerAPI.registerClass(ICreativeTab.class);
