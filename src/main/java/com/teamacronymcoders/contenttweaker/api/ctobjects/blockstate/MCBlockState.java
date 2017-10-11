@@ -1,5 +1,7 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate;
 
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
 import crafttweaker.api.block.IBlock;
 import crafttweaker.mc1120.block.MCSpecificBlock;
 import net.minecraft.block.Block;
@@ -35,6 +37,11 @@ public class MCBlockState implements ICTBlockState {
     @Override
     public int getMeta() {
         return this.getBlock().getMeta();
+    }
+
+    @Override
+    public boolean isReplaceable(IWorld world, IBlockPos blockPos) {
+        return this.blockState.getBlock().isReplaceable(world.getInternal(), blockPos.getInternal());
     }
 
     @Override

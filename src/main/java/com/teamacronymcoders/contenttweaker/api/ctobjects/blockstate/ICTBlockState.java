@@ -1,6 +1,8 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate;
 
 import com.teamacronymcoders.contenttweaker.api.ICTObject;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.block.IBlock;
 import net.minecraft.block.state.IBlockState;
@@ -18,4 +20,7 @@ public interface ICTBlockState extends ICTObject<IBlockState> {
     @ZenMethod
     @ZenGetter("meta")
     int getMeta();
+
+    @ZenMethod
+    boolean isReplaceable(IWorld world, IBlockPos blockPos);
 }
