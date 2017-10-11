@@ -5,10 +5,11 @@ import crafttweaker.annotations.ZenRegister;
 import net.minecraft.util.math.AxisAlignedBB;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.ZenMethodStatic;
 import stanhebben.zenscript.annotations.ZenProperty;
 
 @ZenRegister
-@ZenClass("mods.contenttweaker.aabb")
+@ZenClass("mods.contenttweaker.AxisAlignedBB")
 public class MCAxisAlignedBB implements ICTObject<AxisAlignedBB> {
     @ZenProperty
     public double minX = 0.0;
@@ -32,7 +33,7 @@ public class MCAxisAlignedBB implements ICTObject<AxisAlignedBB> {
         this.maxZ = maxZ;
     }
 
-    @ZenMethod
+    @ZenMethodStatic
     public static MCAxisAlignedBB create(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         return new MCAxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ);
     }
