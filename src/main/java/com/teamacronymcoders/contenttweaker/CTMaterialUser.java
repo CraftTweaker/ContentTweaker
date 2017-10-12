@@ -16,6 +16,6 @@ public class CTMaterialUser extends MaterialUser {
 
     @Override
     protected boolean hasErred() {
-        return super.hasErred() && ContentTweaker.scriptsSuccessful;
+        return super.hasErred() || !ContentTweaker.scriptsSuccessful;
     }
 }
