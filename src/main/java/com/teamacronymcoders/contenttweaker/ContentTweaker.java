@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
+import com.teamacronymcoders.base.util.OreDictUtils;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import crafttweaker.CraftTweakerAPI;
@@ -39,6 +40,7 @@ public class ContentTweaker extends BaseModFoundation<ContentTweaker> {
         ContentTweakerAPI.setInstance(new ContentTweakerAPI(new ModWrapper()));
         this.subBlockSystem = new SubBlockSystem(this);
         this.materialUser = new CTMaterialUser(this);
+        OreDictUtils.addDefaultModId(MOD_ID);
     }
 
     @EventHandler
