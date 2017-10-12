@@ -6,6 +6,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockSta
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.block.IBlock;
 import crafttweaker.api.world.IBiome;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
@@ -28,6 +29,9 @@ public interface IWorld extends ICTObject<World> {
 
     @ZenMethod
     boolean setBlockState(ICTBlockState blockState, IBlockPos blockPos);
+
+    @ZenMethod
+    ICTBlockState getBlockState(IBlockPos blockPos);
 
     @ZenMethod
     IBiome getBiome(IBlockPos blockPos);

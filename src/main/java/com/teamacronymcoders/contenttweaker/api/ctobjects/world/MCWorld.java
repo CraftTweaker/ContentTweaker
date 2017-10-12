@@ -2,8 +2,10 @@ package com.teamacronymcoders.contenttweaker.api.ctobjects.world;
 
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import crafttweaker.api.world.IBiome;
 import crafttweaker.mc1120.world.MCBiome;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
 public class MCWorld implements IWorld {
@@ -31,6 +33,11 @@ public class MCWorld implements IWorld {
     @Override
     public boolean setBlockState(ICTBlockState blockState, IBlockPos blockPos) {
         return this.world.setBlockState(blockPos.getInternal(), blockState.getInternal(), 2);
+    }
+
+    @Override
+    public ICTBlockState getBlockState(IBlockPos blockPos) {
+        return new MCBlockState(this.world.getBlockState(blockPos.getInternal()));
     }
 
     @Override
