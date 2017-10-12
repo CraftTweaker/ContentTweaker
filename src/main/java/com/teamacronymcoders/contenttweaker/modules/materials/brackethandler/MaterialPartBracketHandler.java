@@ -28,7 +28,7 @@ public class MaterialPartBracketHandler implements IBracketHandler {
     }
 
     public static MaterialPartDefinition getMaterialPart(String name) {
-        MaterialPart materialPart = MaterialSystem.getMaterialPart(name);
+        MaterialPart materialPart = MaterialSystem.getMaterialPart(name.replace(":", "_"));
         MaterialPartDefinition zenMaterialPart = null;
         if (materialPart != null) {
             zenMaterialPart = new MaterialPartDefinition(materialPart);
