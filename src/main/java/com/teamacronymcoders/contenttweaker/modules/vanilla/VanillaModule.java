@@ -3,16 +3,14 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla;
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.biome.ICTBiome;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.ResourceListCommand;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemUse;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.BlockBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.CreativeTabBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialBracketHandler;
@@ -50,17 +48,14 @@ public class VanillaModule extends ModuleBase {
                 ContentTweakerAPI.getInstance().getSoundTypes()));
         CraftTweakerAPI.registerBracketHandler(new BlockBracketHandler());
 
-        CraftTweakerAPI.registerClass(ICTBiome.class);
-        CraftTweakerAPI.registerClass(IWorld.class);
-        CraftTweakerAPI.registerClass(IBlockPos.class);
-        CraftTweakerAPI.registerClass(ICTBlockState.class);
-
         CraftTweakerAPI.registerClass(IItemRightClick.class);
+        CraftTweakerAPI.registerClass(IItemUse.class);
         CraftTweakerAPI.registerClass(IBlockAction.class);
 
         CraftTweakerAPI.registerClass(ICreativeTab.class);
         CraftTweakerAPI.registerClass(BlockRepresentation.class);
         CraftTweakerAPI.registerClass(ItemRepresentation.class);
+        CraftTweakerAPI.registerClass(FluidRepresentation.class);
         CraftTweakerAPI.registerClass(VanillaFactory.class);
         CraftTweakerAPI.registerClass(Commands.class);
     }

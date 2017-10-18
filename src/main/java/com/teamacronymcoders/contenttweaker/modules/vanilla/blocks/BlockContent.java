@@ -5,12 +5,15 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -19,6 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
 
 public class BlockContent extends BlockBase {
     private BlockRepresentation blockRepresentation;
@@ -26,6 +31,7 @@ public class BlockContent extends BlockBase {
     private EnumBlockRenderType enumBlockRenderType;
     private CreativeTabs creativeTab;
     private BlockRenderLayer blockRenderLayer;
+    private AxisAlignedBB blockShape;
 
     public BlockContent(BlockRepresentation blockRepresentation) {
         super(blockRepresentation.getBlockMaterial().getInternal(), blockRepresentation.getUnlocalizedName());
@@ -44,6 +50,17 @@ public class BlockContent extends BlockBase {
         this.setSoundType(this.blockRepresentation.getBlockSoundType().getInternal());
         this.enumBlockRenderType = CTUtils.getEnum(this.blockRepresentation.getEnumBlockRenderType(), EnumBlockRenderType.class);
         this.blockRenderLayer = CTUtils.getEnum(this.blockRepresentation.getBlockLayer(), BlockRenderLayer.class);
+        this.blockShape = this.blockRepresentation.getAxisAlignedBB().getInternal();
+        if (this.blockRepresentation.getOnRandomTick() != null) {
+            this.setTickRandomly(true);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public boolean isSideSolid(IBlockState baseState, IBlockAccess world, BlockPos pos, EnumFacing side) {
+        return this.blockRepresentation.isFullBlock();
     }
 
     @Nonnull
@@ -86,21 +103,41 @@ public class BlockContent extends BlockBase {
     @Override
     public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.onBlockAdded(world, pos, state);
-        if (this.blockRepresentation.getOnBlockPlace() != null) {
-            this.blockRepresentation.getOnBlockPlace().onBlockAction(new MCWorld(world), new MCBlockPos(pos), new MCBlockState(state));
-        }
+        activateBlockAction(this.blockRepresentation.getOnBlockPlace(), world, pos, state);
     }
 
     @Override
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.breakBlock(world, pos, state);
-        if (this.blockRepresentation.getOnBlockBreak() != null) {
-            this.blockRepresentation.getOnBlockBreak().onBlockAction(new MCWorld(world), new MCBlockPos(pos), new MCBlockState(state));
-        }
+        activateBlockAction(this.blockRepresentation.getOnBlockBreak(), world, pos, state);
     }
 
     @Override
     public float getSlipperiness(IBlockState state, IBlockAccess world, BlockPos pos, @Nullable Entity entity) {
         return this.blockRepresentation.getSlipperiness();
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return this.blockShape;
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        activateBlockAction(this.blockRepresentation.getOnRandomTick(), world, pos, state);
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        activateBlockAction(this.blockRepresentation.getOnUpdateTick(), world, pos, state);
+    }
+
+    public void activateBlockAction(IBlockAction blockAction, World world, BlockPos blockPos, IBlockState blockState) {
+        if (blockAction != null) {
+            blockAction.onBlockAction(new MCWorld(world), new MCBlockPos(blockPos), new MCBlockState(blockState));
+        }
     }
 }

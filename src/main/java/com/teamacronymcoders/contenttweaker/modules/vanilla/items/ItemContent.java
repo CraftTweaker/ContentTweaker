@@ -1,10 +1,24 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.ItemBase;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.CTPlayer;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
+import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.player.MCPlayer;
 import net.minecraft.creativetab.CreativeTabs;
@@ -15,18 +29,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
-public class ItemContent extends Item implements IHasModel {
+public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedModel {
     private ItemRepresentation itemRepresentation;
     private CreativeTabs creativeTab;
     private IBaseMod mod;
@@ -34,6 +48,7 @@ public class ItemContent extends Item implements IHasModel {
     private EnumRarity rarity;
 
     public ItemContent(ItemRepresentation itemRepresentation) {
+        super(itemRepresentation.getUnlocalizedName());
         this.itemRepresentation = itemRepresentation;
         checkFields();
         setFields();
@@ -67,6 +82,9 @@ public class ItemContent extends Item implements IHasModel {
         this.setHarvestLevel(this.itemRepresentation.getToolClass(), this.itemRepresentation.getToolLevel());
         this.itemUseAction = CTUtils.getEnum(this.itemRepresentation.getItemUseAction(), EnumAction.class);
         this.rarity = CTUtils.getEnum(this.itemRepresentation.getRarity(), EnumRarity.class);
+        if (this.itemRepresentation.getMaxDamage() > 0) {
+            this.setMaxDamage(this.itemRepresentation.getMaxDamage());
+        }
     }
 
     @Override
@@ -122,6 +140,19 @@ public class ItemContent extends Item implements IHasModel {
 
     @Override
     @Nonnull
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
+                                      float hitX, float hitY, float hitZ) {
+        EnumActionResult actionResult = EnumActionResult.PASS;
+        if (Objects.nonNull(itemRepresentation.getOnItemUse())) {
+            Position3f blockTouch = new Position3f(hitX, hitY, hitZ);
+            itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
+                    Hand.of(hand), Facing.of(facing), blockTouch);
+        }
+        return actionResult;
+    }
+
+    @Override
+    @Nonnull
     public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
         return this.itemUseAction;
     }
@@ -141,5 +172,16 @@ public class ItemContent extends Item implements IHasModel {
     @Override
     public Item getItem() {
         return this;
+    }
+
+    @Override
+    public List<IGeneratedModel> getGeneratedModels() {
+        List<IGeneratedModel> models = Lists.newArrayList();
+        TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
+        Map<String, String> replacements = Maps.newHashMap();
+        replacements.put("texture", "contenttweaker:items/" + itemRepresentation.getUnlocalizedName());
+        templateFile.replaceContents(replacements);
+        models.add(new GeneratedModel(itemRepresentation.getUnlocalizedName(), ModelType.ITEM_MODEL, templateFile.getFileContents()));
+        return models;
     }
 }

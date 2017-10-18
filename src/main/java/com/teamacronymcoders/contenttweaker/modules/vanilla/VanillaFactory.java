@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla;
 
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
@@ -47,5 +48,10 @@ public class VanillaFactory {
     @ZenMethod
     public static ICreativeTab createCreativeTab(String unlocalizedName, BlockRepresentation iBlock) {
         return createCreativeTab(unlocalizedName, new MCItemStack(new ItemStack(iBlock.getInternal())));
+    }
+
+    @ZenMethod
+    public static FluidRepresentation createFluid(String unlocalizedName, int color) {
+        return new FluidRepresentation(unlocalizedName, color);
     }
 }

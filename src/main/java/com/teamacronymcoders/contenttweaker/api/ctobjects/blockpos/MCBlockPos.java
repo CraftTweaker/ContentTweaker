@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos;
 
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
@@ -28,6 +29,11 @@ public class MCBlockPos implements IBlockPos {
     @Override
     public IBlockPos getOffset(String directionName, int offset) {
         return new MCBlockPos(blockPos.offset(EnumFacing.valueOf(directionName), offset));
+    }
+
+    @Override
+    public IBlockPos getOffset(Facing facing, int offset) {
+        return new MCBlockPos(blockPos.offset(facing.getInternal(), offset));
     }
 
     @Override

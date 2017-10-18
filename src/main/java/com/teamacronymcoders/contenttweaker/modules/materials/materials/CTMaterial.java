@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
-import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.contenttweaker.modules.materials.CTMaterialSystem;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
@@ -38,23 +37,23 @@ public class CTMaterial implements IMaterial {
     }
 
     @Override
-    public List<IMaterialPart> registerParts(String[] partNames) throws MaterialException {
+    public List<IMaterialPart> registerParts(String[] partNames) {
         return CTMaterialSystem.registerPartsForMaterial(this.material, partNames);
     }
 
     @Override
-    public List<IMaterialPart> registerParts(IPart[] parts) throws MaterialException {
+    public List<IMaterialPart> registerParts(IPart[] parts) {
         List<String> names = Arrays.stream(parts).map(IPart::getName).collect(Collectors.toList());
         return this.registerParts(names.toArray(new String[names.size()]));
     }
 
     @Override
-    public IMaterialPart registerPart(String partName) throws MaterialException {
-        return this.registerParts(new String[] {partName}).get(0);
+    public IMaterialPart registerPart(String partName) {
+        return this.registerParts(new String[]{partName}).get(0);
     }
 
     @Override
-    public IMaterialPart registerPart(IPart part) throws MaterialException {
-        return this.registerParts(new IPart[] {part}).get(0);
+    public IMaterialPart registerPart(IPart part) {
+        return this.registerParts(new IPart[]{part}).get(0);
     }
 }

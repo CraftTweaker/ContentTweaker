@@ -2,6 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.materials;
 
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
+import com.teamacronymcoders.contenttweaker.modules.materials.brackethandler.MaterialPartBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IMaterialPartData;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
@@ -37,5 +38,7 @@ public class MaterialModule extends ModuleBase {
         CraftTweakerAPI.registerClass(IMaterialPart.class);
         CraftTweakerAPI.registerClass(IRegisterMaterialPart .class);
         CraftTweakerAPI.registerClass(CTMaterialSystem.class);
+
+        CraftTweakerAPI.registerBracketHandler(new MaterialPartBracketHandler());
     }
 }

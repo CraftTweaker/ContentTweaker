@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.aabb.MCAxisAlignedBB;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
@@ -59,6 +60,12 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public IBlockAction onBlockBreak;
     @ZenProperty
     public String blockLayer = BlockRenderLayer.SOLID.toString();
+    @ZenProperty
+    public MCAxisAlignedBB axisAlignedBB = MCAxisAlignedBB.create(0, 0, 0, 1, 1, 1);
+    @ZenProperty
+    public IBlockAction onUpdateTick;
+    @ZenProperty
+    public IBlockAction onRandomTick;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -240,6 +247,36 @@ public class BlockRepresentation implements IRepresentation<Block> {
         return this.blockLayer;
     }
 
+    @ZenMethod
+    public MCAxisAlignedBB getAxisAlignedBB() {
+        return axisAlignedBB;
+    }
+
+    @ZenMethod
+    public void setAxisAlignedBB(MCAxisAlignedBB axisAlignedBB) {
+        this.axisAlignedBB = axisAlignedBB;
+    }
+
+    @ZenMethod
+    public IBlockAction getOnUpdateTick() {
+        return onUpdateTick;
+    }
+
+    @ZenMethod
+    public void setOnUpdateTick(IBlockAction onUpdateTick) {
+        this.onUpdateTick = onUpdateTick;
+    }
+
+    @ZenMethod
+    public IBlockAction getOnRandomTick() {
+        return onRandomTick;
+    }
+
+    @ZenMethod
+    public void setOnRandomTick(IBlockAction onRandomTick) {
+        this.onRandomTick = onRandomTick;
+    }
+
     @Override
     public Block getInternal() {
         return ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").get(new ResourceLocation(
@@ -260,4 +297,6 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public void register() {
         ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(new BlockContent(this));
     }
+
+
 }

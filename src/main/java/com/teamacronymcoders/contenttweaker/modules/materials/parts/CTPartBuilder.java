@@ -11,6 +11,7 @@ public class CTPartBuilder implements IPartBuilder {
     
     public CTPartBuilder() {
         this.partBuilder = new PartBuilder();
+        this.partBuilder.setOwnerId("contenttweaker");
     }
     
     @Override
