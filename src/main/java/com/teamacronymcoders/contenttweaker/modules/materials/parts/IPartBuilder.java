@@ -14,5 +14,8 @@ public interface IPartBuilder {
     IPartBuilder setPartType(IPartType partType);
 
     @ZenMethod
+    IPartBuilder setOreDictName(String prefix);
+
+    @ZenMethod
     IPart build() throws MaterialException;
 }

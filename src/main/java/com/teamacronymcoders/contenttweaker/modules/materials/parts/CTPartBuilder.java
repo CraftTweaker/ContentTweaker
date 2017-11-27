@@ -29,6 +29,12 @@ public class CTPartBuilder implements IPartBuilder {
     }
 
     @Override
+    public IPartBuilder setOreDictName(String prefix) {
+        this.partBuilder.setOreDictName(prefix);
+        return this;
+    }
+
+    @Override
     public IPart build() throws MaterialException {
         return new CTPart(this.partBuilder.build());
     }
