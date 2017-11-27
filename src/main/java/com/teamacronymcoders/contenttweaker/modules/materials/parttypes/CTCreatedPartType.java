@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parttypes;
 
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
@@ -18,7 +19,7 @@ public class CTCreatedPartType extends PartType implements IPartType {
     }
 
     @Override
-    public void setup(@Nonnull MaterialPart materialPart) {
+    public void setup(@Nonnull MaterialPart materialPart, @Nonnull MaterialUser materialUser) {
         this.materialPartRegister.register(new CTMaterialPart(materialPart));
     }
 
