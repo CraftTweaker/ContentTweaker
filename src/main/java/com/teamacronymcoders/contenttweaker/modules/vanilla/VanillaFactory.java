@@ -5,10 +5,9 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresen
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -16,7 +15,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("mods.contenttweaker.VanillaFactory")
 public class VanillaFactory {
     @ZenMethod
-    public static BlockRepresentation createBlock(String unlocalizedName, IMaterialDefinition material) {
+    public static BlockRepresentation createBlock(String unlocalizedName, IBlockMaterialDefinition material) {
         BlockRepresentation blockRepresentation = new BlockRepresentation();
         blockRepresentation.setUnlocalizedName(unlocalizedName);
         blockRepresentation.setBlockMaterial(material);
