@@ -1,7 +1,9 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack;
 
 import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.ICTPlayer;
+import crafttweaker.api.entity.IEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
 public class MCMutableItemStack extends MCItemStack implements IMutableItemStack {
@@ -28,7 +30,7 @@ public class MCMutableItemStack extends MCItemStack implements IMutableItemStack
     }
 
     @Override
-    public void damage(int amount, ICTPlayer entity) {
-        this.itemStack.damageItem(amount, entity.getInternal());
+    public void damage(int amount, IEntityLivingBase entity) {
+        this.itemStack.damageItem(amount, (EntityLivingBase) entity.getInternal());
     }
 }
