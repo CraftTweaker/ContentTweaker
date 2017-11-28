@@ -191,7 +191,7 @@ public class ItemRepresentation implements IRepresentation<Item> {
 
     @Override
     public Item getInternal() {
-        return ContentTweaker.instance.getRegistry(ItemRegistry.class, "BLOCK").get(new ResourceLocation(
+        return ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
 

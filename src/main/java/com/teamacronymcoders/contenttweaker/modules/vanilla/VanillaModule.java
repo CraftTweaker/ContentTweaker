@@ -11,6 +11,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRight
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemUse;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.items.food.ItemFoodRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.BlockBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.CreativeTabBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialBracketHandler;
@@ -55,6 +56,7 @@ public class VanillaModule extends ModuleBase {
         CraftTweakerAPI.registerClass(ICreativeTab.class);
         CraftTweakerAPI.registerClass(BlockRepresentation.class);
         CraftTweakerAPI.registerClass(ItemRepresentation.class);
+        CraftTweakerAPI.registerClass(ItemFoodRepresentation.class);
         CraftTweakerAPI.registerClass(FluidRepresentation.class);
         CraftTweakerAPI.registerClass(VanillaFactory.class);
         CraftTweakerAPI.registerClass(Commands.class);
