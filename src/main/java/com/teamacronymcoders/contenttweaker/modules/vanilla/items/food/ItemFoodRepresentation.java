@@ -2,7 +2,6 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items.food;
 
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemContent;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -15,7 +14,7 @@ public class ItemFoodRepresentation extends ItemRepresentation {
     @ZenProperty
     public boolean alwaysEditable = false;
     @ZenProperty
-    public boolean isWolfFood = false;
+    public boolean wolfFood = false;
     @ZenProperty
     public float saturation = 0.6f;
 
@@ -41,12 +40,12 @@ public class ItemFoodRepresentation extends ItemRepresentation {
 
     @ZenMethod
     public boolean isWolfFood() {
-        return isWolfFood;
+        return wolfFood;
     }
 
     @ZenMethod
     public void setWolfFood(boolean wolfFood) {
-        isWolfFood = wolfFood;
+        this.wolfFood = wolfFood;
     }
 
     @ZenMethod

@@ -29,7 +29,7 @@ public class ActionResult implements ICTObject<EnumActionResult> {
         return new ActionResult(EnumActionResult.SUCCESS);
     }
 
-    @ZenOperator(OperatorType.EQUALS)
+    @ZenOperator(OperatorType.COMPARE)
     public boolean equals(ActionResult actionResult) {
         return this.getInternal().equals(actionResult.getInternal());
     }

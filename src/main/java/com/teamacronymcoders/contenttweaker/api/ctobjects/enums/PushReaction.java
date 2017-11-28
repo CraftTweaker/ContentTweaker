@@ -42,7 +42,7 @@ public class PushReaction implements ICTObject<EnumPushReaction> {
         return new PushReaction(EnumPushReaction.PUSH_ONLY);
     }
 
-    @ZenOperator(OperatorType.EQUALS)
+    @ZenOperator(OperatorType.COMPARE)
     public boolean equals(PushReaction other) {
         return this.getInternal() == other.getInternal();
     }

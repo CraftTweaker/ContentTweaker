@@ -39,6 +39,7 @@ public interface ICTBlockState extends ICTObject<IBlockState> {
     @ZenMethod
     PushReaction getMobilityFlag();
 
-    @ZenOperator(OperatorType.EQUALS)
+    @ZenMethod
+    @ZenOperator(OperatorType.COMPARE)
     boolean equals(ICTBlockState other);
 }
