@@ -19,8 +19,8 @@ public class Facing implements ICTObject<EnumFacing> {
     }
 
     @ZenOperator(OperatorType.COMPARE)
-    public boolean equals(Facing facing) {
-        return this.getInternal() == facing.getInternal();
+    public int compare(Facing other) {
+        return this.getInternal().compareTo(other.getInternal());
     }
 
     @ZenMethod

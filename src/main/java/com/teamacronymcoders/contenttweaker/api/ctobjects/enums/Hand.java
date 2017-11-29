@@ -19,8 +19,8 @@ public class Hand implements ICTObject<EnumHand> {
     }
 
     @ZenOperator(OperatorType.COMPARE)
-    public boolean equals(Hand other) {
-        return this.getInternal() == other.getInternal();
+    public int compare(Hand other) {
+        return this.getInternal().compareTo(other.getInternal());
     }
 
     @ZenMethod

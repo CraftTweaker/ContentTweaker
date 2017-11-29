@@ -30,8 +30,8 @@ public class ActionResult implements ICTObject<EnumActionResult> {
     }
 
     @ZenOperator(OperatorType.COMPARE)
-    public boolean equals(ActionResult actionResult) {
-        return this.getInternal().equals(actionResult.getInternal());
+    public int compare(ActionResult actionResult) {
+        return this.getInternal().compareTo(actionResult.getInternal());
     }
 
     @Override

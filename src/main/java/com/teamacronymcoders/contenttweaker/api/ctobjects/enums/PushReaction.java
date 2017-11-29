@@ -43,10 +43,9 @@ public class PushReaction implements ICTObject<EnumPushReaction> {
     }
 
     @ZenOperator(OperatorType.COMPARE)
-    public boolean equals(PushReaction other) {
-        return this.getInternal() == other.getInternal();
+    public int compare(PushReaction other) {
+        return this.getInternal().compareTo(other.getInternal());
     }
-
     @Override
     public EnumPushReaction getInternal() {
         return pushReaction;

@@ -10,6 +10,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistry;
+import stanhebben.zenscript.annotations.OperatorType;
+import stanhebben.zenscript.annotations.ZenOperator;
 
 public class MCBlockState implements ICTBlockState {
     private IBlockState blockState;
@@ -72,8 +75,18 @@ public class MCBlockState implements ICTBlockState {
     }
 
     @Override
-    public boolean equals(ICTBlockState other) {
-        return this.blockState.equals(other.getInternal());
+    public int compare(ICTBlockState other) {
+        int result = 0;
+        if (!this.getInternal().equals(other.getInternal())) {
+            if (this.getInternal().getBlock().equals(other.getInternal().getBlock())) {
+                result = Integer.compare(this.getMeta(), other.getMeta());
+            } else {
+                int blockId = ((ForgeRegistry<Block>)ForgeRegistries.BLOCKS).getID(this.getInternal().getBlock());
+                int otherBlockId = ((ForgeRegistry<Block>)ForgeRegistries.BLOCKS).getID(this.getInternal().getBlock());
+                result = Integer.compare(blockId, otherBlockId);
+            }
+        }
+        return result;
     }
 
     @Override

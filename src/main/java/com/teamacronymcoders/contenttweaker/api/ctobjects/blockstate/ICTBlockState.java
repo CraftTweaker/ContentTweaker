@@ -41,5 +41,5 @@ public interface ICTBlockState extends ICTObject<IBlockState> {
 
     @ZenMethod
     @ZenOperator(OperatorType.COMPARE)
-    boolean equals(ICTBlockState other);
+    int compare(ICTBlockState other);
 }
