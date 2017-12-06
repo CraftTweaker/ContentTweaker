@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.materials;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
@@ -26,7 +27,10 @@ import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartTyp
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @ZenClass("mods.contenttweaker.MaterialSystem")
@@ -75,5 +79,33 @@ public class CTMaterialSystem {
                     .map(CTMaterialPart::new).collect(Collectors.toList()));
         }
         return materialParts;
+    }
+
+    @ZenMethod
+    public Map<String, IMaterialPart> getMaterialParts() {
+        return MaterialSystem.getMaterialParts().entrySet().parallelStream()
+                .map((entry) -> new CTMaterialPart(entry.getValue()))
+                .collect(Collectors.toMap(CTMaterialPart::getName, Function.identity()));
+    }
+
+    @ZenMethod
+    public Map<String, IMaterial> getMaterials() {
+        return MaterialSystem.getMaterials().entrySet().parallelStream()
+                .map((entry) -> new CTMaterial(entry.getValue()))
+                .collect(Collectors.toMap(CTMaterial::getName, Function.identity()));
+    }
+
+    @ZenMethod
+    public Map<String, IPart> getParts() {
+        return MaterialSystem.getParts().entrySet().parallelStream()
+                .map((entry) -> new CTPart(entry.getValue()))
+                .collect(Collectors.toMap(CTPart::getName, Function.identity()));
+    }
+
+    @ZenMethod
+    public Map<String, IPartType> getPartType() {
+        return MaterialSystem.getPartTypes().entrySet().parallelStream()
+                .map((entry) -> new CTPartType(entry.getValue()))
+                .collect(Collectors.toMap(CTPartType::getName, Function.identity()));
     }
 }

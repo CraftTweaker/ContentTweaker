@@ -58,8 +58,8 @@ public class ResourceList<RESOURCE> {
         return this.resources.values();
     }
 
-    public Collection<String> getAllNames() {
-        return this.resources.keySet();
+    public List<String> getAllNames() {
+        return Lists.newArrayList(this.resources.keySet());
     }
 
     private void loadResources() {

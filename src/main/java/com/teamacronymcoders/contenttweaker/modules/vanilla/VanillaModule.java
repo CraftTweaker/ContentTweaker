@@ -36,17 +36,17 @@ public class VanillaModule extends ModuleBase {
         super.preInit(event);
 
         CraftTweakerAPI.registerBracketHandler(new MaterialBracketHandler());
-        CTChatCommand.registerCommand(new ResourceListCommand<>("blockmaterial",
-                ContentTweakerAPI.getInstance().getBlockMaterials()));
+        CTChatCommand.registerCommand(new ResourceListCommand("blockmaterial",
+                ContentTweakerAPI.getInstance().getBlockMaterials().getAllNames()));
         CraftTweakerAPI.registerBracketHandler(new CreativeTabBracketHandler());
-        CTChatCommand.registerCommand(new ResourceListCommand<>("creativetab",
-                ContentTweakerAPI.getInstance().getCreativeTabs()));
+        CTChatCommand.registerCommand(new ResourceListCommand("creativetab",
+                ContentTweakerAPI.getInstance().getCreativeTabs().getAllNames()));
         CraftTweakerAPI.registerBracketHandler(new SoundEventBracketHandler());
-        CTChatCommand.registerCommand(new ResourceListCommand<>("soundevent",
-                ContentTweakerAPI.getInstance().getSoundTypes()));
+        CTChatCommand.registerCommand(new ResourceListCommand("soundevent",
+                ContentTweakerAPI.getInstance().getSoundTypes().getAllNames()));
         CraftTweakerAPI.registerBracketHandler(new SoundTypeBracketHandler());
-        CTChatCommand.registerCommand(new ResourceListCommand<>("soundtype",
-                ContentTweakerAPI.getInstance().getSoundTypes()));
+        CTChatCommand.registerCommand(new ResourceListCommand("soundtype",
+                ContentTweakerAPI.getInstance().getSoundTypes().getAllNames()));
         CraftTweakerAPI.registerBracketHandler(new BlockBracketHandler());
 
         CraftTweakerAPI.registerClass(IItemRightClick.class);
