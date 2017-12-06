@@ -13,9 +13,14 @@ import stanhebben.zenscript.annotations.ZenMethod;
 public class Commands {
     @ZenMethod
     public static void call(String command, IPlayer player, IWorld world) {
+        call(command, player, world, true, true);
+    }
+
+    @ZenMethod
+    public static void call(String command, IPlayer player, IWorld world, boolean logToChat, boolean overridePermissions) {
         if (!world.isRemote() && player instanceof MCPlayer) {
             EntityPlayer entityPlayer = ((MCPlayer) player).getInternal();
-            CommandSenderWrapper commandSenderWrapper = new CommandSenderWrapper(entityPlayer, true, true);
+            CommandSenderWrapper commandSenderWrapper = new CommandSenderWrapper(entityPlayer, overridePermissions, logToChat);
             MinecraftServer server = world.getInternal().getMinecraftServer();
             if (server != null) {
                 server.getCommandManager().executeCommand(commandSenderWrapper, command);
