@@ -13,14 +13,17 @@ import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.CTPlayer;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMutableItemStack;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.player.MCPlayer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -150,6 +153,14 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         }
         return actionResult;
     }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        return Optional.ofNullable(itemRepresentation.getiItemDestroySpeed())
+                .map(value -> value.getDestroySpeed(new MCMutableItemStack(stack), new MCBlockState(state)))
+                .orElseGet(() -> super.getDestroySpeed(stack, state));
+    }
+
 
     @Override
     @Nonnull
