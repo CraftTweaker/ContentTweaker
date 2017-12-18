@@ -6,6 +6,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class SoundEventsResourceList extends ResourceList<SoundEvent> {
@@ -24,7 +25,7 @@ public class SoundEventsResourceList extends ResourceList<SoundEvent> {
     }
 
     @Override
-    public Collection<String> getAllNames() {
+    public List<String> getAllNames() {
         return ForgeRegistries.SOUND_EVENTS.getKeys().stream().map(ResourceLocation::toString).collect(Collectors.toList());
     }
 
