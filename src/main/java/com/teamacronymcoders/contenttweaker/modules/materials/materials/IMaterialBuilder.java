@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -11,6 +12,9 @@ public interface IMaterialBuilder {
 
     @ZenMethod
     IMaterialBuilder setColor(int color);
+
+    @ZenMethod
+    IMaterialBuilder setColor(CTColor color);
 
     @ZenMethod
     IMaterialBuilder setHasEffect(boolean hasEffect);

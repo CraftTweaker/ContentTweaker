@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla;
 
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRepresentation;
@@ -60,6 +61,11 @@ public class VanillaFactory {
 
     @ZenMethod
     public static FluidRepresentation createFluid(String unlocalizedName, int color) {
-        return new FluidRepresentation(unlocalizedName, color);
+        return createFluid(unlocalizedName, CTColor.fromInt(color));
+    }
+
+    @ZenMethod
+    public static FluidRepresentation createFluid(String unlocalizedName, CTColor color) {
+        return new FluidRepresentation(unlocalizedName, color.getIntColor());
     }
 }
