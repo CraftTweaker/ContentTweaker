@@ -156,7 +156,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
 
     @Override
     public float getDestroySpeed(ItemStack stack, IBlockState state) {
-        return Optional.ofNullable(itemRepresentation.getiItemDestroySpeed())
+        return Optional.ofNullable(itemRepresentation.getItemDestroySpeed())
                 .map(value -> value.getDestroySpeed(new MCMutableItemStack(stack), new MCBlockState(state)))
                 .orElseGet(() -> super.getDestroySpeed(stack, state));
     }

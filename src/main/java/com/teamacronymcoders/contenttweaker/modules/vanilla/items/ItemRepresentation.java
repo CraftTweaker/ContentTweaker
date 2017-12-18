@@ -45,7 +45,7 @@ public class ItemRepresentation implements IRepresentation<Item> {
     @ZenProperty
     public int maxDamage = -1;
     @ZenProperty
-    public IItemDestroySpeed iItemDestroySpeed;
+    public IItemDestroySpeed itemDestroySpeed;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -177,6 +177,16 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.maxDamage = maxDamage;
     }
 
+    @ZenMethod
+    public IItemDestroySpeed getItemDestroySpeed() {
+        return itemDestroySpeed;
+    }
+
+    @ZenMethod
+    public void setItemDestroySpeed(IItemDestroySpeed itemDestroySpeed) {
+        this.itemDestroySpeed = itemDestroySpeed;
+    }
+
     @Override
     public String getName() {
         return this.getUnlocalizedName();
@@ -198,11 +208,5 @@ public class ItemRepresentation implements IRepresentation<Item> {
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
 
-    public IItemDestroySpeed getiItemDestroySpeed() {
-        return iItemDestroySpeed;
-    }
 
-    public void setiItemDestroySpeed(IItemDestroySpeed iItemDestroySpeed) {
-        this.iItemDestroySpeed = iItemDestroySpeed;
-    }
 }
