@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemDestroySpeed;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemDestroyedBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemUse;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
@@ -46,6 +47,8 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public int maxDamage = -1;
     @ZenProperty
     public IItemDestroySpeed itemDestroySpeed;
+    @ZenProperty
+    public IItemDestroyedBlock itemDestroyedBlock;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -187,6 +190,16 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.itemDestroySpeed = itemDestroySpeed;
     }
 
+    @ZenMethod
+    public IItemDestroyedBlock getItemDestroyedBlock() {
+        return itemDestroyedBlock;
+    }
+
+    @ZenMethod
+    public void setItemDestroyedBlock(IItemDestroyedBlock itemDestroyedBlock) {
+        this.itemDestroyedBlock = itemDestroyedBlock;
+    }
+
     @Override
     public String getName() {
         return this.getUnlocalizedName();
@@ -207,6 +220,7 @@ public class ItemRepresentation implements IRepresentation<Item> {
         return ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
+
 
 
 }

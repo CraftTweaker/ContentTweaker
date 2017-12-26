@@ -6,9 +6,7 @@ import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.api.utils.ResourceListCommand;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresentation;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemUse;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.*;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.food.ItemFoodRepresentation;
@@ -52,6 +50,8 @@ public class VanillaModule extends ModuleBase {
         CraftTweakerAPI.registerClass(IItemRightClick.class);
         CraftTweakerAPI.registerClass(IItemUse.class);
         CraftTweakerAPI.registerClass(IBlockAction.class);
+        CraftTweakerAPI.registerClass(IItemDestroyedBlock.class);
+        CraftTweakerAPI.registerClass(IItemDestroySpeed.class);
 
         CraftTweakerAPI.registerClass(ICreativeTab.class);
         CraftTweakerAPI.registerClass(BlockRepresentation.class);

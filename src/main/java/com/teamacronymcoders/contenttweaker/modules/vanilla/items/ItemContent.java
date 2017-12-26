@@ -21,10 +21,12 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMut
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import crafttweaker.api.util.Position3f;
+import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.player.MCPlayer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
@@ -161,7 +163,14 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
                 .orElseGet(() -> super.getDestroySpeed(stack, state));
     }
 
-
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
+        return Optional.ofNullable(itemRepresentation.getItemDestroyedBlock())
+                .map(value -> value.onBlockDestroyed(new MCMutableItemStack(stack), new MCWorld(world),
+                        new MCBlockState(state), new MCBlockPos(pos), new MCEntityLivingBase(entityLiving)))
+                .orElseGet(() -> super.onBlockDestroyed(stack, world, state, pos, entityLiving));
+    }
+    
     @Override
     @Nonnull
     public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
