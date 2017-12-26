@@ -3,6 +3,8 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemDestroySpeed;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemDestroyedBlock;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemUse;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
@@ -43,6 +45,10 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public IItemUse onItemUse = null;
     @ZenProperty
     public int maxDamage = -1;
+    @ZenProperty
+    public IItemDestroySpeed itemDestroySpeed;
+    @ZenProperty
+    public IItemDestroyedBlock itemDestroyedBlock;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -174,6 +180,26 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.maxDamage = maxDamage;
     }
 
+    @ZenMethod
+    public IItemDestroySpeed getItemDestroySpeed() {
+        return itemDestroySpeed;
+    }
+
+    @ZenMethod
+    public void setItemDestroySpeed(IItemDestroySpeed itemDestroySpeed) {
+        this.itemDestroySpeed = itemDestroySpeed;
+    }
+
+    @ZenMethod
+    public IItemDestroyedBlock getItemDestroyedBlock() {
+        return itemDestroyedBlock;
+    }
+
+    @ZenMethod
+    public void setItemDestroyedBlock(IItemDestroyedBlock itemDestroyedBlock) {
+        this.itemDestroyedBlock = itemDestroyedBlock;
+    }
+
     @Override
     public String getName() {
         return this.getUnlocalizedName();
@@ -191,8 +217,10 @@ public class ItemRepresentation implements IRepresentation<Item> {
 
     @Override
     public Item getInternal() {
-        return ContentTweaker.instance.getRegistry(ItemRegistry.class, "BLOCK").get(new ResourceLocation(
+        return ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
+
+
 
 }

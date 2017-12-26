@@ -6,12 +6,13 @@ import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
 
+import java.util.Arrays;
+
 public class CTPartBuilder implements IPartBuilder {
     private PartBuilder partBuilder;
     
     public CTPartBuilder() {
-        this.partBuilder = new PartBuilder();
-        this.partBuilder.setOwnerId("contenttweaker");
+        this.partBuilder = new PartBuilder().setOwnerId("contenttweaker");
     }
     
     @Override
@@ -25,6 +26,18 @@ public class CTPartBuilder implements IPartBuilder {
         if (partType.getInternal() instanceof PartType) {
             this.partBuilder.setPartType((PartType) partType.getInternal());
         }
+        return this;
+    }
+
+    @Override
+    public IPartBuilder setOreDictName(String prefix) {
+        this.partBuilder.setOreDictName(prefix);
+        return this;
+    }
+
+    @Override
+    public IPartBuilder setAdditionalOreDictNames(String... prefix) {
+        this.partBuilder.setAdditionalOreDictNames(prefix);
         return this;
     }
 

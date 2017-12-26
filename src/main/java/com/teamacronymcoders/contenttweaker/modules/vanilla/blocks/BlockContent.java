@@ -3,10 +3,12 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -23,6 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 import java.util.Random;
 
 public class BlockContent extends BlockBase {
@@ -139,5 +142,14 @@ public class BlockContent extends BlockBase {
         if (blockAction != null) {
             blockAction.onBlockAction(new MCWorld(world), new MCBlockPos(blockPos), new MCBlockState(blockState));
         }
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public EnumPushReaction getMobilityFlag(@Nonnull IBlockState state) {
+        return Optional.ofNullable(blockRepresentation.getMobilityFlag())
+                .map(PushReaction::getInternal)
+                .orElse(state.getMobilityFlag());
     }
 }

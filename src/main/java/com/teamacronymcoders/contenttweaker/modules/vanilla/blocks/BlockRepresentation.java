@@ -4,11 +4,12 @@ import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.aabb.MCAxisAlignedBB;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialDefinition;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.BlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeDefinition;
 import net.minecraft.block.Block;
@@ -47,7 +48,7 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
     public ISoundTypeDefinition blockSoundType = new SoundTypeDefinition(SoundType.METAL);
     @ZenProperty
-    public IMaterialDefinition blockMaterial = new MaterialDefinition(Material.IRON);
+    public IBlockMaterialDefinition blockMaterial = new BlockMaterialDefinition(Material.IRON);
     @ZenProperty
     public float enchantPowerBonus = 0;
     @ZenProperty
@@ -66,6 +67,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public IBlockAction onUpdateTick;
     @ZenProperty
     public IBlockAction onRandomTick;
+    @ZenProperty
+    public PushReaction mobilityFlag;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -178,12 +181,12 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public IMaterialDefinition getBlockMaterial() {
+    public IBlockMaterialDefinition getBlockMaterial() {
         return this.blockMaterial;
     }
 
     @ZenMethod
-    public void setBlockMaterial(IMaterialDefinition material) {
+    public void setBlockMaterial(IBlockMaterialDefinition material) {
         this.blockMaterial = material;
     }
 
@@ -275,6 +278,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void setOnRandomTick(IBlockAction onRandomTick) {
         this.onRandomTick = onRandomTick;
+    }
+
+    @ZenMethod
+    public PushReaction getMobilityFlag() {
+        return mobilityFlag;
+    }
+
+    @ZenMethod
+    public void setMobilityFlag(PushReaction mobilityFlag) {
+        this.mobilityFlag = mobilityFlag;
     }
 
     @Override

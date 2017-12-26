@@ -1,11 +1,12 @@
-package com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials;
+package com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial;
 
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import net.minecraft.block.material.Material;
 
-public class MaterialDefinition implements IMaterialDefinition {
+public class BlockMaterialDefinition implements IBlockMaterialDefinition {
     private Material material;
 
-    public MaterialDefinition(Material material) {
+    public BlockMaterialDefinition(Material material) {
         this.material = material;
     }
 
@@ -55,8 +56,8 @@ public class MaterialDefinition implements IMaterialDefinition {
     }
 
     @Override
-    public String getMobilityFlag() {
-        return this.material.getMobilityFlag().name();
+    public PushReaction getMobilityFlag() {
+        return PushReaction.of(this.material.getMobilityFlag());
     }
 
     @Override

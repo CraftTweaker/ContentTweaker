@@ -39,12 +39,8 @@ public class CreativeTabsResourceList extends ResourceList<CreativeTabs> {
     }
 
     @Override
-    public Collection<String> getAllNames() {
-        return Arrays.stream(CreativeTabs.CREATIVE_TAB_ARRAY).map(creativeTab -> {
-            @SuppressWarnings("UnnecessaryLocalVariable")
-            String label = ReflectionHelper.getPrivateValue(
-                    CreativeTabs.class, creativeTab, "tabLabel", "field_78034_o");
-            return label;
-        }).collect(Collectors.toList());
+    public List<String> getAllNames() {
+        return Arrays.stream(CreativeTabs.CREATIVE_TAB_ARRAY).map(creativeTab -> ReflectionHelper.getPrivateValue(
+                CreativeTabs.class, creativeTab, "tabLabel", "field_78034_o").toString()).collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package com.teamacronymcoders.contenttweaker.modules.materials.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.materials.MaterialBuilder;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 
 import java.awt.*;
 
@@ -20,7 +21,12 @@ public class CTMaterialBuilder implements IMaterialBuilder {
 
     @Override
     public IMaterialBuilder setColor(int color) {
-        this.materialBuilder.setColor(new Color(color));
+        return setColor(CTColor.fromInt(color));
+    }
+
+    @Override
+    public IMaterialBuilder setColor(CTColor color) {
+        this.materialBuilder.setColor(new Color(color.getIntColor(), true));
         return this;
     }
 

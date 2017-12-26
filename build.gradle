@@ -48,7 +48,7 @@ repositories {
 
 dependencies {
     deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}-SNAPSHOT.+"
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${minecraft_version}-${crafttweaker_version}"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${crafttweaker_version}"
     //deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
     //deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
 }

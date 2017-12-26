@@ -3,9 +3,7 @@ package com.teamacronymcoders.contenttweaker.api.ctobjects.enums;
 import com.teamacronymcoders.contenttweaker.api.ICTObject;
 import crafttweaker.annotations.ZenRegister;
 import net.minecraft.util.EnumHand;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
-import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.*;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.Hand")
@@ -18,6 +16,11 @@ public class Hand implements ICTObject<EnumHand> {
 
     public static Hand of(EnumHand enumHand) {
         return new Hand(enumHand);
+    }
+
+    @ZenOperator(OperatorType.COMPARE)
+    public int compare(Hand other) {
+        return this.getInternal().compareTo(other.getInternal());
     }
 
     @ZenMethod

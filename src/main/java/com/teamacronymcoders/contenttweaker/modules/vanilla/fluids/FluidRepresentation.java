@@ -3,8 +3,8 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.fluids;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.IMaterialDefinition;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.materials.MaterialDefinition;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.BlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundEventDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundEventDefinition;
 import crafttweaker.CraftTweakerAPI;
@@ -48,7 +48,7 @@ public class FluidRepresentation implements IRepresentation<Fluid> {
     @ZenProperty
     public String flowingLocation = "contenttweaker:fluids/fluid_flow";
     @ZenProperty
-    public IMaterialDefinition material = new MaterialDefinition(Material.WATER);
+    public IBlockMaterialDefinition material = new BlockMaterialDefinition(Material.WATER);
 
     public FluidRepresentation(String unlocalizedName, int color) {
         this.unlocalizedName = unlocalizedName;
@@ -196,17 +196,17 @@ public class FluidRepresentation implements IRepresentation<Fluid> {
     }
 
     @ZenMethod
-    public IMaterialDefinition getMaterial() {
+    public IBlockMaterialDefinition getMaterial() {
         return material;
     }
 
     @ZenMethod
-    public void setMaterial(IMaterialDefinition material) {
+    public void setMaterial(IBlockMaterialDefinition material) {
         if (material.isLiquid()) {
             this.material = material;
         } else {
             CraftTweakerAPI.logError("Cannot set Material for Fluid " + this.getUnlocalizedName() +
-                    " as the material does not have 'isLiquid = true'");
+                    " as the blockmaterial does not have 'isLiquid = true'");
         }
     }
 
