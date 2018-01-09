@@ -69,6 +69,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public IBlockAction onRandomTick;
     @ZenProperty
     public PushReaction mobilityFlag;
+    @ZenProperty
+    public boolean passable = !this.blockMaterial.blocksMovement();
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -290,6 +292,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
         this.mobilityFlag = mobilityFlag;
     }
 
+    @ZenMethod
+    public boolean isPassable() {
+        return passable;
+    }
+
+    @ZenMethod
+    public void setPassable(boolean passable) {
+        this.passable = passable;
+    }
+
     @Override
     public Block getInternal() {
         return ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").get(new ResourceLocation(
@@ -310,6 +322,4 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public void register() {
         ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(new BlockContent(this));
     }
-
-
 }
