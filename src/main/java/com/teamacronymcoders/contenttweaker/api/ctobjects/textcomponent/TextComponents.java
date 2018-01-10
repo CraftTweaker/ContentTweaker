@@ -7,12 +7,12 @@ import stanhebben.zenscript.annotations.ZenMethod;
 public class TextComponents {
 
     @ZenMethod
-    public MCTextComponent text(String text){
+    public static MCTextComponent text(String text){
         return new MCTextComponent(text);
     }
 
     @ZenMethod
-    public MCTextComponentTranslation textTranslation(String text){
+    public static MCTextComponentTranslation textTranslation(String text){
         return new MCTextComponentTranslation(text);
     }
 
