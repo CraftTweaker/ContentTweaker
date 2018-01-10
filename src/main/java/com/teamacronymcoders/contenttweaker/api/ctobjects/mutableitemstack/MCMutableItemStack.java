@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack;
 
-import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.ICTPlayer;
 import crafttweaker.api.entity.IEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.entity.EntityLivingBase;

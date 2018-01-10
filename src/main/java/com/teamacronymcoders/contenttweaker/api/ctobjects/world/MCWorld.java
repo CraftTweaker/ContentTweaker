@@ -5,7 +5,6 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockSta
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import crafttweaker.api.world.IBiome;
 import crafttweaker.mc1120.world.MCBiome;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
 public class MCWorld implements IWorld {

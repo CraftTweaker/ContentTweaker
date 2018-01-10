@@ -3,7 +3,6 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import crafttweaker.CraftTweakerAPI;
-import crafttweaker.api.block.IBlock;
 import crafttweaker.mc1120.block.MCSpecificBlock;
 import crafttweaker.zenscript.IBracketHandler;
 import net.minecraft.block.Block;

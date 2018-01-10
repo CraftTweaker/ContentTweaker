@@ -3,7 +3,10 @@ package com.teamacronymcoders.contenttweaker.api.ctobjects.enums;
 import com.teamacronymcoders.contenttweaker.api.ICTObject;
 import crafttweaker.annotations.ZenRegister;
 import net.minecraft.util.EnumFacing;
-import stanhebben.zenscript.annotations.*;
+import stanhebben.zenscript.annotations.OperatorType;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.ZenOperator;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.Facing")

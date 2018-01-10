@@ -1,12 +1,12 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla;
 
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.food.ItemFoodRepresentation;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;

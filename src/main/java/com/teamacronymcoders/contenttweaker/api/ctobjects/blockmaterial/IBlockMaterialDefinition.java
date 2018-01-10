@@ -7,7 +7,6 @@ import net.minecraft.block.material.Material;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
-import stanhebben.zenscript.annotations.ZenSetter;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.BlockMaterial")

@@ -2,8 +2,6 @@ package com.teamacronymcoders.contenttweaker.modules.materials.brackethandler;
 
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.CTMaterialPart;
-import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.BracketHandler;
 import crafttweaker.zenscript.IBracketHandler;

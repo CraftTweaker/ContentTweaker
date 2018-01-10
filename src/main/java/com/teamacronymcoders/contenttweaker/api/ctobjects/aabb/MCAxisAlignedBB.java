@@ -5,7 +5,6 @@ import crafttweaker.annotations.ZenRegister;
 import net.minecraft.util.math.AxisAlignedBB;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import stanhebben.zenscript.annotations.ZenMethodStatic;
 import stanhebben.zenscript.annotations.ZenProperty;
 
 @ZenRegister
