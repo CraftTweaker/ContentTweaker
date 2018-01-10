@@ -18,10 +18,10 @@ public class AdvancementRepresentation implements IRepresentation<Advancement>{
     public IItemStack icon;
 
     @ZenProperty
-    public TextComponents title,
+    public TextComponents title;
 
     @ZenProperty
-    public String frame,
+    public String frame;
 
     @ZenProperty
     public String background;

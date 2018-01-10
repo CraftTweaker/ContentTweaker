@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.textcomponent;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -15,5 +16,4 @@ public class TextComponents {
     public static MCTextComponentTranslation textTranslation(String text){
         return new MCTextComponentTranslation(text);
     }
-
 }
