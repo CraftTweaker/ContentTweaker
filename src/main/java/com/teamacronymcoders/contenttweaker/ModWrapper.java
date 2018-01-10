@@ -8,7 +8,7 @@ public class ModWrapper implements IModWrapper {
         if (throwable == null) {
             ContentTweaker.instance.getLogger().error(error);
         } else {
-            ContentTweaker.instance.getLogger().getLogger().error(error, throwable);
+            ContentTweaker.instance.getLogger().error(error + " - " + throwable);
         }
     }
 }
