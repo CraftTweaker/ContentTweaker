@@ -120,22 +120,6 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
 
     @Override
     @Nonnull
-    @ParametersAreNonnullByDefault
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        EnumActionResult enumActionResult = EnumActionResult.PASS;
-        ItemStack itemStack = player.getHeldItem(hand);
-        if (itemRepresentation.getItemRightClick() != null) {
-            String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCItemStack(itemStack),
-                    new MCWorld(world), new MCPlayer(player), hand.name());
-            if (stringResult != null) {
-                enumActionResult = EnumActionResult.valueOf(stringResult.toUpperCase(Locale.US));
-            }
-        }
-        return new ActionResult<>(enumActionResult, itemStack);
-    }
-
-    @Override
-    @Nonnull
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
                                       float hitX, float hitY, float hitZ) {
         EnumActionResult actionResult = EnumActionResult.PASS;
