@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items.food;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
+import net.minecraft.item.EnumAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
@@ -17,6 +18,8 @@ public class ItemFoodRepresentation extends ItemRepresentation {
     public boolean wolfFood = false;
     @ZenProperty
     public float saturation = 0.6f;
+    @ZenProperty
+    public String itemUseAction = EnumAction.EAT.toString();
 
     @ZenMethod
     public int getHealAmount() {
@@ -56,6 +59,16 @@ public class ItemFoodRepresentation extends ItemRepresentation {
     @ZenMethod
     public void setSaturation(float saturation) {
         this.saturation = saturation;
+    }
+
+    @ZenMethod
+    public String getItemUseAction() {
+        return itemUseAction;
+    }
+
+    @ZenMethod
+    public void setItemUseAction(String itemUseAction) {
+        this.itemUseAction = itemUseAction;
     }
 
     @Override
