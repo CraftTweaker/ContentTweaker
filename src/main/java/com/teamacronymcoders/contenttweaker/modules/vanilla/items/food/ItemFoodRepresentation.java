@@ -10,6 +10,11 @@ import stanhebben.zenscript.annotations.ZenProperty;
 
 @ZenClass("mods.contenttweaker.ItemFood")
 public class ItemFoodRepresentation extends ItemRepresentation {
+    public ItemFoodRepresentation() {
+        super();
+        this.itemUseAction = EnumAction.EAT.toString();
+    }
+
     @ZenProperty
     public int healAmount;
     @ZenProperty
@@ -18,8 +23,6 @@ public class ItemFoodRepresentation extends ItemRepresentation {
     public boolean wolfFood = false;
     @ZenProperty
     public float saturation = 0.6f;
-    @ZenProperty
-    public String itemUseAction = EnumAction.EAT.toString();
 
     @ZenMethod
     public int getHealAmount() {
@@ -59,16 +62,6 @@ public class ItemFoodRepresentation extends ItemRepresentation {
     @ZenMethod
     public void setSaturation(float saturation) {
         this.saturation = saturation;
-    }
-
-    @ZenMethod
-    public String getItemUseAction() {
-        return itemUseAction;
-    }
-
-    @ZenMethod
-    public void setItemUseAction(String itemUseAction) {
-        this.itemUseAction = itemUseAction;
     }
 
     @Override
