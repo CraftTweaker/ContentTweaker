@@ -207,13 +207,17 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack p_hasContainerItem_1_) {
-        return itemRepresentation.getItemCrafted() != null;
+    public boolean hasContainerItem(ItemStack itemStack) {
+        return itemRepresentation.getItemGetContainerItem() != null || super.hasContainerItem(itemStack);
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack) {
-        IItemStack result = itemRepresentation.getItemCrafted().getContainerItem(new MCItemStack(itemStack));
-        return result == null ? ItemStack.EMPTY : (ItemStack) result.getInternal();
+    @Nonnull
+    @SuppressWarnings("result")
+    public ItemStack getContainerItem(@Nonnull ItemStack itemStack) {
+        return Optional.ofNullable(itemRepresentation.getItemGetContainerItem())
+                .map(getContainerItem -> getContainerItem.getContainerItem(new MCItemStack(itemStack)))
+                .map(result -> (ItemStack)result.getInternal())
+                .orElseGet(() -> super.getContainerItem(itemStack));
     }
 }

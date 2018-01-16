@@ -46,19 +46,8 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public IItemDestroySpeed itemDestroySpeed;
     @ZenProperty
     public IItemDestroyedBlock itemDestroyedBlock;
-
     @ZenProperty
-    public IItemCrafted itemCrafted = null;
-
-    @ZenMethod
-    public IItemCrafted getItemCrafted() {
-        return itemCrafted;
-    }
-
-    @ZenMethod
-    public void setItemCrafted(IItemCrafted itemCrafted) {
-        this.itemCrafted = itemCrafted;
-    }
+    public IItemGetContainerItem itemGetContainerItem = null;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -209,6 +198,18 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public void setItemDestroyedBlock(IItemDestroyedBlock itemDestroyedBlock) {
         this.itemDestroyedBlock = itemDestroyedBlock;
     }
+
+
+    @ZenMethod
+    public IItemGetContainerItem getItemGetContainerItem() {
+        return itemGetContainerItem;
+    }
+
+    @ZenMethod
+    public void setItemGetContainerItem(IItemGetContainerItem itemGetContainerItem) {
+        this.itemGetContainerItem = itemGetContainerItem;
+    }
+
 
     @Override
     public String getName() {
