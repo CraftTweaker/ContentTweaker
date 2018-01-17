@@ -5,7 +5,6 @@ import crafttweaker.api.player.IPlayer;
 import crafttweaker.mc1120.player.MCPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 

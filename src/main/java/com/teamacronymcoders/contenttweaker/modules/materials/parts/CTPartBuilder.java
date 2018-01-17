@@ -1,12 +1,9 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parts;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
-
-import java.util.Arrays;
 
 public class CTPartBuilder implements IPartBuilder {
     private PartBuilder partBuilder;

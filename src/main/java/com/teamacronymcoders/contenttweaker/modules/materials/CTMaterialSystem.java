@@ -1,8 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.materials;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
@@ -27,7 +25,6 @@ import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartTyp
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;

@@ -3,10 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemDestroySpeed;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemDestroyedBlock;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemRightClick;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemUse;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.*;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumAction;
@@ -49,6 +46,8 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public IItemDestroySpeed itemDestroySpeed;
     @ZenProperty
     public IItemDestroyedBlock itemDestroyedBlock;
+    @ZenProperty
+    public IItemGetContainerItem itemGetContainerItem = null;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -84,7 +83,7 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public ICreativeTab getCreativeTab() {
         return creativeTab;
     }
-    
+
     @ZenMethod
     public void setCreativeTab(ICreativeTab creativeTab) {
         this.creativeTab = creativeTab;
@@ -200,6 +199,18 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.itemDestroyedBlock = itemDestroyedBlock;
     }
 
+
+    @ZenMethod
+    public IItemGetContainerItem getItemGetContainerItem() {
+        return itemGetContainerItem;
+    }
+
+    @ZenMethod
+    public void setItemGetContainerItem(IItemGetContainerItem itemGetContainerItem) {
+        this.itemGetContainerItem = itemGetContainerItem;
+    }
+
+
     @Override
     public String getName() {
         return this.getUnlocalizedName();
@@ -220,7 +231,6 @@ public class ItemRepresentation implements IRepresentation<Item> {
         return ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
-
 
 
 }

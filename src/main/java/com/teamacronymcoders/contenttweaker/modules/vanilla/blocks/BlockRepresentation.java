@@ -4,12 +4,12 @@ import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.aabb.MCAxisAlignedBB;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.BlockMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.BlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeDefinition;
 import net.minecraft.block.Block;
@@ -69,6 +69,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public IBlockAction onRandomTick;
     @ZenProperty
     public PushReaction mobilityFlag;
+    @ZenProperty
+    public boolean passable = !this.blockMaterial.blocksMovement();
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -290,6 +292,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
         this.mobilityFlag = mobilityFlag;
     }
 
+    @ZenMethod
+    public boolean isPassable() {
+        return passable;
+    }
+
+    @ZenMethod
+    public void setPassable(boolean passable) {
+        this.passable = passable;
+    }
+
     @Override
     public Block getInternal() {
         return ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").get(new ResourceLocation(
@@ -310,6 +322,4 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public void register() {
         ContentTweaker.instance.getRegistry(BlockRegistry.class, "BLOCK").register(new BlockContent(this));
     }
-
-
 }

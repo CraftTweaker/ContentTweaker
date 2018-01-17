@@ -1,6 +1,5 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack;
 
-import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.ICTPlayer;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.entity.IEntityLivingBase;
 import crafttweaker.api.item.IItemStack;

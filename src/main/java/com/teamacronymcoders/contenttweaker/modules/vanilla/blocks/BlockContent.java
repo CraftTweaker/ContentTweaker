@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -151,5 +152,20 @@ public class BlockContent extends BlockBase {
         return Optional.ofNullable(blockRepresentation.getMobilityFlag())
                 .map(PushReaction::getInternal)
                 .orElse(state.getMobilityFlag());
+    }
+
+    @Override
+    public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
+        return this.blockRepresentation.isPassable();
+    }
+
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
+                                      List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean isActualState) {
+        if (this.blockRepresentation.isPassable()) {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, NULL_AABB);
+        } else {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, state.getCollisionBoundingBox(worldIn, pos));
+        }
     }
 }

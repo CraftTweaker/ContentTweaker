@@ -7,7 +7,6 @@ import net.minecraft.util.math.BlockPos;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
-import stanhebben.zenscript.annotations.ZenSetter;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.BlockPos")

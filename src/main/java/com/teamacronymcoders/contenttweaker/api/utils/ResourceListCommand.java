@@ -6,7 +6,6 @@ import crafttweaker.mc1120.commands.CraftTweakerCommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 

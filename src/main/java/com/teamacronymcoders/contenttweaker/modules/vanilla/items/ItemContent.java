@@ -20,6 +20,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMutableItemStack;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
+import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
@@ -170,7 +171,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
                         new MCBlockState(state), new MCBlockPos(pos), new MCEntityLivingBase(entityLiving)))
                 .orElseGet(() -> super.onBlockDestroyed(stack, world, state, pos, entityLiving));
     }
-    
+
     @Override
     @Nonnull
     public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
@@ -203,5 +204,20 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         templateFile.replaceContents(replacements);
         models.add(new GeneratedModel(itemRepresentation.getUnlocalizedName(), ModelType.ITEM_MODEL, templateFile.getFileContents()));
         return models;
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack itemStack) {
+        return itemRepresentation.getItemGetContainerItem() != null || super.hasContainerItem(itemStack);
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("result")
+    public ItemStack getContainerItem(@Nonnull ItemStack itemStack) {
+        return Optional.ofNullable(itemRepresentation.getItemGetContainerItem())
+                .map(getContainerItem -> getContainerItem.getContainerItem(new MCItemStack(itemStack)))
+                .map(result -> (ItemStack)result.getInternal())
+                .orElseGet(() -> super.getContainerItem(itemStack));
     }
 }

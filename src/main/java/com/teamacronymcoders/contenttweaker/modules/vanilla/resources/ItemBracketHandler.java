@@ -2,10 +2,17 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.zen.symbol.StringIntSymbol;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.BracketHandler;
+import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.block.MCSpecificBlock;
+import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.zenscript.IBracketHandler;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
@@ -21,21 +28,22 @@ import stanhebben.zenscript.util.ZenPosition;
 
 import java.util.List;
 
-
-public class BlockBracketHandler implements IBracketHandler {
+@BracketHandler(priority = 100)
+@ZenRegister
+public class ItemBracketHandler implements IBracketHandler {
     private final IJavaMethod method;
 
-    public BlockBracketHandler() {
-        method = CraftTweakerAPI.getJavaMethod(BlockBracketHandler.class, "getBlockState", String.class, int.class);
+    public ItemBracketHandler() {
+        method = CraftTweakerAPI.getJavaMethod(this.getClass(), "getItem", String.class, int.class);
     }
 
-    public static ICTBlockState getBlockState(String name, int meta) {
-        ICTBlockState iBlock = null;
-        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(name));
-        if (block != null) {
-            iBlock = new MCBlockState(new MCSpecificBlock(block, meta));
+    public static IItemStack getItem(String name, int meta) {
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
+        IItemStack itemStack = null;
+        if (item != null) {
+            itemStack = new MCItemStack(new ItemStack(item, 1, meta));
         }
-        return iBlock;
+        return itemStack;
     }
 
     @Override
@@ -43,7 +51,7 @@ public class BlockBracketHandler implements IBracketHandler {
         IZenSymbol zenSymbol = null;
 
         if (tokens.size() > 2) {
-            if ("block".equalsIgnoreCase(tokens.get(0).getValue())) {
+            if ("item".equalsIgnoreCase(tokens.get(0).getValue())) {
                 String blockName;
                 int meta = 0;
                 if (tokens.size() >= 5) {
@@ -54,28 +62,10 @@ public class BlockBracketHandler implements IBracketHandler {
                 } else {
                     blockName = tokens.get(2).getValue();
                 }
-                zenSymbol = new BlockReferenceSymbol(environment, blockName, meta);
+                zenSymbol = new StringIntSymbol(environment, blockName, meta, method);
             }
         }
 
         return zenSymbol;
-    }
-
-    private class BlockReferenceSymbol implements IZenSymbol {
-
-        private final IEnvironmentGlobal environment;
-        private final String name;
-        private final int meta;
-
-        public BlockReferenceSymbol(IEnvironmentGlobal environment, String name, int meta) {
-            this.environment = environment;
-            this.name = name;
-            this.meta = meta;
-        }
-
-        @Override
-        public IPartialExpression instance(ZenPosition position) {
-            return new ExpressionCallStatic(position, environment, method, new ExpressionString(position, name), new ExpressionInt(position, meta, ZenType.INT));
-        }
     }
 }

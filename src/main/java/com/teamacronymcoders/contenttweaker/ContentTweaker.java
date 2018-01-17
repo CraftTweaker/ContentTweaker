@@ -1,25 +1,16 @@
 package com.teamacronymcoders.contenttweaker;
 
 import com.teamacronymcoders.base.BaseModFoundation;
-import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.util.OreDictUtils;
-import com.teamacronymcoders.base.util.files.BaseFileUtils;
 import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import crafttweaker.CraftTweakerAPI;
-import crafttweaker.api.minecraft.CraftTweakerMC;
-import crafttweaker.mc1120.CraftTweaker;
-import crafttweaker.runtime.CrTTweaker;
-import crafttweaker.runtime.ITweaker;
-import crafttweaker.runtime.providers.ScriptProviderDirectory;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
-import java.io.File;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.*;
 
