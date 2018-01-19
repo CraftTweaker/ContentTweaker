@@ -32,7 +32,6 @@ public class DisplayObject {
         this.title = title;
         this.icon = icon;
     }
-Criterion
 
     @ZenMethod
     public FrameType getFrame() {
