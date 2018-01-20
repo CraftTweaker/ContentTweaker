@@ -31,7 +31,7 @@ public class MCWorld implements IWorld {
 
     @Override
     public boolean setBlockState(ICTBlockState blockState, IBlockPos blockPos) {
-        return this.world.setBlockState(blockPos.getInternal(), blockState.getInternal(), 2);
+        return this.world.setBlockState(blockPos.getInternal(), blockState.getInternal(), 3);
     }
 
     @Override
