@@ -52,7 +52,7 @@ public class VanillaModule extends ModuleBase {
         CraftTweakerAPI.registerClass(IBlockAction.class);
         CraftTweakerAPI.registerClass(IItemDestroyedBlock.class);
         CraftTweakerAPI.registerClass(IItemDestroySpeed.class);
-        CraftTweakerAPI.registerClass(ISupplyItemStack.class);
+        CraftTweakerAPI.registerClass(IItemStackSupplier.class);
 
         CraftTweakerAPI.registerClass(ICreativeTab.class);
         CraftTweakerAPI.registerClass(BlockRepresentation.class);

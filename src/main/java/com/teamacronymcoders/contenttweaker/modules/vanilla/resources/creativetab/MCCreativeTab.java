@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab;
 
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.ISupplyItemStack;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemStackSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.creativetab.CreativeTabs;
@@ -33,12 +33,12 @@ public class MCCreativeTab implements ICreativeTab {
     }
 
     @Override
-    public ISupplyItemStack getIconStackSupplier() {
+    public IItemStackSupplier getIconStackSupplier() {
         return this::getIconStack;
     }
 
     @Override
-    public void setIconStackSupplier(ISupplyItemStack stackSupplier) {
+    public void setIconStackSupplier(IItemStackSupplier stackSupplier) {
         throw new IllegalStateException("Can't set Icon Stack for existing Creative Tab");
     }
 

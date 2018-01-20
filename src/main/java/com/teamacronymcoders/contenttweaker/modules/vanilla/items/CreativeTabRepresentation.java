@@ -1,8 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.ISupplyItemStack;
-import crafttweaker.CraftTweakerAPI;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemStackSupplier;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,7 +11,7 @@ import java.util.Optional;
 
 public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>, ICreativeTab {
     private String unlocalizedName;
-    private ISupplyItemStack supplyItemStack;
+    private IItemStackSupplier supplyItemStack;
     private CreativeTabContent creativeTabContent;
 
     public String getUnlocalizedName() {
@@ -40,12 +39,12 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
     }
 
     @Override
-    public ISupplyItemStack getIconStackSupplier() {
+    public IItemStackSupplier getIconStackSupplier() {
         return this.supplyItemStack;
     }
 
     @Override
-    public void setIconStackSupplier(ISupplyItemStack stackSupplier) {
+    public void setIconStackSupplier(IItemStackSupplier stackSupplier) {
         this.supplyItemStack = stackSupplier;
     }
 
@@ -74,11 +73,11 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
         return creativeTabContent;
     }
 
-    public ISupplyItemStack getSupplyItemStack() {
+    public IItemStackSupplier getSupplyItemStack() {
         return supplyItemStack;
     }
 
-    public void setSupplyItemStack(ISupplyItemStack supplyItemStack) {
+    public void setSupplyItemStack(IItemStackSupplier supplyItemStack) {
         this.supplyItemStack = supplyItemStack;
     }
 }

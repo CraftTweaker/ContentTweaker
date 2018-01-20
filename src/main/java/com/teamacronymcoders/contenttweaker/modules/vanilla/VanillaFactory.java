@@ -4,7 +4,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMa
 import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresentation;
-import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.ISupplyItemStack;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemStackSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
@@ -59,7 +59,7 @@ public class VanillaFactory {
     }
 
     @ZenMethod
-    public static ICreativeTab createCreativeTab(String unlocalizedName, ISupplyItemStack supplyItemStack) {
+    public static ICreativeTab createCreativeTab(String unlocalizedName, IItemStackSupplier supplyItemStack) {
         CreativeTabRepresentation creativeTab = new CreativeTabRepresentation();
         creativeTab.setUnlocalizedName(unlocalizedName);
         creativeTab.setIconStackSupplier(supplyItemStack);
