@@ -1,15 +1,18 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.ISupplyItemStack;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
-import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
+import java.util.Optional;
+
 public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>, ICreativeTab {
     private String unlocalizedName;
-    private ItemStack iconStack;
+    private ISupplyItemStack supplyItemStack;
     private CreativeTabContent creativeTabContent;
 
     public String getUnlocalizedName() {
@@ -21,24 +24,29 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
     }
 
     public IItemStack getIconStack() {
-        return new MCItemStack(iconStack);
+        return getSupplyItemStack().get();
     }
 
     public ItemStack getInternalIconStack() {
-        return this.iconStack;
+        return Optional.ofNullable(getSupplyItemStack().get())
+                        .map(IIngredient::getInternal)
+                        .map(iItemStack -> (ItemStack) iItemStack)
+                        .orElse(ItemStack.EMPTY);
     }
 
     @Override
     public void setIconStack(IItemStack iconStack) {
-        if(iconStack.getInternal() instanceof ItemStack) {
-            this.setIconStack((ItemStack) iconStack.getInternal());
-        } else {
-            CraftTweakerAPI.logError("Could not get ItemStack");
-        }
+        this.supplyItemStack = () -> iconStack;
     }
 
-    public void setIconStack(ItemStack iconStack) {
-        this.iconStack = iconStack;
+    @Override
+    public ISupplyItemStack getIconStackSupplier() {
+        return this.supplyItemStack;
+    }
+
+    @Override
+    public void setIconStackSupplier(ISupplyItemStack stackSupplier) {
+        this.supplyItemStack = stackSupplier;
     }
 
     @Override
@@ -64,5 +72,13 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
             creativeTabContent = new CreativeTabContent(this);
         }
         return creativeTabContent;
+    }
+
+    public ISupplyItemStack getSupplyItemStack() {
+        return supplyItemStack;
+    }
+
+    public void setSupplyItemStack(ISupplyItemStack supplyItemStack) {
+        this.supplyItemStack = supplyItemStack;
     }
 }

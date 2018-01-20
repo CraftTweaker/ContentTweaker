@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import com.teamacronymcoders.contenttweaker.api.ICTObject;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.ISupplyItemStack;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -21,6 +22,12 @@ public interface ICreativeTab extends ICTObject<CreativeTabs> {
 
     @ZenSetter("iconStack")
     void setIconStack(IItemStack iconStack);
+
+    @ZenGetter("iconStackSupplier")
+    ISupplyItemStack getIconStackSupplier();
+
+    @ZenSetter("iconStackSupplier")
+    void setIconStackSupplier(ISupplyItemStack stackSupplier);
 
     @ZenMethod
     void register();

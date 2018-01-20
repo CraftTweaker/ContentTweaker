@@ -4,6 +4,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMa
 import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.blocks.BlockRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.fluids.FluidRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.ISupplyItemStack;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
@@ -40,23 +41,29 @@ public class VanillaFactory {
     }
 
     @ZenMethod
-    public static ICreativeTab createCreativeTab(String unlocalizedName, IItemStack iItemStack) {
+    public static ICreativeTab createCreativeTab(String unlocalizedName, final IItemStack iItemStack) {
         CreativeTabRepresentation creativeTab = new CreativeTabRepresentation();
         creativeTab.setUnlocalizedName(unlocalizedName);
-        if (iItemStack.getInternal() instanceof ItemStack) {
-            creativeTab.setIconStack((ItemStack) iItemStack.getInternal());
-        }
+        creativeTab.setIconStackSupplier(() -> iItemStack);
         return creativeTab;
     }
 
     @ZenMethod
-    public static ICreativeTab createCreativeTab(String unlocalizedName, ItemRepresentation iItem) {
-        return createCreativeTab(unlocalizedName, new MCItemStack(new ItemStack(iItem.getInternal())));
+    public static ICreativeTab createCreativeTab(String unlocalizedName, final ItemRepresentation iItem) {
+        return createCreativeTab(unlocalizedName, () -> new MCItemStack(new ItemStack(iItem.getInternal())));
     }
 
     @ZenMethod
-    public static ICreativeTab createCreativeTab(String unlocalizedName, BlockRepresentation iBlock) {
-        return createCreativeTab(unlocalizedName, new MCItemStack(new ItemStack(iBlock.getInternal())));
+    public static ICreativeTab createCreativeTab(String unlocalizedName, final BlockRepresentation iBlock) {
+        return createCreativeTab(unlocalizedName, () -> new MCItemStack(new ItemStack(iBlock.getInternal())));
+    }
+
+    @ZenMethod
+    public static ICreativeTab createCreativeTab(String unlocalizedName, ISupplyItemStack supplyItemStack) {
+        CreativeTabRepresentation creativeTab = new CreativeTabRepresentation();
+        creativeTab.setUnlocalizedName(unlocalizedName);
+        creativeTab.setIconStackSupplier(supplyItemStack);
+        return creativeTab;
     }
 
     @ZenMethod
