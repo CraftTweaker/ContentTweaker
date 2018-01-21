@@ -18,6 +18,9 @@ public interface IPart {
     String getUnlocalizedName();
 
     @ZenMethod
+    String getShortUnlocalizedName();
+
+    @ZenMethod
     IPartType getPartType();
 
     @ZenMethod

@@ -8,6 +8,7 @@ import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
@@ -18,9 +19,10 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.CTPlayer
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMutableItemStack;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
-import crafttweaker.api.item.IItemStack;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IResourceLocationSupplier;
 import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
@@ -33,10 +35,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -46,7 +45,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
-public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedModel {
+public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedModel, IHasItemColor {
     private ItemRepresentation itemRepresentation;
     private CreativeTabs creativeTab;
     private IBaseMod mod;
@@ -200,7 +199,12 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         List<IGeneratedModel> models = Lists.newArrayList();
         TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
         Map<String, String> replacements = Maps.newHashMap();
-        replacements.put("texture", "contenttweaker:items/" + itemRepresentation.getUnlocalizedName());
+
+        replacements.put("texture", Optional.ofNullable(itemRepresentation.getItemTextureLocationSupplier())
+                .map(resourceLocationSupplier -> resourceLocationSupplier.getResourceLocation("model"))
+                .map(CTResourceLocation::getInternal)
+                .map(ResourceLocation::toString)
+                .orElseGet(() -> "contenttweaker:items/" + itemRepresentation.getUnlocalizedName()));
         templateFile.replaceContents(replacements);
         models.add(new GeneratedModel(itemRepresentation.getUnlocalizedName(), ModelType.ITEM_MODEL, templateFile.getFileContents()));
         return models;
@@ -213,11 +217,15 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
 
     @Override
     @Nonnull
-    @SuppressWarnings("result")
     public ItemStack getContainerItem(@Nonnull ItemStack itemStack) {
         return Optional.ofNullable(itemRepresentation.getItemGetContainerItem())
                 .map(getContainerItem -> getContainerItem.getContainerItem(new MCItemStack(itemStack)))
-                .map(result -> (ItemStack)result.getInternal())
+                .map(result -> (ItemStack) result.getInternal())
                 .orElseGet(() -> super.getContainerItem(itemStack));
+    }
+
+    @Override
+    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+        return itemRepresentation.getItemColorSupplier().getColor("itemstack").getIntColor();
     }
 }

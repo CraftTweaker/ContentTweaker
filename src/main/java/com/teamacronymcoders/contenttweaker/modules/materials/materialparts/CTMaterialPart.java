@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materialparts;
 
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.CTMaterialPartData;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IMaterialPartData;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.CTMaterial;
@@ -61,6 +62,11 @@ public class CTMaterialPart implements IMaterialPart {
     @Override
     public int getColor() {
         return this.materialPart.getColor();
+    }
+
+    @Override
+    public CTColor getCTColor() {
+        return CTColor.fromInt(this.getColor());
     }
 
     @Override

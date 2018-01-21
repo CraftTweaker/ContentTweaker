@@ -23,11 +23,11 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
     }
 
     public IItemStack getIconStack() {
-        return getSupplyItemStack().get();
+        return getSupplyItemStack().getItemStack();
     }
 
     public ItemStack getInternalIconStack() {
-        return Optional.ofNullable(getSupplyItemStack().get())
+        return Optional.ofNullable(getSupplyItemStack().getItemStack())
                         .map(IIngredient::getInternal)
                         .map(iItemStack -> (ItemStack) iItemStack)
                         .orElse(ItemStack.EMPTY);

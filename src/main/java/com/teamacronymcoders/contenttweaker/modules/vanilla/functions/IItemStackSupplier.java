@@ -5,5 +5,5 @@ import stanhebben.zenscript.annotations.ZenClass;
 
 @ZenClass("mods.contenttweaker.IItemStackSupplier")
 public interface IItemStackSupplier {
-    IItemStack get();
+    IItemStack getItemStack();
 }

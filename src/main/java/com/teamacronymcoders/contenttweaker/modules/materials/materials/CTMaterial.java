@@ -28,12 +28,12 @@ public class CTMaterial implements IMaterial {
 
     @Override
     public boolean isHasEffect() {
-        return false;
+        return this.material.isHasEffect();
     }
 
     @Override
     public String getUnlocalizedName() {
-        return null;
+        return this.material.getUnlocalizedName();
     }
 
     @Override

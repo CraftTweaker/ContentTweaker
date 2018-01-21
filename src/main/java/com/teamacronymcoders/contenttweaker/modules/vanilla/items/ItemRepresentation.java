@@ -3,6 +3,8 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.*;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import net.minecraft.creativetab.CreativeTabs;
@@ -43,11 +45,15 @@ public class ItemRepresentation implements IRepresentation<Item> {
     @ZenProperty
     public int maxDamage = -1;
     @ZenProperty
-    public IItemDestroySpeed itemDestroySpeed;
+    public IItemDestroySpeed itemDestroySpeed = null;
     @ZenProperty
-    public IItemDestroyedBlock itemDestroyedBlock;
+    public IItemDestroyedBlock itemDestroyedBlock = null;
     @ZenProperty
     public IItemGetContainerItem itemGetContainerItem = null;
+    @ZenProperty
+    public IColorSupplier itemColorSupplier = (identifier) -> CTColor.fromInt(-1);
+    @ZenProperty
+    public IResourceLocationSupplier itemTextureLocationSupplier;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -210,6 +216,25 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.itemGetContainerItem = itemGetContainerItem;
     }
 
+    @ZenMethod
+    public IColorSupplier getItemColorSupplier() {
+        return itemColorSupplier;
+    }
+
+    @ZenMethod
+    public void setItemColorSupplier(IColorSupplier itemColorSupplier) {
+        this.itemColorSupplier = itemColorSupplier;
+    }
+
+    @ZenMethod
+    public IResourceLocationSupplier getItemTextureLocationSupplier() {
+        return itemTextureLocationSupplier;
+    }
+
+    @ZenMethod
+    public void setItemTextureLocationSupplier(IResourceLocationSupplier itemTextureLocationSupplier) {
+        this.itemTextureLocationSupplier = itemTextureLocationSupplier;
+    }
 
     @Override
     public String getName() {
@@ -231,6 +256,7 @@ public class ItemRepresentation implements IRepresentation<Item> {
         return ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
+
 
 
 }

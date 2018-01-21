@@ -3,11 +3,14 @@ package com.teamacronymcoders.contenttweaker.modules.materials.parttypes;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
+import com.teamacronymcoders.contenttweaker.api.ICTObject;
 import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.CTMaterialPart;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class CTCreatedPartType extends PartType implements IPartType {
 
@@ -25,11 +28,13 @@ public class CTCreatedPartType extends PartType implements IPartType {
 
     @Override
     public void setData(IPartDataPiece[] data) {
-
+        super.setData(Arrays.stream(data)
+            .map(ICTObject::getInternal)
+            .collect(Collectors.toList()));
     }
 
     @Override
-    public Object getInternal() {
+    public PartType getInternal() {
         return this;
     }
 }

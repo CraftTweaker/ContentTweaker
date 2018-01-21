@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.materialparts;
 
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IMaterialPartData;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMaterial;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
@@ -35,6 +36,9 @@ public interface IMaterialPart {
 
     @ZenMethod
     int getColor();
+
+    @ZenMethod
+    CTColor getCTColor();
 
     @ZenMethod
     boolean isColorized();
