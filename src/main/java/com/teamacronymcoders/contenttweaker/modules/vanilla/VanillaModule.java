@@ -17,7 +17,9 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.Sou
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands.Commands;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.mc1120.brackets.BracketHandlerCreativeTab;
 import crafttweaker.mc1120.commands.CTChatCommand;
+import crafttweaker.zenscript.GlobalRegistry;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.MOD_ID;
@@ -60,5 +62,7 @@ public class VanillaModule extends ModuleBase {
         CraftTweakerAPI.registerClass(FluidRepresentation.class);
         CraftTweakerAPI.registerClass(VanillaFactory.class);
         CraftTweakerAPI.registerClass(Commands.class);
+
+        GlobalRegistry.getBracketHandlers().removeIf(bracketHandler -> bracketHandler instanceof BracketHandlerCreativeTab);
     }
 }
