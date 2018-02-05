@@ -20,6 +20,7 @@ import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.player.MCPlayer;
+import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
@@ -73,7 +74,12 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
 
     public void setFields() {
         this.setUnlocalizedName(this.itemRepresentation.getUnlocalizedName());
-        this.setCreativeTab(this.itemRepresentation.getCreativeTab().getInternal());
+        if (this.itemRepresentation.getCreativeTab() != null) {
+            Object creativeTab = this.itemRepresentation.getCreativeTab().getInternal();
+            if (creativeTab instanceof CreativeTabs) {
+                this.setCreativeTab((CreativeTabs) this.itemRepresentation.getCreativeTab().getInternal());
+            }
+        }
         this.setMaxStackSize(this.itemRepresentation.getMaxStackSize());
         this.setHarvestLevel(this.itemRepresentation.getToolClass(), this.itemRepresentation.getToolLevel());
         this.itemUseAction = CTUtils.getEnum(this.itemRepresentation.getItemUseAction(), EnumAction.class);
@@ -124,7 +130,7 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
                                       float hitX, float hitY, float hitZ) {
         EnumActionResult actionResult = EnumActionResult.PASS;
         if (Objects.nonNull(itemRepresentation.getOnItemUse())) {
-            Position3f blockTouch = new Position3f(hitX, hitY, hitZ);
+            Position3f blockTouch = new MCPosition3f(hitX, hitY, hitZ);
             itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
                     Hand.of(hand), Facing.of(facing), blockTouch);
         }

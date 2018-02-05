@@ -6,11 +6,17 @@ import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import stanhebben.zenscript.annotations.ZenClass;
 
 public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>, ICreativeTab {
     private String unlocalizedName;
     private ItemStack iconStack;
     private CreativeTabContent creativeTabContent;
+
+    private boolean hasSearch = false;
+    private String backGroundImage = "";
+    private boolean noScrollBar = true;
+    private boolean noTitle = false;
 
     public String getUnlocalizedName() {
         return unlocalizedName;
@@ -37,6 +43,11 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
         }
     }
 
+    @Override
+    public void setHasSearch() {
+        this.hasSearch = true;
+    }
+
     public void setIconStack(ItemStack iconStack) {
         this.iconStack = iconStack;
     }
@@ -59,10 +70,51 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
     }
 
     @Override
+    public void setBackgroundImageName(String backgroundImage) {
+        this.backGroundImage = backgroundImage;
+    }
+
+    @Override
+    public int getSearchBarWidth() {
+        return 0;
+    }
+
+    @Override
+    public String getTabLabel() {
+        return this.getUnlocalizedName();
+    }
+
+    @Override
+    public void setNoScrollBar() {
+        this.noScrollBar = true;
+    }
+
+    @Override
+    public void setNoTitle() {
+        this.noTitle = true;
+    }
+
+    @Override
     public CreativeTabs getInternal() {
         if (creativeTabContent == null) {
             creativeTabContent = new CreativeTabContent(this);
         }
         return creativeTabContent;
+    }
+
+    public boolean isHasSearch() {
+        return hasSearch;
+    }
+
+    public String getBackGroundImage() {
+        return backGroundImage;
+    }
+
+    public boolean isNoScrollBar() {
+        return noScrollBar;
+    }
+
+    public boolean isNoTitle() {
+        return noTitle;
     }
 }
