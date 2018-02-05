@@ -4,8 +4,10 @@ import com.teamacronymcoders.contenttweaker.api.ContentTweakerAPI;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.ResourceBracketHandler;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.BracketHandler;
 import net.minecraft.creativetab.CreativeTabs;
 
+@BracketHandler(priority = 11)
 public class CreativeTabBracketHandler extends ResourceBracketHandler {
     public CreativeTabBracketHandler() {
         super("CreativeTab", CreativeTabBracketHandler.class);

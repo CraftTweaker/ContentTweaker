@@ -4,17 +4,17 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemStack
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-public class MCCreativeTab implements ICreativeTab {
-    private CreativeTabs creativeTabs;
+public class MCCreativeTab extends crafttweaker.mc1120.creativetabs.MCCreativeTab implements ICreativeTab {
 
     public MCCreativeTab(CreativeTabs creativeTabs) {
-        this.creativeTabs = creativeTabs;
+        super(creativeTabs, ReflectionHelper.getPrivateValue(CreativeTabs.class, creativeTabs, "tabLabel", "field_78034_o"));
     }
 
     @Override
     public String getUnlocalizedName() {
-        return null;
+        return this.getTabLabel();
     }
 
     @Override
@@ -26,6 +26,7 @@ public class MCCreativeTab implements ICreativeTab {
     public IItemStack getIconStack() {
         return null;
     }
+
 
     @Override
     public void setIconStack(IItemStack iconStack) {
@@ -43,12 +44,12 @@ public class MCCreativeTab implements ICreativeTab {
     }
 
     @Override
-    public void register() {
-        throw new IllegalStateException("Can't register an already existing Creative Tab");
+    public void setHasSearch() {
+
     }
 
     @Override
-    public CreativeTabs getInternal() {
-        return this.creativeTabs;
+    public void register() {
+        throw new IllegalStateException("Can't register an already existing Creative Tab");
     }
 }

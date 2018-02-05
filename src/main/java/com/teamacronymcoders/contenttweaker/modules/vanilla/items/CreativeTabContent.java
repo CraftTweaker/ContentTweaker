@@ -15,6 +15,22 @@ public class CreativeTabContent extends CreativeTabs {
     public CreativeTabContent(CreativeTabRepresentation representation) {
         super(representation.getUnlocalizedName());
         this.representation = representation;
+        setFields();
+    }
+
+    private void setFields() {
+        this.setBackgroundImageName(representation.getBackGroundImage());
+        if (representation.isNoScrollBar()) {
+            this.setNoScrollbar();
+        }
+        if (representation.isNoTitle()) {
+            this.setNoTitle();
+        }
+    }
+
+    @Override
+    public boolean hasSearchBar() {
+        return this.representation.isHasSearch();
     }
 
     @Override
