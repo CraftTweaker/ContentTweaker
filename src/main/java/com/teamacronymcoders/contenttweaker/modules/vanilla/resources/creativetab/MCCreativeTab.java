@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 public class MCCreativeTab extends crafttweaker.mc1120.creativetabs.MCCreativeTab implements ICreativeTab {
 
     public MCCreativeTab(CreativeTabs creativeTabs) {
-        super(creativeTabs, ReflectionHelper.getPrivateValue(CreativeTabs.class, creativeTabs, "tabLabel", "tabLabel"));
+        super(creativeTabs, ReflectionHelper.getPrivateValue(CreativeTabs.class, creativeTabs, "tabLabel", "field_78034_o"));
     }
 
     @Override
