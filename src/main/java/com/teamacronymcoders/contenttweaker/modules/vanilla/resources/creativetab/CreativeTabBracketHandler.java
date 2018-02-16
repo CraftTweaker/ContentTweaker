@@ -7,7 +7,7 @@ import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.BracketHandler;
 import net.minecraft.creativetab.CreativeTabs;
 
-@BracketHandler(priority = 11)
+@BracketHandler(priority = 101)
 public class CreativeTabBracketHandler extends ResourceBracketHandler {
     public CreativeTabBracketHandler() {
         super("CreativeTab", CreativeTabBracketHandler.class);

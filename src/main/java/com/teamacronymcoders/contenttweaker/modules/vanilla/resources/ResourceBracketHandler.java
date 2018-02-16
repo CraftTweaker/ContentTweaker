@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.BracketHandler;
 import crafttweaker.zenscript.IBracketHandler;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.parser.Token;
@@ -9,6 +10,7 @@ import stanhebben.zenscript.type.natives.IJavaMethod;
 
 import java.util.List;
 
+@BracketHandler
 public abstract class ResourceBracketHandler implements IBracketHandler {
     private final IJavaMethod method;
 
