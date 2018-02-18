@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.resources;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.BracketHandler;
 import crafttweaker.mc1120.block.MCSpecificBlock;
 import crafttweaker.zenscript.IBracketHandler;
 import net.minecraft.block.Block;
@@ -21,7 +22,7 @@ import stanhebben.zenscript.util.ZenPosition;
 
 import java.util.List;
 
-
+@BracketHandler
 public class BlockBracketHandler implements IBracketHandler {
     private final IJavaMethod method;
 
