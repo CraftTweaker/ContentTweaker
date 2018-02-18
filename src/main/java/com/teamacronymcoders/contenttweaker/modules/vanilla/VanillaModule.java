@@ -65,7 +65,5 @@ public class VanillaModule extends ModuleBase {
         CraftTweakerAPI.registerClass(FluidRepresentation.class);
         CraftTweakerAPI.registerClass(VanillaFactory.class);
         CraftTweakerAPI.registerClass(Commands.class);
-
-        GlobalRegistry.getBracketHandlers().removeIf(bracketHandler -> bracketHandler instanceof BracketHandlerCreativeTab);
     }
 }
