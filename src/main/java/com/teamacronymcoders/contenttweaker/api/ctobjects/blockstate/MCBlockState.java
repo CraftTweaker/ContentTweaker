@@ -80,7 +80,7 @@ public class MCBlockState implements ICTBlockState {
                 result = Integer.compare(this.getMeta(), other.getMeta());
             } else {
                 int blockId = ((ForgeRegistry<Block>)ForgeRegistries.BLOCKS).getID(this.getInternal().getBlock());
-                int otherBlockId = ((ForgeRegistry<Block>)ForgeRegistries.BLOCKS).getID(this.getInternal().getBlock());
+                int otherBlockId = ((ForgeRegistry<Block>)ForgeRegistries.BLOCKS).getID(other.getInternal().getBlock());
                 result = Integer.compare(blockId, otherBlockId);
             }
         }
