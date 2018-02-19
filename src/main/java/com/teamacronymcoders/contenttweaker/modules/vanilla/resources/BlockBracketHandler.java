@@ -49,8 +49,8 @@ public class BlockBracketHandler implements IBracketHandler {
                 int meta = 0;
                 if (tokens.size() >= 5) {
                     blockName = tokens.get(2).getValue() + ":" + tokens.get(4).getValue();
-                    if (tokens.size() > 7) {
-                        meta = Integer.parseInt(tokens.get(7).getValue());
+                    if (tokens.size() >= 7) {
+                        meta = Integer.parseInt(tokens.get(6).getValue());
                     }
                 } else {
                     blockName = tokens.get(2).getValue();
