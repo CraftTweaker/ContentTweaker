@@ -173,4 +173,11 @@ public class BlockContent extends BlockBase {
             addCollisionBoxToList(pos, entityBox, collidingBoxes, state.getCollisionBoundingBox(worldIn, pos));
         }
     }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean canEntitySpawn(IBlockState state, Entity entityIn)
+    {
+        return this.blockRepresentation.canEntitySpawn();
+    }
 }
