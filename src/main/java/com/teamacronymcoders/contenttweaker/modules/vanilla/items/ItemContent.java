@@ -26,7 +26,6 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IResourceL
 import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
-import crafttweaker.mc1120.player.MCPlayer;
 import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -140,8 +139,8 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         EnumActionResult enumActionResult = EnumActionResult.PASS;
         ItemStack itemStack = player.getHeldItem(hand);
         if (itemRepresentation.getItemRightClick() != null) {
-            String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCItemStack(itemStack),
-                    new MCWorld(world), new MCPlayer(player), hand.name());
+            String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCMutableItemStack(itemStack),
+                    new MCWorld(world), new CTPlayer(player), Hand.of(hand));
             if (stringResult != null) {
                 enumActionResult = EnumActionResult.valueOf(stringResult.toUpperCase(Locale.US));
             }
