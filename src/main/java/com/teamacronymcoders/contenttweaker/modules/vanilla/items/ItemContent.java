@@ -139,7 +139,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         ItemStack itemStack = player.getHeldItem(hand);
         if (itemRepresentation.getItemRightClick() != null) {
             String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCMutableItemStack(itemStack),
-                    new MCWorld(world), new CTPlayer(player), Hand.of(hand));
+                    new MCWorld(world), new CTPlayer(player), hand.name());
             if (stringResult != null) {
                 enumActionResult = EnumActionResult.valueOf(stringResult.toUpperCase(Locale.US));
             }

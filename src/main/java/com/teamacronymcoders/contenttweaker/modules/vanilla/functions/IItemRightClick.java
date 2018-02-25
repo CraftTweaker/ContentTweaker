@@ -8,5 +8,5 @@ import stanhebben.zenscript.annotations.ZenClass;
 
 @ZenClass("mods.contenttweaker.IItemRightClick")
 public interface IItemRightClick {
-    String onRightClick(MCMutableItemStack itemStack, IWorld world, ICTPlayer player, Hand hand);
+    String onRightClick(MCMutableItemStack itemStack, IWorld world, ICTPlayer player, String hand);
 }
