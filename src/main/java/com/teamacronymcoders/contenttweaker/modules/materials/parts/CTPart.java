@@ -49,6 +49,11 @@ public class CTPart implements IPart {
     }
 
     @Override
+    public boolean hasOverlay() {
+        return part.hasOverlayTexture();
+    }
+
+    @Override
     public List<IPartDataPiece> getData() {
         return this.part.getPartType().getData().stream()
                 .map(CTPartDataPiece::new)

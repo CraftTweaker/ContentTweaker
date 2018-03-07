@@ -41,6 +41,9 @@ public interface IMaterialPart {
     CTColor getCTColor();
 
     @ZenMethod
+    boolean hasOverlay();
+
+    @ZenMethod
     boolean isColorized();
 
     @ZenMethod

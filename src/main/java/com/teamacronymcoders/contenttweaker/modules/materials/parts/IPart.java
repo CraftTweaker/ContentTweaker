@@ -30,6 +30,9 @@ public interface IPart {
     String getOreDictPrefix();
 
     @ZenMethod
+    boolean hasOverlay();
+
+    @ZenMethod
     List<IPartDataPiece> getData();
 
     @ZenMethod

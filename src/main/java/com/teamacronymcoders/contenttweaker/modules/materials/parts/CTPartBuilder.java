@@ -20,7 +20,7 @@ public class CTPartBuilder implements IPartBuilder {
 
     @Override
     public IPartBuilder setPartType(IPartType partType) {
-        if (partType.getInternal() instanceof PartType) {
+        if (partType.getInternal() != null) {
             this.partBuilder.setPartType((PartType) partType.getInternal());
         }
         return this;
@@ -35,6 +35,12 @@ public class CTPartBuilder implements IPartBuilder {
     @Override
     public IPartBuilder setAdditionalOreDictNames(String... prefix) {
         this.partBuilder.setAdditionalOreDictNames(prefix);
+        return this;
+    }
+
+    @Override
+    public IPartBuilder setHasOverlay(boolean hasOverlay) {
+        this.partBuilder.setOverlay(true);
         return this;
     }
 

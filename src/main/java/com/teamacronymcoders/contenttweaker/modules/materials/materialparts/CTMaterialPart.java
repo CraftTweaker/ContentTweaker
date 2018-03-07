@@ -70,6 +70,11 @@ public class CTMaterialPart implements IMaterialPart {
     }
 
     @Override
+    public boolean hasOverlay() {
+        return materialPart.getPart().hasOverlayTexture();
+    }
+
+    @Override
     public boolean isColorized() {
         return this.materialPart.isColorized();
     }

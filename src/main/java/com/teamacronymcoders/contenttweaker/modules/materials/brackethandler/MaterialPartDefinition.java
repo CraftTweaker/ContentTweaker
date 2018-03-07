@@ -72,6 +72,11 @@ public class MaterialPartDefinition extends MCItemStack implements IMaterialPart
     }
 
     @Override
+    public boolean hasOverlay() {
+        return materialPart.getPart().hasOverlayTexture();
+    }
+
+    @Override
     public boolean isColorized() {
         return materialPart.isColorized();
     }
