@@ -153,8 +153,8 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         EnumActionResult actionResult = EnumActionResult.PASS;
         if (Objects.nonNull(itemRepresentation.getOnItemUse())) {
             Position3f blockTouch = new MCPosition3f(hitX, hitY, hitZ);
-            itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
-                    Hand.of(hand), Facing.of(facing), blockTouch);
+            actionResult = itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
+                    Hand.of(hand), Facing.of(facing), blockTouch).getInternal();
         }
         return actionResult;
     }
