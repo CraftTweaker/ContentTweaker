@@ -6,9 +6,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public class CreativeTabContent extends CreativeTabs {
     private CreativeTabRepresentation representation;
+    private ItemStack iconStack;
 
     public CreativeTabContent(CreativeTabRepresentation representation) {
         super(representation.getUnlocalizedName());
@@ -35,6 +37,7 @@ public class CreativeTabContent extends CreativeTabs {
     @Nonnull
     @SideOnly(Side.CLIENT)
     public ItemStack getTabIconItem() {
-        return representation.getInternalIconStack();
+        return iconStack = Optional.ofNullable(iconStack)
+                .orElseGet(() -> representation.getInternalIconStack());
     }
 }

@@ -18,6 +18,9 @@ public interface IPart {
     String getUnlocalizedName();
 
     @ZenMethod
+    String getShortUnlocalizedName();
+
+    @ZenMethod
     IPartType getPartType();
 
     @ZenMethod
@@ -25,6 +28,9 @@ public interface IPart {
 
     @ZenMethod
     String getOreDictPrefix();
+
+    @ZenMethod
+    boolean hasOverlay();
 
     @ZenMethod
     List<IPartDataPiece> getData();

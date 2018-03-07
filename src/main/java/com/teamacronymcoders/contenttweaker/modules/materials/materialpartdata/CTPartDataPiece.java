@@ -20,7 +20,7 @@ public class CTPartDataPiece implements IPartDataPiece {
     }
 
     @Override
-    public Object getInternal() {
+    public PartDataPiece getInternal() {
         return this.partDataPiece;
     }
 }

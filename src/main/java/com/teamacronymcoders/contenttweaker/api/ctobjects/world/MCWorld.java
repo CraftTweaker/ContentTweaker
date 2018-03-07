@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.api.ctobjects.world;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.random.CTRandom;
 import crafttweaker.api.world.IBiome;
 import crafttweaker.mc1120.world.MCBiome;
 import net.minecraft.world.World;
@@ -31,7 +32,7 @@ public class MCWorld implements IWorld {
 
     @Override
     public boolean setBlockState(ICTBlockState blockState, IBlockPos blockPos) {
-        return this.world.setBlockState(blockPos.getInternal(), blockState.getInternal(), 2);
+        return this.world.setBlockState(blockPos.getInternal(), blockState.getInternal(), 3);
     }
 
     @Override
@@ -77,6 +78,11 @@ public class MCWorld implements IWorld {
     @Override
     public String getDimensionType() {
         return this.world.provider.getDimensionType().getName();
+    }
+
+    @Override
+    public CTRandom getRandom() {
+        return new CTRandom(world.rand);
     }
 
     @Override

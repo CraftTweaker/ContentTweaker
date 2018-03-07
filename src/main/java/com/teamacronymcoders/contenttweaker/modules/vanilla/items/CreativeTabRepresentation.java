@@ -1,16 +1,18 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
 import com.teamacronymcoders.contenttweaker.api.IRepresentation;
-import crafttweaker.CraftTweakerAPI;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemStackSupplier;
+import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
-import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 
+import java.util.Optional;
+
 public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>, ICreativeTab {
     private String unlocalizedName;
-    private ItemStack iconStack;
+    private IItemStackSupplier supplyItemStack;
     private CreativeTabContent creativeTabContent;
 
     private boolean hasSearch = false;
@@ -27,29 +29,34 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
     }
 
     public IItemStack getIconStack() {
-        return new MCItemStack(iconStack);
+        return getSupplyItemStack().getItemStack();
     }
 
     public ItemStack getInternalIconStack() {
-        return this.iconStack;
+        return Optional.ofNullable(getSupplyItemStack().getItemStack())
+                        .map(IIngredient::getInternal)
+                        .map(iItemStack -> (ItemStack) iItemStack)
+                        .orElse(ItemStack.EMPTY);
     }
 
     @Override
     public void setIconStack(IItemStack iconStack) {
-        if(iconStack.getInternal() instanceof ItemStack) {
-            this.setIconStack((ItemStack) iconStack.getInternal());
-        } else {
-            CraftTweakerAPI.logError("Could not get ItemStack");
-        }
+        this.supplyItemStack = () -> iconStack;
+    }
+
+    @Override
+    public IItemStackSupplier getIconStackSupplier() {
+        return this.supplyItemStack;
+    }
+
+    @Override
+    public void setIconStackSupplier(IItemStackSupplier stackSupplier) {
+        this.supplyItemStack = stackSupplier;
     }
 
     @Override
     public void setHasSearch() {
         this.hasSearch = true;
-    }
-
-    public void setIconStack(ItemStack iconStack) {
-        this.iconStack = iconStack;
     }
 
     @Override
@@ -100,6 +107,10 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
             creativeTabContent = new CreativeTabContent(this);
         }
         return creativeTabContent;
+    }
+
+    public IItemStackSupplier getSupplyItemStack() {
+        return supplyItemStack;
     }
 
     public boolean isHasSearch() {

@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.items;
 
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemStackSupplier;
 import crafttweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
@@ -19,6 +20,12 @@ public interface ICreativeTab extends crafttweaker.api.creativetabs.ICreativeTab
 
     @ZenSetter("iconStack")
     void setIconStack(IItemStack iconStack);
+
+    @ZenGetter("iconStackSupplier")
+    IItemStackSupplier getIconStackSupplier();
+
+    @ZenSetter("iconStackSupplier")
+    void setIconStackSupplier(IItemStackSupplier stackSupplier);
 
     @ZenMethod
     void setHasSearch();

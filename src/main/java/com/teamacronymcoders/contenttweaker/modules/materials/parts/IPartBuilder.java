@@ -20,5 +20,8 @@ public interface IPartBuilder {
     IPartBuilder setAdditionalOreDictNames(String... prefixes);
 
     @ZenMethod
+    IPartBuilder setHasOverlay(boolean hasOverlay);
+
+    @ZenMethod
     IPart build() throws MaterialException;
 }

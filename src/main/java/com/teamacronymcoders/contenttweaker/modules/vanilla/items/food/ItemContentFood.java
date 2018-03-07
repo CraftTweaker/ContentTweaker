@@ -8,26 +8,30 @@ import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.CTPlayer;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMutableItemStack;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import crafttweaker.api.util.Position3f;
+import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.player.MCPlayer;
 import crafttweaker.mc1120.util.MCPosition3f;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,7 +41,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
-public class ItemContentFood extends ItemFood implements IHasModel, IHasGeneratedModel {
+public class ItemContentFood extends ItemFood implements IHasModel, IHasGeneratedModel, IHasItemColor {
     private final ItemFoodRepresentation itemRepresentation;
     private CreativeTabs creativeTab;
     private IBaseMod mod;
@@ -105,7 +109,6 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
         return this.itemRepresentation.isBeaconPayment();
     }
 
-    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
     public CreativeTabs getCreativeTab() {
@@ -131,10 +134,25 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
         EnumActionResult actionResult = EnumActionResult.PASS;
         if (Objects.nonNull(itemRepresentation.getOnItemUse())) {
             Position3f blockTouch = new MCPosition3f(hitX, hitY, hitZ);
-            itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
-                    Hand.of(hand), Facing.of(facing), blockTouch);
+            actionResult = itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
+                    Hand.of(hand), Facing.of(facing), blockTouch).getInternal();
         }
         return actionResult;
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        return Optional.ofNullable(itemRepresentation.getItemDestroySpeed())
+                .map(value -> value.getDestroySpeed(new MCMutableItemStack(stack), new MCBlockState(state)))
+                .orElseGet(() -> super.getDestroySpeed(stack, state));
+    }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
+        return Optional.ofNullable(itemRepresentation.getItemDestroyedBlock())
+                .map(value -> value.onBlockDestroyed(new MCMutableItemStack(stack), new MCWorld(world),
+                        new MCBlockState(state), new MCBlockPos(pos), new MCEntityLivingBase(entityLiving)))
+                .orElseGet(() -> super.onBlockDestroyed(stack, world, state, pos, entityLiving));
     }
 
     @Override
@@ -165,9 +183,40 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
         List<IGeneratedModel> models = Lists.newArrayList();
         TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
         Map<String, String> replacements = Maps.newHashMap();
-        replacements.put("texture", "contenttweaker:items/" + itemRepresentation.getUnlocalizedName());
+
+        replacements.put("texture", Optional.ofNullable(itemRepresentation.getTextureLocation())
+                .map(CTResourceLocation::getInternal)
+                .map(ResourceLocation::toString)
+                .orElseGet(() -> "contenttweaker:items/" + itemRepresentation.getUnlocalizedName()));
         templateFile.replaceContents(replacements);
         models.add(new GeneratedModel(itemRepresentation.getUnlocalizedName(), ModelType.ITEM_MODEL, templateFile.getFileContents()));
         return models;
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack itemStack) {
+        return itemRepresentation.getItemGetContainerItem() != null || super.hasContainerItem(itemStack);
+    }
+
+    @Override
+    @Nonnull
+    public ItemStack getContainerItem(@Nonnull final ItemStack itemStack) {
+        return Optional.ofNullable(itemRepresentation.getItemGetContainerItem())
+                .map(getContainerItem -> getContainerItem.getContainerItem(new MCItemStack(itemStack)))
+                .map(result -> (ItemStack) result.getInternal())
+                .orElseGet(() -> super.getContainerItem(itemStack));
+    }
+
+    @Override
+    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+        return itemRepresentation.getItemColorSupplier().getColor(new MCItemStack(stack), tintIndex).getIntColor();
+    }
+
+    @Override
+    @Nonnull
+    public String getItemStackDisplayName(@Nonnull ItemStack stack) {
+        return Optional.ofNullable(itemRepresentation.getLocalizedNameSupplier())
+                .map(supplier -> supplier.getLocalizedName(new MCItemStack(stack)))
+                .orElseGet(() -> super.getItemStackDisplayName(stack));
     }
 }

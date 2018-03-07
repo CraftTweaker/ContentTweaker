@@ -36,6 +36,11 @@ public class Hand implements ICTObject<EnumHand> {
         return new Hand(EnumHand.OFF_HAND);
     }
 
+    @ZenMethod
+    public static Hand fromString(String handString) {
+        return new Hand(EnumHand.valueOf(handString.toUpperCase()));
+    }
+
     @Override
     public EnumHand getInternal() {
         return this.hand;

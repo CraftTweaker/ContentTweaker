@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab;
 
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemStackSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,7 +19,7 @@ public class MCCreativeTab extends crafttweaker.mc1120.creativetabs.MCCreativeTa
 
     @Override
     public void setUnlocalizedName(String unlocalizedName) {
-
+        throw new IllegalStateException("Can't set Unlocalized name for existing Creative Tab");
     }
 
     @Override
@@ -26,9 +27,20 @@ public class MCCreativeTab extends crafttweaker.mc1120.creativetabs.MCCreativeTa
         return null;
     }
 
+
     @Override
     public void setIconStack(IItemStack iconStack) {
+        setIconStackSupplier(() -> iconStack);
+    }
 
+    @Override
+    public IItemStackSupplier getIconStackSupplier() {
+        return this::getIconStack;
+    }
+
+    @Override
+    public void setIconStackSupplier(IItemStackSupplier stackSupplier) {
+        throw new IllegalStateException("Can't set Icon Stack for existing Creative Tab");
     }
 
     @Override
@@ -38,6 +50,6 @@ public class MCCreativeTab extends crafttweaker.mc1120.creativetabs.MCCreativeTa
 
     @Override
     public void register() {
-
+        throw new IllegalStateException("Can't register an already existing Creative Tab");
     }
 }

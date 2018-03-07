@@ -7,4 +7,10 @@ import stanhebben.zenscript.annotations.ZenMethod;
 public interface IMaterialPartData {
     @ZenMethod
     void addDataValue(String name, String value);
+
+    @ZenMethod
+    int getIntValue(String name, int defaultValue);
+
+    @ZenMethod
+    String getStringValue(String name, String defaultValue);
 }

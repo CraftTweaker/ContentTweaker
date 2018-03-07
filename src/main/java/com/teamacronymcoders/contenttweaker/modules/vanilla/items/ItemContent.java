@@ -8,6 +8,7 @@ import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
@@ -18,13 +19,12 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.CTPlayer
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMutableItemStack;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
-import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
-import crafttweaker.mc1120.player.MCPlayer;
 import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -34,10 +34,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -47,7 +44,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
-public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedModel {
+public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedModel, IHasItemColor {
     private ItemRepresentation itemRepresentation;
     private CreativeTabs creativeTab;
     private IBaseMod mod;
@@ -115,7 +112,6 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         return this.itemRepresentation.isBeaconPayment();
     }
 
-    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
     public CreativeTabs getCreativeTab() {
@@ -141,8 +137,8 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         EnumActionResult enumActionResult = EnumActionResult.PASS;
         ItemStack itemStack = player.getHeldItem(hand);
         if (itemRepresentation.getItemRightClick() != null) {
-            String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCItemStack(itemStack),
-                    new MCWorld(world), new MCPlayer(player), hand.name());
+            String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCMutableItemStack(itemStack),
+                    new MCWorld(world), new CTPlayer(player), hand.name());
             if (stringResult != null) {
                 enumActionResult = EnumActionResult.valueOf(stringResult.toUpperCase(Locale.US));
             }
@@ -157,8 +153,8 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         EnumActionResult actionResult = EnumActionResult.PASS;
         if (Objects.nonNull(itemRepresentation.getOnItemUse())) {
             Position3f blockTouch = new MCPosition3f(hitX, hitY, hitZ);
-            itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
-                    Hand.of(hand), Facing.of(facing), blockTouch);
+            actionResult = itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
+                    Hand.of(hand), Facing.of(facing), blockTouch).getInternal();
         }
         return actionResult;
     }
@@ -206,7 +202,11 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         List<IGeneratedModel> models = Lists.newArrayList();
         TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
         Map<String, String> replacements = Maps.newHashMap();
-        replacements.put("texture", "contenttweaker:items/" + itemRepresentation.getUnlocalizedName());
+
+        replacements.put("texture", Optional.ofNullable(itemRepresentation.getTextureLocation())
+                .map(CTResourceLocation::getInternal)
+                .map(ResourceLocation::toString)
+                .orElseGet(() -> "contenttweaker:items/" + itemRepresentation.getUnlocalizedName()));
         templateFile.replaceContents(replacements);
         models.add(new GeneratedModel(itemRepresentation.getUnlocalizedName(), ModelType.ITEM_MODEL, templateFile.getFileContents()));
         return models;
@@ -219,11 +219,23 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
 
     @Override
     @Nonnull
-    @SuppressWarnings("result")
-    public ItemStack getContainerItem(@Nonnull ItemStack itemStack) {
+    public ItemStack getContainerItem(@Nonnull final ItemStack itemStack) {
         return Optional.ofNullable(itemRepresentation.getItemGetContainerItem())
                 .map(getContainerItem -> getContainerItem.getContainerItem(new MCItemStack(itemStack)))
-                .map(result -> (ItemStack)result.getInternal())
+                .map(result -> (ItemStack) result.getInternal())
                 .orElseGet(() -> super.getContainerItem(itemStack));
+    }
+
+    @Override
+    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+        return itemRepresentation.getItemColorSupplier().getColor(new MCItemStack(stack), tintIndex).getIntColor();
+    }
+
+    @Override
+    @Nonnull
+    public String getItemStackDisplayName(@Nonnull ItemStack stack) {
+        return Optional.ofNullable(itemRepresentation.getLocalizedNameSupplier())
+                .map(supplier -> supplier.getLocalizedName(new MCItemStack(stack)))
+                .orElseGet(() -> super.getItemStackDisplayName(stack));
     }
 }

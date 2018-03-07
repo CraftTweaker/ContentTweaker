@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parts;
 
 import com.teamacronymcoders.base.materialsystem.parts.Part;
+import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.CTPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMaterial;
@@ -28,23 +29,35 @@ public class CTPart implements IPart {
     }
 
     @Override
+    public String getShortUnlocalizedName() {
+        return part.getShortUnlocalizedName();
+    }
+
+    @Override
     public CTPartType getPartType() {
         return new CTPartType(this.part.getPartType());
     }
 
     @Override
     public String getPartTypeName() {
-        return null;
+        return this.part.getPartTypeName();
     }
 
     @Override
     public String getOreDictPrefix() {
-        return null;
+        return this.part.getOreDictPrefix();
+    }
+
+    @Override
+    public boolean hasOverlay() {
+        return part.hasOverlayTexture();
     }
 
     @Override
     public List<IPartDataPiece> getData() {
-        return null;
+        return this.part.getPartType().getData().stream()
+                .map(CTPartDataPiece::new)
+                .collect(Collectors.toList());
     }
 
     @Override

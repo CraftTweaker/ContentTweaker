@@ -71,6 +71,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public PushReaction mobilityFlag;
     @ZenProperty
     public boolean passable = !this.blockMaterial.blocksMovement();
+    @ZenProperty
+    public boolean entitySpawnable = true;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -300,6 +302,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void setPassable(boolean passable) {
         this.passable = passable;
+    }
+
+    @ZenMethod
+    public void setEntitySpawnable(boolean entitySpawnable) {
+        this.entitySpawnable = entitySpawnable;
+    }
+
+    @ZenMethod
+    public boolean canEntitySpawn() {
+        return entitySpawnable;
     }
 
     @Override
