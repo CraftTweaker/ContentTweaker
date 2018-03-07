@@ -234,7 +234,8 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
     @Override
     @Nonnull
     public String getItemStackDisplayName(@Nonnull ItemStack stack) {
-        return Optional.ofNullable(itemRepresentation.getLocalizedNameSupplier().getLocalizedName(new MCItemStack(stack)))
+        return Optional.ofNullable(itemRepresentation.getLocalizedNameSupplier())
+                .map(supplier -> supplier.getLocalizedName(new MCItemStack(stack)))
                 .orElseGet(() -> super.getItemStackDisplayName(stack));
     }
 }
