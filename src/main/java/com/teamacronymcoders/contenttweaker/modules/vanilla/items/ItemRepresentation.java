@@ -51,9 +51,11 @@ public class ItemRepresentation implements IRepresentation<Item> {
     @ZenProperty
     public IItemGetContainerItem itemGetContainerItem = null;
     @ZenProperty
-    public IColorSupplier itemColorSupplier = (identifier) -> CTColor.fromInt(-1);
+    public IItemColorSupplier itemColorSupplier = (itemStack, tint) -> CTColor.fromInt(-1);
     @ZenProperty
-    public IResourceLocationSupplier itemTextureLocationSupplier;
+    public CTResourceLocation textureLocation;
+    @ZenProperty
+    public ILocalizedNameSupplier localizedNameSupplier;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -217,23 +219,33 @@ public class ItemRepresentation implements IRepresentation<Item> {
     }
 
     @ZenMethod
-    public IColorSupplier getItemColorSupplier() {
+    public IItemColorSupplier getItemColorSupplier() {
         return itemColorSupplier;
     }
 
     @ZenMethod
-    public void setItemColorSupplier(IColorSupplier itemColorSupplier) {
+    public void setItemColorSupplier(IItemColorSupplier itemColorSupplier) {
         this.itemColorSupplier = itemColorSupplier;
     }
 
     @ZenMethod
-    public IResourceLocationSupplier getItemTextureLocationSupplier() {
-        return itemTextureLocationSupplier;
+    public CTResourceLocation getTextureLocation() {
+        return textureLocation;
     }
 
     @ZenMethod
-    public void setItemTextureLocationSupplier(IResourceLocationSupplier itemTextureLocationSupplier) {
-        this.itemTextureLocationSupplier = itemTextureLocationSupplier;
+    public void setTextureLocation(CTResourceLocation resourceLocation) {
+        this.textureLocation = resourceLocation;
+    }
+
+    @ZenMethod
+    public ILocalizedNameSupplier getLocalizedNameSupplier() {
+        return localizedNameSupplier;
+    }
+
+    @ZenMethod
+    public void setLocalizedNameSupplier(ILocalizedNameSupplier localizedNameSupplier) {
+        this.localizedNameSupplier = localizedNameSupplier;
     }
 
     @Override
@@ -256,7 +268,5 @@ public class ItemRepresentation implements IRepresentation<Item> {
         return ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
-
-
 
 }

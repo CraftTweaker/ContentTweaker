@@ -112,7 +112,6 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         return this.itemRepresentation.isBeaconPayment();
     }
 
-    @Nonnull
     @Override
     @SideOnly(Side.CLIENT)
     public CreativeTabs getCreativeTab() {
@@ -204,8 +203,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
         Map<String, String> replacements = Maps.newHashMap();
 
-        replacements.put("texture", Optional.ofNullable(itemRepresentation.getItemTextureLocationSupplier())
-                .map(resourceLocationSupplier -> resourceLocationSupplier.getResourceLocation("model"))
+        replacements.put("texture", Optional.ofNullable(itemRepresentation.getTextureLocation())
                 .map(CTResourceLocation::getInternal)
                 .map(ResourceLocation::toString)
                 .orElseGet(() -> "contenttweaker:items/" + itemRepresentation.getUnlocalizedName()));
@@ -221,7 +219,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
 
     @Override
     @Nonnull
-    public ItemStack getContainerItem(@Nonnull ItemStack itemStack) {
+    public ItemStack getContainerItem(@Nonnull final ItemStack itemStack) {
         return Optional.ofNullable(itemRepresentation.getItemGetContainerItem())
                 .map(getContainerItem -> getContainerItem.getContainerItem(new MCItemStack(itemStack)))
                 .map(result -> (ItemStack) result.getInternal())
@@ -230,6 +228,13 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
 
     @Override
     public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
-        return itemRepresentation.getItemColorSupplier().getColor("itemstack").getIntColor();
+        return itemRepresentation.getItemColorSupplier().getColor(new MCItemStack(stack), tintIndex).getIntColor();
+    }
+
+    @Override
+    @Nonnull
+    public String getItemStackDisplayName(@Nonnull ItemStack stack) {
+        return Optional.ofNullable(itemRepresentation.getLocalizedNameSupplier().getLocalizedName(new MCItemStack(stack)))
+                .orElseGet(() -> super.getItemStackDisplayName(stack));
     }
 }

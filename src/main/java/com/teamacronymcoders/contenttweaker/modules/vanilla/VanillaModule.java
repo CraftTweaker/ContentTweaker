@@ -17,9 +17,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.Sou
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeBracketHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.utils.commands.Commands;
 import crafttweaker.CraftTweakerAPI;
-import crafttweaker.mc1120.brackets.BracketHandlerCreativeTab;
 import crafttweaker.mc1120.commands.CTChatCommand;
-import crafttweaker.zenscript.GlobalRegistry;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import static com.teamacronymcoders.contenttweaker.ContentTweaker.MOD_ID;
@@ -55,8 +53,6 @@ public class VanillaModule extends ModuleBase {
         CraftTweakerAPI.registerClass(IItemDestroyedBlock.class);
         CraftTweakerAPI.registerClass(IItemDestroySpeed.class);
         CraftTweakerAPI.registerClass(IItemStackSupplier.class);
-        CraftTweakerAPI.registerClass(IColorSupplier.class);
-        CraftTweakerAPI.registerClass(IResourceLocationSupplier.class);
 
         CraftTweakerAPI.registerClass(ICreativeTab.class);
         CraftTweakerAPI.registerClass(BlockRepresentation.class);
