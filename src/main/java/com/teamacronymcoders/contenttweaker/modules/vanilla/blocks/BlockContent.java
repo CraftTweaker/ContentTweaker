@@ -63,6 +63,8 @@ public class BlockContent extends BlockBase {
         if (this.blockRepresentation.getOnRandomTick() != null) {
             this.setTickRandomly(true);
         }
+        this.fullBlock = blockRepresentation.isFullBlock();
+        this.translucent = blockRepresentation.isTranslucent();
     }
 
     @Override
@@ -165,19 +167,37 @@ public class BlockContent extends BlockBase {
     }
 
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
-                                      List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean isActualState) {
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox,
+                                      List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity, boolean isActualState) {
         if (this.blockRepresentation.isPassable()) {
             addCollisionBoxToList(pos, entityBox, collidingBoxes, NULL_AABB);
         } else {
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, state.getCollisionBoundingBox(worldIn, pos));
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, state.getCollisionBoundingBox(world, pos));
         }
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public boolean canEntitySpawn(IBlockState state, Entity entityIn)
-    {
+    public boolean canEntitySpawn(IBlockState state, Entity entity) {
         return this.blockRepresentation.canEntitySpawn();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isOpaqueCube(IBlockState state) {
+        return fullBlock;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isFullCube(IBlockState state) {
+        return fullBlock;
+    }
+
+    @Override
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return fullBlock;
     }
 }
