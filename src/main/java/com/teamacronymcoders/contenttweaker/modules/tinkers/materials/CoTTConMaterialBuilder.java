@@ -28,8 +28,6 @@ import java.util.List;
 @ModOnly("tconstruct")
 public class CoTTConMaterialBuilder {
 
-    public static boolean MATERIALS_ADDED = false;
-
     @ZenProperty
     public String identifier;
 
@@ -115,8 +113,18 @@ public class CoTTConMaterialBuilder {
     }
 
     @ZenMethod
+    public void removeMaterialTrait(String identifier, @Optional String dependency) {
+        materialTraits.removeIf(traitPair -> identifier.equals(traitPair.getKey()) && (dependency == null || dependency.equals(traitPair.getValue())));
+    }
+
+    @ZenMethod
     public void addHeadMaterialStats(int durability, float miningSpeed, float attackDamage, int harvestLevel) {
         this.headMaterialStats = new HeadMaterialStats(durability, miningSpeed, attackDamage, harvestLevel);
+    }
+
+    @ZenMethod
+    public void removeHeadMaterialStats() {
+        headMaterialStats = null;
     }
 
     @ZenMethod
@@ -125,8 +133,18 @@ public class CoTTConMaterialBuilder {
     }
 
     @ZenMethod
+    public void removeHandleMaterialStats() {
+        handleMaterialStats = null;
+    }
+
+    @ZenMethod
     public void addExtraMaterialStats(int extraDurability) {
         this.extraMaterialStats = new ExtraMaterialStats(extraDurability);
+    }
+
+    @ZenMethod
+    public void removeExtraMaterialStats() {
+        extraMaterialStats = null;
     }
 
     @ZenMethod
@@ -135,8 +153,18 @@ public class CoTTConMaterialBuilder {
     }
 
     @ZenMethod
+    public void removeBowMaterialStats() {
+        bowMaterialStats = null;
+    }
+
+    @ZenMethod
     public void addBowStringMaterialStats(float modifier) {
         this.bowStringMaterialStats = new BowStringMaterialStats(modifier);
+    }
+
+    @ZenMethod
+    public void removeBowStringMaterialStats() {
+        bowStringMaterialStats = null;
     }
 
     @ZenMethod
@@ -145,13 +173,28 @@ public class CoTTConMaterialBuilder {
     }
 
     @ZenMethod
+    public void removeArrowShaftMaterialStats() {
+        arrowShaftMaterialStats = null;
+    }
+
+    @ZenMethod
     public void addFletchingMaterialStats(float accuracy, float modifier) {
         this.fletchingMaterialStats = new FletchingMaterialStats(accuracy, modifier);
     }
 
     @ZenMethod
+    public void removeFletchingMaterialStats() {
+        fletchingMaterialStats = null;
+    }
+
+    @ZenMethod
     public void addProjectileMaterialStats() {
         this.projectileMaterialStats = new ProjectileMaterialStats();
+    }
+
+    @ZenMethod
+    public void removeProjectileMaterialStats() {
+        this.projectileMaterialStats = null;
     }
 
     @ZenMethod
@@ -207,9 +250,6 @@ public class CoTTConMaterialBuilder {
 
         TinkerRegistry.addMaterial(material);
         TinkerRegistry.integrate(new CoTTConMaterialIntegration(material));
-
-
-        MATERIALS_ADDED = true;
         return new TConMaterialRepresentation(material);
     }
 }
