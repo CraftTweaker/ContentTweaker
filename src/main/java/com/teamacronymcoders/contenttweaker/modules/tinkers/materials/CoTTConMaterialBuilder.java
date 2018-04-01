@@ -3,6 +3,7 @@ package com.teamacronymcoders.contenttweaker.modules.tinkers.materials;
 import com.teamacronymcoders.contenttweaker.modules.tinkers.traits.CoTTraitBuilder;
 import com.teamacronymcoders.contenttweaker.modules.tinkers.traits.TConTraitRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.tinkers.utils.CoTRecipeMatch;
+import com.teamacronymcoders.contenttweaker.modules.tinkers.utils.Functions;
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
@@ -55,6 +56,12 @@ public class CoTTConMaterialBuilder {
 
     @ZenProperty
     public IItemStack shard = null;
+
+    @ZenProperty
+    public String localizedName = null;
+
+    @ZenProperty
+    public Functions.ItemLocalizer itemLocalizer = null;
 
     private List<CoTRecipeMatch> itemMatches = new ArrayList<>();
     private List<Pair<String, String>> materialTraits = new ArrayList<>();
@@ -181,19 +188,22 @@ public class CoTTConMaterialBuilder {
         //Items
         itemMatches.forEach(material::addItemMatch);
 
-        //Traits
-        for (Pair<String, String> pair : materialTraits) {
-            ITrait trait = TinkerRegistry.getTrait(pair.getKey());
-            material.addTrait(trait, pair.getValue());
-        }
-
-
         if (representativeItem != null)
             material.representativeItem = this.representativeItem;
         if (representativeOre != null)
             material.setRepresentativeItem(representativeOre.getName());
         if (shard != null)
             material.setShard(CraftTweakerMC.getItemStack(shard));
+
+
+        //Traits
+        for (Pair<String, String> pair : materialTraits) {
+            ITrait trait = TinkerRegistry.getTrait(pair.getKey());
+            material.addTrait(trait, pair.getValue());
+        }
+
+        material.itemLocalizer = this.itemLocalizer;
+        material.localizedName = this.localizedName;
 
         TinkerRegistry.addMaterial(material);
         TinkerRegistry.integrate(new CoTTConMaterialIntegration(material));

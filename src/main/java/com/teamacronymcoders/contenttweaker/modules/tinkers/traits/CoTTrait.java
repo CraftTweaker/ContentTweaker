@@ -1,6 +1,8 @@
 package com.teamacronymcoders.contenttweaker.modules.tinkers.traits;
 
+import com.teamacronymcoders.contenttweaker.modules.tinkers.utils.Functions;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.mc1120.data.NBTConverter;
 import crafttweaker.mc1120.events.handling.MCBlockBreakEvent;
 import crafttweaker.mc1120.events.handling.MCBlockHarvestDropsEvent;
 import crafttweaker.mc1120.events.handling.MCEntityLivingHurtEvent;
@@ -10,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -21,28 +24,33 @@ import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Actual Trait implementation, created by the CoTTraitBuilder
  */
 public class CoTTrait extends ModifierTrait implements ITrait {
 
-    TraitFunctions.afterBlockBreak afterBlockBreak = null;
-    TraitFunctions.beforeBlockBreak beforeBlockBreak = null;
-    TraitFunctions.blockHarvestDrops onBlockHarvestDrops = null;
-    TraitFunctions.damage calcDamage = null;
-    TraitFunctions.isCriticalHit calcCrit = null;
-    TraitFunctions.miningSpeed getMiningSpeed = null;
-    TraitFunctions.onHit onHit = null;
-    TraitFunctions.onUpdate onUpdate = null;
-    TraitFunctions.afterHit afterHit = null;
-    TraitFunctions.knockBack calcKnockBack = null;
-    TraitFunctions.onBlock onBlock = null;
-    TraitFunctions.onToolDamage onToolDamage = null;
-    TraitFunctions.onToolHeal calcToolHeal = null;
-    TraitFunctions.onToolRepair onToolRepair = null;
-    TraitFunctions.onPlayerHurt onPlayerHurt = null;
-    TraitFunctions.canApplyTogether canApplyTogether = null;
+    Functions.AfterBlockBreak afterBlockBreak = null;
+    Functions.BeforeBlockBreak beforeBlockBreak = null;
+    Functions.BlockHarvestDrops onBlockHarvestDrops = null;
+    Functions.Damage calcDamage = null;
+    Functions.IsCriticalHit calcCrit = null;
+    Functions.MiningSpeed getMiningSpeed = null;
+    Functions.OnHit onHit = null;
+    Functions.OnUpdate onUpdate = null;
+    Functions.AfterHit afterHit = null;
+    Functions.KnockBack calcKnockBack = null;
+    Functions.OnBlock onBlock = null;
+    Functions.OnToolDamage onToolDamage = null;
+    Functions.OnToolHeal calcToolHeal = null;
+    Functions.OnToolRepair onToolRepair = null;
+    Functions.OnPlayerHurt onPlayerHurt = null;
+    Functions.CanApplyTogether canApplyTogether = null;
+    Functions.ExtraInfo extraInfo = null;
+    String localizedName = null;
+    String localizedDescription = null;
     boolean hidden = false;
 
     public CoTTrait(@Nonnull String identifier, int color, int maxLevel, int countPerLevel) {
@@ -179,6 +187,27 @@ public class CoTTrait extends ModifierTrait implements ITrait {
         if (canApplyTogether != null)
             return canApplyTogether.handle(otherModifier.getIdentifier());
         return super.canApplyTogether(otherModifier);
+    }
+
+    @Override
+    public List<String> getExtraInfo(ItemStack tool, NBTTagCompound modifierTag) {
+        if (extraInfo != null)
+            return Arrays.asList(extraInfo.handle(CraftTweakerMC.getIItemStack(tool), NBTConverter.from(modifierTag, true)));
+        return super.getExtraInfo(tool, modifierTag);
+    }
+
+    @Override
+    public String getLocalizedName() {
+        if (localizedName != null)
+            return localizedName;
+        return super.getLocalizedName();
+    }
+
+    @Override
+    public String getLocalizedDesc() {
+        if (localizedDescription != null)
+            return localizedDescription;
+        return super.getLocalizedDesc();
     }
 
     public void addItem(RecipeMatch recipeMatch) {

@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.tinkers.traits;
 
 import com.teamacronymcoders.contenttweaker.modules.tinkers.utils.CoTRecipeMatch;
+import com.teamacronymcoders.contenttweaker.modules.tinkers.utils.Functions;
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
@@ -35,51 +36,64 @@ public class CoTTraitBuilder {
     public boolean hidden = false;
 
     @ZenProperty
-    public TraitFunctions.afterBlockBreak afterBlockBreak = null;
+    public Functions.AfterBlockBreak afterBlockBreak = null;
 
     @ZenProperty
-    public TraitFunctions.beforeBlockBreak beforeBlockBreak = null;
+    public Functions.BeforeBlockBreak beforeBlockBreak = null;
 
     @ZenProperty
-    public TraitFunctions.blockHarvestDrops onBlockHarvestDrops = null;
+    public Functions.BlockHarvestDrops onBlockHarvestDrops = null;
 
     @ZenProperty
-    public TraitFunctions.damage calcDamage = null;
+    public Functions.Damage calcDamage = null;
 
     @ZenProperty
-    public TraitFunctions.isCriticalHit calcCrit = null;
+    public Functions.IsCriticalHit calcCrit = null;
 
     @ZenProperty
-    public TraitFunctions.miningSpeed getMiningSpeed = null;
+    public Functions.MiningSpeed getMiningSpeed = null;
 
     @ZenProperty
-    public TraitFunctions.onHit onHit = null;
+    public Functions.OnHit onHit = null;
 
     @ZenProperty
-    public TraitFunctions.onUpdate onUpdate = null;
+    public Functions.OnUpdate onUpdate = null;
 
     @ZenProperty
-    public TraitFunctions.afterHit afterHit = null;
+    public Functions.AfterHit afterHit = null;
 
     @ZenProperty
-    public TraitFunctions.knockBack calcKnockBack = null;
+    public Functions.KnockBack calcKnockBack = null;
 
     @ZenProperty
-    public TraitFunctions.onBlock onBlock = null;
+    public Functions.OnBlock onBlock = null;
 
     @ZenProperty
-    public TraitFunctions.onToolDamage onToolDamage = null;
+    public Functions.OnToolDamage onToolDamage = null;
 
     @ZenProperty
-    public TraitFunctions.onToolHeal calcToolHeal = null;
+    public Functions.OnToolHeal calcToolHeal = null;
 
     @ZenProperty
-    public TraitFunctions.onToolRepair onToolRepair = null;
+    public Functions.OnToolRepair onToolRepair = null;
 
     @ZenProperty
-    public TraitFunctions.onPlayerHurt onPlayerHurt = null;
+    public Functions.OnPlayerHurt onPlayerHurt = null;
 
-    public TraitFunctions.canApplyTogether canApplyTogether = null;
+    @ZenProperty
+    public Functions.CanApplyTogether canApplyTogether = null;
+
+    @ZenProperty
+    public Functions.ExtraInfo extraInfo = null;
+
+    @ZenProperty
+    public Functions.ItemLocalizer itemLocalizer = null;
+
+    @ZenProperty
+    public String localizedName = null;
+
+    @ZenProperty
+    public String localizedDescription = null;
 
     private List<CoTRecipeMatch> recipeMatches = new ArrayList<>();
 
@@ -123,6 +137,9 @@ public class CoTTraitBuilder {
         trait.onPlayerHurt = this.onPlayerHurt;
         trait.hidden = this.hidden;
         trait.canApplyTogether = this.canApplyTogether;
+        trait.extraInfo = this.extraInfo;
+        trait.localizedName = this.localizedName;
+        trait.localizedDescription = this.localizedDescription;
 
         for (CoTRecipeMatch recipeMatch : recipeMatches) {
             trait.addItem(recipeMatch);

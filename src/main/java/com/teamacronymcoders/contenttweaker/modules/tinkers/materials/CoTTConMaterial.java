@@ -1,6 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.tinkers.materials;
 
-import crafttweaker.CraftTweakerAPI;
+import com.teamacronymcoders.contenttweaker.modules.tinkers.utils.Functions;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.liquid.ILiquidStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
@@ -19,6 +19,8 @@ public class CoTTConMaterial extends Material {
     public IItemStack representativeItem = null;
     public IItemStack shard = null;
     public ILiquidStack liquid = null;
+    public String localizedName = null;
+    public Functions.ItemLocalizer itemLocalizer = null;
 
     public CoTTConMaterial(String identifier, int color) {
         super(identifier, color);
@@ -62,6 +64,20 @@ public class CoTTConMaterial extends Material {
     public CoTTConMaterial setFluid(Fluid liquid) {
         this.liquid = new MCLiquidStack(new FluidStack(liquid, 1));
         return this;
+    }
+
+    @Override
+    public String getLocalizedName() {
+        if (localizedName != null)
+            return localizedName;
+        return super.getLocalizedName();
+    }
+
+    @Override
+    public String getLocalizedItemName(String itemName) {
+        if (itemLocalizer != null)
+            return itemLocalizer.handle(itemName);
+        return super.getLocalizedItemName(itemName);
     }
 
     @Override
