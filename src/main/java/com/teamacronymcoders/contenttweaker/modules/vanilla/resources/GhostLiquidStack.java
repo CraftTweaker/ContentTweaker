@@ -27,7 +27,7 @@ public class GhostLiquidStack implements ILiquidStack {
 
         this.name = name;
         if (!warned) {
-            CraftTweakerAPI.logInfo("Liquid " + name + "has not been found, trying to use a ghost representative. This message will only be printed once, all subsequent missing fluids will be handled the same way.");
+            CraftTweakerAPI.logInfo("Liquid " + name + " has not been found, trying to use a ghost representative. This message will only be printed once, all subsequent missing fluids will be handled the same way.");
             warned = true;
         }
         update();
@@ -39,7 +39,10 @@ public class GhostLiquidStack implements ILiquidStack {
         ILiquidStack stack = BracketHandlerLiquid.getLiquid(name);
         if (stack == null)
             return;
-        this.liquid = stack.withAmount(liquid.getAmount()).withTag(liquid.getTag());
+        stack = stack.withAmount(liquid.getAmount());
+        if(liquid.getTag() != null)
+                stack.withTag(liquid.getTag());
+        this.liquid = stack;
 
     }
 

@@ -53,7 +53,13 @@ public class GhostItemStack implements IItemStack {
         IItemStack stack = BracketHandlerItem.getItem(name, meta);
         if (stack == null)
             return;
-        this.item = stack.withAmount(item.getAmount()).withDamage(item.getDamage()).withTag(item.getTag());
+        stack = stack.withAmount(item.getAmount());
+        stack = stack.withDamage(item.getDamage());
+
+        if (item.hasTag())
+            stack = stack.withTag(item.getTag());
+
+        this.item = stack;
     }
 
     public boolean isPresent() {
