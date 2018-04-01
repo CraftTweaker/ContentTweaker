@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class GhostItemStack implements IItemStack {
 
-    public static final ItemStack FAKE_STACK = new ItemStack(new Item(), 10);
+    public static final ItemStack FAKE_STACK = new ItemStack(new Item(), 1);
     public static final IItemStack FAKE_ISTACK = new MCItemStack(FAKE_STACK);
     private static boolean warned = false;
     private final String name;
@@ -48,7 +48,7 @@ public class GhostItemStack implements IItemStack {
     }
 
     public void update() {
-        if (item != FAKE_ISTACK)
+        if (FAKE_ISTACK.matches(item))
             return;
         IItemStack stack = BracketHandlerItem.getItem(name, meta);
         if (stack == null)
@@ -64,7 +64,7 @@ public class GhostItemStack implements IItemStack {
 
     public boolean isPresent() {
         update();
-        return item != FAKE_ISTACK;
+        return !FAKE_ISTACK.matches(item);
     }
 
     public IItemStack getItem() {
@@ -183,7 +183,8 @@ public class GhostItemStack implements IItemStack {
     @Override
     public IItemStack amount(int amount) {
         update();
-        return item.amount(amount);
+        this.item = item.amount(amount);
+        return this;
     }
 
     @Override
@@ -231,43 +232,50 @@ public class GhostItemStack implements IItemStack {
     @Override
     public IItemStack withDamage(int damage) {
         update();
-        return item.withDamage(damage);
+        this.item = item.withDamage(damage);
+        return this;
     }
 
     @Override
     public IItemStack withAmount(int amount) {
         update();
-        return item.withAmount(amount);
+        this.item = item.withAmount(amount);
+        return this;
     }
 
     @Override
     public IItemStack anyAmount() {
         update();
-        return item.anyAmount();
+        this.item = item.anyAmount();
+        return this;
     }
 
     @Override
     public IItemStack withTag(IData tag) {
         update();
-        return item.withTag(tag);
+        this.item = item.withTag(tag);
+        return this;
     }
 
     @Override
     public IItemStack withEmptyTag() {
         update();
-        return item.withEmptyTag();
+        this.item = item.withEmptyTag();
+        return this;
     }
 
     @Override
     public IItemStack removeTag(String tag) {
         update();
-        return item.removeTag(tag);
+        this.item = item.removeTag(tag);
+        return this;
     }
 
     @Override
     public IItemStack updateTag(IData tagUpdate) {
         update();
-        return item.updateTag(tagUpdate);
+        this.item = item.updateTag(tagUpdate);
+        return this;
     }
 
     @Override
@@ -285,13 +293,15 @@ public class GhostItemStack implements IItemStack {
     @Override
     public IItemStack withDisplayName(String name) {
         update();
-        return item.withDisplayName(name);
+        this.item = item.withDisplayName(name);
+        return this;
     }
 
     @Override
     public IItemStack withLore(String[] lore) {
         update();
-        return item.withLore(lore);
+        this.item = item.withLore(lore);
+        return this;
     }
 
     @Override
@@ -309,7 +319,8 @@ public class GhostItemStack implements IItemStack {
     @Override
     public IItemStack getContainerItem() {
         update();
-        return item.getContainerItem();
+        this.item = item.getContainerItem();
+        return this;
     }
 
     @Override
@@ -459,7 +470,8 @@ public class GhostItemStack implements IItemStack {
     @Override
     public IItemStack splitStack(int amount) {
         update();
-        return item.splitStack(amount);
+        this.item = item.splitStack(amount);
+        return this;
     }
 
     @Override
@@ -531,13 +543,15 @@ public class GhostItemStack implements IItemStack {
     @Override
     public IItemStack applyTransform(IItemStack item, IPlayer byPlayer) {
         update();
-        return item.applyTransform(item, byPlayer);
+        this.item = item.applyTransform(item, byPlayer);
+        return this;
     }
 
     @Override
     public IItemStack applyNewTransform(IItemStack item) {
         update();
-        return item.applyNewTransform(item);
+        this.item = item.applyNewTransform(item);
+        return this;
     }
 
     @Override
@@ -561,6 +575,8 @@ public class GhostItemStack implements IItemStack {
     @Override
     public Object getInternal() {
         update();
+        if (FAKE_ISTACK.matches(item))
+            CraftTweakerAPI.logError("Trying to access Ghost item before it's ready: <item:" + name + ":" + meta + ">");
         return item.getInternal();
     }
 

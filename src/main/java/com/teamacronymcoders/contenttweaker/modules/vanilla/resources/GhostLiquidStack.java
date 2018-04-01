@@ -8,7 +8,6 @@ import crafttweaker.api.liquid.ILiquidStack;
 import crafttweaker.api.player.IPlayer;
 import crafttweaker.mc1120.brackets.BracketHandlerLiquid;
 import crafttweaker.mc1120.liquid.MCLiquidStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -27,7 +26,7 @@ public class GhostLiquidStack implements ILiquidStack {
 
         this.name = name;
         if (!warned) {
-            CraftTweakerAPI.logInfo("Liquid " + name + " has not been found, trying to use a ghost representative. This message will only be printed once, all subsequent missing fluids will be handled the same way.");
+            CraftTweakerAPI.logInfo("Liquid <liquid:" + name + ">" + " has not been found, trying to use a ghost representative. This message will only be printed once, all subsequent missing fluids will be handled the same way.");
             warned = true;
         }
         update();
@@ -40,8 +39,8 @@ public class GhostLiquidStack implements ILiquidStack {
         if (stack == null)
             return;
         stack = stack.withAmount(liquid.getAmount());
-        if(liquid.getTag() != null)
-                stack.withTag(liquid.getTag());
+        if (liquid.getTag() != null)
+            stack.withTag(liquid.getTag());
         this.liquid = stack;
 
     }
@@ -218,18 +217,22 @@ public class GhostLiquidStack implements ILiquidStack {
     @Override
     public ILiquidStack withTag(IData data) {
         update();
-        return liquid.withTag(data);
+        this.liquid = liquid.withTag(data);
+        return this;
     }
 
     @Override
     public ILiquidStack withAmount(int amount) {
         update();
-        return liquid.withAmount(amount);
+        this.liquid = liquid.withAmount(amount);
+        return this;
     }
 
     @Override
     public Object getInternal() {
         update();
+        if (liquid.getDefinition().getInternal().equals(FAKE_STACK.getFluid()))
+            CraftTweakerAPI.logError("Trying to access Ghost liquid before its ready: <liquid:" + name + ">");
         return liquid.getInternal();
     }
 
