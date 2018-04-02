@@ -4,6 +4,7 @@ import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.block.IBlockState;
 import crafttweaker.api.data.IData;
+import crafttweaker.api.enchantments.IEnchantmentDefinition;
 import crafttweaker.api.entity.IEntity;
 import crafttweaker.api.entity.IEntityLivingBase;
 import crafttweaker.api.event.BlockBreakEvent;
@@ -127,8 +128,15 @@ public class Functions {
     @ZenClass("mods.tconstruct.traits.CanApplyTogetherTrait")
     @ZenRegister
     @ModOnly("tconstruct")
-    public interface CanApplyTogether {
+    public interface CanApplyTogetherTrait {
         boolean handle(String otherTrait);
+    }
+
+    @ZenClass("mods.tconstruct.traits.CanApplyTogetherEnchantment")
+    @ZenRegister
+    @ModOnly("tconstruct")
+    public interface CanApplyTogetherEnchantment {
+        boolean handle(IEnchantmentDefinition enchantmentDefinition);
     }
 
     @ZenClass("mods.tconstruct.traits.ExtraInfo")

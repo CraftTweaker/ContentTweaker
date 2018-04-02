@@ -3,11 +3,13 @@ package com.teamacronymcoders.contenttweaker.modules.tinkers.traits;
 import com.teamacronymcoders.contenttweaker.modules.tinkers.utils.Functions;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.mc1120.data.NBTConverter;
+import crafttweaker.mc1120.enchantments.MCEnchantmentDefinition;
 import crafttweaker.mc1120.events.handling.MCBlockBreakEvent;
 import crafttweaker.mc1120.events.handling.MCBlockHarvestDropsEvent;
 import crafttweaker.mc1120.events.handling.MCEntityLivingHurtEvent;
 import crafttweaker.mc1120.events.handling.MCPlayerBreakSpeedEvent;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,7 +49,8 @@ public class CoTTrait extends ModifierTrait implements ITrait {
     Functions.OnToolHeal calcToolHeal = null;
     Functions.OnToolRepair onToolRepair = null;
     Functions.OnPlayerHurt onPlayerHurt = null;
-    Functions.CanApplyTogether canApplyTogether = null;
+    Functions.CanApplyTogetherTrait canApplyTogetherTrait = null;
+    Functions.CanApplyTogetherEnchantment canApplyTogetherEnchantment = null;
     Functions.ExtraInfo extraInfo = null;
     String localizedName = null;
     String localizedDescription = null;
@@ -184,9 +187,16 @@ public class CoTTrait extends ModifierTrait implements ITrait {
 
     @Override
     public boolean canApplyTogether(IToolMod otherModifier) {
-        if (canApplyTogether != null)
-            return canApplyTogether.handle(otherModifier.getIdentifier());
+        if (canApplyTogetherTrait != null)
+            return canApplyTogetherTrait.handle(otherModifier.getIdentifier());
         return super.canApplyTogether(otherModifier);
+    }
+
+    @Override
+    public boolean canApplyTogether(Enchantment enchantment) {
+        if(canApplyTogetherEnchantment != null)
+            return canApplyTogetherEnchantment.handle(new MCEnchantmentDefinition(enchantment));
+        return super.canApplyTogether(enchantment);
     }
 
     @Override

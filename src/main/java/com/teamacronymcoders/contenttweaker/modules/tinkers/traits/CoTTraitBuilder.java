@@ -81,7 +81,10 @@ public class CoTTraitBuilder {
     public Functions.OnPlayerHurt onPlayerHurt = null;
 
     @ZenProperty
-    public Functions.CanApplyTogether canApplyTogether = null;
+    public Functions.CanApplyTogetherTrait canApplyTogetherTrait = null;
+
+    @ZenProperty
+    public Functions.CanApplyTogetherEnchantment canApplyTogetherEnchantment = null;
 
     @ZenProperty
     public Functions.ExtraInfo extraInfo = null;
@@ -136,7 +139,8 @@ public class CoTTraitBuilder {
         trait.onToolRepair = this.onToolRepair;
         trait.onPlayerHurt = this.onPlayerHurt;
         trait.hidden = this.hidden;
-        trait.canApplyTogether = this.canApplyTogether;
+        trait.canApplyTogetherTrait = this.canApplyTogetherTrait;
+        trait.canApplyTogetherEnchantment= this.canApplyTogetherEnchantment;
         trait.extraInfo = this.extraInfo;
         trait.localizedName = this.localizedName;
         trait.localizedDescription = this.localizedDescription;
