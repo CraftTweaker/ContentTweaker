@@ -101,7 +101,6 @@ public class CoTTraitBuilder {
     private List<CoTRecipeMatch> recipeMatches = new ArrayList<>();
 
     public CoTTraitBuilder(String identifier) {
-
         this.identifier = identifier;
     }
 
@@ -140,7 +139,7 @@ public class CoTTraitBuilder {
         trait.onPlayerHurt = this.onPlayerHurt;
         trait.hidden = this.hidden;
         trait.canApplyTogetherTrait = this.canApplyTogetherTrait;
-        trait.canApplyTogetherEnchantment= this.canApplyTogetherEnchantment;
+        trait.canApplyTogetherEnchantment = this.canApplyTogetherEnchantment;
         trait.extraInfo = this.extraInfo;
         trait.localizedName = this.localizedName;
         trait.localizedDescription = this.localizedDescription;

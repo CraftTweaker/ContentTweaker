@@ -68,15 +68,17 @@ public class CoTTConMaterial extends Material {
 
     @Override
     public String getLocalizedName() {
-        if (localizedName != null)
+        if (localizedName != null) {
             return localizedName;
+        }
         return super.getLocalizedName();
     }
 
     @Override
     public String getLocalizedItemName(String itemName) {
-        if (itemLocalizer != null)
+        if (itemLocalizer != null) {
             return itemLocalizer.handle(itemName);
+        }
         return super.getLocalizedItemName(itemName);
     }
 

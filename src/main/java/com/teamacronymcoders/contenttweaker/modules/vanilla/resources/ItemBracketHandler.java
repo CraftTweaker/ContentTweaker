@@ -22,14 +22,9 @@ public class ItemBracketHandler implements IBracketHandler {
         method = CraftTweakerAPI.getJavaMethod(this.getClass(), "getItem", String.class, int.class);
     }
 
+    @SuppressWarnings("unused")
     public static IItemStack getItem(String name, int meta) {
         return new GhostItemStack(name, meta);
-        //Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
-        //IItemStack itemStack = null;
-        //if (item != null) {
-        //    itemStack = new MCItemStack(new ItemStack(item, 1, meta));
-        //}
-        //return itemStack;
     }
 
     @Override
@@ -51,6 +46,7 @@ public class ItemBracketHandler implements IBracketHandler {
                 zenSymbol = new StringIntSymbol(environment, blockName, meta, method);
             }
         }
+
 
         return zenSymbol;
     }

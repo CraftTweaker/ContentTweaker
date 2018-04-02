@@ -17,7 +17,8 @@ public class CoTTConMaterialIntegration extends MaterialIntegration {
 
     @Override
     public void integrate() {
-        if (material.isCastable())
+        if (material.isCastable()) {
             TinkerSmeltery.registerToolpartMeltingCasting(material);
+        }
     }
 }

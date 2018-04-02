@@ -33,14 +33,17 @@ public class GhostLiquidStack implements ILiquidStack {
     }
 
     public void update() {
-        if (!FAKE_LSTACK.matches(liquid))
+        if (!FAKE_LSTACK.matches(liquid)) {
             return;
+        }
         ILiquidStack stack = BracketHandlerLiquid.getLiquid(name);
-        if (stack == null)
+        if (stack == null) {
             return;
+        }
         stack = stack.withAmount(liquid.getAmount());
-        if (liquid.getTag() != null)
-            stack.withTag(liquid.getTag());
+        if (liquid.getTag() != null) {
+            stack = stack.withTag(liquid.getTag());
+        }
         this.liquid = stack;
 
     }
@@ -231,8 +234,9 @@ public class GhostLiquidStack implements ILiquidStack {
     @Override
     public Object getInternal() {
         update();
-        if (liquid.getDefinition().getInternal().equals(FAKE_STACK.getFluid()))
+        if (liquid.getDefinition().getInternal().equals(FAKE_STACK.getFluid())) {
             CraftTweakerAPI.logError("Trying to access Ghost liquid before its ready: <liquid:" + name + ">");
+        }
         return liquid.getInternal();
     }
 

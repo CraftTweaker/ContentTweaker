@@ -48,16 +48,19 @@ public class GhostItemStack implements IItemStack {
     }
 
     public void update() {
-        if (!FAKE_ISTACK.matches(item))
+        if (!FAKE_ISTACK.matches(item)) {
             return;
+        }
         IItemStack stack = BracketHandlerItem.getItem(name, meta);
-        if (stack == null)
+        if (stack == null) {
             return;
+        }
         stack = stack.withAmount(item.getAmount());
         stack = stack.withDamage(item.getDamage());
 
-        if (item.hasTag())
+        if (item.hasTag()) {
             stack = stack.withTag(item.getTag());
+        }
 
         this.item = stack;
     }
@@ -575,8 +578,9 @@ public class GhostItemStack implements IItemStack {
     @Override
     public Object getInternal() {
         update();
-        if (FAKE_ISTACK.matches(item))
+        if (FAKE_ISTACK.matches(item)) {
             CraftTweakerAPI.logError("Trying to access Ghost item before it's ready: <item:" + name + ":" + meta + ">");
+        }
         return item.getInternal();
     }
 

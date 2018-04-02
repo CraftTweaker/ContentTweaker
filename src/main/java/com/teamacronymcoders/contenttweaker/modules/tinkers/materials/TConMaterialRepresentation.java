@@ -41,13 +41,15 @@ public class TConMaterialRepresentation {
 
     @ZenMethod
     public void addItem(IIngredient item, @Optional(valueLong = 1) int amountNeeded, @Optional(valueLong = 144) int amountMatched) {
-        if (item instanceof IItemStack)
+        if (item instanceof IItemStack) {
             material.addItem(CraftTweakerMC.getItemStack(item), amountNeeded, amountMatched);
-        else if (item instanceof IOreDictEntry)
+        } else if (item instanceof IOreDictEntry) {
             material.addItem(((IOreDictEntry) item).getName(), amountNeeded, amountMatched);
-        else
-            for (IItemStack itemStack : item.getItems())
+        } else {
+            for (IItemStack itemStack : item.getItems()) {
                 addItem(itemStack, amountNeeded, amountMatched);
+            }
+        }
     }
 
     @ZenMethod

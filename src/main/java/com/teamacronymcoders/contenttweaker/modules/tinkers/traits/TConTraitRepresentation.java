@@ -45,13 +45,15 @@ public class TConTraitRepresentation {
         }
 
         RecipeMatchRegistry trait = (RecipeMatchRegistry) this.trait;
-        if (item instanceof IItemStack)
+        if (item instanceof IItemStack) {
             trait.addItem(CraftTweakerMC.getItemStack(item), amountNeeded, amountMatched);
-        else if (item instanceof IOreDictEntry)
+        } else if (item instanceof IOreDictEntry) {
             trait.addItem(((IOreDictEntry) item).getName(), amountNeeded, amountMatched);
-        else
-            for (IItemStack itemStack : item.getItems())
+        } else {
+            for (IItemStack itemStack : item.getItems()) {
                 addItem(itemStack, amountNeeded, amountMatched);
+            }
+        }
 
     }
 

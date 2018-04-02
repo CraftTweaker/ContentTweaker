@@ -23,11 +23,13 @@ public class CoTRecipeMatch extends RecipeMatch {
     @Override
     public List<ItemStack> getInputs() {
         List<ItemStack> out = new ArrayList<>();
-        if (ingredient != null)
+        if (ingredient != null) {
             for (IItemStack itemStack : ingredient.getItems()) {
-                if (itemStack != null)
+                if (itemStack != null) {
                     out.add(CraftTweakerMC.getItemStack(itemStack));
+                }
             }
+        }
         return out;
     }
 
@@ -48,8 +50,9 @@ public class CoTRecipeMatch extends RecipeMatch {
 
 
     public boolean matches(IItemStack itemStack) {
-        if (ingredient == null)
+        if (ingredient == null) {
             return itemStack == null;
+        }
         return ingredient.matches(itemStack);
     }
 

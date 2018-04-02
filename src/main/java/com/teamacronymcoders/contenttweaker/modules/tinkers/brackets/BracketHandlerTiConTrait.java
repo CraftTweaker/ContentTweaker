@@ -26,9 +26,9 @@ public class BracketHandlerTiConTrait implements IBracketHandler {
 
     @Override
     public IZenSymbol resolve(IEnvironmentGlobal environment, List<Token> tokens) {
-        if (tokens == null || tokens.size() < 3 || !tokens.get(0).getValue().equalsIgnoreCase("ticontrait"))
+        if (tokens == null || tokens.size() < 3 || !tokens.get(0).getValue().equalsIgnoreCase("ticontrait")) {
             return null;
-        else
-            return position -> new ExpressionCallStatic(position, environment, method, new ExpressionString(position, String.join("", tokens.subList(2, tokens.size()).stream().map(Token::getValue).collect(Collectors.toList()))));
+        }
+        return position -> new ExpressionCallStatic(position, environment, method, new ExpressionString(position, String.join("", tokens.subList(2, tokens.size()).stream().map(Token::getValue).collect(Collectors.toList()))));
     }
 }
