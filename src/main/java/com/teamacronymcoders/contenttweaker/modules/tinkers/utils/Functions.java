@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.tinkers.utils;
 
+import com.teamacronymcoders.contenttweaker.modules.tinkers.traits.TConTraitRepresentation;
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.block.IBlockState;
@@ -23,84 +24,84 @@ public class Functions {
     @ZenRegister
     @ModOnly("tconstruct")
     public interface OnUpdate {
-        void handle(IItemStack tool, IWorld world, IEntity entity, int itemSlot, boolean isSelected);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, IWorld world, IEntity entity, int itemSlot, boolean isSelected);
     }
 
     @ZenClass("mods.tconstruct.traits.MiningSpeed")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface MiningSpeed {
-        void handle(IItemStack tool, PlayerBreakSpeedEvent event);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, PlayerBreakSpeedEvent event);
     }
 
     @ZenClass("mods.tconstruct.traits.BeforeBlockBreak")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface BeforeBlockBreak {
-        void handle(IItemStack tool, BlockBreakEvent event);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, BlockBreakEvent event);
     }
 
     @ZenClass("mods.tconstruct.traits.AfterBlockBreak")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface AfterBlockBreak {
-        void handle(IItemStack tool, IWorld world, IBlockState blockState, IBlockPos pos, IEntityLivingBase miner, boolean wasEffective);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, IWorld world, IBlockState blockState, IBlockPos pos, IEntityLivingBase miner, boolean wasEffective);
     }
 
     @ZenClass("mods.tconstruct.traits.BlockHarvestDrops")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface BlockHarvestDrops {
-        void handle(IItemStack tool, BlockHarvestDropsEvent event);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, BlockHarvestDropsEvent event);
     }
 
     @ZenClass("mods.tconstruct.traits.IsCriticalHit")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface IsCriticalHit {
-        boolean handle(IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target);
+        boolean handle(TConTraitRepresentation thisTrait, IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target);
     }
 
     @ZenClass("mods.tconstruct.traits.Damage")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface Damage {
-        float handle(IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target, float originalDamage, float currentDamage, boolean isCritical);
+        float handle(TConTraitRepresentation thisTrait, IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target, float originalDamage, float currentDamage, boolean isCritical);
     }
 
     @ZenClass("mods.tconstruct.traits.OnHit")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface OnHit {
-        void handle(IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target, float damage, boolean isCritical);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target, float damage, boolean isCritical);
     }
 
     @ZenClass("mods.tconstruct.traits.AfterHit")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface AfterHit {
-        void handle(IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit);
     }
 
     @ZenClass("mods.tconstruct.traits.KnockBack")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface KnockBack {
-        float handle(IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target, float damage, float knockback, float newKnockback, boolean isCritical);
+        float handle(TConTraitRepresentation thisTrait, IItemStack tool, IEntityLivingBase attacker, IEntityLivingBase target, float damage, float knockback, float newKnockback, boolean isCritical);
     }
 
     @ZenClass("mods.tconstruct.traits.OnBlock")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface OnBlock {
-        void handle(IItemStack tool, IPlayer attacker, EntityLivingHurtEvent event);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, IPlayer attacker, EntityLivingHurtEvent event);
     }
 
     @ZenClass("mods.tconstruct.traits.OnToolDamage")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface OnToolDamage {
-        int handle(IItemStack tool, int damage, int newDamage, IEntityLivingBase entity);
+        int handle(TConTraitRepresentation thisTrait, IItemStack tool, int damage, int newDamage, IEntityLivingBase entity);
     }
 
 
@@ -108,42 +109,42 @@ public class Functions {
     @ZenRegister
     @ModOnly("tconstruct")
     public interface OnToolHeal {
-        int handle(IItemStack tool, int damage, int newDamage, IEntityLivingBase entity);
+        int handle(TConTraitRepresentation thisTrait, IItemStack tool, int damage, int newDamage, IEntityLivingBase entity);
     }
 
     @ZenClass("mods.tconstruct.traits.OnToolRepair")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface OnToolRepair {
-        void handle(IItemStack tool, int amount);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, int amount);
     }
 
     @ZenClass("mods.tconstruct.traits.OnPlayerHurt")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface OnPlayerHurt {
-        void handle(IItemStack tool, IPlayer player, IEntityLivingBase attacker, EntityLivingHurtEvent event);
+        void handle(TConTraitRepresentation thisTrait, IItemStack tool, IPlayer player, IEntityLivingBase attacker, EntityLivingHurtEvent event);
     }
 
     @ZenClass("mods.tconstruct.traits.CanApplyTogetherTrait")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface CanApplyTogetherTrait {
-        boolean handle(String otherTrait);
+        boolean handle(TConTraitRepresentation thisTrait, String otherTrait);
     }
 
     @ZenClass("mods.tconstruct.traits.CanApplyTogetherEnchantment")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface CanApplyTogetherEnchantment {
-        boolean handle(IEnchantmentDefinition enchantmentDefinition);
+        boolean handle(TConTraitRepresentation thisTrait, IEnchantmentDefinition enchantmentDefinition);
     }
 
     @ZenClass("mods.tconstruct.traits.ExtraInfo")
     @ZenRegister
     @ModOnly("tconstruct")
     public interface ExtraInfo {
-        String[] handle(IItemStack item, IData tool);
+        String[] handle(TConTraitRepresentation thisTrait, IItemStack item, IData tool);
     }
 
     @ZenClass("mods.tconstruct.materials.ItemLocalizer")

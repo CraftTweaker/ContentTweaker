@@ -19,7 +19,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
  * Material Representation, returned from the materialBuilder's register method and the Bracket handler
  */
 
-@ZenClass("mods.contenttweaker.tconstruct.material")
+@ZenClass("mods.contenttweaker.tconstruct.Material")
 @ZenRegister
 @ModOnly("tconstruct")
 public class TConMaterialRepresentation {

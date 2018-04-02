@@ -15,7 +15,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-@ZenClass("mods.contenttweaker.tconstruct.trait")
+@ZenClass("mods.contenttweaker.tconstruct.Trait")
 @ZenRegister
 @ModOnly("tconstruct")
 public class TConTraitRepresentation {
