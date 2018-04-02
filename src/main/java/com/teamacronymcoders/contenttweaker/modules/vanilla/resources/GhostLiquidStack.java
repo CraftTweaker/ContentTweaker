@@ -33,7 +33,7 @@ public class GhostLiquidStack implements ILiquidStack {
     }
 
     public void update() {
-        if (liquid != FAKE_LSTACK)
+        if (!FAKE_LSTACK.matches(liquid))
             return;
         ILiquidStack stack = BracketHandlerLiquid.getLiquid(name);
         if (stack == null)

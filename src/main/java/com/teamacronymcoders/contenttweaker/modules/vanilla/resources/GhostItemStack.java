@@ -48,7 +48,7 @@ public class GhostItemStack implements IItemStack {
     }
 
     public void update() {
-        if (FAKE_ISTACK.matches(item))
+        if (!FAKE_ISTACK.matches(item))
             return;
         IItemStack stack = BracketHandlerItem.getItem(name, meta);
         if (stack == null)
