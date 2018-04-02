@@ -62,7 +62,7 @@ public class TConTraitRepresentation {
         return trait.getIdentifier();
     }
 
-    @ZenMethod
+    @ZenGetter("commandString")
     public String toCommandString() {
         return "<ticontrait:" + trait.getIdentifier() + ">";
     }

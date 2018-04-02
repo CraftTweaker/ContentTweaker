@@ -90,9 +90,6 @@ public class CoTTraitBuilder {
     public Functions.ExtraInfo extraInfo = null;
 
     @ZenProperty
-    public Functions.ItemLocalizer itemLocalizer = null;
-
-    @ZenProperty
     public String localizedName = null;
 
     @ZenProperty

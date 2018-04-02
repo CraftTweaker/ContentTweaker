@@ -212,10 +212,7 @@ public class EnchantmentBuilder {
             CraftTweakerAPI.logError("Trying to register an Enchantment with null name! Aborting...");
         } else {
             enchantment.setName(name);
-     //       if (domain != null) {
-                enchantment.setRegistryName(domain, name);
-     //       } else
-     //           enchantment.setRegistryName(name);
+            enchantment.setRegistryName(domain, name);
             ForgeRegistries.ENCHANTMENTS.register(enchantment);
         }
         return enchantment.thisDefinition;

@@ -12,6 +12,7 @@ import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 
@@ -61,8 +62,13 @@ public class TConMaterialRepresentation {
         return material;
     }
 
-    @ZenMethod
+    @ZenGetter("commandString")
     public String toCommandString() {
         return "<ticonmaterial:" + material.getIdentifier() + ">";
+    }
+
+    @ZenGetter("identifier")
+    public String getIdentifier() {
+        return material.identifier;
     }
 }

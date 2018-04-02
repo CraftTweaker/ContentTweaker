@@ -21,6 +21,7 @@ public class CoTTConMaterial extends Material {
     public ILiquidStack liquid = null;
     public String localizedName = null;
     public Functions.ItemLocalizer itemLocalizer = null;
+    final TConMaterialRepresentation thisMaterial = new TConMaterialRepresentation(this);
 
     public CoTTConMaterial(String identifier, int color) {
         super(identifier, color);
@@ -77,7 +78,7 @@ public class CoTTConMaterial extends Material {
     @Override
     public String getLocalizedItemName(String itemName) {
         if (itemLocalizer != null) {
-            return itemLocalizer.handle(itemName);
+            return itemLocalizer.handle(thisMaterial, itemName);
         }
         return super.getLocalizedItemName(itemName);
     }

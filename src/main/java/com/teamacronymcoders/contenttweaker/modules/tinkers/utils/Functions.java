@@ -1,5 +1,6 @@
 package com.teamacronymcoders.contenttweaker.modules.tinkers.utils;
 
+import com.teamacronymcoders.contenttweaker.modules.tinkers.materials.TConMaterialRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.tinkers.traits.TConTraitRepresentation;
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
@@ -151,6 +152,6 @@ public class Functions {
     @ZenRegister
     @ModOnly("tconstruct")
     public interface ItemLocalizer {
-        String handle(String itemName);
+        String handle(TConMaterialRepresentation thisMaterial, String itemName);
     }
 }

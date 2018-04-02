@@ -262,6 +262,6 @@ public class CoTTConMaterialBuilder {
 
         TinkerRegistry.addMaterial(material);
         TinkerRegistry.integrate(new CoTTConMaterialIntegration(material));
-        return new TConMaterialRepresentation(material);
+        return material.thisMaterial;
     }
 }
