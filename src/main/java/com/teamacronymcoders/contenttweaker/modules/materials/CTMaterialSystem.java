@@ -79,28 +79,28 @@ public class CTMaterialSystem {
     }
 
     @ZenMethod
-    public Map<String, IMaterialPart> getMaterialParts() {
+    public static Map<String, IMaterialPart> getMaterialParts() {
         return MaterialSystem.getMaterialParts().entrySet().parallelStream()
                 .map((entry) -> new CTMaterialPart(entry.getValue()))
                 .collect(Collectors.toMap(CTMaterialPart::getName, Function.identity()));
     }
 
     @ZenMethod
-    public Map<String, IMaterial> getMaterials() {
+    public static Map<String, IMaterial> getMaterials() {
         return MaterialSystem.getMaterials().entrySet().parallelStream()
                 .map((entry) -> new CTMaterial(entry.getValue()))
                 .collect(Collectors.toMap(CTMaterial::getName, Function.identity()));
     }
 
     @ZenMethod
-    public Map<String, IPart> getParts() {
+    public static Map<String, IPart> getParts() {
         return MaterialSystem.getParts().entrySet().parallelStream()
                 .map((entry) -> new CTPart(entry.getValue()))
                 .collect(Collectors.toMap(CTPart::getName, Function.identity()));
     }
 
     @ZenMethod
-    public Map<String, IPartType> getPartType() {
+    public static Map<String, IPartType> getPartType() {
         return MaterialSystem.getPartTypes().entrySet().parallelStream()
                 .map((entry) -> new CTPartType(entry.getValue()))
                 .collect(Collectors.toMap(CTPartType::getName, Function.identity()));
