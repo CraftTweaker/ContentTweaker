@@ -7,14 +7,20 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.mc1120.item.MCItemStack;
+import crafttweaker.mc1120.world.MCBlockAccess;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -28,6 +34,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class BlockContent extends BlockBase {
     private BlockRepresentation blockRepresentation;
@@ -199,5 +206,20 @@ public class BlockContent extends BlockBase {
     @Override
     public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
         return fullBlock;
+    }
+
+    @Override
+    public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
+        if (this.blockRepresentation.getDropHandler() != null) {
+            crafttweaker.api.world.IBlockAccess blockAccess = world instanceof World ? new MCWorld((World) world) : new MCBlockAccess(world);
+            List<IItemStack> currentDrops = drops.parallelStream()
+                    .map(MCItemStack::new)
+                    .collect(Collectors.toList());
+            drops.clear();
+            this.blockRepresentation.getDropHandler().handleDrops(currentDrops, blockAccess, new MCBlockPos(pos), new MCBlockState(state), fortune);
+            drops.addAll(currentDrops.parallelStream()
+                .map(CraftTweakerMC::getItemStack)
+                .collect(Collectors.toList()));
+        }
     }
 }
