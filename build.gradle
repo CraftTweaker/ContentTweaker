@@ -41,8 +41,12 @@ repositories {
         url "http://maven.blamejared.com"
     }
     maven {
-        name 'Tinkers'
+        name 'Tinkers/JEI'
         url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name 'Chickens'
+        url 'https://minecraft.curseforge.com/api/maven/'
     }
 }
 
@@ -52,6 +56,7 @@ dependencies {
     deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
     deobfCompile "slimeknights.mantle:Mantle:1.12-${mantle_version}"
     deobfCompile "mezz.jei:${jei_version}"
+    deobfCompile "chickens:chickens:${chickens_version}"
 }
 
 processResources {
