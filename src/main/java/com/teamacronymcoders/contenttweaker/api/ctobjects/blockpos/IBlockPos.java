@@ -10,7 +10,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.BlockPos")
-public interface IBlockPos extends ICTObject<BlockPos> {
+public interface IBlockPos extends ICTObject<BlockPos>, crafttweaker.api.world.IBlockPos {
     @ZenMethod
     @ZenGetter("x")
     int getX();

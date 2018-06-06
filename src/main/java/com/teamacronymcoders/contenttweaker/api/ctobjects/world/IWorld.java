@@ -13,7 +13,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.World")
-public interface IWorld extends ICTObject<World> {
+public interface IWorld extends ICTObject<World>, crafttweaker.api.world.IWorld {
     @ZenMethod
     @ZenGetter("remote")
     boolean isRemote();

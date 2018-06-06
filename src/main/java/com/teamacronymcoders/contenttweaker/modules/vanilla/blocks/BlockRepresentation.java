@@ -8,6 +8,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.BlockMat
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockDropHandler;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
@@ -73,6 +74,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public boolean passable = !this.blockMaterial.blocksMovement();
     @ZenProperty
     public boolean entitySpawnable = true;
+    @ZenProperty
+    public IBlockDropHandler dropHandler;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -312,6 +315,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public boolean canEntitySpawn() {
         return entitySpawnable;
+    }
+
+    @ZenMethod
+    public IBlockDropHandler getDropHandler() {
+        return dropHandler;
+    }
+
+    @ZenMethod
+    public void setDropHandler(IBlockDropHandler dropHandler) {
+        this.dropHandler = dropHandler;
     }
 
     @Override
