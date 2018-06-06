@@ -7,6 +7,8 @@ import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.Locale;
+
 public class MCBlockPos implements IBlockPos {
     private BlockPos blockPos;
 
@@ -41,7 +43,7 @@ public class MCBlockPos implements IBlockPos {
 
     @Override
     public IBlockPos getOffset(String directionName, int offset) {
-        return new MCBlockPos(blockPos.offset(EnumFacing.valueOf(directionName), offset));
+        return new MCBlockPos(blockPos.offset(EnumFacing.valueOf(directionName.toUpperCase(Locale.US)), offset));
     }
 
     @Override
