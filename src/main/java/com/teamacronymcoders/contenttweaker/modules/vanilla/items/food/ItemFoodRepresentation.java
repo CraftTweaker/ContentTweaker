@@ -23,6 +23,8 @@ public class ItemFoodRepresentation extends ItemRepresentation {
     public boolean wolfFood = false;
     @ZenProperty
     public float saturation = 0.6f;
+    @ZenProperty
+    public boolean alwaysEdible = false;
 
     @ZenMethod
     public int getHealAmount() {
@@ -64,6 +66,16 @@ public class ItemFoodRepresentation extends ItemRepresentation {
         this.saturation = saturation;
     }
 
+    @ZenMethod
+    public boolean isAlwaysEdible() {
+        return alwaysEdible;
+    }
+
+    @ZenMethod
+    public void setAlwaysEdible(boolean alwaysEdible) {
+        this.alwaysEdible = alwaysEdible;
+    }
+
     @Override
     public String getTypeName() {
         return "ItemFood";
@@ -71,6 +83,9 @@ public class ItemFoodRepresentation extends ItemRepresentation {
 
     @ZenMethod
     public void register() {
+        if (alwaysEditable) {
+            this.alwaysEdible = true;
+        }
         ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").register(new ItemContentFood(this));
     }
 }

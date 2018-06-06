@@ -72,7 +72,7 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
             missingFields.add("unlocalizedName");
         }
         if (!missingFields.isEmpty()) {
-            throw new MissingFieldsException("ItemRepresentation", missingFields);
+            throw new MissingFieldsException("ItemFoodRepresentation", missingFields);
         }
     }
 
@@ -90,6 +90,9 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
         this.rarity = CTUtils.getEnum(this.itemRepresentation.getRarity(), EnumRarity.class);
         if (this.itemRepresentation.getMaxDamage() > 0) {
             this.setMaxDamage(this.itemRepresentation.getMaxDamage());
+        }
+        if (this.itemRepresentation.alwaysEdible) {
+            this.setAlwaysEdible();
         }
     }
 
