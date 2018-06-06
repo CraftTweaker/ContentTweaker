@@ -26,7 +26,7 @@ public class CTItemList implements ICTItemList {
 
     @Override
     public void add(WeightedItemStack weightedItemStack) {
-        if (RANDOM.nextInt(100) < weightedItemStack.getPercent()) {
+        if (RANDOM.nextFloat() < weightedItemStack.getChance()) {
             add(weightedItemStack.getStack());
         }
     }
