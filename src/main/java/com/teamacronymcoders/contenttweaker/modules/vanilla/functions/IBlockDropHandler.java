@@ -2,12 +2,12 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.functions;
 
 
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
-import crafttweaker.api.item.IItemStack;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.itemlist.ICTItemList;
 import crafttweaker.api.world.IBlockAccess;
 import crafttweaker.api.world.IBlockPos;
+import stanhebben.zenscript.annotations.ZenClass;
 
-import java.util.List;
-
+@ZenClass("mods.contenttweaker.DropHandler")
 public interface IBlockDropHandler {
-    void handleDrops(List<IItemStack> drops, IBlockAccess world, IBlockPos pos, ICTBlockState state, int fortune);
+    void handleDrops(ICTItemList drops, IBlockAccess world, IBlockPos pos, ICTBlockState state, int fortune);
 }

@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.itemlist.CTItemList;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
@@ -126,8 +127,9 @@ public class BlockContent extends BlockBase {
 
     @Override
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
-        super.breakBlock(world, pos, state);
         activateBlockAction(this.blockRepresentation.getOnBlockBreak(), world, pos, state);
+        super.breakBlock(world, pos, state);
+
     }
 
     @Override
@@ -210,16 +212,10 @@ public class BlockContent extends BlockBase {
 
     @Override
     public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
+        super.getDrops(drops, world, pos, state, fortune);
         if (this.blockRepresentation.getDropHandler() != null) {
             crafttweaker.api.world.IBlockAccess blockAccess = world instanceof World ? new MCWorld((World) world) : new MCBlockAccess(world);
-            List<IItemStack> currentDrops = drops.parallelStream()
-                    .map(MCItemStack::new)
-                    .collect(Collectors.toList());
-            drops.clear();
-            this.blockRepresentation.getDropHandler().handleDrops(currentDrops, blockAccess, new MCBlockPos(pos), new MCBlockState(state), fortune);
-            drops.addAll(currentDrops.parallelStream()
-                .map(CraftTweakerMC::getItemStack)
-                .collect(Collectors.toList()));
+            this.blockRepresentation.getDropHandler().handleDrops(new CTItemList(drops), blockAccess, new MCBlockPos(pos), new MCBlockState(state), fortune);
         }
     }
 }
