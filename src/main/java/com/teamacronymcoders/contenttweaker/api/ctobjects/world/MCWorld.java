@@ -8,10 +8,11 @@ import crafttweaker.api.world.IBiome;
 import crafttweaker.mc1120.world.MCBiome;
 import net.minecraft.world.World;
 
-public class MCWorld implements IWorld {
+public class MCWorld extends crafttweaker.mc1120.world.MCWorld implements IWorld {
     private World world;
 
     public MCWorld(World world) {
+        super(world);
         this.world = world;
     }
 
