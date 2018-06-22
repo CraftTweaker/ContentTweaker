@@ -66,6 +66,11 @@ public class CTMaterialSystem {
     public static IMaterial getMaterial(String name) {
         return new CTMaterial(MaterialSystem.getMaterial(name));
     }
+    
+    @ZenMethod
+    public static IMaterialPart getMaterialPart(String name) {
+        return new CTMaterialPart(MaterialSystem.getMaterialPart(name));
+    }
 
     @ZenMethod
     public static List<IMaterialPart> registerPartsForMaterial(Material material, String[] partNames) {
