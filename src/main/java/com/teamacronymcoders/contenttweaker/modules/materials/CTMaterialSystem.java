@@ -115,7 +115,7 @@ public class CTMaterialSystem {
     @ZenMethod
     public static Map<String, IMaterialPart> getMaterialPartsByRegex(String regex) {
         return MaterialSystem.getMaterialParts().entrySet().parallelStream()
-        		.filter((entry) -> Pattern.matches(regex, entry.getKey()))
+                .filter((entry) -> Pattern.matches(regex, entry.getKey()))
                 .map((entry) -> new CTMaterialPart(entry.getValue()))
                 .collect(Collectors.toMap(CTMaterialPart::getName, Function.identity()));
     }
