@@ -4,11 +4,11 @@ import crafttweaker.annotations.ZenRegister;
 import stanhebben.zenscript.annotations.ZenExpansion;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-@ZenExpansion("mods.contenttweaker.DropTableSlotBuilder")
+@ZenExpansion("mods.contenttweaker.DropTableBuilder")
 @ZenRegister
 public class DropTableSlotAdder {
     @ZenMethod
-    public static DropTableSlotBuilder newSlot(DropTableSlotBuilder dt) {
-        return new DropTableSlotBuilder(dt.toString());
+    public static CTDropTableBuilder newSlot(CTDropTableBuilder builder) {
+        return new CTDropTableBuilder(builder.toString());
     }
 }
