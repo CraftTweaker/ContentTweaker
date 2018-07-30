@@ -28,6 +28,8 @@ import java.util.List;
 @ModOnly("tconstruct")
 public class CoTTConMaterialBuilder {
 
+    public static List<CoTTConMaterial> addedMaterials = new ArrayList<>();
+
     @ZenProperty
     public String identifier;
 
@@ -199,7 +201,8 @@ public class CoTTConMaterialBuilder {
 
     @ZenMethod
     public TConMaterialRepresentation register() {
-        CoTTConMaterial material = new CoTTConMaterial(identifier, color);
+        CoTTConMaterial material = new CoTTConMaterial(identifier, color, materialTraits);
+        addedMaterials.add(material);
 
         //MaterialStats, if available
         if (headMaterialStats != null) {
@@ -248,13 +251,6 @@ public class CoTTConMaterialBuilder {
         }
         if (shard != null) {
             material.setShard(CraftTweakerMC.getItemStack(shard));
-        }
-
-
-        //Traits
-        for (Pair<String, String> pair : materialTraits) {
-            ITrait trait = TinkerRegistry.getTrait(pair.getKey());
-            material.addTrait(trait, pair.getValue());
         }
 
         material.itemLocalizer = this.itemLocalizer;

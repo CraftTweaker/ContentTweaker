@@ -54,8 +54,23 @@ public class TConMaterialRepresentation {
     }
 
     @ZenMethod
-    public void addTrait(TConTraitRepresentation trait) {
-        TinkerRegistry.addMaterialTrait(material, trait.getTrait(), null);
+    public void addTrait(TConTraitRepresentation trait,  @Optional String dependencies) {
+        if(trait == null) {
+          CraftTweakerAPI.logError("Trying to add null trait to material " + material.identifier);
+        } else if(material instanceof CoTTConMaterial) {
+            ((CoTTConMaterial)material).addTrait(trait.getTrait().getIdentifier(), dependencies);
+        } else {
+            CraftTweakerAPI.logError("Trying to add trait " + trait.getIdentifier() + " to nonCoT Material + " + material.identifier);
+        }
+    }
+
+    @ZenMethod
+    public  void addTrait(String trait,  @Optional String dependencies) {
+        if(material instanceof CoTTConMaterial) {
+            ((CoTTConMaterial)material).addTrait(trait, dependencies);
+        } else {
+            CraftTweakerAPI.logError("Trying to add trait " + trait + " to nonCoT Material + " + material.identifier);
+        }
     }
 
     public Material getMaterial() {
