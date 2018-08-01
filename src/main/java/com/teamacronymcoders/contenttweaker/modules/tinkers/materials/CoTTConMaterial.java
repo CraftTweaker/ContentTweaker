@@ -76,7 +76,7 @@ public class CoTTConMaterial extends Material {
 
     @Override
     public String getLocalizedName() {
-        if (localizedName != null) {
+        if(localizedName != null) {
             return localizedName;
         }
         return super.getLocalizedName();
@@ -84,7 +84,7 @@ public class CoTTConMaterial extends Material {
 
     @Override
     public String getLocalizedItemName(String itemName) {
-        if (itemLocalizer != null) {
+        if(itemLocalizer != null) {
             return itemLocalizer.handle(thisMaterial, itemName);
         }
         return super.getLocalizedItemName(itemName);
@@ -99,8 +99,8 @@ public class CoTTConMaterial extends Material {
         for (final Pair<String, String> traitPair : traits) {
             final String traitName = traitPair.getKey();
             final ITrait trait = TinkerRegistry.getTrait(traitName);
-            if (trait != null) {
-                    this.addTrait(trait, traitPair.getValue());
+            if(trait != null) {
+                this.addTrait(trait, traitPair.getValue());
             } else {
                 CraftTweakerAPI.logError("Could not identify Trait <ticontrait:" + traitName + ">, it will not be added to material " + getIdentifier());
             }

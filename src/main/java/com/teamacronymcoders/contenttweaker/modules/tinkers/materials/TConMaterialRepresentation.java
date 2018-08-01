@@ -33,7 +33,7 @@ public class TConMaterialRepresentation {
     @SuppressWarnings("unused")
     public static TConMaterialRepresentation getFromString(String identifier) {
         Material material = TinkerRegistry.getMaterial(identifier);
-        if (material == null || material == Material.UNKNOWN) {
+        if(material == null || material == Material.UNKNOWN) {
             CraftTweakerAPI.logError("Cannot identify material " + "<ticonmaterial:" + identifier + ">");
             return null;
         }
@@ -42,9 +42,9 @@ public class TConMaterialRepresentation {
 
     @ZenMethod
     public void addItem(IIngredient item, @Optional(valueLong = 1) int amountNeeded, @Optional(valueLong = 144) int amountMatched) {
-        if (item instanceof IItemStack) {
+        if(item instanceof IItemStack) {
             material.addItem(CraftTweakerMC.getItemStack(item), amountNeeded, amountMatched);
-        } else if (item instanceof IOreDictEntry) {
+        } else if(item instanceof IOreDictEntry) {
             material.addItem(((IOreDictEntry) item).getName(), amountNeeded, amountMatched);
         } else {
             for (IItemStack itemStack : item.getItems()) {
@@ -54,20 +54,20 @@ public class TConMaterialRepresentation {
     }
 
     @ZenMethod
-    public void addTrait(TConTraitRepresentation trait,  @Optional String dependencies) {
+    public void addTrait(TConTraitRepresentation trait, @Optional String dependencies) {
         if(trait == null) {
-          CraftTweakerAPI.logError("Trying to add null trait to material " + material.identifier);
+            CraftTweakerAPI.logError("Trying to add null trait to material " + material.identifier);
         } else if(material instanceof CoTTConMaterial) {
-            ((CoTTConMaterial)material).addTrait(trait.getTrait().getIdentifier(), dependencies);
+            ((CoTTConMaterial) material).addTrait(trait.getTrait().getIdentifier(), dependencies);
         } else {
             CraftTweakerAPI.logError("Trying to add trait " + trait.getIdentifier() + " to nonCoT Material + " + material.identifier);
         }
     }
 
     @ZenMethod
-    public  void addTrait(String trait,  @Optional String dependencies) {
+    public void addTrait(String trait, @Optional String dependencies) {
         if(material instanceof CoTTConMaterial) {
-            ((CoTTConMaterial)material).addTrait(trait, dependencies);
+            ((CoTTConMaterial) material).addTrait(trait, dependencies);
         } else {
             CraftTweakerAPI.logError("Trying to add trait " + trait + " to nonCoT Material + " + material.identifier);
         }
