@@ -1,11 +1,15 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.enums;
 
 import com.teamacronymcoders.contenttweaker.api.ICTObject;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.block.material.EnumPushReaction;
 import stanhebben.zenscript.annotations.OperatorType;
+import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenOperator;
 
+@ZenClass("mods.contenttweaker.PushReaction")
+@ZenRegister
 public class PushReaction implements ICTObject<EnumPushReaction> {
     private EnumPushReaction pushReaction;
 

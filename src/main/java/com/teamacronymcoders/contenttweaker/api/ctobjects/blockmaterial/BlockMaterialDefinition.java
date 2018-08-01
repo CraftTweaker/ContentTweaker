@@ -61,6 +61,11 @@ public class BlockMaterialDefinition implements IBlockMaterialDefinition {
     }
 
     @Override
+    public int compare(IBlockMaterialDefinition other) {
+        return this.getInternal() == other.getInternal() ? 0 : -1;
+    }
+
+    @Override
     public Material getInternal() {
         return material;
     }
