@@ -22,12 +22,14 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMut
 import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -237,5 +239,14 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         return Optional.ofNullable(itemRepresentation.getLocalizedNameSupplier())
                 .map(supplier -> supplier.getLocalizedName(new MCItemStack(stack)))
                 .orElseGet(() -> super.getItemStackDisplayName(stack));
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+
+        if(itemRepresentation.onItemUpdate == null)
+            super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+        else
+            itemRepresentation.onItemUpdate.onItemUpdate(new MCMutableItemStack(stack), new MCWorld(worldIn), entityIn instanceof EntityPlayer ? new CTPlayer((EntityPlayer) entityIn) : CraftTweakerMC.getIEntity(entityIn), itemSlot, isSelected);
     }
 }
