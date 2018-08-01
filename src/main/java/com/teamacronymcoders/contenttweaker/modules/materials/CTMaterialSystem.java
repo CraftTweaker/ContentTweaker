@@ -27,6 +27,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,11 @@ public class CTMaterialSystem {
     public static IMaterial getMaterial(String name) {
         return new CTMaterial(MaterialSystem.getMaterial(name));
     }
+    
+    @ZenMethod
+    public static IMaterialPart getMaterialPart(String name) {
+        return new CTMaterialPart(MaterialSystem.getMaterialPart(name));
+    }
 
     @ZenMethod
     public static List<IMaterialPart> registerPartsForMaterial(Material material, String[] partNames) {
@@ -104,5 +110,13 @@ public class CTMaterialSystem {
         return MaterialSystem.getPartTypes().entrySet().parallelStream()
                 .map((entry) -> new CTPartType(entry.getValue()))
                 .collect(Collectors.toMap(CTPartType::getName, Function.identity()));
+    }
+    
+    @ZenMethod
+    public static Map<String, IMaterialPart> getMaterialPartsByRegex(String regex) {
+        return MaterialSystem.getMaterialParts().entrySet().parallelStream()
+                .filter((entry) -> Pattern.matches(regex, entry.getKey()))
+                .map((entry) -> new CTMaterialPart(entry.getValue()))
+                .collect(Collectors.toMap(CTMaterialPart::getName, Function.identity()));
     }
 }
