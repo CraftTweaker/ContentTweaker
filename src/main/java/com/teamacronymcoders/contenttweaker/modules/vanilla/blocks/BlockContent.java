@@ -218,4 +218,9 @@ public class BlockContent extends BlockBase {
             this.blockRepresentation.getDropHandler().handleDrops(new CTItemList(drops), blockAccess, new MCBlockPos(pos), new MCBlockState(state), fortune);
         }
     }
+
+    @Override
+    public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
+        return this.blockRepresentation.beaconBase;
+    }
 }

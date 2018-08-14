@@ -28,6 +28,8 @@ import java.util.List;
 @ModOnly("tconstruct")
 public class CoTTConMaterialBuilder {
 
+    public static List<CoTTConMaterial> addedMaterials = new ArrayList<>();
+
     @ZenProperty
     public String identifier;
 
@@ -199,35 +201,36 @@ public class CoTTConMaterialBuilder {
 
     @ZenMethod
     public TConMaterialRepresentation register() {
-        CoTTConMaterial material = new CoTTConMaterial(identifier, color);
+        CoTTConMaterial material = new CoTTConMaterial(identifier, color, materialTraits);
+        addedMaterials.add(material);
 
         //MaterialStats, if available
-        if (headMaterialStats != null) {
+        if(headMaterialStats != null) {
             material.addStats(headMaterialStats);
         }
-        if (handleMaterialStats != null) {
+        if(handleMaterialStats != null) {
             material.addStats(handleMaterialStats);
         }
-        if (extraMaterialStats != null) {
+        if(extraMaterialStats != null) {
             material.addStats(extraMaterialStats);
         }
-        if (bowMaterialStats != null) {
+        if(bowMaterialStats != null) {
             material.addStats(bowMaterialStats);
         }
-        if (bowStringMaterialStats != null) {
+        if(bowStringMaterialStats != null) {
             material.addStats(bowStringMaterialStats);
         }
-        if (arrowShaftMaterialStats != null) {
+        if(arrowShaftMaterialStats != null) {
             material.addStats(arrowShaftMaterialStats);
         }
-        if (fletchingMaterialStats != null) {
+        if(fletchingMaterialStats != null) {
             material.addStats(fletchingMaterialStats);
         }
-        if (projectileMaterialStats != null) {
+        if(projectileMaterialStats != null) {
             material.addStats(projectileMaterialStats);
         }
 
-        if (liquid != null) {
+        if(liquid != null) {
             material.liquid = liquid;
         }
 
@@ -240,21 +243,14 @@ public class CoTTConMaterialBuilder {
         //Items
         itemMatches.forEach(material::addItemMatch);
 
-        if (representativeItem != null) {
+        if(representativeItem != null) {
             material.representativeItem = this.representativeItem;
         }
-        if (representativeOre != null) {
+        if(representativeOre != null) {
             material.setRepresentativeItem(representativeOre.getName());
         }
-        if (shard != null) {
+        if(shard != null) {
             material.setShard(CraftTweakerMC.getItemStack(shard));
-        }
-
-
-        //Traits
-        for (Pair<String, String> pair : materialTraits) {
-            ITrait trait = TinkerRegistry.getTrait(pair.getKey());
-            material.addTrait(trait, pair.getValue());
         }
 
         material.itemLocalizer = this.itemLocalizer;

@@ -77,6 +77,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
     public IBlockDropHandler dropHandler;
 
+    @ZenProperty
+    public boolean beaconBase = false;
+
     @ZenMethod
     public String getUnlocalizedName() {
         return unlocalizedName;

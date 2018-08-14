@@ -9,6 +9,7 @@ import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.oredict.IOreDictEntry;
 import slimeknights.mantle.util.RecipeMatchRegistry;
 import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -28,7 +29,7 @@ public class TConTraitRepresentation {
     @SuppressWarnings("unused")
     public static TConTraitRepresentation getFromString(String identifier) {
         ITrait trait = TinkerRegistry.getTrait(identifier);
-        if (trait == null) {
+        if(trait == null) {
             CraftTweakerAPI.logError("Cannot identify trait " + "<ticontrait:" + identifier + ">");
             return null;
         }
@@ -39,15 +40,15 @@ public class TConTraitRepresentation {
     @ZenMethod
     public void addItem(IIngredient item, @Optional(valueLong = 1) int amountNeeded, @Optional(valueLong = 1) int amountMatched) {
 
-        if (!(trait instanceof RecipeMatchRegistry)) {
+        if(!(trait instanceof RecipeMatchRegistry)) {
             CraftTweakerAPI.logError("Cannot add item " + item.toCommandString() + " to trait " + toCommandString());
             return;
         }
 
         RecipeMatchRegistry trait = (RecipeMatchRegistry) this.trait;
-        if (item instanceof IItemStack) {
+        if(item instanceof IItemStack) {
             trait.addItem(CraftTweakerMC.getItemStack(item), amountNeeded, amountMatched);
-        } else if (item instanceof IOreDictEntry) {
+        } else if(item instanceof IOreDictEntry) {
             trait.addItem(((IOreDictEntry) item).getName(), amountNeeded, amountMatched);
         } else {
             for (IItemStack itemStack : item.getItems()) {
@@ -65,6 +66,15 @@ public class TConTraitRepresentation {
     @ZenGetter("commandString")
     public String toCommandString() {
         return "<ticontrait:" + trait.getIdentifier() + ">";
+    }
+
+    @ZenMethod
+    public TConTraitDataRepresentation getData(IItemStack itemStack) {
+        if(trait instanceof ModifierTrait) {
+            return new TConTraitDataRepresentation(((ModifierTrait) trait).getData(CraftTweakerMC.getItemStack(itemStack)));
+        }
+        CraftTweakerAPI.logError("Trait " + trait.getIdentifier() + " is not applicable to the getData function!");
+        return null;
     }
 
 

@@ -4,6 +4,7 @@ import crafttweaker.CraftTweakerAPI;
 import crafttweaker.api.block.IBlock;
 import crafttweaker.api.block.IBlockDefinition;
 import crafttweaker.api.block.IBlockState;
+import crafttweaker.api.data.DataString;
 import crafttweaker.api.data.IData;
 import crafttweaker.api.enchantments.IEnchantment;
 import crafttweaker.api.enchantments.IEnchantmentDefinition;
@@ -16,10 +17,13 @@ import crafttweaker.api.player.IPlayer;
 import crafttweaker.api.world.IBlockPos;
 import crafttweaker.api.world.IWorld;
 import crafttweaker.mc1120.brackets.BracketHandlerItem;
+import crafttweaker.mc1120.data.NBTConverter;
 import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,16 +33,27 @@ public class GhostItemStack implements IItemStack {
 
     public static final ItemStack FAKE_STACK = new ItemStack(new Item(), 1);
     public static final IItemStack FAKE_ISTACK = new MCItemStack(FAKE_STACK);
+
+    private static final int ANY_AMOUNT = -300;
+    private static final int UNCHANGED = -600;
+
     private static boolean warned = false;
+
     private final String name;
     private final int meta;
+
+    private int amount = UNCHANGED;
+    private IData tag = null;
+    private String mark;
+
     private IItemStack item = FAKE_ISTACK;
+    private int damage = UNCHANGED;
 
     public GhostItemStack(String name, int meta) {
         this.name = name;
         this.meta = meta;
 
-        if (!warned) {
+        if(!warned) {
             CraftTweakerAPI.logInfo("Item <item:" + name + ":" + meta + "> has not been found, trying to use a ghost representative. This message will only be printed once, all subsequent missing items will be handled the same way.");
             warned = true;
         }
@@ -47,538 +62,541 @@ public class GhostItemStack implements IItemStack {
 
     }
 
-    public void update() {
-        if (!FAKE_ISTACK.matches(item)) {
-            return;
+    public boolean update() {
+        if(FAKE_ISTACK != item) {
+            return true;
         }
         IItemStack stack = BracketHandlerItem.getItem(name, meta);
-        if (stack == null) {
-            return;
+        if(stack == null) {
+            return false;
         }
-        stack = stack.withAmount(item.getAmount());
-        stack = stack.withDamage(item.getDamage());
 
-        if (item.hasTag()) {
-            stack = stack.withTag(item.getTag());
+        if(amount == ANY_AMOUNT) {
+            stack = stack.anyAmount();
+        } else if(amount != UNCHANGED) {
+            stack = stack.withAmount(amount);
+        }
+        if(damage != UNCHANGED) {
+            stack = stack.withDamage(damage);
+        }
+
+        if(tag != null) {
+            stack = stack.withTag(tag);
         }
 
         this.item = stack;
-    }
-
-    public boolean isPresent() {
-        update();
-        return !FAKE_ISTACK.matches(item);
-    }
-
-    public IItemStack getItem() {
-        update();
-        return item;
+        return true;
     }
 
     @Override
     public IItemDefinition getDefinition() {
-        update();
-        return item.getDefinition();
+        if(update()) {
+            return item.getDefinition();
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public String getName() {
-        update();
-        return item.getName();
+        //Not the same for GIS, so it should be noticeable for packdevs
+        return update() ? item.getName() : name;
     }
 
     @Override
     public String getDisplayName() {
-        update();
-        return item.getDisplayName();
+        //Not the same for GIS, so it should be noticeable for packdevs
+        return update() ? item.getName() : name;
     }
 
     @Override
     public void setDisplayName(String name) {
-        update();
-        item.setDisplayName(name);
+        if(update()) {
+            item.setDisplayName(name);
+        }
     }
 
     @Override
     public int getMaxStackSize() {
-        update();
-        return item.getMaxStackSize();
+        return update() ? item.getMaxStackSize() : 0;
     }
 
     @Override
     public void setMaxStackSize(int size) {
-        update();
-        item.setMaxStackSize(size);
+        if(update()) {
+            item.setMaxStackSize(size);
+        }
     }
 
     @Override
     public float getBlockHardness() {
-        update();
-        return item.getBlockHardness();
+        return update() ? item.getBlockHardness() : 0;
     }
 
     @Override
     public void setBlockHardness(float hardness) {
-        update();
-        item.setBlockHardness(hardness);
+        if(update()) {
+            item.setBlockHardness(hardness);
+        }
     }
 
     @Override
     public int getDamage() {
-        update();
-        return item.getDamage();
+        return update() ? item.getDamage() : damage;
     }
 
     @Override
     public int getMaxDamage() {
-        update();
-        return item.getMaxDamage();
+        return update() ? item.getMaxDamage() : 0;
     }
 
     @Override
     public void setMaxDamage(int damage) {
-        update();
-        item.setMaxDamage(damage);
+        if(update()) {
+            item.setMaxDamage(damage);
+        }
     }
 
     @Override
     public IData getTag() {
-        update();
-        return item.getTag();
+        return update() ? item.getTag() : tag;
     }
 
     @Override
     public ILiquidStack getLiquid() {
-        update();
-        return item.getLiquid();
+        return update() ? item.getLiquid() : null;
     }
 
     @Override
     public String getMark() {
-        update();
-        return item.getMark();
+        return update() ? item.getMark() : mark;
     }
 
     @Override
     public int getAmount() {
-        update();
-        return item.getAmount();
+        return update() ? item.getAmount() : amount;
     }
 
     @Override
     public List<IItemStack> getItems() {
-        update();
-        return item.getItems();
+        return update() ? item.getItems() : Collections.emptyList();
     }
 
     @Override
     public IItemStack[] getItemArray() {
-        update();
-        return item.getItemArray();
+        return update() ? item.getItemArray() : new IItemStack[0];
     }
 
     @Override
     public List<ILiquidStack> getLiquids() {
-        update();
-        return item.getLiquids();
+        return update() ? item.getLiquids() : Collections.EMPTY_LIST;
     }
 
     @Override
     public IItemStack amount(int amount) {
-        update();
-        this.item = item.amount(amount);
+        if(update()) {
+            return item.amount(amount);
+        }
+        this.amount = amount;
         return this;
     }
 
     @Override
     public IIngredient or(IIngredient ingredient) {
-        update();
-        return item.or(ingredient);
+        if(update()) {
+            return item.or(ingredient);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public IIngredient transformNew(IItemTransformerNew transformer) {
-        update();
-        return item.transformNew(transformer);
+        if(update()) {
+            return item.transformNew(transformer);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public IIngredient only(IItemCondition condition) {
-        update();
-        return item.only(condition);
+        if(update()) {
+            return item.only(condition);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public IIngredient marked(String mark) {
-        update();
-        return item.marked(mark);
+        if(update()) {
+            return item.marked(mark);
+        }
+        this.mark = mark;
+        return this;
     }
 
     @Override
     public WeightedItemStack percent(float p) {
-        update();
-        return item.percent(p);
+        if(update()) {
+            return item.percent(p);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public WeightedItemStack weight(float p) {
-        update();
-        return item.weight(p);
+        if(update()) {
+            return item.weight(p);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public IIngredient anyDamage() {
-        update();
-        return item.anyDamage();
+        if(update()) {
+            return item.anyDamage();
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public IItemStack withDamage(int damage) {
-        update();
-        this.item = item.withDamage(damage);
+        if(update()) {
+            return item.withDamage(damage);
+        }
+        this.damage = damage;
         return this;
     }
 
     @Override
     public IItemStack withAmount(int amount) {
-        update();
-        this.item = item.withAmount(amount);
+        if(update()) {
+            return item.withDamage(amount);
+        }
+        this.amount = amount;
         return this;
     }
 
     @Override
     public IItemStack anyAmount() {
-        update();
-        this.item = item.anyAmount();
+        if(update()) {
+            return item.anyAmount();
+        }
+        this.amount = ANY_AMOUNT;
         return this;
     }
 
     @Override
     public IItemStack withTag(IData tag) {
-        update();
-        this.item = item.withTag(tag);
+        if(update()) {
+            return item.withTag(tag);
+        }
         return this;
     }
 
     @Override
     public IItemStack withEmptyTag() {
-        update();
-        this.item = item.withEmptyTag();
+        if(update()) {
+            return item.withEmptyTag();
+        }
+        this.tag = NBTConverter.from(new NBTTagCompound(), true);
         return this;
     }
 
     @Override
     public IItemStack removeTag(String tag) {
-        update();
-        this.item = item.removeTag(tag);
+        if(update()) {
+            return item.removeTag(tag);
+        }
+        this.tag = this.tag.sub(new DataString(tag));
         return this;
     }
 
     @Override
     public IItemStack updateTag(IData tagUpdate) {
-        update();
-        this.item = item.updateTag(tagUpdate);
+        if(update()) {
+            return item.updateTag(tagUpdate);
+        }
+        this.tag = this.tag.update(tagUpdate);
         return this;
     }
 
     @Override
     public IBlock asBlock() {
-        update();
-        return item.asBlock();
+        if(update()) {
+            return item.asBlock();
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public List<IOreDictEntry> getOres() {
-        update();
-        return item.getOres();
+        return update() ? item.getOres() : Collections.EMPTY_LIST;
     }
 
     @Override
     public IItemStack withDisplayName(String name) {
-        update();
-        this.item = item.withDisplayName(name);
+        if(update()) {
+            return item.withDisplayName(name);
+        }
         return this;
     }
 
     @Override
     public IItemStack withLore(String[] lore) {
-        update();
-        this.item = item.withLore(lore);
+        if(update()) {
+            return item.withLore(lore);
+        }
         return this;
     }
 
     @Override
     public List<String> getToolClasses() {
-        update();
-        return item.getToolClasses();
+        return update() ? item.getToolClasses() : Collections.EMPTY_LIST;
     }
 
     @Override
     public int getItemEnchantability() {
-        update();
-        return item.getItemEnchantability();
+        return update() ? item.getItemEnchantability() : 0;
     }
 
     @Override
     public IItemStack getContainerItem() {
-        update();
-        this.item = item.getContainerItem();
+        if(update()) {
+            return item.getContainerItem();
+        }
         return this;
     }
 
     @Override
     public boolean isBeaconPayment() {
-        update();
-        return item.isBeaconPayment();
+        return update() && item.isBeaconPayment();
     }
 
     @Override
     public boolean canPlaceOn(IBlockDefinition block) {
-        update();
-        return item.canPlaceOn(block);
+        return update() && item.canPlaceOn(block);
     }
 
     @Override
     public boolean canDestroy(IBlockDefinition block) {
-        update();
-        return item.canDestroy(block);
+        return update() && item.canDestroy(block);
     }
 
     @Override
     public boolean canHarvestBlock(IBlockState block) {
-        update();
-        return item.canHarvestBlock(block);
+        return update() && item.canHarvestBlock(block);
     }
 
     @Override
     public int getRepairCost() {
-        update();
-        return item.getRepairCost();
+        return update() ? item.getRepairCost() : 0;
     }
 
     @Override
     public void setRepairCost(int repairCost) {
-        update();
-        item.setRepairCost(repairCost);
+        if(update()) {
+            item.setRepairCost(repairCost);
+        }
     }
 
     @Override
     public boolean canEditBlocks() {
-        update();
-        return item.canEditBlocks();
+        return update() && item.canEditBlocks();
     }
 
     @Override
     public boolean isOnItemFrame() {
-        update();
-        return item.isOnItemFrame();
+        return update() && item.isOnItemFrame();
     }
 
     @Override
     public boolean isItemEnchanted() {
-        update();
-        return item.isItemEnchanted();
+        return update() && item.isItemEnchanted();
     }
 
     @Override
     public boolean isItemDamaged() {
-        update();
-        return item.isItemDamaged();
+        return update() && item.isItemDamaged();
     }
 
     @Override
     public boolean isDamageable() {
-        update();
-        return item.isDamageable();
+        return update() && item.isDamageable();
     }
 
     @Override
     public boolean isStackable() {
-        update();
-        return item.isStackable();
+        return update() && item.isStackable();
     }
 
     @Override
     public void addEnchantment(IEnchantment enchantment) {
-        update();
-        item.addEnchantment(enchantment);
+        if(update()) {
+            item.addEnchantment(enchantment);
+        }
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(IEnchantmentDefinition enchantment) {
-        update();
-        return item.canApplyAtEnchantingTable(enchantment);
+        return update() && item.canApplyAtEnchantingTable(enchantment);
     }
 
     @Override
     public List<IEnchantment> getEnchantments() {
-        update();
-        return item.getEnchantments();
+        return update() ? item.getEnchantments() : Collections.EMPTY_LIST;
     }
 
     @Override
     public boolean isItemEnchantable() {
-        update();
-        return item.isItemEnchantable();
+        return update() && item.isItemEnchantable();
     }
 
     @Override
     public boolean hasEffect() {
-        update();
-        return item.hasEffect();
+        return update() && item.hasEffect();
     }
 
     @Override
     public boolean hasDisplayName() {
-        update();
-        return item.hasDisplayName();
+        return update() && item.hasDisplayName();
     }
 
     @Override
     public void clearCustomName() {
-        update();
-
+        if(update()) {
+            item.clearCustomName();
+        }
     }
 
     @Override
     public boolean hasTag() {
-        update();
-        return item.hasTag();
+        return update() ? item.hasTag() : tag != null;
     }
 
     @Override
     public void damageItem(int amount, IEntity entity) {
-        update();
-        item.damageItem(amount, entity);
+        if(update()) {
+            item.damageItem(amount, entity);
+        }
     }
 
     @Override
     public int getMetadata() {
-        update();
-        return item.getMetadata();
+        return update() ? item.getMetadata() : meta;
     }
 
     @Override
     public boolean getHasSubtypes() {
-        update();
-        return item.getHasSubtypes();
+        return update() && item.getHasSubtypes();
     }
 
     @Override
     public float getStrengthAgainstBlock(IBlockState blockState) {
-        update();
-        return item.getStrengthAgainstBlock(blockState);
+        return update() ? item.getStrengthAgainstBlock(blockState) : 0f;
     }
 
     @Override
     public IItemStack splitStack(int amount) {
-        update();
-        this.item = item.splitStack(amount);
-        return this;
+        return update() ? item.splitStack(amount) : this;
     }
 
     @Override
     public boolean isEmpty() {
-        update();
-        return item.isEmpty();
+        return !update() || item.isEmpty();
     }
 
     @Override
     public int getItemBurnTime() {
-        update();
-        return item.getItemBurnTime();
+        return update() ? item.getItemBurnTime() : 0;
     }
 
     @Override
     public boolean showsDurabilityBar() {
-        update();
-        return item.showsDurabilityBar();
+        return update() && item.showsDurabilityBar();
     }
 
     @Override
     public boolean hasCustomEntity() {
-        update();
-        return item.hasCustomEntity();
+        return update() && item.hasCustomEntity();
     }
 
     @Override
     public boolean hasContainerItem() {
-        update();
-        return item.hasContainerItem();
+        return update() && item.hasContainerItem();
     }
 
     @Override
     public IEntityItem createEntityItem(IWorld world, int x, int y, int z) {
-        update();
-        return item.createEntityItem(world, x, y, z);
+        if(update()) {
+            return item.createEntityItem(world, x, y, z);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public IEntityItem createEntityItem(IWorld world, IBlockPos pos) {
-        update();
-        return item.createEntityItem(world, pos);
+        if(update()) {
+            return item.createEntityItem(world, pos);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public boolean matches(IItemStack item) {
-        update();
-        return this.item.matches(item);
+        return update() && this.item.matches(item);
     }
 
     @Override
     public boolean matchesExact(IItemStack item) {
-        update();
-        return this.item.matchesExact(item);
+        return update() && this.item.matchesExact(item);
     }
 
     @Override
     public boolean matches(ILiquidStack liquid) {
-        update();
-        return item.matches(liquid);
+        return update() && this.item.matches(liquid);
     }
 
     @Override
     public boolean contains(IIngredient ingredient) {
-        update();
-        return item.contains(ingredient);
+        return update() && this.item.contains(ingredient);
     }
 
     @Override
     public IItemStack applyTransform(IItemStack item, IPlayer byPlayer) {
-        update();
-        this.item = item.applyTransform(item, byPlayer);
-        return this;
+        if(update()) {
+            return item.applyTransform(item, byPlayer);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public IItemStack applyNewTransform(IItemStack item) {
-        update();
-        this.item = item.applyNewTransform(item);
-        return this;
+        if(update()) {
+            return item.applyNewTransform(item);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public boolean hasNewTransformers() {
-        update();
-        return item.hasNewTransformers();
+        return update() && this.item.hasNewTransformers();
     }
 
     @Override
     public boolean hasTransformers() {
-        update();
-        return item.hasTransformers();
+        return update() && this.item.hasTransformers();
     }
 
     @Override
     public IIngredient transform(IItemTransformer transformer) {
-        update();
-        return item.transform(transformer);
+        if(update()) {
+            return item.transform(transformer);
+        }
+        throw new IllegalStateException("GhostItemStack not yet initialized!");
     }
 
     @Override
     public Object getInternal() {
-        update();
-        if (FAKE_ISTACK.matches(item)) {
+        if(!update()) {
             CraftTweakerAPI.logError("Trying to access Ghost item before it's ready: <item:" + name + ":" + meta + ">");
         }
         return item.getInternal();
@@ -586,7 +604,6 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public String toCommandString() {
-        update();
-        return item.toCommandString();
+        return update() ? item.toCommandString() : "(GhostItemStack) <item:" + name + ":" + meta + ">";
     }
 }

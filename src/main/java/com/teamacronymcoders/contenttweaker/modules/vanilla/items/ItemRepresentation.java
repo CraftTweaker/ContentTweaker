@@ -56,6 +56,8 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public CTResourceLocation textureLocation;
     @ZenProperty
     public ILocalizedNameSupplier localizedNameSupplier;
+    @ZenProperty
+    public IItemUpdate onItemUpdate = null;
 
     @ZenMethod
     public String getUnlocalizedName() {

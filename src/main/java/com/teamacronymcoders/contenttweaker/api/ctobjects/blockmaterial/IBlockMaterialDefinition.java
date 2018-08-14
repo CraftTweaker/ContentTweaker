@@ -4,9 +4,7 @@ import com.teamacronymcoders.contenttweaker.api.ICTObject;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import crafttweaker.annotations.ZenRegister;
 import net.minecraft.block.material.Material;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
-import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.*;
 
 @ZenRegister
 @ZenClass("mods.contenttweaker.BlockMaterial")
@@ -50,6 +48,9 @@ public interface IBlockMaterialDefinition extends ICTObject<Material> {
     @ZenMethod
     @ZenGetter("mobilityFlag")
     PushReaction getMobilityFlag();
+
+    @ZenOperator(OperatorType.COMPARE)
+    int compare(IBlockMaterialDefinition other);
 
     Material getInternal();
 }

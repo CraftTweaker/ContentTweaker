@@ -22,12 +22,14 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMut
 import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.util.Position3f;
 import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -71,19 +73,19 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
     /* Beginning of Representation stuff */
     public void checkFields() {
         List<String> missingFields = new ArrayList<>();
-        if (this.itemRepresentation.getUnlocalizedName() == null) {
+        if(this.itemRepresentation.getUnlocalizedName() == null) {
             missingFields.add("unlocalizedName");
         }
-        if (!missingFields.isEmpty()) {
+        if(!missingFields.isEmpty()) {
             throw new MissingFieldsException("ItemRepresentation", missingFields);
         }
     }
 
     public void setFields() {
         this.setUnlocalizedName(this.itemRepresentation.getUnlocalizedName());
-        if (this.itemRepresentation.getCreativeTab() != null) {
+        if(this.itemRepresentation.getCreativeTab() != null) {
             Object creativeTab = this.itemRepresentation.getCreativeTab().getInternal();
-            if (creativeTab instanceof CreativeTabs) {
+            if(creativeTab instanceof CreativeTabs) {
                 this.setCreativeTab((CreativeTabs) this.itemRepresentation.getCreativeTab().getInternal());
             }
         }
@@ -91,7 +93,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         this.setHarvestLevel(this.itemRepresentation.getToolClass(), this.itemRepresentation.getToolLevel());
         this.itemUseAction = CTUtils.getEnum(this.itemRepresentation.getItemUseAction(), EnumAction.class);
         this.rarity = CTUtils.getEnum(this.itemRepresentation.getRarity(), EnumRarity.class);
-        if (this.itemRepresentation.getMaxDamage() > 0) {
+        if(this.itemRepresentation.getMaxDamage() > 0) {
             this.setMaxDamage(this.itemRepresentation.getMaxDamage());
         }
     }
@@ -136,10 +138,10 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         EnumActionResult enumActionResult = EnumActionResult.PASS;
         ItemStack itemStack = player.getHeldItem(hand);
-        if (itemRepresentation.getItemRightClick() != null) {
+        if(itemRepresentation.getItemRightClick() != null) {
             String stringResult = itemRepresentation.getItemRightClick().onRightClick(new MCMutableItemStack(itemStack),
                     new MCWorld(world), new CTPlayer(player), hand.name());
-            if (stringResult != null) {
+            if(stringResult != null) {
                 enumActionResult = EnumActionResult.valueOf(stringResult.toUpperCase(Locale.US));
             }
         }
@@ -151,7 +153,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
                                       float hitX, float hitY, float hitZ) {
         EnumActionResult actionResult = EnumActionResult.PASS;
-        if (Objects.nonNull(itemRepresentation.getOnItemUse())) {
+        if(Objects.nonNull(itemRepresentation.getOnItemUse())) {
             Position3f blockTouch = new MCPosition3f(hitX, hitY, hitZ);
             actionResult = itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
                     Hand.of(hand), Facing.of(facing), blockTouch).getInternal();
@@ -237,5 +239,15 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
         return Optional.ofNullable(itemRepresentation.getLocalizedNameSupplier())
                 .map(supplier -> supplier.getLocalizedName(new MCItemStack(stack)))
                 .orElseGet(() -> super.getItemStackDisplayName(stack));
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+
+        if(itemRepresentation.onItemUpdate == null) {
+            super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+        } else {
+            itemRepresentation.onItemUpdate.onItemUpdate(new MCMutableItemStack(stack), new MCWorld(worldIn), entityIn instanceof EntityPlayer ? new CTPlayer((EntityPlayer) entityIn) : CraftTweakerMC.getIEntity(entityIn), itemSlot, isSelected);
+        }
     }
 }
