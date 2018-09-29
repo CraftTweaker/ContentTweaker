@@ -69,7 +69,7 @@ public class MCBlockState implements ICTBlockState {
 
     @Override
     public PushReaction getMobilityFlag() {
-        return PushReaction.of(this.blockState.getMobilityFlag());
+        return PushReaction.of(this.blockState.getPushReaction());
     }
 
     @Override

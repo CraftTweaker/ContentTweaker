@@ -23,12 +23,12 @@ public class CTResourceLocation implements ICTObject<ResourceLocation> {
 
     @ZenGetter("domain")
     public String getDomain() {
-        return resourceLocation.getResourceDomain();
+        return resourceLocation.getNamespace();
     }
 
     @ZenGetter("path")
     public String getPath() {
-        return resourceLocation.getResourcePath();
+        return resourceLocation.getPath();
     }
 
     @Override

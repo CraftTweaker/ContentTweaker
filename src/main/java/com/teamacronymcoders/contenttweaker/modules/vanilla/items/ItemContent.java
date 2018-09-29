@@ -82,7 +82,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
     }
 
     public void setFields() {
-        this.setUnlocalizedName(this.itemRepresentation.getUnlocalizedName());
+        this.setTranslationKey(this.itemRepresentation.getUnlocalizedName());
         if(this.itemRepresentation.getCreativeTab() != null) {
             Object creativeTab = this.itemRepresentation.getCreativeTab().getInternal();
             if(creativeTab instanceof CreativeTabs) {
@@ -184,7 +184,7 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        modelNames.add(this.getUnlocalizedName().substring(5));
+        modelNames.add(this.getTranslationKey().substring(5));
         return modelNames;
     }
 

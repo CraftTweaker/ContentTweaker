@@ -52,7 +52,7 @@ public class BlockContent extends BlockBase {
     }
 
     public void setFields() {
-        this.setUnlocalizedName(this.blockRepresentation.getUnlocalizedName());
+        this.setTranslationKey(this.blockRepresentation.getUnlocalizedName());
         if (this.blockRepresentation.getCreativeTab() != null) {
             Object creativeTab = this.blockRepresentation.getCreativeTab().getInternal();
             if (creativeTab instanceof CreativeTabs) {
@@ -82,13 +82,8 @@ public class BlockContent extends BlockBase {
         return this.blockRepresentation.isFullBlock();
     }
 
-    @Nonnull
     @Override
-    @SideOnly(Side.CLIENT)
-    public CreativeTabs getCreativeTabToDisplayOn() {
-        return this.getCreativeTab();
-    }
-
+    @Nonnull
     public CreativeTabs getCreativeTab() {
         return this.creativeTab;
     }
@@ -115,7 +110,7 @@ public class BlockContent extends BlockBase {
     @Override
     @SideOnly(Side.CLIENT)
     @Nonnull
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return this.blockRenderLayer;
     }
 
@@ -164,10 +159,10 @@ public class BlockContent extends BlockBase {
     @Override
     @Nonnull
     @SuppressWarnings("deprecation")
-    public EnumPushReaction getMobilityFlag(@Nonnull IBlockState state) {
+    public EnumPushReaction getPushReaction(@Nonnull IBlockState state) {
         return Optional.ofNullable(blockRepresentation.getMobilityFlag())
                 .map(PushReaction::getInternal)
-                .orElse(state.getMobilityFlag());
+                .orElse(state.getPushReaction());
     }
 
     @Override

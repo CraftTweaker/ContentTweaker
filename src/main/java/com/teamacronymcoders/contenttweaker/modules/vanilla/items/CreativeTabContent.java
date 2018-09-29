@@ -36,7 +36,7 @@ public class CreativeTabContent extends CreativeTabs {
     @Override
     @Nonnull
     @SideOnly(Side.CLIENT)
-    public ItemStack getTabIconItem() {
+    public ItemStack createIcon() {
         return iconStack = Optional.ofNullable(iconStack)
                 .orElseGet(() -> representation.getInternalIconStack());
     }
