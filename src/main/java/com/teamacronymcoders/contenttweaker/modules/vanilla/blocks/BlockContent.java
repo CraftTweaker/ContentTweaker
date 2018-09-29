@@ -8,6 +8,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.itemlist.CTItemList;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityContent;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.mc1120.item.MCItemStack;
@@ -18,6 +19,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -217,5 +219,18 @@ public class BlockContent extends BlockBase {
     @Override
     public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
         return this.blockRepresentation.beaconBase;
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return blockRepresentation.tileEntityRepresentation != null;
+    }
+
+    @Nullable
+    @Override
+    @ParametersAreNonnullByDefault
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return blockRepresentation.tileEntityRepresentation != null ?
+                new TileEntityContent(blockRepresentation.tileEntityRepresentation) : null;
     }
 }

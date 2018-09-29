@@ -4,6 +4,7 @@ import com.teamacronymcoders.contenttweaker.api.ICTObject;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.random.CTRandom;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.tileentity.IMCTileEntity;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.world.IBiome;
 import net.minecraft.world.World;
@@ -66,4 +67,7 @@ public interface IWorld extends ICTObject<World>, crafttweaker.api.world.IWorld 
     @ZenMethod
     @ZenGetter("random")
     CTRandom getRandom();
+
+    @ZenMethod
+    IMCTileEntity getTileEntity(IBlockPos blockPos);
 }

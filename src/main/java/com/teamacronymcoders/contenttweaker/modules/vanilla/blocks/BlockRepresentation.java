@@ -13,6 +13,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityRepresentation;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -76,9 +77,10 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public boolean entitySpawnable = true;
     @ZenProperty
     public IBlockDropHandler dropHandler;
-
     @ZenProperty
     public boolean beaconBase = false;
+    @ZenProperty
+    public TileEntityRepresentation tileEntityRepresentation = null;
 
     @ZenMethod
     public String getUnlocalizedName() {

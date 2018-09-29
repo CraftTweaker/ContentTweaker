@@ -4,9 +4,14 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.random.CTRandom;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.tileentity.IMCTileEntity;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.tileentity.MCTileEntity;
 import crafttweaker.api.world.IBiome;
 import crafttweaker.mc1120.world.MCBiome;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class MCWorld extends crafttweaker.mc1120.world.MCWorld implements IWorld {
     private World world;
@@ -84,6 +89,13 @@ public class MCWorld extends crafttweaker.mc1120.world.MCWorld implements IWorld
     @Override
     public CTRandom getRandom() {
         return new CTRandom(world.rand);
+    }
+
+    @Override
+    public IMCTileEntity getTileEntity(IBlockPos blockPos) {
+        return Optional.ofNullable(world.getTileEntity(blockPos.getInternal()))
+                .map(MCTileEntity::new)
+                .orElse(null);
     }
 
     @Override

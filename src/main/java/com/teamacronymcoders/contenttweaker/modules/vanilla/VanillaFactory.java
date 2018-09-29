@@ -9,6 +9,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.items.CreativeTabRep
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.food.ItemFoodRepresentation;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityRepresentation;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.item.ItemStack;
@@ -74,5 +75,10 @@ public class VanillaFactory {
     @ZenMethod
     public static FluidRepresentation createFluid(String unlocalizedName, CTColor color) {
         return new FluidRepresentation(unlocalizedName, color.getIntColor());
+    }
+
+    @ZenMethod
+    public static TileEntityRepresentation createTileEntity(String name) {
+        return new TileEntityRepresentation(name);
     }
 }
