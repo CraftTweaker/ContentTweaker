@@ -269,7 +269,7 @@ public class GhostItemStack implements IItemStack {
     @Override
     public IItemStack withAmount(int amount) {
         if(update()) {
-            return item.withDamage(amount);
+            return item.withAmount(amount);
         }
         this.amount = amount;
         return this;
@@ -287,8 +287,15 @@ public class GhostItemStack implements IItemStack {
     @Override
     public IItemStack withTag(IData tag) {
         if(update()) {
-            return item.withTag(tag);
+            return item.withTag(tag, true);
         }
+        return this;
+    }
+
+    @Override
+    public IItemStack withTag(IData tag, boolean matchTagExact) {
+        if(update())
+            return item.withTag(tag, matchTagExact);
         return this;
     }
 
@@ -314,6 +321,15 @@ public class GhostItemStack implements IItemStack {
     public IItemStack updateTag(IData tagUpdate) {
         if(update()) {
             return item.updateTag(tagUpdate);
+        }
+        this.tag = this.tag.update(tagUpdate);
+        return this;
+    }
+
+    @Override
+    public IItemStack updateTag(IData tagUpdate, boolean matchTagExact) {
+        if(update()) {
+            return item.updateTag(tagUpdate, matchTagExact);
         }
         this.tag = this.tag.update(tagUpdate);
         return this;
