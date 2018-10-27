@@ -294,8 +294,9 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack withTag(IData tag, boolean matchTagExact) {
-        if(update())
+        if(update()) {
             return item.withTag(tag, matchTagExact);
+        }
         return this;
     }
 
