@@ -14,6 +14,7 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.EntityHelper;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.CTPlayer;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
@@ -22,8 +23,8 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTRes
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemFoodEaten;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.util.Position3f;
-import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.block.state.IBlockState;
@@ -156,7 +157,7 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
     public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
         return Optional.ofNullable(itemRepresentation.getItemDestroyedBlock())
                 .map(value -> value.onBlockDestroyed(new MCMutableItemStack(stack), new MCWorld(world),
-                        new MCBlockState(state), new MCBlockPos(pos), new MCEntityLivingBase(entityLiving)))
+                        new MCBlockState(state), new MCBlockPos(pos), EntityHelper.getIEntityLivingBase(entityLiving)))
                 .orElseGet(() -> super.onBlockDestroyed(stack, world, state, pos, entityLiving));
     }
 
@@ -233,5 +234,13 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
         } else {
             super.onFoodEaten(stack, worldIn, player);
         }
+    }
+
+    @Override
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+        return Optional.ofNullable(itemRepresentation.getOnItemUseFinish())
+                .map(iItemUseFinish -> iItemUseFinish.getResult(new MCMutableItemStack(stack), new MCWorld(worldIn), EntityHelper.getIEntityLivingBase(entityLiving)))
+                .map(CraftTweakerMC::getItemStack)
+                .orElseGet(() -> super.onItemUseFinish(stack, worldIn, entityLiving));
     }
 }
