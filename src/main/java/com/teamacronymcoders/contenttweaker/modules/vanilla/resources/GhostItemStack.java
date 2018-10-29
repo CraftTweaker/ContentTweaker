@@ -53,7 +53,7 @@ public class GhostItemStack implements IItemStack {
         this.name = name;
         this.meta = meta;
 
-        if(!warned) {
+        if (!warned) {
             CraftTweakerAPI.logInfo("Item <item:" + name + ":" + meta + "> has not been found, trying to use a ghost representative. This message will only be printed once, all subsequent missing items will be handled the same way.");
             warned = true;
         }
@@ -63,24 +63,24 @@ public class GhostItemStack implements IItemStack {
     }
 
     public boolean update() {
-        if(FAKE_ISTACK != item) {
+        if (FAKE_ISTACK != item) {
             return true;
         }
         IItemStack stack = BracketHandlerItem.getItem(name, meta);
-        if(stack == null) {
+        if (stack == null) {
             return false;
         }
 
-        if(amount == ANY_AMOUNT) {
+        if (amount == ANY_AMOUNT) {
             stack = stack.anyAmount();
-        } else if(amount != UNCHANGED) {
+        } else if (amount != UNCHANGED) {
             stack = stack.withAmount(amount);
         }
-        if(damage != UNCHANGED) {
+        if (damage != UNCHANGED) {
             stack = stack.withDamage(damage);
         }
 
-        if(tag != null) {
+        if (tag != null) {
             stack = stack.withTag(tag);
         }
 
@@ -90,7 +90,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemDefinition getDefinition() {
-        if(update()) {
+        if (update()) {
             return item.getDefinition();
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -110,7 +110,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public void setDisplayName(String name) {
-        if(update()) {
+        if (update()) {
             item.setDisplayName(name);
         }
     }
@@ -122,7 +122,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public void setMaxStackSize(int size) {
-        if(update()) {
+        if (update()) {
             item.setMaxStackSize(size);
         }
     }
@@ -134,7 +134,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public void setBlockHardness(float hardness) {
-        if(update()) {
+        if (update()) {
             item.setBlockHardness(hardness);
         }
     }
@@ -151,7 +151,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public void setMaxDamage(int damage) {
-        if(update()) {
+        if (update()) {
             item.setMaxDamage(damage);
         }
     }
@@ -193,7 +193,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack amount(int amount) {
-        if(update()) {
+        if (update()) {
             return item.amount(amount);
         }
         this.amount = amount;
@@ -202,7 +202,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IIngredient or(IIngredient ingredient) {
-        if(update()) {
+        if (update()) {
             return item.or(ingredient);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -210,7 +210,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IIngredient transformNew(IItemTransformerNew transformer) {
-        if(update()) {
+        if (update()) {
             return item.transformNew(transformer);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -218,7 +218,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IIngredient only(IItemCondition condition) {
-        if(update()) {
+        if (update()) {
             return item.only(condition);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -226,7 +226,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IIngredient marked(String mark) {
-        if(update()) {
+        if (update()) {
             return item.marked(mark);
         }
         this.mark = mark;
@@ -235,7 +235,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public WeightedItemStack percent(float p) {
-        if(update()) {
+        if (update()) {
             return item.percent(p);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -243,7 +243,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public WeightedItemStack weight(float p) {
-        if(update()) {
+        if (update()) {
             return item.weight(p);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -251,7 +251,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IIngredient anyDamage() {
-        if(update()) {
+        if (update()) {
             return item.anyDamage();
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -259,7 +259,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack withDamage(int damage) {
-        if(update()) {
+        if (update()) {
             return item.withDamage(damage);
         }
         this.damage = damage;
@@ -268,7 +268,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack withAmount(int amount) {
-        if(update()) {
+        if (update()) {
             return item.withAmount(amount);
         }
         this.amount = amount;
@@ -277,7 +277,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack anyAmount() {
-        if(update()) {
+        if (update()) {
             return item.anyAmount();
         }
         this.amount = ANY_AMOUNT;
@@ -286,7 +286,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack withTag(IData tag) {
-        if(update()) {
+        if (update()) {
             return item.withTag(tag, true);
         }
         return this;
@@ -294,7 +294,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack withTag(IData tag, boolean matchTagExact) {
-        if(update()) {
+        if (update()) {
             return item.withTag(tag, matchTagExact);
         }
         return this;
@@ -302,7 +302,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack withEmptyTag() {
-        if(update()) {
+        if (update()) {
             return item.withEmptyTag();
         }
         this.tag = NBTConverter.from(new NBTTagCompound(), true);
@@ -311,7 +311,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack removeTag(String tag) {
-        if(update()) {
+        if (update()) {
             return item.removeTag(tag);
         }
         this.tag = this.tag.sub(new DataString(tag));
@@ -320,7 +320,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack updateTag(IData tagUpdate) {
-        if(update()) {
+        if (update()) {
             return item.updateTag(tagUpdate);
         }
         this.tag = this.tag.update(tagUpdate);
@@ -329,7 +329,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack updateTag(IData tagUpdate, boolean matchTagExact) {
-        if(update()) {
+        if (update()) {
             return item.updateTag(tagUpdate, matchTagExact);
         }
         this.tag = this.tag.update(tagUpdate);
@@ -338,7 +338,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IBlock asBlock() {
-        if(update()) {
+        if (update()) {
             return item.asBlock();
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -351,7 +351,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack withDisplayName(String name) {
-        if(update()) {
+        if (update()) {
             return item.withDisplayName(name);
         }
         return this;
@@ -359,7 +359,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack withLore(String[] lore) {
-        if(update()) {
+        if (update()) {
             return item.withLore(lore);
         }
         return this;
@@ -377,7 +377,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack getContainerItem() {
-        if(update()) {
+        if (update()) {
             return item.getContainerItem();
         }
         return this;
@@ -410,7 +410,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public void setRepairCost(int repairCost) {
-        if(update()) {
+        if (update()) {
             item.setRepairCost(repairCost);
         }
     }
@@ -447,7 +447,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public void addEnchantment(IEnchantment enchantment) {
-        if(update()) {
+        if (update()) {
             item.addEnchantment(enchantment);
         }
     }
@@ -479,7 +479,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public void clearCustomName() {
-        if(update()) {
+        if (update()) {
             item.clearCustomName();
         }
     }
@@ -491,7 +491,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public void damageItem(int amount, IEntity entity) {
-        if(update()) {
+        if (update()) {
             item.damageItem(amount, entity);
         }
     }
@@ -543,7 +543,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IEntityItem createEntityItem(IWorld world, int x, int y, int z) {
-        if(update()) {
+        if (update()) {
             return item.createEntityItem(world, x, y, z);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -551,7 +551,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IEntityItem createEntityItem(IWorld world, IBlockPos pos) {
-        if(update()) {
+        if (update()) {
             return item.createEntityItem(world, pos);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -579,7 +579,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack applyTransform(IItemStack item, IPlayer byPlayer) {
-        if(update()) {
+        if (update()) {
             return item.applyTransform(item, byPlayer);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -587,7 +587,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IItemStack applyNewTransform(IItemStack item) {
-        if(update()) {
+        if (update()) {
             return item.applyNewTransform(item);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -605,7 +605,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public IIngredient transform(IItemTransformer transformer) {
-        if(update()) {
+        if (update()) {
             return item.transform(transformer);
         }
         throw new IllegalStateException("GhostItemStack not yet initialized!");
@@ -613,7 +613,7 @@ public class GhostItemStack implements IItemStack {
 
     @Override
     public Object getInternal() {
-        if(!update()) {
+        if (!update()) {
             CraftTweakerAPI.logError("Trying to access Ghost item before it's ready: <item:" + name + ":" + meta + ">");
         }
         return item.getInternal();

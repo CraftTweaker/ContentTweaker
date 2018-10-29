@@ -70,19 +70,19 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
     /* Beginning of Representation stuff */
     public void checkFields() {
         List<String> missingFields = new ArrayList<>();
-        if(this.itemRepresentation.getUnlocalizedName() == null) {
+        if (this.itemRepresentation.getUnlocalizedName() == null) {
             missingFields.add("unlocalizedName");
         }
-        if(!missingFields.isEmpty()) {
+        if (!missingFields.isEmpty()) {
             throw new MissingFieldsException("ItemFoodRepresentation", missingFields);
         }
     }
 
     public void setFields() {
         this.setTranslationKey(this.itemRepresentation.getUnlocalizedName());
-        if(this.itemRepresentation.getCreativeTab() != null) {
+        if (this.itemRepresentation.getCreativeTab() != null) {
             Object creativeTab = this.itemRepresentation.getCreativeTab().getInternal();
-            if(creativeTab instanceof CreativeTabs) {
+            if (creativeTab instanceof CreativeTabs) {
                 this.setCreativeTab((CreativeTabs) this.itemRepresentation.getCreativeTab().getInternal());
             }
         }
@@ -90,10 +90,10 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
         this.setHarvestLevel(this.itemRepresentation.getToolClass(), this.itemRepresentation.getToolLevel());
         this.itemUseAction = CTUtils.getEnum(this.itemRepresentation.getItemUseAction(), EnumAction.class);
         this.rarity = CTUtils.getEnum(this.itemRepresentation.getRarity(), EnumRarity.class);
-        if(this.itemRepresentation.getMaxDamage() > 0) {
+        if (this.itemRepresentation.getMaxDamage() > 0) {
             this.setMaxDamage(this.itemRepresentation.getMaxDamage());
         }
-        if(this.itemRepresentation.alwaysEdible) {
+        if (this.itemRepresentation.alwaysEdible) {
             this.setAlwaysEdible();
         }
     }
@@ -137,7 +137,7 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
                                       float hitX, float hitY, float hitZ) {
         EnumActionResult actionResult = EnumActionResult.PASS;
-        if(Objects.nonNull(itemRepresentation.getOnItemUse())) {
+        if (Objects.nonNull(itemRepresentation.getOnItemUse())) {
             Position3f blockTouch = new MCPosition3f(hitX, hitY, hitZ);
             actionResult = itemRepresentation.getOnItemUse().useItem(new CTPlayer(player), new MCWorld(world), new MCBlockPos(pos),
                     Hand.of(hand), Facing.of(facing), blockTouch).getInternal();
@@ -228,7 +228,7 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
     @Override
     protected void onFoodEaten(ItemStack stack, World worldIn, @Nonnull EntityPlayer player) {
         final IItemFoodEaten onItemFoodEaten = itemRepresentation.getOnItemFoodEaten();
-        if(onItemFoodEaten != null) {
+        if (onItemFoodEaten != null) {
             onItemFoodEaten.handle(new MCMutableItemStack(stack), new MCWorld(worldIn), new CTPlayer(player));
         } else {
             super.onFoodEaten(stack, worldIn, player);
