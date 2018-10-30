@@ -16,7 +16,7 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
     private CreativeTabContent creativeTabContent;
 
     private boolean hasSearch = false;
-    private String backGroundImage = "";
+    private String backGroundImage = "items.png";
     private boolean noScrollBar = true;
     private boolean noTitle = false;
 
