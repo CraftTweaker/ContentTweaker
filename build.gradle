@@ -48,6 +48,10 @@ repositories {
         name 'Chickens'
         url 'https://minecraft.curseforge.com/api/maven/'
     }
+    maven {
+        name 'Bees'
+        url "http://maven.ic2.player.to/"
+    }
 }
 
 dependencies {
@@ -57,6 +61,7 @@ dependencies {
     deobfCompile "slimeknights.mantle:Mantle:1.12-${mantle_version}"
     deobfCompile "mezz.jei:${jei_version}"
     deobfCompile "chickens:chickens:${chickens_version}"
+    deobfCompile "net.sengir.forestry:forestry_${minecraft_version}:${forestry_version}"
 }
 
 processResources {
