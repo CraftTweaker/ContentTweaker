@@ -31,6 +31,6 @@ public class SoundEventsResourceList extends ResourceList<SoundEvent> {
 
     @Override
     public Collection<SoundEvent> getAllResources() {
-        return ForgeRegistries.SOUND_EVENTS.getValues();
+        return ForgeRegistries.SOUND_EVENTS.getValuesCollection();
     }
 }
