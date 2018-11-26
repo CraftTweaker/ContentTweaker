@@ -58,6 +58,8 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public ILocalizedNameSupplier localizedNameSupplier;
     @ZenProperty
     public IItemUpdate onItemUpdate = null;
+    @ZenProperty
+    public IItemUseFinish onItemUseFinish = null;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -250,6 +252,17 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.localizedNameSupplier = localizedNameSupplier;
     }
 
+    @ZenMethod
+    public IItemUseFinish getOnItemUseFinish() {
+        return onItemUseFinish;
+    }
+
+    @ZenMethod
+    public void setOnItemUseFinish(IItemUseFinish onItemUseFinish) {
+        this.onItemUseFinish = onItemUseFinish;
+    }
+
+
     @Override
     public String getName() {
         return this.getUnlocalizedName();
@@ -270,5 +283,4 @@ public class ItemRepresentation implements IRepresentation<Item> {
         return ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
-
 }
