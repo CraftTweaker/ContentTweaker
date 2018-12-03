@@ -1,16 +1,25 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.blocks.BlockBase;
+import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.itemlist.CTItemList;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityContent;
-import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.world.MCBlockAccess;
 import net.minecraft.block.Block;
@@ -24,6 +33,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -35,11 +45,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
-public class BlockContent extends BlockBase {
+public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemColor {
     private BlockRepresentation blockRepresentation;
 
     private EnumBlockRenderType enumBlockRenderType;
@@ -232,5 +242,44 @@ public class BlockContent extends BlockBase {
     public TileEntity createTileEntity(World world, IBlockState state) {
         return blockRepresentation.tileEntityRepresentation != null ?
                 new TileEntityContent(blockRepresentation.tileEntityRepresentation) : null;
+    }
+
+    @Override
+    public List<IGeneratedModel> getGeneratedModels() {
+        List<IGeneratedModel> models = Lists.newArrayList();
+        this.getResourceLocations(Lists.newArrayList()).forEach(resourceLocation ->  {
+            TemplateFile templateFile = TemplateManager.getTemplateFile("colored_block");
+            Map<String, String> replacements = Maps.newHashMap();
+
+            replacements.put("texture", Optional.ofNullable(blockRepresentation.getTextureLocation())
+                    .map(CTResourceLocation::getInternal)
+                    .map(ResourceLocation::toString)
+                    .orElseGet(() -> new ResourceLocation(resourceLocation.getNamespace(),
+                            "blocks/" + resourceLocation.getPath()).toString()));
+
+            templateFile.replaceContents(replacements);
+
+            models.add(new GeneratedModel(resourceLocation.getPath(), ModelType.BLOCKSTATE,
+                    templateFile.getFileContents()));
+        });
+
+        return models;
+    }
+
+    @Override
+    public int colorMultiplier(IBlockState state, @Nullable IBlockAccess world, @Nullable BlockPos pos, int tintIndex) {
+        crafttweaker.api.world.IBlockAccess blockAccess = null;
+        if (world instanceof World) {
+            blockAccess = new MCWorld((World) world);
+        } else if (world != null) {
+            blockAccess = new MCBlockAccess(world);
+        }
+        IBlockPos blockPos = pos == null ? null : new MCBlockPos(pos);
+        return blockRepresentation.getBlockColorSupplier().getColor(new MCBlockState(state), blockAccess, blockPos, tintIndex).getIntColor();
+    }
+
+    @Override
+    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+        return blockRepresentation.getItemColorSupplier().getColor(new MCItemStack(stack), tintIndex).getIntColor();
     }
 }
