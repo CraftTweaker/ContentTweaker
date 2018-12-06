@@ -6,7 +6,6 @@ import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import stanhebben.zenscript.annotations.ZenClass;
 
 import java.util.Optional;
 

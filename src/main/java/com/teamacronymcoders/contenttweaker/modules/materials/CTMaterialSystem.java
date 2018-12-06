@@ -22,6 +22,7 @@ import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPartBuilder
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.CTCreatedPartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.CTPartType;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
+import crafttweaker.annotations.ZenRegister;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -31,6 +32,7 @@ import java.util.regex.Pattern;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.MaterialSystem")
 public class CTMaterialSystem {
     @ZenMethod

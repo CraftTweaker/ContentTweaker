@@ -1,9 +1,11 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.utils;
 
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
+import crafttweaker.annotations.ZenRegister;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.Particles")
 public class Particles {
     private Particles() {

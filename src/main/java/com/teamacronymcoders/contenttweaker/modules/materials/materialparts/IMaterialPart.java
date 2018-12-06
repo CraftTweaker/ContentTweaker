@@ -4,10 +4,12 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IMaterialPartData;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMaterial;
 import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.MaterialPart")
 public interface IMaterialPart {
     @ZenMethod

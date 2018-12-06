@@ -14,6 +14,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativeta
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityRepresentation;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -25,6 +26,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.Block")
 public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty

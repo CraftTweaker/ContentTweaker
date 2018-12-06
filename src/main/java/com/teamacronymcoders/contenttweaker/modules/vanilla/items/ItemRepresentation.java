@@ -7,6 +7,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.*;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
@@ -16,6 +17,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.Item")
 public class ItemRepresentation implements IRepresentation<Item> {
     @ZenProperty

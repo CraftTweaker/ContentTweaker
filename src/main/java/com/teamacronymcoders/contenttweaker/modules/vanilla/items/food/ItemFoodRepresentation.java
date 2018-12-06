@@ -4,11 +4,13 @@ import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemFoodEaten;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.item.EnumAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.ItemFood")
 public class ItemFoodRepresentation extends ItemRepresentation {
     public ItemFoodRepresentation() {
