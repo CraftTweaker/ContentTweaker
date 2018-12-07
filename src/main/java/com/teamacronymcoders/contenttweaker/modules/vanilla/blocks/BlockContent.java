@@ -173,6 +173,11 @@ public class BlockContent extends BlockBase {
     }
 
     @Override
+    public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos) {
+        return this.blockRepresentation.isReplaceable();
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
     @ParametersAreNonnullByDefault
     public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox,
