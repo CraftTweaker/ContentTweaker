@@ -13,12 +13,14 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.itemlist.CTItemList;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockColorSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityContent;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.world.MCBlockAccess;
@@ -268,6 +270,10 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
 
     @Override
     public int colorMultiplier(IBlockState state, @Nullable IBlockAccess world, @Nullable BlockPos pos, int tintIndex) {
+        IBlockColorSupplier blockColorSupplier = blockRepresentation.getBlockColorSupplier();
+        if (blockColorSupplier == null) {
+            return -1;
+        }
         crafttweaker.api.world.IBlockAccess blockAccess = null;
         if (world instanceof World) {
             blockAccess = new MCWorld((World) world);
@@ -275,11 +281,15 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
             blockAccess = new MCBlockAccess(world);
         }
         IBlockPos blockPos = pos == null ? null : new MCBlockPos(pos);
-        return blockRepresentation.getBlockColorSupplier().getColor(new MCBlockState(state), blockAccess, blockPos, tintIndex).getIntColor();
+        CTColor color = blockColorSupplier.getColor(new MCBlockState(state), blockAccess, blockPos, tintIndex);
+        return color == null ? -1 : color.getIntColor();
     }
 
     @Override
     public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
-        return blockRepresentation.getItemColorSupplier().getColor(new MCItemStack(stack), tintIndex).getIntColor();
+        return Optional.ofNullable(blockRepresentation.getItemColorSupplier())
+                .map(supplier -> supplier.getColor(new MCItemStack(stack), tintIndex))
+                .map(CTColor::getIntColor)
+                .orElse(-1);
     }
 }
