@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parttype.PartDataPiece;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
+import com.teamacronymcoders.contenttweaker.modules.materials.functions.IMaterialPartItemStackSupplier;
 import com.teamacronymcoders.contenttweaker.modules.materials.functions.IRegisterMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.CTPartDataPiece;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
@@ -37,7 +38,12 @@ import java.util.stream.Collectors;
 public class CTMaterialSystem {
     @ZenMethod
     public static IPartType createPartType(String name, IRegisterMaterialPart registerMaterialPart) {
-        return new CTCreatedPartType(name, registerMaterialPart);
+        return new CTCreatedPartType(name, registerMaterialPart, materialPart -> null);
+    }
+
+    @ZenMethod
+    public static IPartType createPartType(String name, IRegisterMaterialPart registerMaterialPart, IMaterialPartItemStackSupplier supplier) {
+        return new CTCreatedPartType(name, registerMaterialPart, supplier);
     }
 
     @ZenMethod

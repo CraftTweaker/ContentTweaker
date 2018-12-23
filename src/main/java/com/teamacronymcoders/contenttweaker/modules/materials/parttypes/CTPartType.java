@@ -1,6 +1,7 @@
 package com.teamacronymcoders.contenttweaker.modules.materials.parttypes;
 
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
+import com.teamacronymcoders.contenttweaker.modules.materials.functions.IMaterialPartItemStackSupplier;
 import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IPartDataPiece;
 
 public class CTPartType implements IPartType {
