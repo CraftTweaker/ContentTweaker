@@ -31,6 +31,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.ItemStack;
@@ -336,5 +337,10 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
                 .map(supplier -> supplier.getColor(new MCItemStack(stack), tintIndex))
                 .map(CTColor::getIntColor)
                 .orElse(-1);
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState state, EntityPlayer player) {
+a        return blockRepresentation.canSilkHarvest;
     }
 }

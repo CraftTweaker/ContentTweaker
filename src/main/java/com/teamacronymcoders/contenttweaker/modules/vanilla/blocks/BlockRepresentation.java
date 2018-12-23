@@ -99,6 +99,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public IItemColorSupplier itemColorSupplier = (itemStack, tint) -> CTColor.fromInt(-1);
     @ZenProperty
     public CTResourceLocation textureLocation;
+    @ZenProperty
+    public boolean canSilkHarvest = true;
 
     @ZenMethod
     public String getUnlocalizedName() {
