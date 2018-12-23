@@ -25,12 +25,14 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntit
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.world.MCBlockAccess;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.projectile.EntityWitherSkull;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -135,6 +137,9 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
     public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.onBlockAdded(world, pos, state);
         activateBlockAction(this.blockRepresentation.getOnBlockPlace(), world, pos, state);
+        if (this.blockRepresentation.hasGravity()) {
+            world.scheduleUpdate(pos, this, tickRate(world));
+        }
     }
 
     @Override
@@ -181,6 +186,25 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         activateBlockAction(this.blockRepresentation.getOnUpdateTick(), world, pos, state);
+        if (this.blockRepresentation.hasGravity() && !world.isRemote && (world.isAirBlock(pos.down()) || BlockFalling.canFallThrough(world.getBlockState(pos.down()))) &&
+                pos.getY() >= 0 && world.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32))) {
+            world.spawnEntity(new EntityFallingBlock(world, (double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, world.getBlockState(pos)));
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (this.blockRepresentation.hasGravity()) {
+            world.scheduleUpdate(pos, this, tickRate(world));
+        } else {
+            super.neighborChanged(state, world, pos, blockIn, fromPos);
+        }
+    }
+
+    @Override
+    public int tickRate(World world) {
+        return this.blockRepresentation.hasGravity() ? 2 : super.tickRate(world);
     }
 
     public void activateBlockAction(IBlockAction blockAction, World world, BlockPos blockPos, IBlockState blockState) {

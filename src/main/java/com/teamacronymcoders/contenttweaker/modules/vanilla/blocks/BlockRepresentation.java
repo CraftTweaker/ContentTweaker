@@ -40,6 +40,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
     public boolean fullBlock = true;
     @ZenProperty
+    public boolean gravity = false;
+    @ZenProperty
     public int lightOpacity = 255;
     @ZenProperty
     public boolean translucent = false;
@@ -126,6 +128,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void setFullBlock(boolean fullBlock) {
         this.fullBlock = fullBlock;
+    }
+
+    @ZenMethod
+    public boolean hasGravity() {
+        return gravity;
+    }
+
+    @ZenMethod
+    public void setHasGravity(boolean gravity) {
+        this.gravity = gravity;
     }
 
     @ZenMethod
