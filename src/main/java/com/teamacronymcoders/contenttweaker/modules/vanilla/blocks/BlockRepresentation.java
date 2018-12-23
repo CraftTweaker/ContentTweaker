@@ -74,6 +74,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
     public boolean passable = !this.blockMaterial.blocksMovement();
     @ZenProperty
+    public boolean replaceable = this.blockMaterial.isReplaceable();
+    @ZenProperty
     public boolean entitySpawnable = true;
     @ZenProperty
     public IBlockDropHandler dropHandler;
@@ -310,6 +312,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void setPassable(boolean passable) {
         this.passable = passable;
+    }
+
+    @ZenMethod
+    public void setReplaceable(boolean replaceable) {
+        this.replaceable = replaceable;
+    }
+
+    @ZenMethod
+    public boolean isReplaceable() {
+        return replaceable;
     }
 
     @ZenMethod
