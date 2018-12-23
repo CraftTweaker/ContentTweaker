@@ -6,7 +6,6 @@ import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import stanhebben.zenscript.annotations.ZenClass;
 
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
     private CreativeTabContent creativeTabContent;
 
     private boolean hasSearch = false;
-    private String backGroundImage = "";
+    private String backGroundImage = "items.png";
     private boolean noScrollBar = true;
     private boolean noTitle = false;
 

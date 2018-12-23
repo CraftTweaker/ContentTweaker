@@ -2,9 +2,11 @@ package com.teamacronymcoders.contenttweaker.modules.materials.parts;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
+import crafttweaker.annotations.ZenRegister;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.PartBuilder")
 public interface IPartBuilder {
     @ZenMethod

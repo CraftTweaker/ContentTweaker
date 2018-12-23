@@ -2,12 +2,15 @@ package com.teamacronymcoders.contenttweaker.modules.vanilla.items.food;
 
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemFoodEaten;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.item.EnumAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.ItemFood")
 public class ItemFoodRepresentation extends ItemRepresentation {
     public ItemFoodRepresentation() {
@@ -25,6 +28,9 @@ public class ItemFoodRepresentation extends ItemRepresentation {
     public float saturation = 0.6f;
     @ZenProperty
     public boolean alwaysEdible = false;
+
+    @ZenProperty
+    public IItemFoodEaten onItemFoodEaten = null;
 
     @ZenMethod
     public int getHealAmount() {
@@ -74,6 +80,16 @@ public class ItemFoodRepresentation extends ItemRepresentation {
     @ZenMethod
     public void setAlwaysEdible(boolean alwaysEdible) {
         this.alwaysEdible = alwaysEdible;
+    }
+
+    @ZenMethod
+    public IItemFoodEaten getOnItemFoodEaten() {
+        return onItemFoodEaten;
+    }
+
+    @ZenMethod
+    public void setOnItemFoodEaten(IItemFoodEaten onItemFoodEaten) {
+        this.onItemFoodEaten = onItemFoodEaten;
     }
 
     @Override

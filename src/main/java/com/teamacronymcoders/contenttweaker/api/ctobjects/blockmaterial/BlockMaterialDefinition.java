@@ -57,7 +57,7 @@ public class BlockMaterialDefinition implements IBlockMaterialDefinition {
 
     @Override
     public PushReaction getMobilityFlag() {
-        return PushReaction.of(this.material.getMobilityFlag());
+        return PushReaction.of(this.material.getPushReaction());
     }
 
     @Override

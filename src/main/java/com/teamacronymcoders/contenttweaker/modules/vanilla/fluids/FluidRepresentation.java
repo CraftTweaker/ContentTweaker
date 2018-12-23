@@ -8,6 +8,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMa
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundEventDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundEventDefinition;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
@@ -17,6 +18,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.Fluid")
 public class FluidRepresentation implements IRepresentation<Fluid> {
     @ZenProperty

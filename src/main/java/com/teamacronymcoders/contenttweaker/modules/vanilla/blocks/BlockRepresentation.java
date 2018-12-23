@@ -6,13 +6,19 @@ import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.aabb.MCAxisAlignedBB;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.BlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockColorSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockDropHandler;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemColorSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.SoundTypeDefinition;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityRepresentation;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -24,6 +30,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.Block")
 public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
@@ -32,6 +39,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public ICreativeTab creativeTab = new MCCreativeTab(CreativeTabs.MISC);
     @ZenProperty
     public boolean fullBlock = true;
+    @ZenProperty
+    public boolean gravity = false;
     @ZenProperty
     public int lightOpacity = 255;
     @ZenProperty
@@ -69,16 +78,29 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
     public IBlockAction onRandomTick;
     @ZenProperty
-    public PushReaction mobilityFlag;
+    public PushReaction mobilityFlag = PushReaction.normal();
     @ZenProperty
     public boolean passable = !this.blockMaterial.blocksMovement();
     @ZenProperty
+    public boolean replaceable = this.blockMaterial.isReplaceable();
+    @ZenProperty
     public boolean entitySpawnable = true;
     @ZenProperty
+    public boolean witherProof = false;
+    @ZenProperty
     public IBlockDropHandler dropHandler;
-
     @ZenProperty
     public boolean beaconBase = false;
+    @ZenProperty
+    public TileEntityRepresentation tileEntityRepresentation = null;
+    @ZenProperty
+    public IBlockColorSupplier blockColorSupplier = (state, access, pos, tint) -> CTColor.fromInt(-1);
+    @ZenProperty
+    public IItemColorSupplier itemColorSupplier = (itemStack, tint) -> CTColor.fromInt(-1);
+    @ZenProperty
+    public CTResourceLocation textureLocation;
+    @ZenProperty
+    public boolean canSilkHarvest = true;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -108,6 +130,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void setFullBlock(boolean fullBlock) {
         this.fullBlock = fullBlock;
+    }
+
+    @ZenMethod
+    public boolean hasGravity() {
+        return gravity;
+    }
+
+    @ZenMethod
+    public void setHasGravity(boolean gravity) {
+        this.gravity = gravity;
     }
 
     @ZenMethod
@@ -311,6 +343,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
+    public void setReplaceable(boolean replaceable) {
+        this.replaceable = replaceable;
+    }
+
+    @ZenMethod
+    public boolean isReplaceable() {
+        return replaceable;
+    }
+
+    @ZenMethod
     public void setEntitySpawnable(boolean entitySpawnable) {
         this.entitySpawnable = entitySpawnable;
     }
@@ -321,6 +363,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
+    public void setWitherProof(boolean witherProof) {
+        this.witherProof = witherProof;
+    }
+
+    @ZenMethod
+    public boolean isWitherProof() {
+        return witherProof;
+    }
+
+    @ZenMethod
     public IBlockDropHandler getDropHandler() {
         return dropHandler;
     }
@@ -328,6 +380,36 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void setDropHandler(IBlockDropHandler dropHandler) {
         this.dropHandler = dropHandler;
+    }
+
+    @ZenMethod
+    public IBlockColorSupplier getBlockColorSupplier() {
+        return blockColorSupplier;
+    }
+
+    @ZenMethod
+    public void setBlockColorSupplier(IBlockColorSupplier blockColorSupplier) {
+        this.blockColorSupplier = blockColorSupplier;
+    }
+
+    @ZenMethod
+    public IItemColorSupplier getItemColorSupplier() {
+        return itemColorSupplier;
+    }
+
+    @ZenMethod
+    public void setItemColorSupplier(IItemColorSupplier itemColorSupplier) {
+        this.itemColorSupplier = itemColorSupplier;
+    }
+
+    @ZenMethod
+    public CTResourceLocation getTextureLocation() {
+        return textureLocation;
+    }
+
+    @ZenMethod
+    public void setTextureLocation(CTResourceLocation resourceLocation) {
+        this.textureLocation = resourceLocation;
     }
 
     @Override

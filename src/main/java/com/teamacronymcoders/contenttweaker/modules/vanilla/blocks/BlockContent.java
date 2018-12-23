@@ -1,29 +1,49 @@
 package com.teamacronymcoders.contenttweaker.modules.vanilla.blocks;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.blocks.BlockBase;
+import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.itemlist.CTItemList;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
-import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.minecraft.CraftTweakerMC;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockColorSupplier;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityContent;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.world.MCBlockAccess;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityWitherSkull;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,11 +53,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
-public class BlockContent extends BlockBase {
+public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemColor {
     private BlockRepresentation blockRepresentation;
 
     private EnumBlockRenderType enumBlockRenderType;
@@ -52,7 +72,7 @@ public class BlockContent extends BlockBase {
     }
 
     public void setFields() {
-        this.setUnlocalizedName(this.blockRepresentation.getUnlocalizedName());
+        this.setTranslationKey(this.blockRepresentation.getUnlocalizedName());
         if (this.blockRepresentation.getCreativeTab() != null) {
             Object creativeTab = this.blockRepresentation.getCreativeTab().getInternal();
             if (creativeTab instanceof CreativeTabs) {
@@ -82,13 +102,8 @@ public class BlockContent extends BlockBase {
         return this.blockRepresentation.isFullBlock();
     }
 
-    @Nonnull
     @Override
-    @SideOnly(Side.CLIENT)
-    public CreativeTabs getCreativeTabToDisplayOn() {
-        return this.getCreativeTab();
-    }
-
+    @Nonnull
     public CreativeTabs getCreativeTab() {
         return this.creativeTab;
     }
@@ -115,7 +130,7 @@ public class BlockContent extends BlockBase {
     @Override
     @SideOnly(Side.CLIENT)
     @Nonnull
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return this.blockRenderLayer;
     }
 
@@ -123,6 +138,9 @@ public class BlockContent extends BlockBase {
     public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         super.onBlockAdded(world, pos, state);
         activateBlockAction(this.blockRepresentation.getOnBlockPlace(), world, pos, state);
+        if (this.blockRepresentation.hasGravity()) {
+            world.scheduleUpdate(pos, this, tickRate(world));
+        }
     }
 
     @Override
@@ -130,6 +148,22 @@ public class BlockContent extends BlockBase {
         activateBlockAction(this.blockRepresentation.getOnBlockBreak(), world, pos, state);
         super.breakBlock(world, pos, state);
 
+    }
+
+    @Override
+    public boolean canEntityDestroy(IBlockState state, IBlockAccess world, BlockPos pos, Entity entity){
+        if (this.blockRepresentation.isWitherProof() && (entity instanceof EntityWither || entity instanceof EntityWitherSkull)) {
+            return false;
+        }
+        return super.canEntityDestroy(state, world, pos, entity);
+    }
+
+    @Override
+    public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity entity, Explosion explosion) {
+        if (this.blockRepresentation.isWitherProof() && (entity instanceof EntityWither || entity instanceof EntityWitherSkull)) {
+            return 2000.0F;
+        }
+        return super.getExplosionResistance(world, pos, entity, explosion);
     }
 
     @Override
@@ -153,6 +187,25 @@ public class BlockContent extends BlockBase {
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         activateBlockAction(this.blockRepresentation.getOnUpdateTick(), world, pos, state);
+        if (this.blockRepresentation.hasGravity() && !world.isRemote && (world.isAirBlock(pos.down()) || BlockFalling.canFallThrough(world.getBlockState(pos.down()))) &&
+                pos.getY() >= 0 && world.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32))) {
+            world.spawnEntity(new EntityFallingBlock(world, (double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, world.getBlockState(pos)));
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (this.blockRepresentation.hasGravity()) {
+            world.scheduleUpdate(pos, this, tickRate(world));
+        } else {
+            super.neighborChanged(state, world, pos, blockIn, fromPos);
+        }
+    }
+
+    @Override
+    public int tickRate(World world) {
+        return this.blockRepresentation.hasGravity() ? 2 : super.tickRate(world);
     }
 
     public void activateBlockAction(IBlockAction blockAction, World world, BlockPos blockPos, IBlockState blockState) {
@@ -163,16 +216,18 @@ public class BlockContent extends BlockBase {
 
     @Override
     @Nonnull
-    @SuppressWarnings("deprecation")
-    public EnumPushReaction getMobilityFlag(@Nonnull IBlockState state) {
-        return Optional.ofNullable(blockRepresentation.getMobilityFlag())
-                .map(PushReaction::getInternal)
-                .orElse(state.getMobilityFlag());
+    public EnumPushReaction getPushReaction(@Nonnull IBlockState state) {
+        return blockRepresentation.getMobilityFlag().getInternal();
     }
 
     @Override
     public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
         return this.blockRepresentation.isPassable();
+    }
+
+    @Override
+    public boolean isReplaceable(IBlockAccess world, @Nonnull BlockPos pos) {
+        return this.blockRepresentation.isReplaceable();
     }
 
     @Override
@@ -222,5 +277,70 @@ public class BlockContent extends BlockBase {
     @Override
     public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
         return this.blockRepresentation.beaconBase;
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return blockRepresentation.tileEntityRepresentation != null;
+    }
+
+    @Nullable
+    @Override
+    @ParametersAreNonnullByDefault
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return blockRepresentation.tileEntityRepresentation != null ?
+                new TileEntityContent(blockRepresentation.tileEntityRepresentation) : null;
+    }
+
+    @Override
+    public List<IGeneratedModel> getGeneratedModels() {
+        List<IGeneratedModel> models = Lists.newArrayList();
+        this.getResourceLocations(Lists.newArrayList()).forEach(resourceLocation ->  {
+            TemplateFile templateFile = TemplateManager.getTemplateFile("colored_block");
+            Map<String, String> replacements = Maps.newHashMap();
+
+            replacements.put("texture", Optional.ofNullable(blockRepresentation.getTextureLocation())
+                    .map(CTResourceLocation::getInternal)
+                    .map(ResourceLocation::toString)
+                    .orElseGet(() -> new ResourceLocation(resourceLocation.getNamespace(),
+                            "blocks/" + resourceLocation.getPath()).toString()));
+
+            templateFile.replaceContents(replacements);
+
+            models.add(new GeneratedModel(resourceLocation.getPath(), ModelType.BLOCKSTATE,
+                    templateFile.getFileContents()));
+        });
+
+        return models;
+    }
+
+    @Override
+    public int colorMultiplier(IBlockState state, @Nullable IBlockAccess world, @Nullable BlockPos pos, int tintIndex) {
+        IBlockColorSupplier blockColorSupplier = blockRepresentation.getBlockColorSupplier();
+        if (blockColorSupplier == null) {
+            return -1;
+        }
+        crafttweaker.api.world.IBlockAccess blockAccess = null;
+        if (world instanceof World) {
+            blockAccess = new MCWorld((World) world);
+        } else if (world != null) {
+            blockAccess = new MCBlockAccess(world);
+        }
+        IBlockPos blockPos = pos == null ? null : new MCBlockPos(pos);
+        CTColor color = blockColorSupplier.getColor(new MCBlockState(state), blockAccess, blockPos, tintIndex);
+        return color == null ? -1 : color.getIntColor();
+    }
+
+    @Override
+    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+        return Optional.ofNullable(blockRepresentation.getItemColorSupplier())
+                .map(supplier -> supplier.getColor(new MCItemStack(stack), tintIndex))
+                .map(CTColor::getIntColor)
+                .orElse(-1);
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState state, EntityPlayer player) {
+        return blockRepresentation.canSilkHarvest;
     }
 }

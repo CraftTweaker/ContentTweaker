@@ -7,6 +7,7 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.*;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
@@ -16,6 +17,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.Item")
 public class ItemRepresentation implements IRepresentation<Item> {
     @ZenProperty
@@ -58,6 +60,8 @@ public class ItemRepresentation implements IRepresentation<Item> {
     public ILocalizedNameSupplier localizedNameSupplier;
     @ZenProperty
     public IItemUpdate onItemUpdate = null;
+    @ZenProperty
+    public IItemUseFinish onItemUseFinish = null;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -250,6 +254,17 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.localizedNameSupplier = localizedNameSupplier;
     }
 
+    @ZenMethod
+    public IItemUseFinish getOnItemUseFinish() {
+        return onItemUseFinish;
+    }
+
+    @ZenMethod
+    public void setOnItemUseFinish(IItemUseFinish onItemUseFinish) {
+        this.onItemUseFinish = onItemUseFinish;
+    }
+
+
     @Override
     public String getName() {
         return this.getUnlocalizedName();
@@ -270,5 +285,4 @@ public class ItemRepresentation implements IRepresentation<Item> {
         return ContentTweaker.instance.getRegistry(ItemRegistry.class, "ITEM").get(new ResourceLocation(
                 ContentTweaker.MOD_ID, this.getUnlocalizedName()));
     }
-
 }

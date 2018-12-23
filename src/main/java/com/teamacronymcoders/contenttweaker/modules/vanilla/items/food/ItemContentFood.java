@@ -14,6 +14,7 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.EntityHelper;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.CTPlayer;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Hand;
@@ -21,24 +22,26 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.MCMut
 import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemFoodEaten;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.util.Position3f;
-import crafttweaker.mc1120.entity.MCEntityLivingBase;
 import crafttweaker.mc1120.item.MCItemStack;
-import crafttweaker.mc1120.player.MCPlayer;
 import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
 public class ItemContentFood extends ItemFood implements IHasModel, IHasGeneratedModel, IHasItemColor {
@@ -77,7 +80,7 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
     }
 
     public void setFields() {
-        this.setUnlocalizedName(this.itemRepresentation.getUnlocalizedName());
+        this.setTranslationKey(this.itemRepresentation.getUnlocalizedName());
         if (this.itemRepresentation.getCreativeTab() != null) {
             Object creativeTab = this.itemRepresentation.getCreativeTab().getInternal();
             if (creativeTab instanceof CreativeTabs) {
@@ -154,7 +157,7 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
     public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
         return Optional.ofNullable(itemRepresentation.getItemDestroyedBlock())
                 .map(value -> value.onBlockDestroyed(new MCMutableItemStack(stack), new MCWorld(world),
-                        new MCBlockState(state), new MCBlockPos(pos), new MCEntityLivingBase(entityLiving)))
+                        new MCBlockState(state), new MCBlockPos(pos), EntityHelper.getIEntityLivingBase(entityLiving)))
                 .orElseGet(() -> super.onBlockDestroyed(stack, world, state, pos, entityLiving));
     }
 
@@ -166,7 +169,7 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        modelNames.add(this.getUnlocalizedName().substring(5));
+        modelNames.add(this.getTranslationKey().substring(5));
         return modelNames;
     }
 
@@ -221,5 +224,23 @@ public class ItemContentFood extends ItemFood implements IHasModel, IHasGenerate
         return Optional.ofNullable(itemRepresentation.getLocalizedNameSupplier())
                 .map(supplier -> supplier.getLocalizedName(new MCItemStack(stack)))
                 .orElseGet(() -> super.getItemStackDisplayName(stack));
+    }
+
+    @Override
+    protected void onFoodEaten(ItemStack stack, World worldIn, @Nonnull EntityPlayer player) {
+        final IItemFoodEaten onItemFoodEaten = itemRepresentation.getOnItemFoodEaten();
+        if (onItemFoodEaten != null) {
+            onItemFoodEaten.handle(new MCMutableItemStack(stack), new MCWorld(worldIn), new CTPlayer(player));
+        } else {
+            super.onFoodEaten(stack, worldIn, player);
+        }
+    }
+
+    @Override
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+        return Optional.ofNullable(itemRepresentation.getOnItemUseFinish())
+                .map(iItemUseFinish -> iItemUseFinish.getResult(new MCMutableItemStack(stack), new MCWorld(worldIn), EntityHelper.getIEntityLivingBase(entityLiving)))
+                .map(CraftTweakerMC::getItemStack)
+                .orElseGet(() -> super.onItemUseFinish(stack, worldIn, entityLiving));
     }
 }
