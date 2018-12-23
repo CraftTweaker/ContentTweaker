@@ -6,9 +6,13 @@ import com.teamacronymcoders.contenttweaker.api.IRepresentation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.aabb.MCAxisAlignedBB;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.BlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockColorSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockDropHandler;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemColorSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.sounds.ISoundTypeDefinition;
@@ -87,6 +91,12 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public boolean beaconBase = false;
     @ZenProperty
     public TileEntityRepresentation tileEntityRepresentation = null;
+    @ZenProperty
+    public IBlockColorSupplier blockColorSupplier = (state, access, pos, tint) -> CTColor.fromInt(-1);
+    @ZenProperty
+    public IItemColorSupplier itemColorSupplier = (itemStack, tint) -> CTColor.fromInt(-1);
+    @ZenProperty
+    public CTResourceLocation textureLocation;
 
     @ZenMethod
     public String getUnlocalizedName() {
@@ -356,6 +366,36 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void setDropHandler(IBlockDropHandler dropHandler) {
         this.dropHandler = dropHandler;
+    }
+
+    @ZenMethod
+    public IBlockColorSupplier getBlockColorSupplier() {
+        return blockColorSupplier;
+    }
+
+    @ZenMethod
+    public void setBlockColorSupplier(IBlockColorSupplier blockColorSupplier) {
+        this.blockColorSupplier = blockColorSupplier;
+    }
+
+    @ZenMethod
+    public IItemColorSupplier getItemColorSupplier() {
+        return itemColorSupplier;
+    }
+
+    @ZenMethod
+    public void setItemColorSupplier(IItemColorSupplier itemColorSupplier) {
+        this.itemColorSupplier = itemColorSupplier;
+    }
+
+    @ZenMethod
+    public CTResourceLocation getTextureLocation() {
+        return textureLocation;
+    }
+
+    @ZenMethod
+    public void setTextureLocation(CTResourceLocation resourceLocation) {
+        this.textureLocation = resourceLocation;
     }
 
     @Override

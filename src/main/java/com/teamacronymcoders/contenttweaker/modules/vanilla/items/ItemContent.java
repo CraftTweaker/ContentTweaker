@@ -15,6 +15,7 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import com.teamacronymcoders.contenttweaker.api.MissingFieldsException;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.EntityHelper;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.entity.player.CTPlayer;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
@@ -230,7 +231,10 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
 
     @Override
     public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
-        return itemRepresentation.getItemColorSupplier().getColor(new MCItemStack(stack), tintIndex).getIntColor();
+        return Optional.ofNullable(itemRepresentation.getItemColorSupplier())
+                .map(supplier -> supplier.getColor(new MCItemStack(stack), tintIndex))
+                .map(CTColor::getIntColor)
+                .orElse(-1);
     }
 
     @Override
