@@ -46,20 +46,5 @@ public class VanillaModule extends ModuleBase {
         CTChatCommand.registerCommand(new ResourceListCommand("soundtype",
                 ContentTweakerAPI.getInstance().getSoundTypes().getAllNames()));
         CraftTweakerAPI.registerBracketHandler(new BlockBracketHandler());
-
-        CraftTweakerAPI.registerClass(IItemRightClick.class);
-        CraftTweakerAPI.registerClass(IItemUse.class);
-        CraftTweakerAPI.registerClass(IBlockAction.class);
-        CraftTweakerAPI.registerClass(IItemDestroyedBlock.class);
-        CraftTweakerAPI.registerClass(IItemDestroySpeed.class);
-        CraftTweakerAPI.registerClass(IItemStackSupplier.class);
-
-        CraftTweakerAPI.registerClass(ICreativeTab.class);
-        CraftTweakerAPI.registerClass(BlockRepresentation.class);
-        CraftTweakerAPI.registerClass(ItemRepresentation.class);
-        CraftTweakerAPI.registerClass(ItemFoodRepresentation.class);
-        CraftTweakerAPI.registerClass(FluidRepresentation.class);
-        CraftTweakerAPI.registerClass(VanillaFactory.class);
-        CraftTweakerAPI.registerClass(Commands.class);
     }
 }

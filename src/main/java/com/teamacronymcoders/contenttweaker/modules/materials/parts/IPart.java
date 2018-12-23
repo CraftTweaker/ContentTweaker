@@ -4,11 +4,13 @@ import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.I
 import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
 import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMaterial;
 import com.teamacronymcoders.contenttweaker.modules.materials.parttypes.IPartType;
+import crafttweaker.annotations.ZenRegister;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.List;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.Part")
 public interface IPart {
     @ZenMethod

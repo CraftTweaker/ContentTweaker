@@ -16,6 +16,7 @@ import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ItemRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.food.ItemFoodRepresentation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityRepresentation;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.VanillaFactory")
 public class VanillaFactory {
     @ZenMethod

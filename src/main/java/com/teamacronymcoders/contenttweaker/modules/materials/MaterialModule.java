@@ -31,17 +31,6 @@ public class MaterialModule extends ModuleBase {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
-        CraftTweakerAPI.registerClass(IPartType.class);
-        CraftTweakerAPI.registerClass(IPartDataPiece.class);
-        CraftTweakerAPI.registerClass(IMaterialPartData.class);
-        CraftTweakerAPI.registerClass(IPart.class);
-        CraftTweakerAPI.registerClass(IPartBuilder.class);
-        CraftTweakerAPI.registerClass(IMaterial.class);
-        CraftTweakerAPI.registerClass(IMaterialBuilder.class);
-        CraftTweakerAPI.registerClass(IMaterialPart.class);
-        CraftTweakerAPI.registerClass(IRegisterMaterialPart .class);
-        CraftTweakerAPI.registerClass(CTMaterialSystem.class);
-
         CTChatCommand.registerCommand(new ResourceListCommand("materialparts", MaterialSystem.getMaterialParts().keySet()));
         CTChatCommand.registerCommand(new ResourceListCommand("materials", MaterialSystem.getMaterials().keySet()));
         CTChatCommand.registerCommand(new ResourceListCommand("parts", MaterialSystem.getParts().keySet()));

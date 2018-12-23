@@ -4,10 +4,12 @@ import com.teamacronymcoders.base.event.PlaceWaypointEvent;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
+import crafttweaker.annotations.ZenRegister;
 import net.minecraftforge.common.MinecraftForge;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+@ZenRegister
 @ZenClass("mods.contenttweaker.Map")
 public class Map {
     @ZenMethod
