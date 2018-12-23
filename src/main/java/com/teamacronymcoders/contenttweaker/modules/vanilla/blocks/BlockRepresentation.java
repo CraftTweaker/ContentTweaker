@@ -78,6 +78,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
     public boolean entitySpawnable = true;
     @ZenProperty
+    public boolean witherProof = false;
+    @ZenProperty
     public IBlockDropHandler dropHandler;
     @ZenProperty
     public boolean beaconBase = false;
@@ -332,6 +334,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public boolean canEntitySpawn() {
         return entitySpawnable;
+    }
+
+    @ZenMethod
+    public void setWitherProof(boolean witherProof) {
+        this.witherProof = witherProof;
+    }
+
+    @ZenMethod
+    public boolean isWitherProof() {
+        return witherProof;
     }
 
     @ZenMethod
