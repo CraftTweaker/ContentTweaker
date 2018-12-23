@@ -341,6 +341,6 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
 
     @Override
     public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState state, EntityPlayer player) {
-a        return blockRepresentation.canSilkHarvest;
+        return blockRepresentation.canSilkHarvest;
     }
 }
