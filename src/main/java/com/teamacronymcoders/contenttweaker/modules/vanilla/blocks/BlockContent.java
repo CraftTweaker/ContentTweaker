@@ -215,11 +215,8 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
 
     @Override
     @Nonnull
-    @SuppressWarnings("deprecation")
     public EnumPushReaction getPushReaction(@Nonnull IBlockState state) {
-        return Optional.ofNullable(blockRepresentation.getMobilityFlag())
-                .map(PushReaction::getInternal)
-                .orElse(state.getPushReaction());
+        return blockRepresentation.getMobilityFlag().getInternal();
     }
 
     @Override
@@ -228,7 +225,7 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
     }
 
     @Override
-    public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos) {
+    public boolean isReplaceable(IBlockAccess world, @Nonnull BlockPos pos) {
         return this.blockRepresentation.isReplaceable();
     }
 

@@ -78,7 +78,7 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenProperty
     public IBlockAction onRandomTick;
     @ZenProperty
-    public PushReaction mobilityFlag;
+    public PushReaction mobilityFlag = PushReaction.normal();
     @ZenProperty
     public boolean passable = !this.blockMaterial.blocksMovement();
     @ZenProperty
