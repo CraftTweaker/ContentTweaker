@@ -9,8 +9,6 @@ import crafttweaker.api.data.IData;
 import net.minecraft.tileentity.TileEntity;
 import stanhebben.zenscript.annotations.ZenClass;
 
-@ZenRegister
-@ZenClass("mods.contenttweaker.TileEntity")
 public class MCTileEntity implements IMCTileEntity {
     private final TileEntity tileEntity;
 
