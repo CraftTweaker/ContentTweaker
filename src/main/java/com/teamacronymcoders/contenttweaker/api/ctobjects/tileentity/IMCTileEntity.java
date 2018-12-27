@@ -8,8 +8,6 @@ import crafttweaker.api.data.IData;
 import net.minecraft.tileentity.TileEntity;
 import stanhebben.zenscript.annotations.ZenClass;
 
-@ZenRegister
-@ZenClass("mods.contenttweaker.TileEntity")
 public interface IMCTileEntity extends ICTObject<TileEntity> {
     IWorld getWorld();
 

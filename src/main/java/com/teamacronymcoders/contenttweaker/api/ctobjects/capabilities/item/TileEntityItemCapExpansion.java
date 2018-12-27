@@ -9,8 +9,6 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.Optional;
 
-@ZenRegister
-@ZenExpansion("mods.contenttweaker.TileEntity")
 public class TileEntityItemCapExpansion {
     @ZenMethod
     public static ItemCapability getItemHandler(IMCTileEntity tileEntity, Facing facing) {

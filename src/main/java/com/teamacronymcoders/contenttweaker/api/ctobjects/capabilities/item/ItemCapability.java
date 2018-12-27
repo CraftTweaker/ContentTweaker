@@ -10,8 +10,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-@ZenRegister
-@ZenClass("mods.contenttweaker.ItemCapability")
 public class ItemCapability {
     private final IItemHandler itemHandler;
 
