@@ -7,11 +7,13 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.aabb.MCAxisAlignedBB;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.BlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockmaterial.IBlockMaterialDefinition;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.FaceShape;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockColorSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockDropHandler;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockFaceSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IItemColorSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.items.ICreativeTab;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.resources.creativetab.MCCreativeTab;
@@ -22,6 +24,7 @@ import crafttweaker.annotations.ZenRegister;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -97,6 +100,8 @@ public class BlockRepresentation implements IRepresentation<Block> {
     public IBlockColorSupplier blockColorSupplier = (state, access, pos, tint) -> CTColor.fromInt(-1);
     @ZenProperty
     public IItemColorSupplier itemColorSupplier = (itemStack, tint) -> CTColor.fromInt(-1);
+    @ZenProperty
+    public IBlockFaceSupplier blockFaceSupplier = (access, state, pos, face) -> FaceShape.solid();
     @ZenProperty
     public CTResourceLocation textureLocation;
     @ZenProperty
@@ -400,6 +405,16 @@ public class BlockRepresentation implements IRepresentation<Block> {
     @ZenMethod
     public void setItemColorSupplier(IItemColorSupplier itemColorSupplier) {
         this.itemColorSupplier = itemColorSupplier;
+    }
+
+    @ZenMethod
+    public void setBlockFaceSupplier(IBlockFaceSupplier blockFaceSupplier) {
+        this.blockFaceSupplier = blockFaceSupplier;
+    }
+
+    @ZenMethod
+    public IBlockFaceSupplier getBlockFaceSupplier() {
+        return this.blockFaceSupplier;
     }
 
     @ZenMethod
