@@ -362,7 +362,8 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
             blockAccess = new MCBlockAccess(world);
         }
         IBlockPos blockPos = pos == null ? null : new MCBlockPos(pos);
-        FaceShape faceShape = blockFaceSupplier.getBlockFaceShape(blockAccess, new MCBlockState(state), blockPos, Facing.of(face));
+        Facing facing = face == null ? null : Facing.of(face);
+        FaceShape faceShape = blockFaceSupplier.getBlockFaceShape(blockAccess, new MCBlockState(state), blockPos, facing);
         return faceShape != null ? faceShape.getInternal() : super.getBlockFaceShape(world, state, pos, face);
     }
 }
