@@ -8,6 +8,8 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenOperator;
 
+import java.util.Objects;
+
 @ZenRegister
 @ZenClass("mods.contenttweaker.Facing")
 public class Facing implements ICTObject<EnumFacing> {
@@ -33,7 +35,7 @@ public class Facing implements ICTObject<EnumFacing> {
 
     @ZenMethod
     public static Facing east() {
-        return  new Facing(EnumFacing.EAST);
+        return new Facing(EnumFacing.EAST);
     }
 
     @ZenMethod
@@ -54,6 +56,11 @@ public class Facing implements ICTObject<EnumFacing> {
     @ZenMethod
     public static Facing up() {
         return new Facing(EnumFacing.UP);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj instanceof Facing && Objects.equals(this.getInternal(), ((Facing) obj).getInternal());
     }
 
     @Override
