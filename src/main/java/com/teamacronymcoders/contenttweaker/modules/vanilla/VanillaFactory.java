@@ -116,4 +116,14 @@ public class VanillaFactory {
                         .map(CTColor::getInternal)
                         .orElse(null)));
     }
+    
+    @ZenMethod
+    public static void createSoundEvent(String name) {
+        final SoundEventRegistry registry = ContentTweaker.instance.getRegistry(SoundEventRegistry.class, "SOUND_EVENT");
+        final ResourceLocation soundName = new ResourceLocation(ContentTweaker.MOD_ID, name);
+        if (registry.get(soundName) == null) {
+            SoundEvent newSoundEvent = new CustomSoundEvent(soundName);
+            registry.register(soundName, newSoundEvent);
+        }
+    }
 }
