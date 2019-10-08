@@ -7,14 +7,14 @@ import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.oredict.IOreDictEntry;
+import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.mantle.util.RecipeMatchRegistry;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
-import stanhebben.zenscript.annotations.Optional;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenGetter;
-import stanhebben.zenscript.annotations.ZenMethod;
+import stanhebben.zenscript.annotations.*;
+
+import java.util.Arrays;
 
 @ZenClass("mods.contenttweaker.tconstruct.Trait")
 @ZenRegister
@@ -55,7 +55,16 @@ public class TConTraitRepresentation {
                 addItem(itemStack, amountNeeded, amountMatched);
             }
         }
+    }
 
+    @ZenMethod
+    public void addMultiItem(int amountMatched, IItemStack... items) {
+        if(!(trait instanceof RecipeMatchRegistry)){
+            CraftTweakerAPI.logError("Cannot add items " + Arrays.toString(items) + " to trait " + toCommandString());
+            return;
+        }
+        RecipeMatchRegistry recipeMatchRegistry = (RecipeMatchRegistry) this.trait;
+        recipeMatchRegistry.addRecipeMatch(new RecipeMatch.ItemCombination(amountMatched, CraftTweakerMC.getItemStacks(items)));
     }
 
     @ZenGetter("identifier")
