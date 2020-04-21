@@ -1,0 +1,35 @@
+rootProject.name = 'ContentTweaker'
+
+
+include(":CraftTweaker")
+project(":CraftTweaker").projectDir = new File(rootDir, "CraftTweaker");
+
+
+include(":Crafttweaker_Annotations")
+project(":Crafttweaker_Annotations").projectDir = new File(rootDir, "CraftTweaker/Crafttweaker_Annotations");
+
+
+include(":Crafttweaker_Annotation_Processors")
+project(":Crafttweaker_Annotation_Processors").projectDir = new File(rootDir, "CraftTweaker/Crafttweaker_Annotation_Processors");
+
+
+// Find the directories containing a "build.gradle" file in the root directory
+// of the project. That is, every directory containing a "build.gradle" will
+// be automatically the subproject of this project.
+
+def subDirs = new File(rootDir, "CraftTweaker/ZenCode").listFiles(new FileFilter() {
+    boolean accept(File file) {
+        if (!file.isDirectory()) {
+            return false
+        }
+        if (file.name == 'ModuleDeserializer' || file.name == "ModuleSerializationShared" || file.name == "ModuleSerializer") {
+            return false
+        }
+        return new File(file, 'build.gradle').isFile()
+    }
+})
+
+subDirs.each { File dir ->
+    include(":" + dir.name)
+    project(":" + dir.name).projectDir = dir
+}

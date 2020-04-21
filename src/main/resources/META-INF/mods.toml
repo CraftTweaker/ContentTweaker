@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[26,)"
+issueTrackerURL="https://github.com/CraftTweaker/CraftTweaker/issues"
+[[mods]]
+modId="contenttweaker"
+version="${file.jarVersion}"
+displayName="ContentTweaker"
+displayURL="https://minecraft.curseforge.com/projects/contenttweaker"
+logoFile="logo.png"
+authors="Jaredlll08, Kindlich, Skysom and StanH"
+description="Customize your minecraft experience!"
+[[dependencies.contenttweaker]]
+    modId="forge"
+    mandatory=true
+    versionRange="[26,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.contenttweaker]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.14.4]"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.contenttweaker]]
+    modId="crafttweaker"
+    mandatory=true
+    versionRange="[5,)"
+    ordering="AFTER"
+    side="BOTH"

@@ -1,0 +1,117 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+//apply plugin: 'idea'
+
+//apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/22e7d543a18cd30675277fbfa3669e3d9e206010/generic/secrets.gradle'
+//
+//if (project.hasProperty('secretFile')) {
+//    loadSecrets(new File((String) findProperty('secretFile')))
+//}
+
+subprojects {
+    apply plugin: 'java'
+
+    if(name != "CraftTweaker") {
+        apply from: rootProject.file("common.gradle");
+    }
+}
+
+
+version = '1.0.0'
+group = 'com.blamejared.contenttweaker'
+archivesBaseName = 'ContentTweaker-1.14.4'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: '20191028-1.14.3'
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            mods {
+                contenttweaker {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('runServer')
+
+            mods {
+                contenttweaker {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            args '--mod', 'contenttweaker', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                contenttweaker {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    maven {
+        url "https://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        url "https://maven.blamejared.com"
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.14.4-28.2.3'
+    compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18");
+    compile project(":CraftTweaker")
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "ContentTweaker",
+            "Specification-Vendor": "BlameJared",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"BlameJared",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}

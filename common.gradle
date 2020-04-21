@@ -1,0 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+
+task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
