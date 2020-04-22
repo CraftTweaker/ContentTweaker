@@ -45,6 +45,10 @@ minecraft {
                 contenttweaker {
                     source sourceSets.main
                 }
+
+                crafttweaker {
+                    source project(":CraftTweaker").sourceSets.main
+                }
             }
         }
 
@@ -54,6 +58,9 @@ minecraft {
             mods {
                 contenttweaker {
                     source sourceSets.main
+                }
+                crafttweaker {
+                    source project(":CraftTweaker").sourceSets.main
                 }
             }
         }
@@ -66,6 +73,9 @@ minecraft {
             mods {
                 contenttweaker {
                     source sourceSets.main
+                }
+                crafttweaker {
+                    source project(":CraftTweaker").sourceSets.main
                 }
             }
         }

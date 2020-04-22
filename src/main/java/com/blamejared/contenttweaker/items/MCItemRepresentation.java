@@ -6,24 +6,28 @@ import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCItemRepresentation")
-public abstract class MCItemRepresentation {
+public class MCItemRepresentation {
     
-    private final MCProperties properties;
+    @ZenCodeType.Field
+    public final MCItemProperties properties;
     
     @ZenCodeType.Constructor
     public MCItemRepresentation() {
-        this(new MCProperties());
+        this(new MCItemProperties());
     }
     
     @ZenCodeType.Constructor
-    public MCItemRepresentation(MCProperties properties) {
+    public MCItemRepresentation(MCItemProperties properties) {
         this.properties = properties;
     }
     
-    @ZenCodeType.Getter("properties")
-    public MCProperties getProperties() {
+    @ZenCodeType.Method
+    public MCItemProperties getProperties() {
         return properties;
     }
     
-    public abstract String getDisplayName();
+    @ZenCodeType.Getter("canRepair")
+    public boolean canRepair() {
+        return true;
+    }
 }
