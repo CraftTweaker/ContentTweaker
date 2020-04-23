@@ -94,6 +94,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.14.4-28.2.3'
     compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18");
+    compile fg.deobf("com.teamacronymcoders:theloader:1.14.4-1.0.0");
     compile project(":CraftTweaker")
 }
 
