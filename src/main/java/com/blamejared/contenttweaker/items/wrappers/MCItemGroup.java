@@ -8,7 +8,7 @@ import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCItemGroup")
-@ZenWrapper(wrappedClass = "net.minecraftforge.event.entity.player.CriticalHitEvent", displayStringFormat = "%s.toString()")
+@ZenWrapper(wrappedClass = "net.minecraft.item.ItemGroup", displayStringFormat = "%s.getCommandString()")
 public class MCItemGroup implements CommandStringDisplayable {
     
     private final ItemGroup internal;
