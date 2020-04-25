@@ -1,8 +1,8 @@
-package com.blamejared.contenttweaker.items.wrappers;
+package com.blamejared.contenttweaker.items;
 
 import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.items.*;
 import com.blamejared.contenttweaker.items.functions.*;
+import com.blamejared.contenttweaker.items.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.food.*;
 import com.blamejared.crafttweaker.impl.util.*;
@@ -60,6 +60,12 @@ public class MCItemProperties {
     @ZenCodeType.Method
     public MCItemProperties withCanRepair(boolean canRepair) {
         this.canRepair = canRepair;
+        return this;
+    }
+    
+    @ZenCodeType.Method
+    public MCItemProperties withItemGroup(MCItemGroup itemGroup) {
+        this.itemGroup = itemGroup;
         return this;
     }
     
