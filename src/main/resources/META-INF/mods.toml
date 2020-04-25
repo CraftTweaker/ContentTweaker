@@ -7,7 +7,7 @@ version="${file.jarVersion}"
 displayName="ContentTweaker"
 displayURL="https://minecraft.curseforge.com/projects/contenttweaker"
 logoFile="logo.png"
-authors="Jaredlll08, Kindlich, Skysom and StanH"
+authors="Jaredlll08, kindlich, Skysom and StanH"
 description="Customize your minecraft experience!"
 [[dependencies.contenttweaker]]
     modId="forge"
@@ -27,3 +27,9 @@ description="Customize your minecraft experience!"
     versionRange="[5,)"
     ordering="AFTER"
     side="BOTH"
+[[dependencies.contenttweaker]]
+    modId="theloader"
+    mandatory=true
+    versionRange="[1,)"
+    ordering="AFTER"
+    side="CLIENT"
