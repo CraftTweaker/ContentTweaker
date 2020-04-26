@@ -8,6 +8,7 @@ import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.MCBlockMaterial")
+@Document("mods/contenttweaker/block/MCBlockMaterial")
 @ZenWrapper(wrappedClass = "new.minecraft.block.Block$Properties", displayStringFormat = "%s.getInternal()")
 public class MCBlockMaterial implements CommandStringDisplayable {
     

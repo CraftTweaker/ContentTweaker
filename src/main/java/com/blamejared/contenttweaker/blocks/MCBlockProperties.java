@@ -7,6 +7,7 @@ import com.blamejared.contenttweaker.items.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.blocks.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -14,6 +15,7 @@ import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.MCBlockProperties")
+@Document("mods/contenttweaker/block/MCBlockProperties")
 public class MCBlockProperties {
     
     private final Block.Properties internal;

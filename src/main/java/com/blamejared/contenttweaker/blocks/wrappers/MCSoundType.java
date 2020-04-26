@@ -8,6 +8,7 @@ import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.MCSoundType")
+@Document("mods/contenttweaker/block/MCSoundType")
 @ZenWrapper(wrappedClass = "net.minecraft.block.SoundType", creationMethodFormat = "new MCSoundType(%s, \"unknown_wrapped\")",displayStringFormat = "%s.getCommandString()")
 public class MCSoundType implements CommandStringDisplayable {
     

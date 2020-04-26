@@ -96,6 +96,7 @@ dependencies {
     compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18");
     compile fg.deobf("com.teamacronymcoders:theloader:1.14.4-1.0.0");
     compile project(":CraftTweaker")
+    annotationProcessor project(":Crafttweaker_Annotation_Processors");
 }
 
 jar {
