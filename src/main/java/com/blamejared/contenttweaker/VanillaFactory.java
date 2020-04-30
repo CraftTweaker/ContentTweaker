@@ -1,13 +1,15 @@
 package com.blamejared.contenttweaker;
 
 import com.blamejared.contenttweaker.blocks.*;
+import com.blamejared.contenttweaker.blocks.functions.*;
 import com.blamejared.contenttweaker.items.*;
 import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.actions.*;
+import com.blamejared.crafttweaker.api.data.*;
 import com.blamejared.crafttweaker.api.logger.*;
+import com.blamejared.crafttweaker.impl.data.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import com.google.gson.*;
-import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.fml.*;
@@ -24,7 +26,9 @@ public class VanillaFactory {
     
     private static final File RESOURCE_PACK_FOLDER = new File("the_loader/resourcepacks", ContentTweaker.MOD_ID);
     private static final List<CoTItem> items = new ArrayList<>();
-    private static final List<Block> blocks = new ArrayList<>();
+    private static final List<CoTBlock> blocks = new ArrayList<>();
+    private static final Map<ResourceLocation, IData> blockModels = new HashMap<>();
+    private static final Map<ResourceLocation, IData> itemModels = new HashMap<>();
     
     public static boolean registerAllowed = false;
     public static boolean writeTextures = true;
@@ -149,10 +153,7 @@ public class VanillaFactory {
                     .filter(Objects::nonNull)
                     .forEach(VanillaFactory::WriteItemModel);
             
-            blocks.stream()
-                    .map(ForgeRegistryEntry::getRegistryName)
-                    .filter(Objects::nonNull)
-                    .forEach(VanillaFactory::WriteBlockModel);
+            blocks.forEach(VanillaFactory::WriteBlockModel);
         }
         
         if(writeTextures) {
@@ -255,60 +256,73 @@ public class VanillaFactory {
         }
     }
     
-    private static void WriteBlockModel(ResourceLocation location) {
-        final String namespace = location.getNamespace();
-        final String path = location.getPath();
-        final File itemModel = new File(RESOURCE_PACK_FOLDER, String.format("assets/%s/models/item/%s.json", namespace, path));
-        final File blockModel = new File(RESOURCE_PACK_FOLDER, String.format("assets/%s/models/block/%s.json", namespace, path));
-        final File blockState = new File(RESOURCE_PACK_FOLDER, String.format("assets/%s/blockstates/%s.json", namespace, path));
+    private static void WriteBlockModel(CoTBlock block) {
+        final MCResourceLocation mcResourceLocation = block.getMCResourceLocation();
+        final ResourceLocation location = mcResourceLocation.getInternal();
+        if(location == null) {
+            return;
+        }
         
+        writeBlockState(block, mcResourceLocation);
+    }
+    
+    private static void writeAsset(ResourceLocation location, IData model, String type) {
+        final File itemModel = new File(RESOURCE_PACK_FOLDER, String.format("assets/%s/%s/%s.json", location
+                .getNamespace(), type, location.getPath()));
         if(itemModel.exists() && !itemModel.getParentFile().exists() && !itemModel.getParentFile()
                 .mkdirs()) {
             throw new IllegalStateException("Could not create Directory " + itemModel.getParentFile());
         }
         
-        if(blockModel.exists() && !blockModel.getParentFile()
-                .exists() && !blockModel.getParentFile().mkdirs()) {
-            throw new IllegalStateException("Could not create Directory " + blockModel.getParentFile());
-        }
-        
         try(final PrintWriter itemModelWriter = new PrintWriter(new FileWriter(itemModel))) {
-            itemModelWriter.println("{");
-            itemModelWriter.printf("    \"parent\": \"%s:block/%s\"%n", namespace, path);
-            itemModelWriter.println("}");
+            itemModelWriter.write(model.toJsonString());
         } catch(IOException e) {
             e.printStackTrace();
         }
-        
-        
+    }
+    
+    private static void writeBlockState(CoTBlock block, MCResourceLocation mcResourceLocation) {
+        final String path = mcResourceLocation.getPath();
+        final String namespace = mcResourceLocation.getNamespace();
+        final File blockState = new File(RESOURCE_PACK_FOLDER, String.format("assets/%s/models/block/%s.json", namespace, path));
         if(!blockState.getParentFile().exists() && !blockState.getParentFile().mkdirs()) {
             throw new IllegalStateException("Could not create Directory " + blockState.getParentFile());
         }
         
+        
+        final MCBlockProperties properties = block.getProperties();
+        final BlockStateToModelMapping blockStateToModelMapping = properties.blockStateToModelMapping;
+        if(blockStateToModelMapping == null) {
+            return;
+        }
+        
         if(!blockState.exists()) {
+            final StringJoiner stringJoiner = new StringJoiner(",\n");
+            final Map<String, IData> allValues = HelpersThatNeedToBeRefactored.getAllValues(properties, mcResourceLocation);
+            allValues.forEach((s, iData) -> stringJoiner.add(String.format("        \"%s\": %s", s, iData
+                    .toJsonString())));
+            
+            allValues.values()
+                    .stream()
+                    .filter(d -> d instanceof MapData)
+                    .map(d -> ((MapData) d).get("model"))
+                    .filter(Objects::nonNull)
+                    .map(Object::toString)
+                    .distinct()
+                    .map(ResourceLocation::tryCreate)
+                    .filter(obj -> obj != null && blockModels.containsKey(obj))
+                    .forEach(location -> writeAsset(location, blockModels.get(location)));
+            
+            
             try(final PrintWriter modelWriter = new PrintWriter(new FileWriter(blockState))) {
                 modelWriter.println("{");
                 modelWriter.println("    \"variants\": {");
-                modelWriter.println("        \"\": {");
-                modelWriter.printf("            \"model\": \"%s:block/%s\"%n", namespace, path);
-                modelWriter.println("        }");
+                modelWriter.println(stringJoiner.toString());
                 modelWriter.println("    }");
                 modelWriter.println("}");
             } catch(IOException e) {
                 e.printStackTrace();
             }
-        }
-        
-        
-        try(final PrintWriter blockModelWriter = new PrintWriter(new FileWriter(blockModel))) {
-            blockModelWriter.println("{");
-            blockModelWriter.println("    \"parent\": \"block/cube_all\",");
-            blockModelWriter.println("    \"textures\": {");
-            blockModelWriter.printf("        \"all\": \"%s:block/%s\"%n", namespace, path);
-            blockModelWriter.println("    }");
-            blockModelWriter.println("}");
-        } catch(IOException e) {
-            e.printStackTrace();
         }
     }
 }

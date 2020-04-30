@@ -25,11 +25,11 @@ description="Customize your minecraft experience!"
     modId="crafttweaker"
     mandatory=true
     versionRange="[5,)"
-    ordering="AFTER"
+    ordering="BEFORE"
     side="BOTH"
 [[dependencies.contenttweaker]]
     modId="theloader"
     mandatory=true
     versionRange="[1,)"
-    ordering="AFTER"
+    ordering="BEFORE"
     side="CLIENT"

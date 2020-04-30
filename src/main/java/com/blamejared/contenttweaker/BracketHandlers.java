@@ -1,5 +1,6 @@
 package com.blamejared.contenttweaker;
 
+import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.contenttweaker.blocks.wrappers.*;
 import com.blamejared.contenttweaker.items.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
@@ -77,5 +78,15 @@ public class BracketHandlers {
             return fromString;
         }
         throw new IllegalArgumentException("Could not find blockmaterial <blockmaterial:" + tokens + ">!");
+    }
+    
+    @ZenCodeType.Method
+    @BracketResolver("blockstateproperty")
+    public static MCBlockStateProperty getBlockStateProperty(String tokens) {
+        final MCBlockStateProperty fromString = MCBlockStateProperty.getFromString(tokens.toUpperCase());
+        if(fromString != null) {
+            return fromString;
+        }
+        throw new IllegalArgumentException("Could not find block state Property <blockstateproperty:" + tokens + ">!");
     }
 }
