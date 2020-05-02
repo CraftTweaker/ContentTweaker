@@ -2,6 +2,7 @@ package com.blamejared.contenttweaker;
 
 import com.blamejared.crafttweaker.api.*;
 import net.minecraft.block.*;
+import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.event.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.*;
@@ -29,7 +30,7 @@ public class ContentTweaker {
                 .addListener(EventPriority.LOW, this::registerItems);
     
         if(EffectiveSide.get().isClient()) {
-            VanillaFactory.createResourcePackFolders();
+            ResourcePackInformation.createResourcePackFolders();
         }
     }
     

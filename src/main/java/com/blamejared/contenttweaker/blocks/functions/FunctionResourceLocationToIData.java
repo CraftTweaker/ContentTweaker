@@ -7,10 +7,10 @@ import com.blamejared.crafttweaker_annotations.annotations.*;
 import org.openzen.zencode.java.*;
 
 @ZenRegister
-@ZenCodeType.Name("mods.contenttweaker.blocks.BlockStateToModelMapping")
-@Document("mods/contenttweaker/blocks/BlockStateToModelMapping")
+@ZenCodeType.Name("mods.contenttweaker.blocks.FunctionResourceLocationToIData")
+@Document("mods/contenttweaker/blocks/FunctionResourceLocationToIData")
 @FunctionalInterface
-public interface ModelCreator {
+public interface FunctionResourceLocationToIData {
     
     @ZenCodeType.Method
     IData mapModel(MCResourceLocation name);

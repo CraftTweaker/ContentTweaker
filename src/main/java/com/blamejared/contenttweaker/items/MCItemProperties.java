@@ -1,9 +1,12 @@
 package com.blamejared.contenttweaker.items;
 
 import com.blamejared.contenttweaker.*;
+import com.blamejared.contenttweaker.blocks.functions.*;
 import com.blamejared.contenttweaker.items.functions.*;
 import com.blamejared.contenttweaker.items.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
+import com.blamejared.crafttweaker.api.data.*;
+import com.blamejared.crafttweaker.impl.data.*;
 import com.blamejared.crafttweaker.impl.food.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
@@ -37,11 +40,21 @@ public class MCItemProperties {
     @ZenCodeType.Field
     public ToolDestroySpeedFunction destroySpeedFunction = (stack, state) -> 1.0f;
     
+    public FunctionResourceLocationToIData nameToModel;
+    
     /**
      * The starting point, creates a Properties object with default values
      */
     @ZenCodeType.Constructor
     public MCItemProperties() {
+        nameToModel = name -> {
+            final Map<String, IData> content = new HashMap<>(2);
+            content.put("parent", new StringData("item/generated"));
+            final StringData value = new StringData(new ResourceLocation(name.getNamespace(), "item/" + name
+                    .getPath()).toString());
+            content.put("textures", new MapData(Collections.singletonMap("layer0", value)));
+            return new MapData(content);
+        };
     }
     
     public Map<ToolType, ToolTypeFunction> getToolClasses() {
@@ -50,13 +63,13 @@ public class MCItemProperties {
     
     /**
      * Sets the max stack size.
-     *
+     * <p>
      * Conflicts with withMaxDamage since maxDamage will only work if the stack size is 1
      * By default 64, unless withMaxDamage has been called, then 1
      *
      * @param maxStackSize The maximum Stacksize of the object
-     * @docParam maxStackSize 16
      * @return This object for chaining
+     * @docParam maxStackSize 16
      */
     @ZenCodeType.Method
     public MCItemProperties withMaxStackSize(int maxStackSize) {
@@ -70,8 +83,8 @@ public class MCItemProperties {
      * By default 0, which means the item has infinite uses
      *
      * @param maxDamage The maximum damage of the object
-     * @docParam maxDamage 60
      * @return This object for chaining
+     * @docParam maxDamage 60
      */
     @ZenCodeType.Method
     public MCItemProperties withMaxDamage(int maxDamage) {
@@ -84,8 +97,8 @@ public class MCItemProperties {
      * By default an item has no food value
      *
      * @param food The food values
-     * @docParam food new MCFood(4, 4.0f)
      * @return This object for chaining
+     * @docParam food new MCFood(4, 4.0f)
      */
     @ZenCodeType.Method
     public MCItemProperties withFood(MCFood food) {
@@ -96,9 +109,10 @@ public class MCItemProperties {
     /**
      * Sets if the item can be repaired or not.
      * True by default
+     *
      * @param canRepair Can this item be repaired
-     * @docParam canRepair true
      * @return This object for chaining
+     * @docParam canRepair true
      */
     @ZenCodeType.Method
     public MCItemProperties withCanRepair(boolean canRepair) {
@@ -109,12 +123,12 @@ public class MCItemProperties {
     /**
      * Sets the itemGroup for this item.
      * The item will always appear in the search group (= creative search), however.
-     *
+     * <p>
      * By default `<itemgroup:misc>`
      *
      * @param itemGroup The group that this item should appear in.
-     * @docParam itemGroup <itemgroup:buildingBlocks>
      * @return This object for chaining
+     * @docParam itemGroup <itemgroup:buildingBlocks>
      */
     @ZenCodeType.Method
     public MCItemProperties withItemGroup(MCItemGroup itemGroup) {
@@ -125,14 +139,14 @@ public class MCItemProperties {
     /**
      * Allows this item to be used as tool.
      * Can be used multiple times with different ToolTypes.
-     *
+     * <p>
      * The provided function calculates the Harvest level against the given block.
      *
      * @param type The tooltype this item will be
-     * @docParam type <tooltype:axe>
-     * @param fun Calculates the Harvest level
-     * @docParam fun (stack, type, player, blockState) => 3
+     * @param fun  Calculates the Harvest level
      * @return This object for chaining.
+     * @docParam type <tooltype:axe>
+     * @docParam fun (stack, type, player, blockState) => 3
      */
     @ZenCodeType.Method
     public MCItemProperties isTool(MCToolType type, ToolTypeFunction fun) {
@@ -144,11 +158,11 @@ public class MCItemProperties {
      * Allows this item to be used as tool with the given harvestLevel
      * Can be used multiple times with different ToolTypes.
      *
-     * @param type The tooltype this item will be
-     * @docParam type <tooltype:axe>
+     * @param type         The tooltype this item will be
      * @param harvestLevel The harvest level of the tool
-     * @docParam harvestLevel 3
      * @return This object for chaining
+     * @docParam type <tooltype:axe>
+     * @docParam harvestLevel 3
      */
     @ZenCodeType.Method
     public MCItemProperties isTool(MCToolType type, int harvestLevel) {
@@ -157,9 +171,10 @@ public class MCItemProperties {
     
     /**
      * Sets how the item calculates how fast it can mine given blocks.
+     *
      * @param fun The function that will be executed
-     * @docParam fun (stack, state) => state.harvestTool in [<tooltype:shovel>, <tooltype:axe>] ? 3 : 1
      * @return This object for chaining
+     * @docParam fun (stack, state) => state.harvestTool in [<tooltype:shovel>, <tooltype:axe>] ? 3 : 1
      */
     @ZenCodeType.Method
     public MCItemProperties withDestroySpeed(ToolDestroySpeedFunction fun) {
@@ -170,6 +185,7 @@ public class MCItemProperties {
     /**
      * Registers this item to the game.
      * If this method is not called, then all your other chagnes won't do anything
+     *
      * @param name The resource path of this item.
      * @docParam name "my_generic_item"
      */

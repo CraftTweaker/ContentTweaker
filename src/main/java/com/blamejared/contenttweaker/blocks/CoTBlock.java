@@ -4,13 +4,18 @@ import com.blamejared.contenttweaker.blocks.functions.*;
 import com.blamejared.contenttweaker.blocks.wrappers.*;
 import com.blamejared.crafttweaker.impl.blocks.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import mcp.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.state.*;
+import net.minecraft.util.math.*;
+import net.minecraft.util.math.shapes.*;
+import net.minecraft.world.*;
 
 import javax.annotation.*;
 import java.util.*;
 
+@MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class CoTBlock extends Block {
     
@@ -20,13 +25,13 @@ public class CoTBlock extends Block {
     public CoTBlock(MCBlockProperties properties) {
         super(properties.getInternal());
         this.properties = properties;
-    
+        
         BlockState defaultState = getDefaultState();
         for(Map.Entry<MCBlockStateProperty, String> entry : properties.getBlockStatePropertyMap()
                 .entrySet()) {
             final IProperty internal = entry.getKey().getInternal();
             final Optional optional = internal.parseValue(entry.getValue());
-        
+            
             if(optional.isPresent()) {
                 //noinspection rawtypes
                 defaultState = defaultState.with(internal, (Comparable) optional.get());
@@ -54,5 +59,17 @@ public class CoTBlock extends Block {
         final MCBlockItemUseContext mcContext = new MCBlockItemUseContext(context);
         final MCBlockState state = placeStateMapping.getState(new MCBlockState(getDefaultState()), mcContext);
         return state == null ? null : state.getInternal();
+    }
+    
+    @Override
+    @Deprecated
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        final BlockShapeFunction blockShapeFunction = properties.blockShapeFunction;
+        if(blockShapeFunction == null) {
+            return super.getShape(state, worldIn, pos, context);
+        }
+        
+        return blockShapeFunction.getShape(new MCBlockState(state), new MCBlockPos(pos))
+                .getInternal();
     }
 }

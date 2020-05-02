@@ -5,6 +5,7 @@ import com.blamejared.contenttweaker.items.wrappers.*;
 import com.blamejared.crafttweaker.impl.blocks.*;
 import com.blamejared.crafttweaker.impl.entity.player.*;
 import com.blamejared.crafttweaker.impl.item.*;
+import com.blamejared.crafttweaker.impl.util.*;
 import mcp.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -25,11 +26,17 @@ public class CoTItem extends Item {
     
     private final Map<ToolType, ToolTypeFunction> toolClasses;
     private final ToolDestroySpeedFunction speedFunction;
+    private final MCItemProperties mcItemProperties;
     
     public CoTItem(MCItemProperties properties) {
         super(properties.createInternal());
         this.toolClasses = properties.getToolClasses();
         this.speedFunction = properties.destroySpeedFunction;
+        mcItemProperties = properties;
+    }
+    
+    public MCItemProperties getMcItemProperties() {
+        return mcItemProperties;
     }
     
     @Override
@@ -67,5 +74,9 @@ public class CoTItem extends Item {
         }
         
         return true;
+    }
+    
+    public MCResourceLocation getMcResourceLocation() {
+        return new MCResourceLocation(this.getRegistryName());
     }
 }

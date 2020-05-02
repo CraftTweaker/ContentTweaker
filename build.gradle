@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'java'
-//apply plugin: 'idea'
+apply plugin: 'idea'
 
 //apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/22e7d543a18cd30675277fbfa3669e3d9e206010/generic/secrets.gradle'
 //
@@ -125,5 +125,18 @@ publishing {
         maven {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs += "/src/generated/java/"
+    }
+
+}
+
+idea {
+    module {
+        generatedSourceDirs += file("src/generated/java")
     }
 }

@@ -111,7 +111,7 @@ public class MCBlockItemUseContext {
      */
     
     @ZenCodeType.Method
-    @ZenCodeType.Getter("placementHorizontalFacint")
+    @ZenCodeType.Getter("placementHorizontalFacing")
     public MCDirection getPlacementHorizontalFacing() {
         return new MCDirection(internal.getPlacementHorizontalFacing());
     }
