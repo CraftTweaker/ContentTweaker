@@ -31,44 +31,8 @@ public class MCVoxelShape {
     }
 
     @ZenCodeType.Method
-    public MCAxisAlignedBB getBoundingBox() {
-        return new MCAxisAlignedBB(internal.getBoundingBox());
-    }
-
-
-    @ZenCodeType.Method
-    public List<MCAxisAlignedBB> toBoundingBoxList() {
-        return (internal.toBoundingBoxList()).stream().map(myStrangeTypeMCAxisAlignedBB -> new MCAxisAlignedBB(myStrangeTypeMCAxisAlignedBB)).collect(java.util.stream.Collectors.toCollection(java.util.ArrayList::new));
-    }
-
-
-    @ZenCodeType.Method
-    public String toString() {
-        return (internal.toString());
-    }
-
-
-    @ZenCodeType.Method
-    public double max(MCDirectionAxis p_197760_1_, double p_197760_2_, double p_197760_4_) {
-        return internal.max((p_197760_1_).getInternal(), p_197760_2_, p_197760_4_);
-    }
-
-
-    @ZenCodeType.Method
-    public double getStart(MCDirectionAxis axis) {
-        return internal.getStart((axis).getInternal());
-    }
-
-
-    @ZenCodeType.Method
-    public boolean isEmpty() {
-        return internal.isEmpty();
-    }
-
-
-    @ZenCodeType.Method
-    public MCVoxelShape simplify() {
-        return new MCVoxelShape(internal.simplify());
+    public MCVoxelShape withOffset(double xOffset, double yOffset, double zOffset) {
+        return new MCVoxelShape(internal.withOffset(xOffset, yOffset, zOffset));
     }
 
 
@@ -79,20 +43,44 @@ public class MCVoxelShape {
 
 
     @ZenCodeType.Method
-    public double getAllowedOffset(MCDirectionAxis movementAxis, MCAxisAlignedBB collisionBox, double desiredOffset) {
-        return internal.getAllowedOffset((movementAxis).getInternal(), (collisionBox).getInternal(), desiredOffset);
+    public String toString() {
+        return (internal.toString());
     }
 
 
     @ZenCodeType.Method
-    public double getEnd(MCDirectionAxis axis) {
-        return internal.getEnd((axis).getInternal());
+    public double getStart(MCDirectionAxis axis) {
+        return internal.getStart((axis).getInternal());
     }
 
 
     @ZenCodeType.Method
-    public MCVoxelShape withOffset(double xOffset, double yOffset, double zOffset) {
-        return new MCVoxelShape(internal.withOffset(xOffset, yOffset, zOffset));
+    public List<MCAxisAlignedBB> toBoundingBoxList() {
+        return (internal.toBoundingBoxList()).stream().map(myStrangeTypeMCAxisAlignedBB -> new MCAxisAlignedBB(myStrangeTypeMCAxisAlignedBB)).collect(java.util.stream.Collectors.toCollection(java.util.ArrayList::new));
+    }
+
+
+    @ZenCodeType.Method
+    public MCVoxelShape simplify() {
+        return new MCVoxelShape(internal.simplify());
+    }
+
+
+    @ZenCodeType.Method
+    public MCAxisAlignedBB getBoundingBox() {
+        return new MCAxisAlignedBB(internal.getBoundingBox());
+    }
+
+
+    @ZenCodeType.Method
+    public boolean isEmpty() {
+        return internal.isEmpty();
+    }
+
+
+    @ZenCodeType.Method
+    public double max(MCDirectionAxis p_197760_1_, double p_197760_2_, double p_197760_4_) {
+        return internal.max((p_197760_1_).getInternal(), p_197760_2_, p_197760_4_);
     }
 
 
@@ -103,6 +91,18 @@ public class MCVoxelShape {
     @ZenCodeType.Method
     public MCVoxelShape project(MCDirection side) {
         return new MCVoxelShape(internal.project((side).getInternal()));
+    }
+
+
+    @ZenCodeType.Method
+    public double getEnd(MCDirectionAxis axis) {
+        return internal.getEnd((axis).getInternal());
+    }
+
+
+    @ZenCodeType.Method
+    public double getAllowedOffset(MCDirectionAxis movementAxis, MCAxisAlignedBB collisionBox, double desiredOffset) {
+        return internal.getAllowedOffset((movementAxis).getInternal(), (collisionBox).getInternal(), desiredOffset);
     }
 
 

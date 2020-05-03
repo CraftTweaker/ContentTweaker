@@ -1,8 +1,6 @@
 package com.blamejared.contenttweaker;
 
-import com.blamejared.contenttweaker.blocks.*;
-import com.blamejared.contenttweaker.blocks.wrappers.*;
-import com.blamejared.contenttweaker.items.wrappers.*;
+import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.item.*;
@@ -33,6 +31,7 @@ public class BracketHandlers {
                 .orElseThrow(() -> new IllegalArgumentException("Could not find itemgroup for '<itemgroup:" + tokens + ">'!"));
     }
     
+    
     /**
      * Gets a {@link MCToolType}. Will create a new one if the given one does not exist.
      *
@@ -45,40 +44,24 @@ public class BracketHandlers {
     public static MCToolType getToolType(String tokens) {
         return new MCToolType(ToolType.get(tokens));
     }
-    
-    /**
-     * Gets the {@link MCSoundType}. Will throw an exception if not found.
-     *
-     * @param tokens What you would write in the BEP call
-     * @return The found {@link MCSoundType}
-     * @docParam tokens "ground"
-     */
-    @ZenCodeType.Method
-    @BracketResolver("soundtype")
-    public static MCSoundType getSoundType(String tokens) {
-        final MCSoundType fromString = MCSoundType.getFromString(tokens.toUpperCase());
-        if(fromString != null) {
-            return fromString;
-        }
-        throw new IllegalArgumentException("Could not find soundtype <soundtype:" + tokens + ">!");
-    }
-    
-    /**
-     * Gets the given {@link MCBlockMaterial}. Throws an Exception if not found.
-     *
-     * @param tokens What you would write in the BEP call.
-     * @return The found {@link MCBlockMaterial}
-     * @docParam tokens "earth"
-     */
-    @ZenCodeType.Method
-    @BracketResolver("blockmaterial")
-    public static MCBlockMaterial getBlockMaterial(String tokens) {
-        final MCBlockMaterial fromString = MCBlockMaterial.getFromString(tokens.toUpperCase());
-        if(fromString != null) {
-            return fromString;
-        }
-        throw new IllegalArgumentException("Could not find blockmaterial <blockmaterial:" + tokens + ">!");
-    }
+    //
+    //    /**
+    //     * Gets the {@link MCSoundType}. Will throw an exception if not found.
+    //     *
+    //     * @param tokens What you would write in the BEP call
+    //     * @return The found {@link MCSoundType}
+    //     * @docParam tokens "ground"
+    //     */
+    //    @ZenCodeType.Method
+    //    @BracketResolver("soundtype")
+    //    public static MCSoundType getSoundType(String tokens) {
+    //        final MCSoundType fromString = MCSoundType.getFromString(tokens.toUpperCase());
+    //        if(fromString != null) {
+    //            return fromString;
+    //        }
+    //        throw new IllegalArgumentException("Could not find soundtype <soundtype:" + tokens + ">!");
+    //    }
+    //
     
     @ZenCodeType.Method
     @BracketResolver("blockstateproperty")
@@ -89,4 +72,6 @@ public class BracketHandlers {
         }
         throw new IllegalArgumentException("Could not find block state Property <blockstateproperty:" + tokens + ">!");
     }
+    
+    
 }

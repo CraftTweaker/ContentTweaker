@@ -2,19 +2,13 @@ package com.blamejared.contenttweaker;
 
 import com.blamejared.crafttweaker.api.*;
 import net.minecraft.block.*;
-import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.event.*;
 import net.minecraftforge.eventbus.api.*;
-import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.*;
-import net.minecraftforge.fml.common.thread.*;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.*;
 import net.minecraftforge.registries.*;
 import org.apache.logging.log4j.*;
-
-import java.io.*;
-import java.util.stream.*;
 
 @Mod("contenttweaker")
 public class ContentTweaker {
@@ -28,10 +22,10 @@ public class ContentTweaker {
         FMLJavaModLoadingContext.get()
                 .getModEventBus()
                 .addListener(EventPriority.LOW, this::registerItems);
-    
-        if(EffectiveSide.get().isClient()) {
-            ResourcePackInformation.createResourcePackFolders();
-        }
+        
+        //if(EffectiveSide.get().isClient()) {
+        //    ResourcePackInformation.createResourcePackFolders();
+        //}
     }
     
     private void setup(final FMLCommonSetupEvent event) {
@@ -47,13 +41,14 @@ public class ContentTweaker {
             return;
         }
         
-        VanillaFactory.registerAllowed = true;
+        // VanillaFactory.registerAllowed = true;
         CraftTweakerAPI.logWarning("Hello from CoT!");
         CraftTweakerAPI.loadScripts(new ScriptLoadingOptions().execute().setLoaderName(MOD_ID));
-        VanillaFactory.registerAllowed = false;
-    
-        if(EffectiveSide.get().isClient()) {
-            VanillaFactory.writeResourcePack();
-        }
+        // VanillaFactory.registerAllowed = false;
+        
+        // if(EffectiveSide.get().isClient()) {
+        //     VanillaFactory.writeResourcePack();
+        // }
+        VanillaFactory.complete();
     }
 }
