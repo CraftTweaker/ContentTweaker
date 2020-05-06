@@ -1,170 +1,60 @@
-### Current version: 5.0.1
-- [Moved BracketDumpers and BracketValidators to their own class](https://github.com/CraftTweaker/CraftTweaker/commit/63e5ca9b6136f6668d12d372845b69d3f0e2f44d) - kindlich - Mon Apr 27 21:29:46 2020
-- [Fixed NPE when errors are logged in the annotation search](https://github.com/CraftTweaker/CraftTweaker/commit/f2e9896d4f7e3993122406ce53be75dcca26bd79) - kindlich - Mon Apr 27 21:28:41 2020
-- [Documentation Processor: Print BEP call even if without examples](https://github.com/CraftTweaker/CraftTweaker/commit/d157665377776260ff0e627fd288702c40660ea7) - kindlich - Mon Apr 27 21:27:39 2020
-- [Started with adding BEP validation](https://github.com/CraftTweaker/CraftTweaker/commit/4088c8be3f91054787666a20b5e60c7fe0d43bfc) - kindlich - Mon Apr 27 08:49:28 2020
-- [Added JavaDoc to BracketHandler methods](https://github.com/CraftTweaker/CraftTweaker/commit/a4e09ebff998541421e94d3181b2d5cd71968f1c) - kindlich - Mon Apr 27 08:47:49 2020
-- [Fixed Commands Documentation paths](https://github.com/CraftTweaker/CraftTweaker/commit/252bfb97673c89e4d95d6bb8d9bc236d433c6710) - kindlich - Mon Apr 27 08:47:09 2020
-- [add `getRecipeByName` and `getRecipesByOutput` (NYI) Close #935](https://github.com/CraftTweaker/CraftTweaker/commit/717a54b8692af4aba2a3584fe719736da6d46571) - Jared - Mon Apr 27 01:32:00 2020
-- [fix mods.toml...](https://github.com/CraftTweaker/CraftTweaker/commit/3d910cb362c3d58fec0dfe9354e8364fe75279ed) - Jared - Mon Apr 27 00:13:50 2020
-- [maybe actually import jsonoutput](https://github.com/CraftTweaker/CraftTweaker/commit/513a46f6068915dd1fab536eca6f9235e03ed4f9) - Jared - Sun Apr 26 22:59:57 2020
-- [forgot this one](https://github.com/CraftTweaker/CraftTweaker/commit/845e45663701493ca457966dc6bbac9c5a0274e2) - Jared - Sun Apr 26 22:53:59 2020
-- [fix version checker looking for a non existent variable](https://github.com/CraftTweaker/CraftTweaker/commit/dd7c6bf6a260caaad53a83c6c9309da9787adead) - Jared - Sun Apr 26 22:51:09 2020
-- [add forge version checker support](https://github.com/CraftTweaker/CraftTweaker/commit/1cf8e056a42ba9c9a261e8d9a14b0c4def05146f) - Jared - Sun Apr 26 22:48:30 2020
-- [Updated ZC: Mostly cleanup](https://github.com/CraftTweaker/CraftTweaker/commit/053cb001fe5306c3c3aa589b527c857d417628b5) - kindlich - Sun Apr 26 18:45:04 2020
-- [Added Document to some more types, and ZCT.Method to BEP methods](https://github.com/CraftTweaker/CraftTweaker/commit/978811bdfd9625af0173dcd0e3cb517b0376063a) - kindlich - Sun Apr 26 18:44:40 2020
-- [Annotation Processor enhancements](https://github.com/CraftTweaker/CraftTweaker/commit/b95bddc514ab330b3004a07f6cf748fe928d389f) - kindlich - Sun Apr 26 18:43:44 2020
-- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/2992e472da7069fab1df3e5a4e90d259c349299d) - kindlich - Sat Apr 25 19:16:54 2020
-- [Moved Bracket handler method resolution into their ZC modules](https://github.com/CraftTweaker/CraftTweaker/commit/ed08b722e6715ece218e56f6df31f90cb7b193be) - kindlich - Sat Apr 25 19:16:18 2020
-- [Updated .gitignore](https://github.com/CraftTweaker/CraftTweaker/commit/92acb895628a61d44977b5a9a28e1be437655773) - kindlich - Thu Apr 23 23:27:08 2020
-- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/0bc6af820f000a40a78f6af53104da6f8d3bbfe5) - kindlich - Thu Apr 23 23:27:08 2020
-- [Moved Expansion registration to own ZC Module](https://github.com/CraftTweaker/CraftTweaker/commit/c4c61c9b528ff2fbb9a266ee42ade5781139f35b) - kindlich - Thu Apr 23 23:27:07 2020
-- [Added simple Style and TextComponent Wrapper](https://github.com/CraftTweaker/CraftTweaker/commit/b5bee138de3989c41afee7ab30eb588bb0e4ae90) - kindlich - Thu Apr 23 23:27:07 2020
-- [Added simple Resource Location Wrapper](https://github.com/CraftTweaker/CraftTweaker/commit/f1406f974da2830f07cee8acfdb09775d7dd8d7f) - kindlich - Thu Apr 23 23:27:06 2020
-- [Added #mutable and Damage getter to IItemStack](https://github.com/CraftTweaker/CraftTweaker/commit/b685fc38c78181a2dfcee52eaf682558862b8013) - kindlich - Thu Apr 23 23:27:05 2020
-- [Moved Logger and Class Registration to Mod Construction](https://github.com/CraftTweaker/CraftTweaker/commit/b41aa8c23a06e280d179932146b361241ff2906d) - kindlich - Thu Apr 23 23:27:05 2020
-- [Use MCP's MethodsReturnNonnullDefault instead of JEI's](https://github.com/CraftTweaker/CraftTweaker/commit/f39615fff3eab57de3f7818e974cfe905c339103) - kindlich - Thu Apr 23 23:27:04 2020
-- [update custom commands to be in a different package](https://github.com/CraftTweaker/CraftTweaker/commit/39adc4af7b40d1ebb7e35a42e41cdd967145136a) - Jared - Wed Apr 22 11:00:07 2020
-- [update ZC to fix errors](https://github.com/CraftTweaker/CraftTweaker/commit/76b3b4978e112d6b164d759206370a93e61d7813) - Jared - Tue Apr 21 08:55:37 2020
-- [POC: ItemTransformers (see desc for more)](https://github.com/CraftTweaker/CraftTweaker/commit/ae8f25507461db413f789d4dcd2e1045ed7c86b0) - kindlich - Mon Apr 20 11:45:57 2020
-- [Updated ZC:](https://github.com/CraftTweaker/CraftTweaker/commit/b0f2b0f2d6101be80b6c86f33c1871df987dfb25) - kindlich - Sun Apr 19 00:55:34 2020
-- [Upated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/bcae93a7d91e29c5521f232f000256231ac70afc) - kindlich - Sat Apr 18 01:26:37 2020
-- [Updated Recipe Manager Brackets](https://github.com/CraftTweaker/CraftTweaker/commit/a60f85c9de5c93e60b08df17d4fd75bff6442226) - kindlich - Sat Apr 18 01:25:46 2020
-- [Document Processor: Fixed IndexOutOfBounds for doc paths without delimiter](https://github.com/CraftTweaker/CraftTweaker/commit/c8525a7dc5aec247c240ef6205f66962d6b19551) - kindlich - Sat Apr 18 01:20:11 2020
-- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/732f5fcabe09b67287509c5120ca92784d6007ef) - kindlich - Fri Apr 17 17:27:55 2020
-- [Make my IDE happy](https://github.com/CraftTweaker/CraftTweaker/commit/f3b5938751a4eb2142a73946e660e1855e378e54) - kindlich - Fri Apr 17 17:14:41 2020
-- [Work on commands via ZC](https://github.com/CraftTweaker/CraftTweaker/commit/d0a653587608a8a79464e7d7d837c859a5105606) - kindlich - Fri Apr 17 17:12:56 2020
-- [fix bad recipe names and log a warning in the log](https://github.com/CraftTweaker/CraftTweaker/commit/46c64a5fc8e008ccd044d467bebc75d795303a2a) - Jared - Fri Apr 17 00:48:15 2020
-- [Add JEITweaker as required lib](https://github.com/CraftTweaker/CraftTweaker/commit/7d92b4e9836de33690514a3aa11ad986bc9f50d9) - Jared - Thu Apr 16 23:17:26 2020
-- [Added simple loaders implementation](https://github.com/CraftTweaker/CraftTweaker/commit/6ff942d57e4402c87db8cc29d3d88c7a15811dca) - kindlich - Thu Apr 16 15:04:19 2020
-- [Added ScriptLoadingOptions to IPreprocessor#apply and FileAccesssSingle signatures](https://github.com/CraftTweaker/CraftTweaker/commit/77d5b107e05aab6ead1041630018d20aa5627a3c) - kindlich - Thu Apr 16 14:15:15 2020
-- [mods -> loadedMods](https://github.com/CraftTweaker/CraftTweaker/commit/5a9fbfe1126d5a51afe379b033c31988fb604463) - kindlich - Mon Apr 13 23:13:10 2020
-- [Check that all folders are properly built for format task](https://github.com/CraftTweaker/CraftTweaker/commit/f679451af7eef5e46e34beccce7861f2a151b100) - kindlich - Mon Apr 13 01:03:46 2020
-- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/e4f21c2829c8734d732b89ef0fcbfb2e2ada12df) - kindlich - Mon Apr 13 00:55:31 2020
-- [ScriptOptions and ct syntax](https://github.com/CraftTweaker/CraftTweaker/commit/d321f50623860064745cc9821ea876decca04876) - kindlich - Mon Apr 13 00:53:49 2020
-- [Removed unused class](https://github.com/CraftTweaker/CraftTweaker/commit/b81cbe32882bb67d67137da07d40063e4ca18550) - kindlich - Mon Apr 13 00:19:22 2020
-- [Added message on Load Start/End](https://github.com/CraftTweaker/CraftTweaker/commit/a7a1e0ee1cc02bcf2a08bdcd1d478f15eb8abbd9) - kindlich - Mon Apr 13 00:19:07 2020
-- [FileAccessSingle now returns relative paths instead of only filename](https://github.com/CraftTweaker/CraftTweaker/commit/cf4ba9a1b7df81d3618650dc56a38343fa0e21f7) - kindlich - Mon Apr 13 00:18:03 2020
-- [Added /ct inventory and /ct inventory tags](https://github.com/CraftTweaker/CraftTweaker/commit/65dfc640bb058c2721d0a1c4baf91507b9ceea67) - Jared - Sun Apr 12 05:57:57 2020
-- [Implement /ct hand tags](https://github.com/CraftTweaker/CraftTweaker/commit/33350dee178ad47b6fcd0fd5a52df0fe8d77dc20) - Jared - Sun Apr 12 02:33:36 2020
-- [add IItemStack#owner](https://github.com/CraftTweaker/CraftTweaker/commit/9102e419963acc0a3580d91368edc36a360044e3) - Jared - Sun Apr 12 02:20:34 2020
-- [Add a way to get an empty MCItemStack](https://github.com/CraftTweaker/CraftTweaker/commit/50797810c441b5ad1c4efb707aec923a2d85c857) - Jared - Sun Apr 12 02:20:24 2020
-- [Add MCTag#firstXYZ](https://github.com/CraftTweaker/CraftTweaker/commit/762a999b2a0e25f45d5820753147509b8b3632d0) - Jared - Sun Apr 12 02:20:15 2020
-- [Added mod methods to see if a mod is loaded and more](https://github.com/CraftTweaker/CraftTweaker/commit/69125a298f1e647260fa16b1a2cb61c119bee92f) - Jared - Sun Apr 12 01:54:52 2020
-- [Add predicate exclusion to modid recipe removal close #949](https://github.com/CraftTweaker/CraftTweaker/commit/f572b3372ee1c56b73b0bb8a7cdb92a5af1753a5) - Jared - Sun Apr 12 00:18:35 2020
-- [Specify the mod version in the user agent](https://github.com/CraftTweaker/CraftTweaker/commit/e18df6838bb7f7cf81e4a8f376f7f66147763303) - Jared - Sat Apr 11 22:12:10 2020
-- [Added a way to get the item registryName. close #925](https://github.com/CraftTweaker/CraftTweaker/commit/4d2a614de586b6553ddcda3a0149f4546eccf9db) - Jared - Sat Apr 11 22:06:57 2020
-- [update forge](https://github.com/CraftTweaker/CraftTweaker/commit/d029e6a4488af7a1272dbdab1edd9015fd35fcf2) - Jared - Sat Apr 11 22:06:28 2020
-- [Update ZC to fix a crash](https://github.com/CraftTweaker/CraftTweaker/commit/222838ffb32d5b31c391a124a68c70214fa96754) - Jared - Sat Apr 11 21:01:32 2020
-- [update ZS](https://github.com/CraftTweaker/CraftTweaker/commit/beccf8140eefa41f560bcbdd86af192f33ad0599) - Jared - Fri Apr 10 23:55:44 2020
-- [Fixed Shapeless recipes not displaying tags correctly](https://github.com/CraftTweaker/CraftTweaker/commit/1327cbf6122be1b63f9c6c63e680691f3ecf2f7f) - Jared - Thu Mar 26 16:10:29 2020
-- [Get the recipetype safer, hopefully. Close #927](https://github.com/CraftTweaker/CraftTweaker/commit/e2cbf1facf78876515d7784149e0a29abdcd2c4c) - Jared - Wed Feb 26 23:09:29 2020
-- [Fixed scripts bigger than 32k not working on servers](https://github.com/CraftTweaker/CraftTweaker/commit/bebb6c382e5c720006bff46354c0612a6bf073bd) - Jared - Wed Feb 26 20:40:33 2020
-- [made it possible to cast a string to an int and double](https://github.com/CraftTweaker/CraftTweaker/commit/3c09bf964150ee5f790005ab7da04f0e030cc148) - Jared - Tue Feb 18 23:13:26 2020
-- [add a way to check if a MCTag is a certain type of tag](https://github.com/CraftTweaker/CraftTweaker/commit/92199c07469124ebf3350d63885354a0f9286a44) - Jared - Sat Jan 25 19:54:12 2020
-- [wrapper classes docs are now /vanilla/api/](https://github.com/CraftTweaker/CraftTweaker/commit/e524914f5b057a9c007dca1310638c2bcac53d31) - Jared - Sun Jan 19 22:18:46 2020
-- [move all generated docs to /vanilla/api](https://github.com/CraftTweaker/CraftTweaker/commit/6a1d9f4f69025c20e450feef2ca561c7ab54ad03) - Jared - Sun Jan 19 22:15:13 2020
-- [no more value = for docs annotation](https://github.com/CraftTweaker/CraftTweaker/commit/ba576f0a25678a6451080d23403ae3954d41d914) - Jared - Sun Jan 19 22:03:38 2020
-- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/f3b595aa161e93f6ff90788b53fbea04ee9b265d) - kindlich - Sat Jan 11 13:58:34 2020
-- [make YAML output be in folders](https://github.com/CraftTweaker/CraftTweaker/commit/0de76eb4e3008edf0963c65d83ee971b4963c20c) - Jared - Fri Jan 10 22:55:02 2020
-- [ignore docsOut and src/generated](https://github.com/CraftTweaker/CraftTweaker/commit/c7f9f97ed3398bc61b0bf81f1050284fb0c6ca79) - Jared - Fri Jan 10 22:54:34 2020
-- [update ZC to fix server crashes](https://github.com/CraftTweaker/CraftTweaker/commit/7c703a57a06fc9bb2ea7d2ecde673e7ff18f89ef) - Jared - Fri Jan 10 22:23:43 2020
-- [update ZC](https://github.com/CraftTweaker/CraftTweaker/commit/224ad15e53c38b430dbd4230922d82f7f5b59977) - Jared - Fri Jan 10 19:21:41 2020
-- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/5d9f252e406156b81bcadd720b95e8a9ddca43f4) - kindlich - Fri Jan 10 19:06:10 2020
-- [Added IIngredient#asIData](https://github.com/CraftTweaker/CraftTweaker/commit/1f4761cdf63d7b8b9bd878ac2a34940a36a4eb17) - kindlich - Fri Jan 10 19:00:45 2020
-- [Updated Doc location for Biome and BiomeSpawnEntry](https://github.com/CraftTweaker/CraftTweaker/commit/02cf6a708b3d163174ddfd31276807d941b78cdc) - kindlich - Fri Jan 10 18:58:57 2020
-- [update ZS](https://github.com/CraftTweaker/CraftTweaker/commit/2839aed162ff778c0acd40472474a3fde50e83bc) - Jared - Wed Jan 8 17:53:38 2020
-- [Removed test code for no wrapper file](https://github.com/CraftTweaker/CraftTweaker/commit/69fa5381ed1f6457342fd34fde78155ecbb4143b) - kindlich - Sun Jan 5 20:23:39 2020
-- [DocumentProcessor: Clear the output directory first](https://github.com/CraftTweaker/CraftTweaker/commit/d64087adf887972238ba1ec7482ce8e83676f395) - kindlich - Sun Jan 5 20:20:35 2020
-- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/9f960d9c5a301a942c48512e4ab2085a08d83ea9) - kindlich - Sun Jan 5 19:51:50 2020
-- [Fix recipes "canFit" Close #912](https://github.com/CraftTweaker/CraftTweaker/commit/5a72b2d373b3d5d480dd4a61d904ecb9f040173a) - Jared - Sun Jan 5 14:15:28 2020
-- [Added some advancements as being wrapped](https://github.com/CraftTweaker/CraftTweaker/commit/57cc981aee01abaa689b872ab851d63a7db4b366) - kindlich - Wed Jan 1 23:45:25 2020
-- [Fixed some issues with the wrapper Processor](https://github.com/CraftTweaker/CraftTweaker/commit/e22c6972784858c8118eb1485496f1ea1eb655c8) - kindlich - Wed Jan 1 23:44:59 2020
-- [Forgot Some these](https://github.com/CraftTweaker/CraftTweaker/commit/54a5854f42414293ff8c6ea897f9c86a45956665) - kindlich - Wed Jan 1 22:56:12 2020
-- [Event Wrapper and Comment cleanup](https://github.com/CraftTweaker/CraftTweaker/commit/13501a232699331ea342199b86ec938692e621ee) - kindlich - Wed Jan 1 21:35:22 2020
-- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/100bfb38141ec271a31e04e342f82cad6dc0a4a4) - kindlich - Wed Jan 1 16:43:17 2020
-- [Removed 2nd MCWorld](https://github.com/CraftTweaker/CraftTweaker/commit/d82e4ef51904c0378c4025973a14dfdbb5b0da7c) - kindlich - Wed Jan 1 16:30:19 2020
-- [Removed unused buildSrc](https://github.com/CraftTweaker/CraftTweaker/commit/0b782c48bb8d36950a00546258d0d63d9f98154c) - kindlich - Wed Jan 1 16:27:20 2020
-- [Made Event listeners unregister themselves on a reload](https://github.com/CraftTweaker/CraftTweaker/commit/592e7d9862449a6f7285a65250be98296e3820d3) - kindlich - Wed Jan 1 16:25:55 2020
-- [Only remove sidedActions when on the same side](https://github.com/CraftTweaker/CraftTweaker/commit/7d15faf7ae87abbc96d060cdc832b6cc957a7002) - kindlich - Wed Jan 1 16:24:36 2020
-- [Added missing Document and ZenWrapper annotations](https://github.com/CraftTweaker/CraftTweaker/commit/42cd76858c4bb9901ac234f2bd2cc9bc342738d5) - kindlich - Wed Jan 1 16:23:38 2020
-- [More work on wrappers](https://github.com/CraftTweaker/CraftTweaker/commit/a5f6a37ecd56898eefd2408b9e4177cba5927aba) - kindlich - Wed Jan 1 16:22:16 2020
-- [Committing stuff before I do something stupid](https://github.com/CraftTweaker/CraftTweaker/commit/a93ea989e169113d715fa84e4144b8ca23491b06) - kindlich - Tue Dec 31 23:03:43 2019
-- [Committing stuff before I do something stupid](https://github.com/CraftTweaker/CraftTweaker/commit/2c785dbd40fa4e6ad62d6574347041f85fa7984f) - kindlich - Tue Dec 31 21:46:11 2019
-- [CTTooltipEvent handler working now.](https://github.com/CraftTweaker/CraftTweaker/commit/b43eefc90d69e5111b7a17fdac383bbf0487fc78) - kindlich - Fri Dec 27 16:52:33 2019
-- [Some minor cleanup for Annotation Processors](https://github.com/CraftTweaker/CraftTweaker/commit/2e0897e84a4fbd7733d63d1fb054f80411fe929b) - kindlich - Thu Dec 26 23:07:54 2019
-- [Simple yaml generation and fixed multiple classes being generated](https://github.com/CraftTweaker/CraftTweaker/commit/2912e29a540d1241f7616e3641a9a95f276019a1) - kindlich - Mon Dec 23 13:31:29 2019
-- [Some cleanup](https://github.com/CraftTweaker/CraftTweaker/commit/18591fa7ac102e2cf11c172d9bc5e76b92b10624) - kindlich - Mon Dec 23 13:06:59 2019
-- [Some more work on Expansions and declaredModid](https://github.com/CraftTweaker/CraftTweaker/commit/91eb925ba4ecdf5a03498677a572383547fd04cc) - kindlich - Mon Dec 23 12:53:29 2019
-- [Started working on expansion classes](https://github.com/CraftTweaker/CraftTweaker/commit/4b68e0e43bd13b86d94b227b97a67094ae0981ea) - kindlich - Sun Dec 22 23:23:31 2019
-- [Normal classes should be running now](https://github.com/CraftTweaker/CraftTweaker/commit/6b06dd25f2b4adb58c72eec818d5f87cafdc98f7) - kindlich - Sun Dec 22 21:15:31 2019
-- [Base classes for Document Processor rewrite](https://github.com/CraftTweaker/CraftTweaker/commit/34fd8a748133dbc8a0c609ae9e21ef41336252d4) - kindlich - Sat Dec 21 22:42:42 2019
-- [Start working on annotation processor rewrite](https://github.com/CraftTweaker/CraftTweaker/commit/bd6cf0c2cf376516896fa603fa3a9bc41911760f) - kindlich - Fri Dec 20 14:04:26 2019
-- [It shouldn't be CT*, should be MC*](https://github.com/CraftTweaker/CraftTweaker/commit/bbcfb802e5b3638495dd3437d3557359d4d32e71) - Jared - Tue Dec 17 10:50:52 2019
-- [Replaced IEventHandler with Consumer](https://github.com/CraftTweaker/CraftTweaker/commit/e0fcd372ad7143fa3a69f42d0c4fd59cf00e2986) - kindlich - Sat Dec 14 21:25:17 2019
-- [event test](https://github.com/CraftTweaker/CraftTweaker/commit/98d834eed872ba45bb9ecd24b4bbab249b9f031a) - Jared - Thu Dec 12 18:43:10 2019
-- [update ZS](https://github.com/CraftTweaker/CraftTweaker/commit/02dbe0659348e71ed5a2bdd25fb232af2da45735) - Jared - Thu Dec 12 18:41:54 2019
-- [Fix creating non item tags Close #894](https://github.com/CraftTweaker/CraftTweaker/commit/d789ba46c24bbd18ea9e45bf0cc6fac02b602819) - Jared - Sun Dec 8 20:35:53 2019
-- [Gave MCTag a toString() method](https://github.com/CraftTweaker/CraftTweaker/commit/c0eff766d56ca341cde171408ebb6c233c964fec) - Jared - Sun Dec 8 20:32:30 2019
-- [Preprocessor Annotation validator](https://github.com/CraftTweaker/CraftTweaker/commit/bdb566290c0270dc3af98e75d725e17841b54553) - kindlich - Sun Dec 8 20:07:31 2019
-- [Force BEPs to return a specific type](https://github.com/CraftTweaker/CraftTweaker/commit/cd3bdfbf34c690e2c0f093f5b42db1a688f4c885) - kindlich - Sun Dec 8 19:44:07 2019
-- [invalid recipe names are now logged (not fixed!) close #877](https://github.com/CraftTweaker/CraftTweaker/commit/ef821921e1cdd911aec23fcc3a9794dffaa60012) - Jared - Fri Dec 6 23:54:48 2019
-- [Gave MCBlockState a proper commandString](https://github.com/CraftTweaker/CraftTweaker/commit/35f12bd6c64058580cfb7629bd1ab4c04eb7da1a) - Jared - Fri Dec 6 23:42:02 2019
-- [Should fix random null pointer exceptions when comparing stacks](https://github.com/CraftTweaker/CraftTweaker/commit/b1b0f7cb12963b7e3c95d9b662d42e8a2934597c) - Jared - Fri Dec 6 23:28:04 2019
-- [Fixed the reload listener being too early close #883](https://github.com/CraftTweaker/CraftTweaker/commit/60047cb682cda0661830887c718c9b22eeb54dc2) - Jared - Fri Dec 6 23:19:29 2019
-- [Fixed JEI showing the recipes incorrectly on servers](https://github.com/CraftTweaker/CraftTweaker/commit/570deaceeed83c3eebe0da08063c44c114ff406d) - Jared - Fri Dec 6 23:03:56 2019
-- [update ZenCode](https://github.com/CraftTweaker/CraftTweaker/commit/c1d9f18d2665bae72b4d623e3d1a0f215065f750) - Jared - Fri Dec 6 22:44:29 2019
-- [update ZS to include stdlibs (please report issues!)](https://github.com/CraftTweaker/CraftTweaker/commit/41b431043e430a53e2a3cf3407f5a9921746a60e) - Jared - Fri Dec 6 03:57:29 2019
-- [Added MCBiome and MCBiomeSpawnEntry](https://github.com/CraftTweaker/CraftTweaker/commit/04c42b8c98239269547ea60f897e25096be831be) - Jared - Fri Nov 22 23:46:36 2019
-- [entityclassification bep](https://github.com/CraftTweaker/CraftTweaker/commit/f9ec8c5f1fb99b6e24ce91ad0a41ff759f3166db) - Jared - Fri Nov 22 23:05:04 2019
-- [renamed entityType bracket handler to entitytype, to fit with the rest](https://github.com/CraftTweaker/CraftTweaker/commit/b3b11ef1e3ff1c0c0e9bee636e2b47c6f804d271) - Jared - Fri Nov 22 22:15:30 2019
-- [Just warn about docs, don't error](https://github.com/CraftTweaker/CraftTweaker/commit/cd4eeb1cf7e77c28906a50894f76cfceee5d93f5) - Jared - Fri Nov 22 22:10:34 2019
-- [Added BlockPos and Direction/Axis](https://github.com/CraftTweaker/CraftTweaker/commit/076c282df6e242de7f25cca14065434a402dbf97) - Jared - Wed Nov 20 04:15:54 2019
-- [added docParam this to IData related stuff](https://github.com/CraftTweaker/CraftTweaker/commit/89b249931cd7ac7b302c073f0d1d19b874788f33) - Jared - Sat Nov 16 15:34:33 2019
-- [remove TODOS from docs](https://github.com/CraftTweaker/CraftTweaker/commit/7335be72ab1db2989cc040ebc6011edb80aff20f) - Jared - Sat Nov 16 12:38:23 2019
-- [Fix extra spaces in param examples](https://github.com/CraftTweaker/CraftTweaker/commit/7cc191cec787ab21bbeb24d2584d04e0492b1a77) - Jared - Sat Nov 16 12:38:13 2019
-- [Made the document processor check for interfaces and super classes](https://github.com/CraftTweaker/CraftTweaker/commit/9081e02bdb3e0aba84f96ea640cac02c1d10e21e) - Jared - Sat Nov 16 01:43:06 2019
-- [Set timeouts and closed the buffered reader](https://github.com/CraftTweaker/CraftTweaker/commit/00db92a516db7e46b6b7042873c55d39f413a6cb) - Jared - Thu Nov 14 15:29:40 2019
-- [add docParams for things to fix failed builds](https://github.com/CraftTweaker/CraftTweaker/commit/7c7553da78989db2ce9f05c1a3f6f0da95292def) - Jared - Thu Nov 14 01:53:05 2019
-- [renamed CTRecipeManager to CTCraftingTableManager](https://github.com/CraftTweaker/CraftTweaker/commit/4022ee82170c7dcff88826b8e634a0e159f8fe7f) - Jared - Thu Nov 14 01:24:06 2019
-- [Add more javadocs and Document javadocs](https://github.com/CraftTweaker/CraftTweaker/commit/294c12b46c1682c0e076afdb39ac4b8857dffa5e) - Jared - Thu Nov 14 01:22:59 2019
-- [Actually register MCEntityClassification](https://github.com/CraftTweaker/CraftTweaker/commit/a2a7f49dc28967d5301ee341155281c2c1f543fa) - Jared - Thu Nov 14 01:20:46 2019
-- [Apparently HTTPGet isn't on the server...](https://github.com/CraftTweaker/CraftTweaker/commit/614a24757df3c4e9d4171829acfeda7f1af389d4) - Jared - Wed Nov 13 23:45:25 2019
-- [Added a patron message. use #nobrand to disable it. open beta msg gone](https://github.com/CraftTweaker/CraftTweaker/commit/561511680fbbb6aea75468138070f71353e6e273) - Jared - Tue Nov 12 02:21:20 2019
-- [Disabled debug mode to start with, made #debug enable it](https://github.com/CraftTweaker/CraftTweaker/commit/7cd78799e2da610f98a872c8fe8dff05d598c5f3) - Jared - Wed Nov 6 11:13:35 2019
-- [Added composter support](https://github.com/CraftTweaker/CraftTweaker/commit/3d371a905e8e14eab71a5e9494a1bd35bc7ca1aa) - Jared - Tue Nov 5 23:52:12 2019
-- [made actions only undo on their effective sides (not a full fix)](https://github.com/CraftTweaker/CraftTweaker/commit/c2166e3674a729e0fd45401a658a831985bb1744) - Jared - Tue Nov 5 23:52:00 2019
-- [add MCIngredientList, which is, fixes server tags in recipes](https://github.com/CraftTweaker/CraftTweaker/commit/74ed833f66ae051822fcb5dee2bedd74fe4e06b8) - Jared - Tue Nov 5 20:13:48 2019
-- [Ingredients only work with Tag<Item> so just always create it](https://github.com/CraftTweaker/CraftTweaker/commit/2428a951a3af1f5b63208150a485dc340e1511ed) - Jared - Tue Nov 5 20:12:54 2019
-- [no need to pretty print our json](https://github.com/CraftTweaker/CraftTweaker/commit/3f9441aefdf5929a6aaa5d75ad361e0c438c4750) - Jared - Tue Nov 5 20:12:37 2019
-- [IData#toJsonString](https://github.com/CraftTweaker/CraftTweaker/commit/d0ab6511d18423d3f488e2ecb1cf63faeec7b6e2) - kindlich - Tue Nov 5 19:59:36 2019
-- [Fix nested maps in json](https://github.com/CraftTweaker/CraftTweaker/commit/8dcf80c7b568052c53c14087916462c8dd80302a) - Jared - Tue Nov 5 12:51:22 2019
-- [Added a way to add any recipe through json](https://github.com/CraftTweaker/CraftTweaker/commit/7cb66910a8aa3020ae8aa86c7c01b4b78d52b478) - Jared - Mon Nov 4 23:51:54 2019
-- [Fixed the stone cutter subType being wrong](https://github.com/CraftTweaker/CraftTweaker/commit/9324b32c133fe61cf9c254d713f3df4939bfe2c9) - Jared - Mon Nov 4 23:51:34 2019
-- [fix command dumps being hard to copy](https://github.com/CraftTweaker/CraftTweaker/commit/3f86c6a5aec95ada60ccc8aebc7fff49e611bf3e) - Jared - Mon Nov 4 23:51:21 2019
-- [removed source and javadoc jars from curseforge upload](https://github.com/CraftTweaker/CraftTweaker/commit/ef43e24057bac52e883dd37332c5594b7d09cf0e) - Jared - Sun Nov 3 23:21:41 2019
-- [Added a tag dump command](https://github.com/CraftTweaker/CraftTweaker/commit/944395cb03d7e4c375b4ad9adce0aa39e1778bb7) - Jared - Sun Nov 3 23:13:10 2019
-- [Fixed duplicate jar entries](https://github.com/CraftTweaker/CraftTweaker/commit/ac9ea58c9ff6021241f872ccb36dcdfb48d65f12) - Jared - Sun Nov 3 13:00:23 2019
-- [Made stdlibs a jar file, in theory this should work](https://github.com/CraftTweaker/CraftTweaker/commit/7225829f2c5ea2cf4cb2e0e821bc97aa3e798fbc) - Jared - Sat Nov 2 21:53:11 2019
-- [add <item>.registryName](https://github.com/CraftTweaker/CraftTweaker/commit/92dede21bef019455b6abf18e570372d5885ca28) - Jared - Sat Nov 2 21:40:00 2019
-- [and we're back to the zip file because Java resources are not feasible](https://github.com/CraftTweaker/CraftTweaker/commit/6d26fd25229ec1a622ed02bb1f294eed896f0c5f) - Jared - Sat Nov 2 21:29:12 2019
-- [Fully remove any other zip files from the jar file.](https://github.com/CraftTweaker/CraftTweaker/commit/8c96694f079f185d159e1d260686997601898191) - Jared - Sat Nov 2 18:45:46 2019
-- [remove left over 7z file...](https://github.com/CraftTweaker/CraftTweaker/commit/4bbd9faa44dc43356cf5a334aa74bc68c6d6bc5f) - Jared - Sat Nov 2 18:37:53 2019
-- [Made stdLibs a folder instead of a zip file to reduce curse wait times](https://github.com/CraftTweaker/CraftTweaker/commit/f351b225fa640570074f3326606e66eb5a05c3c4) - Jared - Sat Nov 2 18:33:46 2019
-- [undo zsp test](https://github.com/CraftTweaker/CraftTweaker/commit/bc747467579e1380842fa491b9074ea366dfdd97) - Jared - Sat Nov 2 14:33:10 2019
-- [test with making StdLibs zsp instead of zip](https://github.com/CraftTweaker/CraftTweaker/commit/ce5801f4cbec7a5630024342171e5cdcac96b861) - Jared - Sat Nov 2 14:28:17 2019
-- [Blacklist crafttweaker:scripts recipe type from being used in scripts](https://github.com/CraftTweaker/CraftTweaker/commit/ee0bec4bfddd768d8dc18c192819a08ec33721c5) - Jared - Fri Nov 1 18:59:57 2019
-- [Fix client only actions not being applied in single player](https://github.com/CraftTweaker/CraftTweaker/commit/c193eb604fadac6e642919cb6ad5563a70cc330a) - Jared - Fri Nov 1 15:11:25 2019
-- [fix script recipe type modid](https://github.com/CraftTweaker/CraftTweaker/commit/e2dd626c995e08db9e8168d3a14be2e90eb382cb) - Jared - Fri Nov 1 15:10:40 2019
-- [fix recipe dumps if there are no recipes in a recipe type](https://github.com/CraftTweaker/CraftTweaker/commit/00b8fb1dd244555b13b38ef2740805545c4ffa93) - Jared - Fri Nov 1 15:10:25 2019
-- [re-enable curseforge pushing](https://github.com/CraftTweaker/CraftTweaker/commit/1cfaff85b9aae782bcdaa2eedc6be7c6dc2d2fc5) - Jared - Fri Nov 1 09:07:48 2019
-- [Fixed javadoc complaining about docParam](https://github.com/CraftTweaker/CraftTweaker/commit/1bc78f150c08ad5e9c42f4f92c2d811876dfa2f1) - kindlich - Thu Oct 31 19:14:40 2019
-- [Fixed pipeline](https://github.com/CraftTweaker/CraftTweaker/commit/9f6c3be5ab0ea4577af95ed1e92cdda9d95c8921) - kindlich - Thu Oct 31 17:22:53 2019
-- [Split Jenkins Pipeline](https://github.com/CraftTweaker/CraftTweaker/commit/8a439cca69cd19e71af7a194f0a0989c3a8a100d) - kindlich - Thu Oct 31 17:19:31 2019
-- [fix gradle execing commands](https://github.com/CraftTweaker/CraftTweaker/commit/5af8959cc9afed4d3c4fb422f7185a2ea12761df) - Jared - Thu Oct 31 16:29:45 2019
-- [remove line about ct syntax, feedback received](https://github.com/CraftTweaker/CraftTweaker/commit/911d78038a972b6aa028f918a5463f67d9cf604e) - Jared - Thu Oct 31 16:12:20 2019
-- [Add burn time changing](https://github.com/CraftTweaker/CraftTweaker/commit/1c2e637a258d9ec15f4a4b1bf296cd6a5915f81a) - Jared - Thu Oct 31 16:09:28 2019
-- [Set docParam missing as error and added it to the existing classes](https://github.com/CraftTweaker/CraftTweaker/commit/0de8d10cb5b1b6e036be120872df9145ed1e121a) - kindlich - Wed Oct 30 18:25:18 2019
-- [Changed some regex matches to make them more readable](https://github.com/CraftTweaker/CraftTweaker/commit/8691284e033a875cbd71bab2efc56898fa366bc1) - kindlich - Wed Oct 30 18:23:51 2019
-- [Fixed static-only classes wanting docParam this](https://github.com/CraftTweaker/CraftTweaker/commit/69e61e7f2fee4d68f7b28407f8a9dae15216bd60) - kindlich - Wed Oct 30 00:01:52 2019
-- [docParam and scriptFile for generated documents Methods need @docParam for their parameters. If the type has nonstatic methods, then the type also needs @docParam on its javadoc](https://github.com/CraftTweaker/CraftTweaker/commit/d20fe1f5b461a572dbde2d15ace8f366afee888e) - kindlich - Tue Oct 29 18:17:19 2019
+### Current version: 6.0.0
+- [Added MCMaterial](https://github.com/CraftTweaker/CraftTweaker/commit/b1c31105ecf11ef05d937fc68c3ec248c0c6f815) - kindlich - Wed May 6 13:36:21 2020
+- [Made ArrayDatas implement asList](https://github.com/CraftTweaker/CraftTweaker/commit/b13526a14c1e279201262778d3b6071df0bcb2e2) - kindlich - Wed May 6 13:36:04 2020
+- [Fixed NPE when errors are logged in the annotation search](https://github.com/CraftTweaker/CraftTweaker/commit/a241f0fe33d7523788c7c20aea15e848c8ab1988) - kindlich - Wed May 6 13:35:50 2020
+- [Documentation Processor: Print BEP call even if without examples](https://github.com/CraftTweaker/CraftTweaker/commit/d4fbcc9b5a3f04bea3819bb16849d0f09f8f4bf5) - kindlich - Wed May 6 13:35:49 2020
+- [Started with adding BEP validation](https://github.com/CraftTweaker/CraftTweaker/commit/a9a7362c2341b4ac52d9f6211274cc752724def7) - kindlich - Wed May 6 13:35:49 2020
+- [Added JavaDoc to BracketHandler methods](https://github.com/CraftTweaker/CraftTweaker/commit/b5ca287e104e4c815fa1763d6073571b6421e73e) - kindlich - Wed May 6 13:35:09 2020
+- [Fixed Commands Documentation paths](https://github.com/CraftTweaker/CraftTweaker/commit/a84db5aa2be1ac2ed842a6667e305f3b66d961e2) - kindlich - Wed May 6 13:35:09 2020
+- [Updated ZC: Mostly cleanup](https://github.com/CraftTweaker/CraftTweaker/commit/8ff6198207e6f6c33b2693f6ee42902039f24830) - kindlich - Wed May 6 13:35:08 2020
+- [Added Document to some more types, and ZCT.Method to BEP methods](https://github.com/CraftTweaker/CraftTweaker/commit/b64e38494bce2e1301d2f3c44a8fa889fb28e1e0) - kindlich - Wed May 6 13:35:07 2020
+- [Annotation Processor enhancements](https://github.com/CraftTweaker/CraftTweaker/commit/322198b9eee89343b5f1458cb5a1e49c5cc1aa28) - kindlich - Wed May 6 13:35:06 2020
+- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/380def9cee5550e7f1f7719e366c3569ee2cdf68) - kindlich - Wed May 6 13:35:06 2020
+- [Moved Bracket handler method resolution into their ZC modules](https://github.com/CraftTweaker/CraftTweaker/commit/a82985a1f43b3bd0ffe724cea2bdf0f9db88bd9b) - kindlich - Wed May 6 13:35:05 2020
+- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/95ed4a52a54204efafea1d47d3ed77b60eb84ea7) - kindlich - Wed May 6 13:31:00 2020
+- [Moved Expansion registration to own ZC Module](https://github.com/CraftTweaker/CraftTweaker/commit/f92152a6beb99d933dd91cf2aec26b7a50ebb547) - kindlich - Wed May 6 13:31:00 2020
+- [Added simple Style and TextComponent Wrapper](https://github.com/CraftTweaker/CraftTweaker/commit/844bef89605d989ffc58c21ad471f77c34c78c49) - kindlich - Wed May 6 13:30:59 2020
+- [Added simple Resource Location Wrapper](https://github.com/CraftTweaker/CraftTweaker/commit/02889beb6bf94b2db4a91c1b8345fe8c5887a552) - kindlich - Wed May 6 13:30:58 2020
+- [Added #mutable and Damage getter to IItemStack](https://github.com/CraftTweaker/CraftTweaker/commit/e502a192e67b9ba76f49f20369454576fb5c9a31) - kindlich - Wed May 6 13:30:58 2020
+- [Moved Logger and Class Registration to Mod Construction](https://github.com/CraftTweaker/CraftTweaker/commit/70964333e2030e46f30a100cd2db8c53d318cb20) - kindlich - Wed May 6 13:30:57 2020
+- [Use MCP's MethodsReturnNonnullDefault instead of JEI's](https://github.com/CraftTweaker/CraftTweaker/commit/1d5342dec94827f297e861a8933ef1c10952c75b) - kindlich - Wed May 6 13:28:58 2020
+- [add `getRecipeByName` and `getRecipesByOutput` (NYI) Close #935](https://github.com/CraftTweaker/CraftTweaker/commit/832a70f73293cd0c549404ce4b76e12564caf4ef) - Jared - Mon Apr 27 01:32:23 2020
+- [fix mods.toml...](https://github.com/CraftTweaker/CraftTweaker/commit/79fa1145af0f99b7fe23a41fff18b3a20a73e6dd) - Jared - Mon Apr 27 00:14:27 2020
+- [maybe actually import jsonoutput](https://github.com/CraftTweaker/CraftTweaker/commit/b6a9d1143930baefd33728234e01c2f9a2b3ac43) - Jared - Sun Apr 26 23:13:51 2020
+- [add forge update checker support](https://github.com/CraftTweaker/CraftTweaker/commit/cdcf7d1aa640330e7425a0cb21d08d9d5f048bdb) - Jared - Sun Apr 26 23:08:36 2020
+- [update custom commands to be in a different package](https://github.com/CraftTweaker/CraftTweaker/commit/c0427f372ad67e5cdcc163ceb0125b0aabd382a6) - Jared - Wed Apr 22 12:55:33 2020
+- [update ZC to fix errors](https://github.com/CraftTweaker/CraftTweaker/commit/ebcf6e0d81f9efcdce93564d7d41a7a59860adaf) - Jared - Wed Apr 22 12:55:27 2020
+- [Merge pull request #958 from kindlich/1.14](https://github.com/CraftTweaker/CraftTweaker/commit/5fcf158944a303516cb57f9713dcae395d08a53a) - Jared - Wed Apr 22 12:54:49 2020
+- [fix bad recipe names and log a warning in the log](https://github.com/CraftTweaker/CraftTweaker/commit/7dc56fe4cb0a66ef97f6c06db5db354ffebbc129) - Jared - Fri Apr 17 00:48:00 2020
+- [Add JEITweaker as required lib](https://github.com/CraftTweaker/CraftTweaker/commit/f2282e38d379afe2b115d7c5c4cb4639cac59348) - Jared - Thu Apr 16 23:15:18 2020
+- [mods -> loadedMods](https://github.com/CraftTweaker/CraftTweaker/commit/a1a66a04efa54c72d94831fffe9cd6e53bc1dce3) - kindlich - Mon Apr 13 23:16:45 2020
+- [Check that all folders are properly built for format task](https://github.com/CraftTweaker/CraftTweaker/commit/e60c5e81165c0e812ca1266f09c3f41cb97636b2) - kindlich - Mon Apr 13 23:16:16 2020
+- [Updated ZC](https://github.com/CraftTweaker/CraftTweaker/commit/1c1b28dbbecce90b0d08bea43b9bf56d69442019) - kindlich - Mon Apr 13 23:16:09 2020
+- [ScriptOptions and ct syntax](https://github.com/CraftTweaker/CraftTweaker/commit/b120126afb0c60ebb11f4faf33d00964e49c0dab) - kindlich - Mon Apr 13 23:16:00 2020
+- [Removed unused class](https://github.com/CraftTweaker/CraftTweaker/commit/5c345beebb1b7de67c2b719be09e59e94a9aac79) - kindlich - Mon Apr 13 23:15:31 2020
+- [Added message on Load Start/End](https://github.com/CraftTweaker/CraftTweaker/commit/a267c78e53f3e7ca8e92bb3993732777f131fe16) - kindlich - Mon Apr 13 23:15:19 2020
+- [FileAccessSingle now returns relative paths instead of only filename](https://github.com/CraftTweaker/CraftTweaker/commit/bc51ae93a6ca5c20282d0f15943d011745d59e83) - kindlich - Mon Apr 13 23:15:07 2020
+- [update the first commit hash](https://github.com/CraftTweaker/CraftTweaker/commit/22f1bcbad04091041e8573c34f084e9e276796a1) - Jared - Sun Apr 12 22:16:30 2020
+- [Added /ct inventory and /ct inventory tags](https://github.com/CraftTweaker/CraftTweaker/commit/a09a5865022bc5c7657f3350639f8d45635cfacf) - Jared - Sun Apr 12 06:24:36 2020
+- [Implement /ct hand tags](https://github.com/CraftTweaker/CraftTweaker/commit/ebc53c2f7d3ac1d37a0f022fa7d1ce13b318eef1) - Jared - Sun Apr 12 06:24:30 2020
+- [add IItemStack#owner](https://github.com/CraftTweaker/CraftTweaker/commit/7dcbd1f1747a7e8431639ba202c4459f710b0221) - Jared - Sun Apr 12 06:24:26 2020
+- [Add a way to get an empty MCItemStack](https://github.com/CraftTweaker/CraftTweaker/commit/9f7631ede5b82ee59a2354dc2b1ae479442e396e) - Jared - Sun Apr 12 06:24:22 2020
+- [Add MCTag#firstXYZ](https://github.com/CraftTweaker/CraftTweaker/commit/d9836697536fe6a7dd3e6dc93248f91f2eed6b26) - Jared - Sun Apr 12 06:24:15 2020
+- [Added mod methods to see if a mod is loaded and more](https://github.com/CraftTweaker/CraftTweaker/commit/697b8cba1b9f40bb0afa30a93c1e973510831ef8) - Jared - Sun Apr 12 06:24:11 2020
+- [Add predicate exclusion to modid recipe removal close #949](https://github.com/CraftTweaker/CraftTweaker/commit/7a8e21d08a719c651f16b891229f2ff80b8643ee) - Jared - Sun Apr 12 06:24:07 2020
+- [Implement /ct hand tags](https://github.com/CraftTweaker/CraftTweaker/commit/7d7315fba0e56d78c9c7a6e0601fac68af9e6587) - Jared - Sun Apr 12 06:24:00 2020
+- [Added a way to get the item registryName. close #925](https://github.com/CraftTweaker/CraftTweaker/commit/6ffa3ff33ee0fc8b48fc30770926f0e9ed845b76) - Jared - Sun Apr 12 06:23:38 2020
+- [update ZC to fix a crash](https://github.com/CraftTweaker/CraftTweaker/commit/71b673f2baf2a9f190b1f848020225fdaee4b0f3) - Jared - Sat Apr 11 21:01:56 2020
+- [update ZS](https://github.com/CraftTweaker/CraftTweaker/commit/d82e97ea8b8cb46fd2fdb63c3d66b6524dac562f) - Jared - Fri Apr 10 23:56:18 2020
+- [Fixed Shapeless recipes not displaying tags correctly](https://github.com/CraftTweaker/CraftTweaker/commit/6e82504eda010a4bbcdae083829eec2bf1ab91c2) - Jared - Thu Mar 26 16:09:10 2020
+- [update forge and mappings](https://github.com/CraftTweaker/CraftTweaker/commit/25f90e830ba4811abd30e1a86873aee4c2515525) - Jared - Fri Feb 28 00:20:53 2020
+- [Get the recipetype safer, hopefully. Close #927](https://github.com/CraftTweaker/CraftTweaker/commit/ea4a96caf94cbf43103ea16a4f47a5d2ea8a2577) - Jared - Wed Feb 26 23:09:51 2020
+- [Fixed scripts bigger than 32k not working on servers](https://github.com/CraftTweaker/CraftTweaker/commit/250194edf597fc06b93c5017ad4d61e6398091d7) - Jared - Wed Feb 26 20:40:48 2020
+- [made it possible to cast a string to an int and double](https://github.com/CraftTweaker/CraftTweaker/commit/634576292be37aba8cc5b6aef5a33e4ff900937e) - Jared - Tue Feb 18 23:13:45 2020
+- [update jar file name and mods.toml](https://github.com/CraftTweaker/CraftTweaker/commit/41da80a7a30c6ff96286ccdc6039f4a0359e45e3) - Jared - Fri Feb 7 21:14:27 2020
+- [port to 1.15.2](https://github.com/CraftTweaker/CraftTweaker/commit/a8be724fd6eb4a8e5c49af0bdaa4ec3e96af2fff) - Jared - Fri Feb 7 11:55:03 2020
+- [add a way to check if a MCTag is a certain type of tag](https://github.com/CraftTweaker/CraftTweaker/commit/10a2b04483ce4032c6ffb8803b567e2dcbedce5a) - Jared - Fri Feb 7 11:39:02 2020
+- [update MC and forge versions in toml and gradle](https://github.com/CraftTweaker/CraftTweaker/commit/457020bbf055aea2e4e6aad015309e6e9ccfacdf) - Jared - Wed Jan 22 21:36:34 2020
+- [update changelog commit](https://github.com/CraftTweaker/CraftTweaker/commit/c9ef77624a3c438180d561f3ea05916e4738c83d) - Jared - Wed Jan 22 21:36:34 2020
+- [port to 1.15.1](https://github.com/CraftTweaker/CraftTweaker/commit/b21c1f5da8ec69929d34647873c9729be2458e4e) - Jared - Wed Jan 22 21:36:34 2020
+- [update JEI](https://github.com/CraftTweaker/CraftTweaker/commit/c1c4434a134398e429ba4ba62f7affe05e57f367) - Jared - Wed Jan 22 21:35:54 2020

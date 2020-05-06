@@ -31,12 +31,12 @@ subprojects {
 
 version = '1.0.0'
 group = 'com.blamejared.contenttweaker'
-archivesBaseName = 'ContentTweaker-1.14.4'
+archivesBaseName = 'ContentTweaker-1.15'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20191028-1.14.3'
+    mappings channel: 'snapshot', version: '20200227-1.15.1'
     runs {
         client {
             workingDirectory project.file('run')
@@ -92,9 +92,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.2.3'
-    compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18");
-    compile fg.deobf("com.teamacronymcoders:theloader:1.14.4-1.0.0");
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.18'
+    compile fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2");
+    compile fg.deobf("com.teamacronymcoders:theloader:1.15.2-1.1.0");
     compile project(":CraftTweaker")
     annotationProcessor project(":Crafttweaker_Annotation_Processors");
 }
