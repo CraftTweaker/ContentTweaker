@@ -5,10 +5,12 @@ import com.blamejared.contenttweaker.api.*;
 import com.blamejared.contenttweaker.items.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.basic.BuilderBasic")
+@Document("mods/contenttweaker/item/basic/BuilderBasic")
 public class BuilderBasic implements IIsBuilder {
     
     private final ItemBuilder builder;

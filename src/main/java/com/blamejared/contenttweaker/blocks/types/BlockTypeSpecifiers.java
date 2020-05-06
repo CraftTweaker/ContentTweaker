@@ -6,10 +6,12 @@ import com.blamejared.contenttweaker.blocks.types.custom.*;
 import com.blamejared.contenttweaker.blocks.types.horizontal.*;
 import com.blamejared.contenttweaker.blocks.types.stairs.*;
 import com.blamejared.crafttweaker.api.annotations.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.blocks.BlockTypeSpecifiers")
+@Document("mods/contenttweaker/blocks/BlockTypeSpecifiers")
 public class BlockTypeSpecifiers {
     
     @ZenCodeType.Field

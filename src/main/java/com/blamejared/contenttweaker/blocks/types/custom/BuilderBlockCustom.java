@@ -7,6 +7,7 @@ import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.block.*;
 import net.minecraft.state.*;
 import org.openzen.zencode.java.*;
@@ -15,6 +16,7 @@ import java.util.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.custom.BuilderBlockCustom")
+@Document("mods/contenttweaker/block/custom.BuilderBlockCustom")
 public class BuilderBlockCustom implements IIsBuilder {
     
     private final BlockBuilder builder;

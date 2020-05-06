@@ -8,12 +8,14 @@ import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.block.material.*;
 import com.blamejared.crafttweaker.impl.blocks.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.BlockBuilder")
+@Document("mods/contenttweaker/block/BlockBuilder")
 public class BlockBuilder implements IIsBuilder {
     
     private final Block.Properties blockProperties;

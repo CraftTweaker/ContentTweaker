@@ -10,7 +10,7 @@ import net.minecraft.util.*;
 import java.util.*;
 import java.util.stream.*;
 
-class WriteableResourceBlockStateCustom extends WriteableResource {
+final class WriteableResourceBlockStateCustom extends WriteableResource {
     
     private final Collection<WriteableResourceModelContentCustom> referencedModels;
     

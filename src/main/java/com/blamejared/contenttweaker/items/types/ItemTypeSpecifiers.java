@@ -5,10 +5,12 @@ import com.blamejared.contenttweaker.items.*;
 import com.blamejared.contenttweaker.items.types.basic.*;
 import com.blamejared.contenttweaker.items.types.tool.*;
 import com.blamejared.crafttweaker.api.annotations.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import org.openzen.zencode.java.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.ItemTypeSpecifiers")
+@Document("mods/contenttweaker/item/ItemTypeSpecifiers")
 public class ItemTypeSpecifiers {
     @ZenCodeType.Field
     public static IItemTypeSpecifier<BuilderBasic> basic = BuilderBasic::new;

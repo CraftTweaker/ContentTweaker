@@ -5,6 +5,7 @@ import com.blamejared.crafttweaker.api.item.*;
 import com.blamejared.crafttweaker.impl.entity.player.*;
 import com.blamejared.crafttweaker.impl.item.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.item.*;
 import net.minecraft.util.math.*;
 import org.openzen.zencode.java.*;
@@ -14,6 +15,7 @@ import java.util.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.MCBlockItemUseContext")
+@Document("mods/contenttweaker/block/MCBlockItemUseContext")
 public class MCBlockItemUseContext {
     
     private final BlockItemUseContext internal;

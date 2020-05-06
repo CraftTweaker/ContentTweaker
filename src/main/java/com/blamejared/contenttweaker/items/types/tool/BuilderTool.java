@@ -6,6 +6,7 @@ import com.blamejared.contenttweaker.items.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraftforge.common.*;
 import org.openzen.zencode.java.*;
 
@@ -13,16 +14,21 @@ import java.util.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.tool.BuilderTool")
+@Document("mods/contenttweaker/item/tool/BuilderTool")
 public class BuilderTool implements IIsBuilder {
     
     private final ItemBuilder builder;
     private final Map<ToolType, Float> miningSpeeds;
     private double attackSpeed;
     private double attackDamage;
+    private int durabilityCostAttack;
+    private int durabilityCostMining;
     
     public BuilderTool(ItemBuilder builder) {
         this.builder = builder;
         this.miningSpeeds = new HashMap<>();
+        this.durabilityCostAttack = 2;
+        this.durabilityCostMining = 1;
     }
     
     public Map<ToolType, Float> getMiningSpeeds() {
@@ -52,6 +58,18 @@ public class BuilderTool implements IIsBuilder {
         return this;
     }
     
+    @ZenCodeType.Method
+    public BuilderTool withDurabilityCostAttack(int durabilityCostAttack) {
+        this.durabilityCostAttack = durabilityCostAttack;
+        return this;
+    }
+    
+    @ZenCodeType.Method
+    public BuilderTool withDurabilityCostMining(int durabilityCostMining) {
+        this.durabilityCostMining = durabilityCostMining;
+        return this;
+    }
+    
     @Override
     public void build(MCResourceLocation location) {
         VanillaFactory.registerItem(new CoTItemTool(this, location.getInternal()));
@@ -63,5 +81,13 @@ public class BuilderTool implements IIsBuilder {
     
     public double getAttackDamage() {
         return attackDamage;
+    }
+    
+    public int getDurabilityCostAttack() {
+        return durabilityCostAttack;
+    }
+    
+    public int getDurabilityCostMining() {
+        return durabilityCostMining;
     }
 }

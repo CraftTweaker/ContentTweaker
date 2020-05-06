@@ -5,12 +5,14 @@ import com.blamejared.contenttweaker.api.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import org.openzen.zencode.java.*;
 
 import java.util.function.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.stairs.BuilderStairs")
+@Document("mods/contenttweaker/block/stairs/BuilderStairs")
 public class BuilderStairs implements IIsBuilder {
     
     private final BlockBuilder builder;

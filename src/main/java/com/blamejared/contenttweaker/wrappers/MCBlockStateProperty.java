@@ -12,8 +12,8 @@ import java.util.*;
 import java.util.stream.*;
 
 @ZenRegister
-@ZenCodeType.Name("mods.contenttweaker.blocks.MCBlockStateProperty")
-@Document("mods/contenttweaker/blocks/MCBlockStateProperty")
+@ZenCodeType.Name("mods.contenttweaker.block.MCBlockStateProperty")
+@Document("mods/contenttweaker/block/MCBlockStateProperty")
 public class MCBlockStateProperty implements CommandStringDisplayable {
     
     private final Property<?> internal;
