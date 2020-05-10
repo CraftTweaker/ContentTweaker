@@ -1,7 +1,7 @@
 package com.blamejared.contenttweaker.blocks.types.horizontal;
 
 import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.*;
+import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
@@ -13,14 +13,13 @@ import java.util.function.*;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.custom.BuilderPillarRotatable")
 @Document("mods/contenttweaker/block/custom/BuilderPillarRotatable")
-public class BuilderPillarRotatable implements IIsBuilder {
+public class BuilderPillarRotatable extends BlockTypeBuilder {
     
-    private final BlockBuilder builder;
     private final Function<MCResourceLocation, MCResourceLocation> end;
     private final Function<MCResourceLocation, MCResourceLocation> sides;
     
-    public BuilderPillarRotatable(BlockBuilder builder) {
-        this.builder = builder;
+    public BuilderPillarRotatable(BlockBuilder blockBuilder) {
+        super(blockBuilder);
         end = location -> new MCResourceLocation(location.getNamespace(), location.getPath() + "_end");
         sides = location -> new MCResourceLocation(location.getNamespace(), location.getPath() + "_sides");
     }
@@ -38,7 +37,4 @@ public class BuilderPillarRotatable implements IIsBuilder {
         VanillaFactory.registerBlock(new CoTBlockRotatablePillar(this, location));
     }
     
-    public BlockBuilder getBuilder() {
-        return builder;
-    }
 }

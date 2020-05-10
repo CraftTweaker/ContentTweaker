@@ -12,19 +12,19 @@ description="Customize your minecraft experience!"
 [[dependencies.contenttweaker]]
     modId="forge"
     mandatory=true
-    versionRange="[26,)"
+    versionRange="[31,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.contenttweaker]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.15.2]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.contenttweaker]]
     modId="crafttweaker"
     mandatory=true
-    versionRange="[5,)"
+    versionRange="[6,)"
     ordering="BEFORE"
     side="BOTH"
 [[dependencies.contenttweaker]]

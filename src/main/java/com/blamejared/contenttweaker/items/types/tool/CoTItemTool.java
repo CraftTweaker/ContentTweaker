@@ -26,7 +26,7 @@ final class CoTItemTool extends CoTItemBasic implements IIsCotItem {
     private final int durabilityCostMining;
     
     public CoTItemTool(BuilderTool builder, ResourceLocation location) {
-        super(builder.getBuilder().getItemProperties(), location);
+        super(builder.getItemBuilder().getItemProperties(), location);
         miningSpeeds = builder.getMiningSpeeds();
         attackSpeed = builder.getAttackSpeed();
         attackDamage = builder.getAttackDamage();

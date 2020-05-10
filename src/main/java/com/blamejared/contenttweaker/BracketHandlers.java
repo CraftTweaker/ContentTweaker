@@ -17,7 +17,7 @@ public class BracketHandlers {
     /**
      * Gets the itemGroup. Will throw an error if the group could not be found
      *
-     * @param tokens What you write in the BEP call
+     * @param tokens What you createDataCompound in the BEP call
      * @return The found MCItemGroup
      * @docParam tokens "misc"
      */
@@ -35,7 +35,7 @@ public class BracketHandlers {
     /**
      * Gets a {@link MCToolType}. Will create a new one if the given one does not exist.
      *
-     * @param tokens What you would write in the BEP call
+     * @param tokens What you would createDataCompound in the BEP call
      * @return The {@link MCToolType} if found, or a new MCToolType
      * @docParam tokens "shovel"
      */
@@ -48,7 +48,7 @@ public class BracketHandlers {
     //    /**
     //     * Gets the {@link MCSoundType}. Will throw an exception if not found.
     //     *
-    //     * @param tokens What you would write in the BEP call
+    //     * @param tokens What you would createDataCompound in the BEP call
     //     * @return The found {@link MCSoundType}
     //     * @docParam tokens "ground"
     //     */

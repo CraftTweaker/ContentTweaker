@@ -24,9 +24,9 @@ class CoTBlockCustom extends Block implements IIsCoTBlock {
     
     @SuppressWarnings("unchecked,rawtypes")
     public CoTBlockCustom(BuilderBlockCustom builder, ResourceLocation location) {
-        super(builder.getBuilder().getBlockProperties());
+        super(builder.getBlockBuilder().getBlockProperties());
         this.setRegistryName(location);
-        this.item = new CoTBlockItem(this, builder.getBuilder().getItemProperties());
+        this.item = new CoTBlockItem(this, builder.getBlockBuilder().getItemProperties());
         this.builder = builder;
         
         BlockState defaultState = getDefaultState();

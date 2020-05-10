@@ -6,6 +6,7 @@ import com.blamejared.crafttweaker.impl.entity.player.*;
 import com.blamejared.crafttweaker.impl.item.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.util.math.*;
 import org.openzen.zencode.java.*;
@@ -52,21 +53,21 @@ public class MCBlockItemUseContext {
     @ZenCodeType.Method
     @ZenCodeType.Getter("nearestLookingDirection")
     public MCDirection getNearestLookingDirection() {
-        return new MCDirection(internal.getNearestLookingDirection());
+        return MCDirection.get(internal.getNearestLookingDirection());
     }
     
     @ZenCodeType.Method
     @ZenCodeType.Getter("nearestLookingDirections")
     public MCDirection[] getNearestLookingDirections() {
         return Arrays.stream(internal.getNearestLookingDirections())
-                .map(MCDirection::new)
+                .map(MCDirection::get)
                 .toArray(MCDirection[]::new);
     }
     
     @ZenCodeType.Method
     @ZenCodeType.Getter("face")
     public MCDirection getFace() {
-        return new MCDirection(internal.getFace());
+        return MCDirection.get(internal.getFace());
     }
     
     /*
@@ -79,8 +80,9 @@ public class MCBlockItemUseContext {
     
     @ZenCodeType.Method
     @ZenCodeType.Getter
-    public boolean func_221533_k() {
-        return internal.func_221533_k();
+    //public boolean func_221533_k() {
+    public boolean func_225518_g_() {
+        return internal.func_225518_g_();
     }
     
     @ZenCodeType.Method
@@ -115,14 +117,17 @@ public class MCBlockItemUseContext {
     @ZenCodeType.Method
     @ZenCodeType.Getter("placementHorizontalFacing")
     public MCDirection getPlacementHorizontalFacing() {
-        return new MCDirection(internal.getPlacementHorizontalFacing());
+        return MCDirection.get(internal.getPlacementHorizontalFacing());
     }
+
     
     @ZenCodeType.Method
     @ZenCodeType.Getter("playerSneaking")
     public boolean isPlacerSneaking() {
-        return internal.isPlacerSneaking();
+        final PlayerEntity player = internal.getPlayer();
+        return player != null && player.isShiftKeyDown();
     }
+    
     
     @ZenCodeType.Method
     @ZenCodeType.Getter("placementYaw")

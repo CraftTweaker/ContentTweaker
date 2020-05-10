@@ -1,7 +1,7 @@
 package com.blamejared.contenttweaker.items.types.tool;
 
 import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.*;
+import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.items.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
@@ -15,9 +15,8 @@ import java.util.*;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.tool.BuilderTool")
 @Document("mods/contenttweaker/item/tool/BuilderTool")
-public class BuilderTool implements IIsBuilder {
+public class BuilderTool extends ItemTypeBuilder {
     
-    private final ItemBuilder builder;
     private final Map<ToolType, Float> miningSpeeds;
     private double attackSpeed;
     private double attackDamage;
@@ -25,7 +24,7 @@ public class BuilderTool implements IIsBuilder {
     private int durabilityCostMining;
     
     public BuilderTool(ItemBuilder builder) {
-        this.builder = builder;
+        super(builder);
         this.miningSpeeds = new HashMap<>();
         this.durabilityCostAttack = 2;
         this.durabilityCostMining = 1;
@@ -35,13 +34,9 @@ public class BuilderTool implements IIsBuilder {
         return miningSpeeds;
     }
     
-    public ItemBuilder getBuilder() {
-        return builder;
-    }
-    
     @ZenCodeType.Method
     public BuilderTool withToolType(MCToolType toolType, int miningLevel, @ZenCodeType.OptionalFloat(1.0F) float miningSpeed) {
-        builder.getItemProperties().addToolType(toolType.getInternal(), miningLevel);
+        itemBuilder.getItemProperties().addToolType(toolType.getInternal(), miningLevel);
         miningSpeeds.put(toolType.getInternal(), miningSpeed);
         return this;
     }

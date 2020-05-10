@@ -2,12 +2,14 @@ package com.blamejared.contenttweaker.items;
 
 import com.blamejared.contenttweaker.api.*;
 import com.blamejared.contenttweaker.api.items.*;
-import com.blamejared.contenttweaker.items.types.*;
+import com.blamejared.contenttweaker.items.types.basic.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.item.*;
 import org.openzen.zencode.java.*;
+
+import java.lang.reflect.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.ItemBuilder")
@@ -55,12 +57,18 @@ public class ItemBuilder implements IIsBuilder {
     }
     
     @ZenCodeType.Method
-    public <T extends IIsBuilder> T withType(IItemTypeSpecifier<T> specifier) {
-        return specifier.apply(this);
+    public <T extends ItemTypeBuilder> T withType(Class<T> typeOfT) {
+        try {
+            final Constructor<T> constructor = typeOfT.getConstructor(ItemBuilder.class);
+            return constructor.newInstance(this);
+        } catch(InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
     @Override
     public void build(MCResourceLocation location) {
-        withType(ItemTypeSpecifiers.basic).build(location);
+        withType(BuilderBasic.class).build(location);
     }
 }

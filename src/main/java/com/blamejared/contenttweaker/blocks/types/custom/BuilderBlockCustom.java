@@ -2,7 +2,7 @@ package com.blamejared.contenttweaker.blocks.types.custom;
 
 
 import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.*;
+import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
@@ -17,23 +17,18 @@ import java.util.*;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.custom.BuilderBlockCustom")
 @Document("mods/contenttweaker/block/custom.BuilderBlockCustom")
-public class BuilderBlockCustom implements IIsBuilder {
+public class BuilderBlockCustom extends BlockTypeBuilder {
     
-    private final BlockBuilder builder;
     private final Map<MCBlockStateProperty, String> blockStatePropertyMap;
     private final Set<MCBlockStateProperty> blockStatePropertiesForBlockStateJson;
     private BlockStateToModelMapping blockStateToModelMapping;
     private FunctionResourceLocationToIData modelNameToModelContentMapping;
     private PlaceStateMapping blockPlaceStateMapper;
     
-    public BuilderBlockCustom(BlockBuilder builder) {
-        this.builder = builder;
+    public BuilderBlockCustom(BlockBuilder blockBuilder) {
+        super(blockBuilder);
         this.blockStatePropertyMap = new HashMap<>();
         this.blockStatePropertiesForBlockStateJson = new HashSet<>();
-    }
-    
-    public BlockBuilder getBuilder() {
-        return builder;
     }
     
     public PlaceStateMapping getBlockPlaceStateMapper() {

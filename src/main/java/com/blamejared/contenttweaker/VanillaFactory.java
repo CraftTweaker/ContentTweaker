@@ -25,6 +25,15 @@ public class VanillaFactory {
         registry.getItemsAsVanillaItems().forEach(ForgeRegistries.ITEMS::register);
         
         final File resourcePackDir = new File("the_loader/resourcepacks/contenttweaker");
+        if(!new File(resourcePackDir, "pack.mcmeta").exists()) {
+            try(final PrintWriter writer = new PrintWriter(new FileWriter(new File(resourcePackDir, "pack.mcmeta")))) {
+                writer.write("{\n" + "   \"pack\": {\n" + "      \"pack_format\": 5,\n" + "      \"description\": \"ContentTweaker resources\"\n" + "   }\n" + "}");
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+        }
+    
+    
         registry.getAssetResources()
                 .filter(w -> ContentTweaker.MOD_ID.equals(w.getModId()))
                 .forEach(w -> {

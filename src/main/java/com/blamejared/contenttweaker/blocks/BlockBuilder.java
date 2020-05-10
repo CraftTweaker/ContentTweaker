@@ -2,8 +2,8 @@ package com.blamejared.contenttweaker.blocks;
 
 import com.blamejared.contenttweaker.api.*;
 import com.blamejared.contenttweaker.api.blocks.*;
-import com.blamejared.contenttweaker.blocks.types.*;
 import com.blamejared.contenttweaker.wrappers.*;
+import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.block.material.*;
 import com.blamejared.crafttweaker.impl.blocks.*;
@@ -12,6 +12,8 @@ import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import org.openzen.zencode.java.*;
+
+import java.lang.reflect.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.BlockBuilder")
@@ -120,12 +122,18 @@ public class BlockBuilder implements IIsBuilder {
     }
     
     @ZenCodeType.Method
-    public <T extends IIsBuilder> T withType(IBlockTypeSpecifier<T> specifier) {
-        return specifier.apply(this);
+    public <T extends BlockTypeBuilder> T withType(Class<T> typeOfT) {
+        try {
+            final Constructor<T> constructor = typeOfT.getConstructor(BlockBuilder.class);
+            return constructor.newInstance(this);
+        } catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            CraftTweakerAPI.logThrowing("Could not instantiate Builder!", e);
+            return null;
+        }
     }
     
     @Override
     public void build(MCResourceLocation location) {
-        withType(BlockTypeSpecifiers.basic).build(location);
+        //withType(BlockTypeSpecifiers.basic).applyToBuilder(location);
     }
 }

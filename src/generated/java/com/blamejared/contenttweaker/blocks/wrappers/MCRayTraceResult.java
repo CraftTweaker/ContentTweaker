@@ -25,18 +25,18 @@ public class MCRayTraceResult {
         return this.internal;
     }
 
+    @ZenCodeType.Method
+    public MCRayTraceResultType getType() {
+        return new MCRayTraceResultType(internal.getType());
+    }
+
+
     /**
      * Returns the hit position of the raycast, in absolute world coordinates
      */
     @ZenCodeType.Method
     public MCVec3d getHitVec() {
         return new MCVec3d(internal.getHitVec());
-    }
-
-
-    @ZenCodeType.Method
-    public MCRayTraceResultType getType() {
-        return new MCRayTraceResultType(internal.getType());
     }
 
 
