@@ -1,7 +1,10 @@
 package com.blamejared.contenttweaker.blocks.types.machine.capability;
 
 import com.blamejared.contenttweaker.blocks.types.machine.*;
+import com.blamejared.contenttweaker.blocks.types.machine.gui.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.inventory.container.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -18,16 +21,12 @@ public class CoTCapabilityInstanceManager {
     private CoTTile tile;
     
     public CoTCapabilityInstanceManager(CoTBlockTile allBlock) {
-        configurations = new HashMap<>();
-        for(Map.Entry<ICotCapability, ICoTCapabilityConfiguration> entry : allBlock.getCapabilities().entrySet()) {
-            final ICotCapability capability = entry.getKey();
-            final ICoTCapabilityConfiguration configuration = entry.getValue();
-            final ICotCapabilityInstance capabilityInstance = configuration.createCapabilityInstance(this);
-            this.addInstance(capability, capabilityInstance);
-        }
+        this.configurations = new HashMap<>();
+        final CoTCapabilityConfigurationManager capabilityConfiguration = allBlock.getCapabilityConfiguration();
+        capabilityConfiguration.createInstancesFor(this);
     }
     
-    public void addInstance(ICotCapability capability, ICotCapabilityInstance instance) {
+    public void addInstance(ICotCapability capability, ICotCapabilityInstance instance){
         configurations.put(capability, instance);
     }
     
@@ -81,7 +80,7 @@ public class CoTCapabilityInstanceManager {
             return null;
         }
         for(ICotCapability iCotCapability : this.configurations.keySet()) {
-            if(iCotCapability.getId().equals(location)){
+            if(iCotCapability.getId().equals(location)) {
                 return configurations.get(iCotCapability);
             }
         }
@@ -92,5 +91,20 @@ public class CoTCapabilityInstanceManager {
         for(ICotCapabilityInstance value : this.configurations.values()) {
             value.onBlockBroken(state, world, pos, newState, isMoving);
         }
+    }
+    
+    public CoTContainer createMenu(int windowId, PlayerInventory playerInventory) {
+        if(this.configurations.isEmpty()) {
+            return null;
+        }
+        
+        final ResourceLocation registryName = tile.getType().getRegistryName();
+        final ContainerType<CoTContainer> containerType = MachineBlockRegistry.CONTAINER_TYPES.get(registryName);
+        final CoTContainer coTContainer = new CoTContainer(containerType, windowId);
+        
+        for(ICotCapabilityInstance value : this.configurations.values()) {
+            value.addToContainer(coTContainer, playerInventory);
+        }
+        return coTContainer;
     }
 }

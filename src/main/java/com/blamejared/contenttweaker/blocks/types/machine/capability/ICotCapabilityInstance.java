@@ -1,7 +1,9 @@
 package com.blamejared.contenttweaker.blocks.types.machine.capability;
 
+import com.blamejared.contenttweaker.blocks.types.machine.gui.*;
 import mcp.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -21,4 +23,6 @@ public interface ICotCapabilityInstance {
     void deserializeDataCompound(CompoundNBT compound);
     
     void onBlockBroken(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving);
+    
+    void addToContainer(CoTContainer coTContainer, PlayerInventory playerInventory);
 }

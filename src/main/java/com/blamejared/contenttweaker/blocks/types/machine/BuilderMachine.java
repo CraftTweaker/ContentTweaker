@@ -7,6 +7,7 @@ import com.blamejared.contenttweaker.blocks.types.machine.capability.*;
 import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import net.minecraft.client.gui.*;
 import org.openzen.zencode.java.*;
 
 import java.util.*;
@@ -16,15 +17,15 @@ import java.util.function.*;
 @ZenCodeType.Name("mods.contenttweaker.block.machine.BuilderMachine")
 public class BuilderMachine extends BlockTypeBuilder {
     
-    private final Map<ICotCapability, ICoTCapabilityConfiguration> capabilities;
+    private final CoTCapabilityConfigurationManager capabilities;
     
     public BuilderMachine(BlockBuilder blockBuilder) {
         super(blockBuilder);
-        this.capabilities = new HashMap<>();
+        this.capabilities = new CoTCapabilityConfigurationManager();
     }
     
     
-    public Map<ICotCapability, ICoTCapabilityConfiguration> getCapabilities() {
+    public CoTCapabilityConfigurationManager getCapabilities() {
         return capabilities;
     }
     
@@ -49,10 +50,10 @@ public class BuilderMachine extends BlockTypeBuilder {
     }
     
     public boolean hasCapability(ICotCapability capability) {
-        return capabilities.containsKey(capability);
+        return capabilities.hasCapability(capability);
     }
     
     public void addCapability(ICotCapability capability, ICoTCapabilityConfiguration configuration){
-        this.capabilities.put(capability, configuration);
+        this.capabilities.addCapability(capability, configuration);
     }
 }

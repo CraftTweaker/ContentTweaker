@@ -1,10 +1,12 @@
 package com.blamejared.contenttweaker.blocks.types.machine.item.capability;
 
 import com.blamejared.contenttweaker.blocks.types.machine.capability.*;
+import com.blamejared.contenttweaker.blocks.types.machine.gui.*;
 import mcp.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
-import net.minecraft.item.*;
+import net.minecraft.inventory.container.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -58,26 +60,9 @@ public class ItemCapabilityInstance implements ICotCapabilityInstance {
         handler.clear();
     }
     
-    private static final class CoTItemStackHandler extends ItemStackHandler {
-        
-        private final CoTCapabilityInstanceManager manager;
-        
-        public CoTItemStackHandler(CoTCapabilityInstanceManager manager) {
-            this.manager = manager;
-        }
-        
-        @Override
-        protected void onContentsChanged(int slot) {
-            super.onContentsChanged(slot);
-            manager.markDirty();
-        }
-        
-        public NonNullList<ItemStack> getStacks() {
-            return stacks;
-        }
-        
-        public void clear() {
-            this.stacks = NonNullList.withSize(stacks.size(), ItemStack.EMPTY);
-        }
+    @Override
+    public void addToContainer(CoTContainer coTContainer, PlayerInventory playerInventory) {
+        coTContainer.addSlot(new Slot(new ItemHandlerInventory(handler), 0, 0,0));
     }
+    
 }

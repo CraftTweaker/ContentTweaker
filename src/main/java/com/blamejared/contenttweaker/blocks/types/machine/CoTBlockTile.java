@@ -6,20 +6,28 @@ import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.contenttweaker.blocks.types.machine.capability.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import mcp.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.inventory.container.*;
+import net.minecraft.stats.*;
 import net.minecraft.tileentity.*;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
+import net.minecraft.util.text.*;
 import net.minecraft.world.*;
+import net.minecraftforge.fml.network.*;
 
 import javax.annotation.*;
 import java.util.*;
 
+@MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class CoTBlockTile extends Block implements IIsCoTBlock {
     
     
     private final CoTBlockItem item;
-    private final Map<ICotCapability, ICoTCapabilityConfiguration> capabilities;
+    private final CoTCapabilityConfigurationManager capabilities;
     
     
     public CoTBlockTile(BuilderMachine builderMachine, MCResourceLocation location) {
@@ -30,7 +38,7 @@ public class CoTBlockTile extends Block implements IIsCoTBlock {
         MachineBlockRegistry.ALL_BLOCKS.add(this);
     }
     
-    public Map<ICotCapability, ICoTCapabilityConfiguration> getCapabilities() {
+    public CoTCapabilityConfigurationManager getCapabilityConfiguration() {
         return capabilities;
     }
     
@@ -89,5 +97,23 @@ public class CoTBlockTile extends Block implements IIsCoTBlock {
             }
         }
         super.onReplaced(state, worldIn, pos, newState, isMoving);
+    }
+    
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
+        if(!worldIn.isRemote) {
+            NetworkHooks.openGui((ServerPlayerEntity) player, state.getContainer(worldIn, pos), pos);
+        }
+        return ActionResultType.SUCCESS;
+    }
+    
+    @Nullable
+    @Override
+    public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+        final TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if(tileEntity instanceof CoTTile) {
+            return (CoTTile) tileEntity;
+        }
+        return null;
     }
 }
