@@ -25,6 +25,6 @@ public class IndexList implements SlotSelector {
     
     @Override
     public boolean matches(ItemCapabilitySlotBuilder slot) {
-        return indices.contains(slot.getIndex());
+        return indices.contains(slot.getSpecifiedIndex());
     }
 }

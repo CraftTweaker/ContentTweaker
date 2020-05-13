@@ -1,7 +1,8 @@
 package com.blamejared.contenttweaker.items.types.tool;
 
 import com.blamejared.contenttweaker.api.items.*;
-import com.blamejared.contenttweaker.items.types.basic.*;
+import com.blamejared.contenttweaker.api.resources.*;
+import com.blamejared.crafttweaker.impl.util.*;
 import com.google.common.collect.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -17,7 +18,7 @@ import javax.annotation.*;
 import java.util.*;
 
 @ParametersAreNonnullByDefault
-final class CoTItemTool extends CoTItemBasic implements IIsCotItem {
+final class CoTItemTool extends Item implements IIsCotItem {
     
     private final Map<ToolType, Float> miningSpeeds;
     private final double attackDamage;
@@ -26,7 +27,8 @@ final class CoTItemTool extends CoTItemBasic implements IIsCotItem {
     private final int durabilityCostMining;
     
     public CoTItemTool(BuilderTool builder, ResourceLocation location) {
-        super(builder.getItemBuilder().getItemProperties(), location);
+        super(builder.getItemBuilder().getItemProperties());
+        this.setRegistryName(location);
         miningSpeeds = builder.getMiningSpeeds();
         attackSpeed = builder.getAttackSpeed();
         attackDamage = builder.getAttackDamage();
@@ -60,7 +62,7 @@ final class CoTItemTool extends CoTItemBasic implements IIsCotItem {
     
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        if (!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F) {
+        if(!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F) {
             stack.damageItem(durabilityCostMining, entityLiving, holder -> holder.sendBreakAnimation(EquipmentSlotType.MAINHAND));
         }
         return true;
@@ -70,5 +72,23 @@ final class CoTItemTool extends CoTItemBasic implements IIsCotItem {
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damageItem(durabilityCostAttack, attacker, holder -> holder.sendBreakAnimation(EquipmentSlotType.MAINHAND));
         return true;
+    }
+    
+    @Nonnull
+    @Override
+    public Collection<WriteableResource> getResourcePackResources() {
+        final MCResourceLocation location = getMCResourceLocation();
+        final List<WriteableResource> out = new ArrayList<>();
+        out.add(new WriteableResourceImage(ImageType.ITEM, location));
+        out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "models", "item")
+                .withContent(String.format("{\n    \"parent\" : \"item/handheld\",\n    \"textures\" : \n        {\"layer0\" : \"%s:item/%s\"\n    }\n}", location
+                        .getNamespace(), location.getPath())));
+        return out;
+    }
+    
+    @Nonnull
+    @Override
+    public Collection<WriteableResource> getDataPackResources() {
+        return Collections.emptyList();
     }
 }

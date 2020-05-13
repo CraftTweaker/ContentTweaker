@@ -4,29 +4,35 @@ import com.blamejared.contenttweaker.blocks.types.machine.item.*;
 import com.blamejared.contenttweaker.blocks.types.machine.item.capability.*;
 import com.blamejared.contenttweaker.blocks.types.machine.item.gui.*;
 import com.blamejared.crafttweaker.api.annotations.*;
+import com.blamejared.crafttweaker.api.item.*;
+import com.blamejared.crafttweaker.impl.item.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import org.openzen.zencode.java.*;
+
+import java.util.function.*;
 
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.machine.ItemCapabilitySlotBuilder")
 public class ItemCapabilitySlotBuilder {
     
-    private final int index;
+    private final int specifiedIndex;
     private final GroupNames groupNames;
     private final IOSides ioSides;
     private final ItemSlotGuiInformation guiInformation;
+    private final ItemSlotItemRestriction itemRestriction;
     
-    public ItemCapabilitySlotBuilder(int index) {
-        this.index = index;
+    public ItemCapabilitySlotBuilder(int specifiedIndex) {
+        this.specifiedIndex = specifiedIndex;
         this.groupNames = new GroupNames();
         this.ioSides = new IOSides();
         this.guiInformation = new ItemSlotGuiInformation();
+        itemRestriction = new ItemSlotItemRestriction();
     }
     
     @ZenCodeType.Method
     @ZenCodeType.Getter("index")
-    public int getIndex() {
-        return index;
+    public int getSpecifiedIndex() {
+        return specifiedIndex;
     }
     
     @ZenCodeType.Method
@@ -85,8 +91,20 @@ public class ItemCapabilitySlotBuilder {
     }
     
     @ZenCodeType.Method
-    public ItemCapabilitySlotBuilder withColor(int color) {
-        guiInformation.setColor(color);
+    public ItemCapabilitySlotBuilder withMaxStackSize(int stackSize) {
+        this.itemRestriction.setMaxStackSize(stackSize);
+        return this;
+    }
+    
+    @ZenCodeType.Method
+    public ItemCapabilitySlotBuilder withInputRestriction(Predicate<IItemStack> predicate) {
+        this.itemRestriction.setCanInputPredicate(predicate);
+        return this;
+    }
+    
+    @ZenCodeType.Method
+    public ItemCapabilitySlotBuilder withOutputRestriction(Predicate<IItemStack> predicate) {
+        this.itemRestriction.setCanOutputPredicate(predicate);
         return this;
     }
     
@@ -95,7 +113,7 @@ public class ItemCapabilitySlotBuilder {
         return groupNames.hasName(name);
     }
     
-    public ItemSlot buildItemSlot() {
-        return new ItemSlot(index, groupNames, ioSides, guiInformation);
+    public ItemSlot buildItemSlot(int actualIndex) {
+        return new ItemSlot(specifiedIndex, actualIndex, groupNames, ioSides, guiInformation, itemRestriction);
     }
 }

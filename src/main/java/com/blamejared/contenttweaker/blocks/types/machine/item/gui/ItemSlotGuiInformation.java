@@ -5,8 +5,7 @@ import java.awt.*;
 public class ItemSlotGuiInformation {
     
     private boolean hidden = false;
-    private Point position = new Point(0, 0);
-    private int color = 0x00000000;
+    private final Point position = new Point(0, 0);
     
     public void hide() {
         this.hidden = true;
@@ -20,15 +19,11 @@ public class ItemSlotGuiInformation {
         position.setLocation(position.x, y);
     }
     
-    public void setColor(int color) {
-        this.color = color;
+    public Point getPosition() {
+        return position;
     }
     
-    public void draw() {
-        if(hidden) {
-            return;
-        }
-    
-        System.out.println("Drawing");
+    public boolean isVisible() {
+        return !hidden;
     }
 }

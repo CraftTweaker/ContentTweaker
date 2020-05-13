@@ -83,7 +83,12 @@ public class ContentTweaker {
         
         for(CoTBlockTile allBlock : MachineBlockRegistry.ALL_BLOCKS) {
             final ResourceLocation location = allBlock.getMCResourceLocation().getInternal();
-            final Supplier<CoTTile> factory = () -> new CoTTile(location, new CoTCapabilityInstanceManager(allBlock));
+            final Supplier<CoTTile> factory;
+            if(allBlock.hasTickingCapabilities()) {
+                factory = () -> new CoTTileTicking(location, new CoTCapabilityInstanceManager(allBlock));
+            } else {
+                factory = () -> new CoTTile(location, new CoTCapabilityInstanceManager(allBlock));
+            }
             //noinspection ConstantConditions
             final TileEntityType<CoTTile> type = TileEntityType.Builder.create(factory, allBlock)
                     .build(null);

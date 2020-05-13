@@ -4,13 +4,12 @@ import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.contenttweaker.blocks.types.machine.capability.*;
+import com.blamejared.contenttweaker.blocks.types.machine.gui.capability.builder.*;
 import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
-import net.minecraft.client.gui.*;
 import org.openzen.zencode.java.*;
 
-import java.util.*;
 import java.util.function.*;
 
 @ZenRegister
@@ -41,6 +40,10 @@ public class BuilderMachine extends BlockTypeBuilder {
         return this;
     }
     
+    @ZenCodeType.Method
+    public BuilderMachine configureGui(Function<GuiCapabilityBuilder, GuiCapabilityBuilder> fun) {
+        return buildCapability(GuiCapabilityBuilder.class, fun);
+    }
     
     
     @Override
@@ -53,7 +56,7 @@ public class BuilderMachine extends BlockTypeBuilder {
         return capabilities.hasCapability(capability);
     }
     
-    public void addCapability(ICotCapability capability, ICoTCapabilityConfiguration configuration){
+    public void addCapability(ICotCapability capability, ICoTCapabilityConfiguration configuration) {
         this.capabilities.addCapability(capability, configuration);
     }
 }

@@ -27,9 +27,3 @@ description="Customize your minecraft experience!"
     versionRange="[6,)"
     ordering="BEFORE"
     side="BOTH"
-[[dependencies.contenttweaker]]
-    modId="theloader"
-    mandatory=true
-    versionRange="[1,)"
-    ordering="BEFORE"
-    side="CLIENT"

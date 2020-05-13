@@ -1,20 +1,27 @@
 package com.blamejared.contenttweaker.blocks.types.machine.item.capability;
 
+import com.blamejared.contenttweaker.blocks.types.machine.*;
+import com.blamejared.contenttweaker.blocks.types.machine.gui.*;
+import com.blamejared.crafttweaker.impl.item.*;
+import com.blamejared.crafttweaker.impl.util.*;
 import mcp.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.util.*;
 
 import javax.annotation.*;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ItemHandlerInventory implements IInventory {
+public class ItemHandlerInventory implements ISidedInventory {
     
     private final CoTItemStackHandler handler;
+    private final ItemSlotList slotList;
     
-    public ItemHandlerInventory(CoTItemStackHandler handler) {
+    public ItemHandlerInventory(CoTItemStackHandler handler, ItemSlotList slotList) {
         this.handler = handler;
+        this.slotList = slotList;
     }
     
     @Override
@@ -67,5 +74,42 @@ public class ItemHandlerInventory implements IInventory {
     @Override
     public void clear() {
         handler.clear();
+    }
+    
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return slotList.getSlotsForFace(MCDirection.get(side));
+    }
+    
+    @Override
+    public boolean canInsertItem(int index, ItemStack itemStackIn, @Nullable Direction direction) {
+        return slotList.canInsertItem(index, new MCItemStackMutable(itemStackIn), MCDirection.get(direction));
+    }
+    
+    public int getMaxStackSize(int index){
+        return slotList.getMaxStackSize(index);
+    }
+    
+    @Override
+    public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
+        return slotList.canExtractItem(index, new MCItemStackMutable(stack), MCDirection.get(direction));
+    }
+    
+    public void addToContainer(CoTContainer coTContainer) {
+        slotList.addToContainer(coTContainer, this);
+    }
+    
+    public boolean tick(CoTTileTicking tile) {
+        return slotList.tick(tile, this);
+    }
+    
+    @Nonnull
+    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+        return handler.insertItem(slot, stack, simulate);
+    }
+    
+    @Nonnull
+    public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        return handler.extractItem(slot, amount, simulate);
     }
 }

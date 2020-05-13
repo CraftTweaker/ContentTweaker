@@ -1,12 +1,12 @@
 package com.blamejared.contenttweaker.blocks.types.machine.item.capability;
 
+import com.blamejared.contenttweaker.blocks.types.machine.*;
 import com.blamejared.contenttweaker.blocks.types.machine.capability.*;
 import com.blamejared.contenttweaker.blocks.types.machine.gui.*;
 import mcp.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
-import net.minecraft.inventory.container.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -17,28 +17,31 @@ import net.minecraftforge.items.*;
 
 import javax.annotation.*;
 
+
 @MethodsReturnNonnullByDefault
-public class ItemCapabilityInstance implements ICotCapabilityInstance {
+public class ItemCapabilityInstance implements ICotCapabilityInstanceTickable {
     
     @CapabilityInject(IItemHandler.class)
     static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = null;
     
     private final CoTItemStackHandler handler;
-    private final ItemSlotList slotList;
+    private final ItemSlotList playerSlotItemList;
+    private final boolean needsTicking;
+    private byte tickCooldown = 8;
     
-    
-    public ItemCapabilityInstance(CoTCapabilityInstanceManager manager, ItemSlotList slotList, CompoundNBT nbt) {
-        this.handler = new CoTItemStackHandler(manager);
-        this.slotList = slotList;
+    @ParametersAreNonnullByDefault
+    public ItemCapabilityInstance(CoTCapabilityInstanceManager manager, ItemSlotList slotList, ItemSlotList playerSlotItemList, CompoundNBT nbt) {
+        this.handler = new CoTItemStackHandler(manager, slotList);
         this.handler.deserializeNBT(nbt);
+        this.playerSlotItemList = playerSlotItemList;
+        this.needsTicking = slotList.needsTicking();
     }
     
     
     @Override
-    @SuppressWarnings("unchecked")
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if(cap == ITEM_HANDLER_CAPABILITY) {
-            return LazyOptional.of(() -> (T) handler);
+            return handler.getItemHandlerCapability(side).cast();
         }
         
         return LazyOptional.empty();
@@ -62,7 +65,21 @@ public class ItemCapabilityInstance implements ICotCapabilityInstance {
     
     @Override
     public void addToContainer(CoTContainer coTContainer, PlayerInventory playerInventory) {
-        coTContainer.addSlot(new Slot(new ItemHandlerInventory(handler), 0, 0,0));
+        handler.addToContainer(coTContainer);
+        playerSlotItemList.addToContainer(coTContainer, playerInventory);
     }
     
+    @Override
+    public boolean tick(CoTTileTicking tile) {
+        if(tickCooldown-- > 1){
+            return false;
+        }
+        tickCooldown = 8;
+        return handler.tick(tile);
+    }
+    
+    @Override
+    public boolean needsTicking() {
+        return needsTicking;
+    }
 }

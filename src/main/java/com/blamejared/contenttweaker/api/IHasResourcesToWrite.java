@@ -15,8 +15,4 @@ public interface IHasResourcesToWrite {
     Collection<WriteableResource> getDataPackResources();
     
     
-    interface IHasCoTItem extends IHasMCResourceLocation {
-        @Nonnull
-        IIsCotItem getItem();
-    }
 }

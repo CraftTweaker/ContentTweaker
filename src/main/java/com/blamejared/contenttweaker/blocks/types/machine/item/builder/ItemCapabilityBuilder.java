@@ -15,11 +15,12 @@ import java.util.function.*;
 public class ItemCapabilityBuilder implements IIsCoTCapabilityBuilder {
     
     private ItemCapabilitySlotListBuilder slots;
+    private ItemCapabilitySlotListBuilder playerInventorySlots;
     
     public ItemCapabilityBuilder() {
         this.slots = new ItemCapabilitySlotListBuilder();
+        this.playerInventorySlots = new ItemCapabilitySlotListBuilder();
     }
-    
     
     
     @ZenCodeType.Method
@@ -27,7 +28,7 @@ public class ItemCapabilityBuilder implements IIsCoTCapabilityBuilder {
         slots = new ItemCapabilitySlotListBuilder(numbers);
         return this;
     }
-
+    
     
     @ZenCodeType.Method
     public ItemCapabilityBuilder forAllSlots(Consumer<ItemCapabilitySlotBuilder> consumer) {
@@ -49,7 +50,7 @@ public class ItemCapabilityBuilder implements IIsCoTCapabilityBuilder {
     }
     
     @ZenCodeType.Method
-    public ItemCapabilityBuilder groupSlots(String groupName, SlotSelector... selector){
+    public ItemCapabilityBuilder groupSlots(String groupName, SlotSelector... selector) {
         forSlots(selector, itemCapabilitySlot -> itemCapabilitySlot.addToGroup(groupName));
         return this;
     }
@@ -93,6 +94,31 @@ public class ItemCapabilityBuilder implements IIsCoTCapabilityBuilder {
         return this;
     }
     
+    @ZenCodeType.Method
+    public ItemCapabilityBuilder addPlayerInventory() {
+        final CoTIntRange range = new CoTIntRange(0, 36);
+        this.playerInventorySlots = new ItemCapabilitySlotListBuilder(range);
+        return this;
+    }
+    
+    @ZenCodeType.Method
+    public ItemCapabilityBuilder forPlayerSlots(SlotSelector selector, Consumer<ItemCapabilitySlotBuilder> consumer) {
+        playerInventorySlots.forSlots(selector, consumer);
+        return this;
+    }
+    
+    @ZenCodeType.Method
+    public ItemCapabilityBuilder forPlayerInventorySlots(Consumer<ItemCapabilitySlotBuilder> consumer) {
+        final CoTIntRange range = new CoTIntRange(9, 36);
+        return forPlayerSlots(new IndexList(range), consumer);
+    }
+    
+    @ZenCodeType.Method
+    public ItemCapabilityBuilder forPlayerHotbarSlots(Consumer<ItemCapabilitySlotBuilder> consumer) {
+        final CoTIntRange range = new CoTIntRange(0, 9);
+        return forPlayerSlots(new IndexList(range), consumer);
+    }
+    
     @Override
     public void applyToBuilder(BuilderMachine builderMachine) {
         if(builderMachine.hasCapability(CoTCapabilities.ITEM)) {
@@ -103,6 +129,8 @@ public class ItemCapabilityBuilder implements IIsCoTCapabilityBuilder {
     }
     
     private ItemCapabilityConfiguration buildCapabilityConfiguration() {
-        return new ItemCapabilityConfiguration(slots.buildItemSlotList());
+        final ItemSlotList declaredSlotItemSlotLost = slots.buildItemSlotList();
+        final ItemSlotList playerSlotItemList = playerInventorySlots.buildItemSlotList();
+        return new ItemCapabilityConfiguration(declaredSlotItemSlotLost, playerSlotItemList);
     }
 }

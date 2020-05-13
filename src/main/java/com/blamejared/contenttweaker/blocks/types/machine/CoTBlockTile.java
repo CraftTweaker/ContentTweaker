@@ -10,11 +10,9 @@ import mcp.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
-import net.minecraft.stats.*;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.text.*;
 import net.minecraft.world.*;
 import net.minecraftforge.fml.network.*;
 
@@ -53,17 +51,18 @@ public class CoTBlockTile extends Block implements IIsCoTBlock {
     @SuppressWarnings("DuplicatedCode") //Reason: Will be changed later
     public Collection<WriteableResource> getResourcePackResources() {
         final MCResourceLocation location = getMCResourceLocation();
-        final Collection<WriteableResource> out = new ArrayList<>();
+        final Collection<WriteableResource> out = new HashSet<>();
         out.add(new WriteableResourceImage(ImageType.BLOCK, location));
         out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "models", "block")
                 .withContent("{\n" + "    \"parent\": \"block/cube_all\",\n" + "    \"textures\": {\n" + "        \"all\": \"%s:block/%s\"\n" + "    }\n" + "}\n", location
                         .getNamespace(), location.getPath()));
-    
+        
         out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "blockstates")
                 .withContent("{\n" + "    \"variants\": {\n" + "        \"\": {\"model\" : \"%s:block/%s\"}\n" + "    }\n" + "}\n", location
                         .getNamespace(), location.getPath()));
-    
-    
+        
+        out.addAll(capabilities.getResourcePackResources(getMCResourceLocation()));
+        
         return out;
     }
     
@@ -82,7 +81,12 @@ public class CoTBlockTile extends Block implements IIsCoTBlock {
     @Override
     public CoTTile createTileEntity(BlockState state, IBlockReader world) {
         final CoTCapabilityInstanceManager instanceManager = new CoTCapabilityInstanceManager(this);
-        final CoTTile coTTile = new CoTTile(getMCResourceLocation().getInternal(), instanceManager);
+        final CoTTile coTTile;
+        if(instanceManager.requiresTickableTile()) {
+            coTTile = new CoTTileTicking(getMCResourceLocation().getInternal(), instanceManager);
+        } else {
+            coTTile = new CoTTile(getMCResourceLocation().getInternal(), instanceManager);
+        }
         instanceManager.registerTile(coTTile);
         return coTTile;
     }
@@ -93,7 +97,7 @@ public class CoTBlockTile extends Block implements IIsCoTBlock {
         if(state.getBlock() != newState.getBlock()) {
             final TileEntity tileEntity = worldIn.getTileEntity(pos);
             if(tileEntity instanceof CoTTile) {
-                ((CoTTile)tileEntity).onBlockBroken(state, worldIn, pos, newState, isMoving);
+                ((CoTTile) tileEntity).onBlockBroken(state, worldIn, pos, newState, isMoving);
             }
         }
         super.onReplaced(state, worldIn, pos, newState, isMoving);
@@ -115,5 +119,9 @@ public class CoTBlockTile extends Block implements IIsCoTBlock {
             return (CoTTile) tileEntity;
         }
         return null;
+    }
+    
+    public boolean hasTickingCapabilities() {
+        return new CoTCapabilityInstanceManager(this).requiresTickableTile();
     }
 }

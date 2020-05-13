@@ -14,9 +14,9 @@ public final class CoTIntRange implements CommandStringDisplayable, Iterable<Int
     public final int from;
     public final int to;
     
-    public CoTIntRange(int var1, int var2) {
-        this.from = var1;
-        this.to = var2;
+    public CoTIntRange(int from, int to) {
+        this.from = from;
+        this.to = to;
     }
     
     @Override

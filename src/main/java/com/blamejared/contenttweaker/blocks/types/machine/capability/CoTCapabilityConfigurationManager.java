@@ -1,6 +1,8 @@
 package com.blamejared.contenttweaker.blocks.types.machine.capability;
 
+import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.blocks.types.machine.gui.*;
+import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.*;
@@ -25,7 +27,11 @@ public class CoTCapabilityConfigurationManager {
     
     @OnlyIn(Dist.CLIENT)
     public CoTScreen createScreen(CoTContainer container, PlayerInventory playerInventory, ITextComponent textComponent) {
-        return new CoTScreen(container, playerInventory, textComponent);
+        final CoTScreen coTScreen = new CoTScreen(container, playerInventory, textComponent);
+        for(ICoTCapabilityConfiguration value : configurationMap.values()) {
+            value.addToScreen(coTScreen);
+        }
+        return coTScreen;
     }
     
     public void createInstancesFor(CoTCapabilityInstanceManager instanceManager) {
@@ -35,5 +41,13 @@ public class CoTCapabilityConfigurationManager {
             final ICotCapabilityInstance capabilityInstance = configuration.createCapabilityInstance(instanceManager);
             instanceManager.addInstance(capability, capabilityInstance);
         }
+    }
+    
+    public Collection<WriteableResource> getResourcePackResources(MCResourceLocation blockName) {
+        final Collection<WriteableResource> out = new HashSet<>();
+        for(ICoTCapabilityConfiguration value : configurationMap.values()) {
+            out.addAll(value.getResourcePackResources(blockName));
+        }
+        return out;
     }
 }

@@ -9,7 +9,7 @@ import java.util.function.*;
 
 public class ItemCapabilitySlotListBuilder {
     
-    private final Map<Integer, ItemCapabilitySlotBuilder> slotList = new HashMap<>();
+    private final NavigableMap<Integer, ItemCapabilitySlotBuilder> slotList = new TreeMap<>();
     
     public ItemCapabilitySlotListBuilder() {
     }
@@ -20,7 +20,7 @@ public class ItemCapabilitySlotListBuilder {
         }
     }
     
-    public ItemCapabilitySlotListBuilder(CoTIntRange[] numbers) {
+    public ItemCapabilitySlotListBuilder(CoTIntRange... numbers) {
         Arrays.stream(numbers)
                 .flatMapToInt(CoTIntRange::stream)
                 .distinct()
@@ -42,7 +42,12 @@ public class ItemCapabilitySlotListBuilder {
     
     public ItemSlotList buildItemSlotList() {
         final Map<Integer, ItemSlot> itemSlotList = new HashMap<>();
-        slotList.forEach((index, builder) -> itemSlotList.put(index, builder.buildItemSlot()));
+        int actualIndex = 0;
+        for(int index : slotList.navigableKeySet()) {
+            ItemCapabilitySlotBuilder builder = slotList.get(index);
+            itemSlotList.put(index, builder.buildItemSlot(actualIndex));
+            actualIndex++;
+        }
     
     
         return new ItemSlotList(itemSlotList);

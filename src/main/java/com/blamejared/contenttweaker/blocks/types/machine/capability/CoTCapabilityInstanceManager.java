@@ -26,7 +26,10 @@ public class CoTCapabilityInstanceManager {
         capabilityConfiguration.createInstancesFor(this);
     }
     
-    public void addInstance(ICotCapability capability, ICotCapabilityInstance instance){
+    public void addInstance(ICotCapability capability, @Nullable ICotCapabilityInstance instance) {
+        if(instance == null) {
+            return;
+        }
         configurations.put(capability, instance);
     }
     
@@ -106,5 +109,30 @@ public class CoTCapabilityInstanceManager {
             value.addToContainer(coTContainer, playerInventory);
         }
         return coTContainer;
+    }
+    
+    public Collection<ICotCapabilityInstanceTickable> tickableTiles() {
+        List<ICotCapabilityInstanceTickable> list = new ArrayList<>();
+        for(ICotCapabilityInstance iCotCapabilityInstance : this.configurations.values()) {
+            if(iCotCapabilityInstance instanceof ICotCapabilityInstanceTickable) {
+                final ICotCapabilityInstanceTickable tickable = (ICotCapabilityInstanceTickable) iCotCapabilityInstance;
+                if(tickable.needsTicking()) {
+                    list.add(tickable);
+                }
+            }
+        }
+        return list;
+    }
+    
+    public boolean requiresTickableTile() {
+        for(ICotCapabilityInstance iCotCapabilityInstance : this.configurations.values()) {
+            if(iCotCapabilityInstance instanceof ICotCapabilityInstanceTickable) {
+                final ICotCapabilityInstanceTickable tickable = (ICotCapabilityInstanceTickable) iCotCapabilityInstance;
+                if(tickable.needsTicking()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
