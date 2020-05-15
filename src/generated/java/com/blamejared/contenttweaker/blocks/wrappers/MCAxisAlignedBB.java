@@ -29,8 +29,26 @@ public class MCAxisAlignedBB {
     }
 
     @ZenCodeType.Method
-    public double getXSize() {
-        return internal.getXSize();
+    public MCAxisAlignedBB offset(double x, double y, double z) {
+        return new MCAxisAlignedBB(internal.offset(x, y, z));
+    }
+
+
+    @ZenCodeType.Method
+    public boolean intersects(MCAxisAlignedBB other) {
+        return internal.intersects((other).getInternal());
+    }
+
+
+    @ZenCodeType.Method
+    public MCAxisAlignedBB offset(MCVec3d vec) {
+        return new MCAxisAlignedBB(internal.offset((vec).getInternal()));
+    }
+
+
+    @ZenCodeType.Method
+    public MCAxisAlignedBB expand(double x, double y, double z) {
+        return new MCAxisAlignedBB(internal.expand(x, y, z));
     }
 
 
@@ -41,20 +59,25 @@ public class MCAxisAlignedBB {
 
 
     @ZenCodeType.Method
-    public MCAxisAlignedBB offset(double x, double y, double z) {
-        return new MCAxisAlignedBB(internal.offset(x, y, z));
+    public MCAxisAlignedBB offset(MCBlockPos pos) {
+        return new MCAxisAlignedBB(internal.offset((pos).getInternal()));
     }
 
 
+    /**
+     * Creates a new {@link AxisAlignedBB} that is expanded by the given value in all directions. Equivalent to {@link
+     * #grow(double)} with value set to the negative of the value provided here. Passing a negative value to this method
+     * values will grow the AABB.
+     * <br/>
+     * Side lengths will be decreased by 2 times the value of the parameter, since both min and max are changed.
+     * <br/>
+     * If contracting and the amount to contract by is larger than the length of a side, then the side will wrap (still
+     * creating a valid AABB - see samples on {@link #grow(double, double, double)}).
+     * @return A modified AABB.
+     */
     @ZenCodeType.Method
-    public MCAxisAlignedBB intersect(MCAxisAlignedBB other) {
-        return new MCAxisAlignedBB(internal.intersect((other).getInternal()));
-    }
-
-
-    @ZenCodeType.Method
-    public MCAxisAlignedBB grow(double value) {
-        return new MCAxisAlignedBB(internal.grow(value));
+    public MCAxisAlignedBB shrink(double value) {
+        return new MCAxisAlignedBB(internal.shrink(value));
     }
 
 
@@ -65,8 +88,20 @@ public class MCAxisAlignedBB {
 
 
     @ZenCodeType.Method
+    public boolean contains(MCVec3d vec) {
+        return internal.contains((vec).getInternal());
+    }
+
+
+    @ZenCodeType.Method
     public String toString() {
         return (internal.toString());
+    }
+
+
+    @ZenCodeType.Method
+    public double getZSize() {
+        return internal.getZSize();
     }
 
 
@@ -83,35 +118,8 @@ public class MCAxisAlignedBB {
 
 
     @ZenCodeType.Method
-    public boolean contains(double x, double y, double z) {
-        return internal.contains(x, y, z);
-    }
-
-
-    @ZenCodeType.Method
-    public MCAxisAlignedBB offset(MCVec3d vec) {
-        return new MCAxisAlignedBB(internal.offset((vec).getInternal()));
-    }
-
-
-    @ZenCodeType.Method
     public boolean intersects(double x1, double y1, double z1, double x2, double y2, double z2) {
         return internal.intersects(x1, y1, z1, x2, y2, z2);
-    }
-
-
-    /**
-     * Returns the average length of the edges of the bounding box.
-     */
-    @ZenCodeType.Method
-    public double getAverageEdgeLength() {
-        return internal.getAverageEdgeLength();
-    }
-
-
-    @ZenCodeType.Method
-    public boolean contains(MCVec3d vec) {
-        return internal.contains((vec).getInternal());
     }
 
 
@@ -122,8 +130,20 @@ public class MCAxisAlignedBB {
 
 
     @ZenCodeType.Method
-    public double getYSize() {
-        return internal.getYSize();
+    public boolean equals(Object p_equals_1_) {
+        return internal.equals((p_equals_1_));
+    }
+
+
+    @ZenCodeType.Method
+    public MCAxisAlignedBB intersect(MCAxisAlignedBB other) {
+        return new MCAxisAlignedBB(internal.intersect((other).getInternal()));
+    }
+
+
+    @ZenCodeType.Method
+    public MCAxisAlignedBB grow(double value) {
+        return new MCAxisAlignedBB(internal.grow(value));
     }
 
 
@@ -160,8 +180,8 @@ public class MCAxisAlignedBB {
 
 
     @ZenCodeType.Method
-    public boolean equals(Object p_equals_1_) {
-        return internal.equals((p_equals_1_));
+    public MCVec3d getCenter() {
+        return new MCVec3d(internal.getCenter());
     }
 
 
@@ -172,20 +192,14 @@ public class MCAxisAlignedBB {
 
 
     @ZenCodeType.Method
-    public MCVec3d getCenter() {
-        return new MCVec3d(internal.getCenter());
+    public double getXSize() {
+        return internal.getXSize();
     }
 
 
     @ZenCodeType.Method
-    public boolean intersects(MCAxisAlignedBB other) {
-        return internal.intersects((other).getInternal());
-    }
-
-
-    @ZenCodeType.Method
-    public MCAxisAlignedBB expand(double x, double y, double z) {
-        return new MCAxisAlignedBB(internal.expand(x, y, z));
+    public boolean intersects(MCVec3d min, MCVec3d max) {
+        return internal.intersects((min).getInternal(), (max).getInternal());
     }
 
 
@@ -195,38 +209,24 @@ public class MCAxisAlignedBB {
     }
 
 
+    @ZenCodeType.Method
+    public double getYSize() {
+        return internal.getYSize();
+    }
+
+
+    @ZenCodeType.Method
+    public boolean contains(double x, double y, double z) {
+        return internal.contains(x, y, z);
+    }
+
+
     /**
-     * Creates a new {@link AxisAlignedBB} that is expanded by the given value in all directions. Equivalent to {@link
-     * #grow(double)} with value set to the negative of the value provided here. Passing a negative value to this method
-     * values will grow the AABB.
-     * <br/>
-     * Side lengths will be decreased by 2 times the value of the parameter, since both min and max are changed.
-     * <br/>
-     * If contracting and the amount to contract by is larger than the length of a side, then the side will wrap (still
-     * creating a valid AABB - see samples on {@link #grow(double, double, double)}).
-     * @return A modified AABB.
+     * Returns the average length of the edges of the bounding box.
      */
     @ZenCodeType.Method
-    public MCAxisAlignedBB shrink(double value) {
-        return new MCAxisAlignedBB(internal.shrink(value));
-    }
-
-
-    @ZenCodeType.Method
-    public double getZSize() {
-        return internal.getZSize();
-    }
-
-
-    @ZenCodeType.Method
-    public MCAxisAlignedBB offset(MCBlockPos pos) {
-        return new MCAxisAlignedBB(internal.offset((pos).getInternal()));
-    }
-
-
-    @ZenCodeType.Method
-    public boolean intersects(MCVec3d min, MCVec3d max) {
-        return internal.intersects((min).getInternal(), (max).getInternal());
+    public double getAverageEdgeLength() {
+        return internal.getAverageEdgeLength();
     }
 
 

@@ -54,13 +54,12 @@ public class GuiGuiInformation {
     }
     
     public Collection<WriteableResource> getResourcePackResources(MCResourceLocation blockName) {
-        final WriteableResourceImage image;
-        if(backgroundLocation != null) {
-            image = new WriteableResourceImage(ImageType.GUI, backgroundLocation);
-        }else {
-            image = new WriteableResourceImage(ImageType.GUI, blockName);
+        if(backgroundLocation == null) {
+            backgroundLocation = blockName;
         }
+        
+        final WriteableResourceImage image = new WriteableResourceImage(ImageType.GUI, backgroundLocation);
         return Collections.singleton(image);
-    
+        
     }
 }
