@@ -1,7 +1,0 @@
-//Note to self: Inner classes are . not $ at this point
-//WrappedClass;CrTName;ZCName;DocPath: All except the 1st are optional and calculated based on the preceding value(s)
-net.minecraft.util.math.AxisAlignedBB;com.blamejared.contenttweaker.blocks.wrappers.MCAxisAlignedBB;mods.contenttweaker.block.MCAxisAlignedBB
-net.minecraft.util.math.Vec3d;com.blamejared.contenttweaker.blocks.wrappers.MCVec3d;mods.contenttweaker.block.MCVec3d
-net.minecraft.util.math.RayTraceResult;com.blamejared.contenttweaker.blocks.wrappers.MCRayTraceResult;mods.contenttweaker.block.MCRayTraceResult
-net.minecraft.util.math.RayTraceResult.Type;com.blamejared.contenttweaker.blocks.wrappers.MCRayTraceResultType;mods.contenttweaker.block.MCRayTraceResultType
-net.minecraft.util.math.shapes.VoxelShape;com.blamejared.contenttweaker.blocks.wrappers.MCVoxelShape;mods.contenttweaker.block.MCVoxelShape

@@ -6,12 +6,14 @@ import com.blamejared.contenttweaker.items.types.basic.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.item.*;
 import org.openzen.zencode.java.*;
 
 import java.lang.reflect.*;
 
 @ZenRegister
+@Document("mods/contenttweaker/item/ItemBuilder")
 @ZenCodeType.Name("mods.contenttweaker.item.ItemBuilder")
 public class ItemBuilder implements IIsBuilder {
     

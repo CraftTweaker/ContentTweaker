@@ -9,10 +9,16 @@ import net.minecraftforge.registries.*;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.*;
 
 public class VanillaFactory {
     
+    private static final Set<String> modIdsToGenerateStuffFor = new HashSet<>();
     private static final CoTRegistry registry = new CoTRegistry();
+    
+    public static void generateStuffForMyModId(String myModId) {
+        modIdsToGenerateStuffFor.add(myModId);
+    }
     
     public static void registerBlock(IIsCoTBlock block) {
         registry.addBlock(block);
@@ -62,7 +68,7 @@ public class VanillaFactory {
         
         
         registry.getAssetResources()
-                .filter(w -> ContentTweaker.MOD_ID.equals(w.getModId()))
+                .filter(w -> modIdsToGenerateStuffFor.contains(w.getModId()))
                 .forEach(w -> {
                     w.writeContentToFileRelativeTo(resourcePackDir);
                     w.onWrite();
@@ -84,7 +90,7 @@ public class VanillaFactory {
         
         
         registry.getDataResources()
-                .filter(w -> ContentTweaker.MOD_ID.equals(w.getModId()))
+                .filter(w -> modIdsToGenerateStuffFor.contains(w.getModId()))
                 .forEach(w -> {
                     w.writeContentToFileRelativeTo(dataPackDir);
                     w.onWrite();
