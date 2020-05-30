@@ -9,9 +9,17 @@ import org.openzen.zencode.java.*;
 
 import java.util.*;
 
+/**
+ * I advise against using the static methods in this class directly as they may be merged into CrT's BEP at any point.
+ * If you need to access the Bracket Expression Parser methods dynamically, you can use
+ * ```zencode
+ * var myName = "misc";
+ * <itemgroup:${myName}>
+ * ```
+ */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.BracketHandlers")
-@Document("mods/contenttweaker/BracketHandlers")
+@Document("mods/contenttweaker/API/BracketHandlers")
 public class BracketHandlers {
     
     /**
@@ -62,16 +70,5 @@ public class BracketHandlers {
     //        throw new IllegalArgumentException("Could not find soundtype <soundtype:" + tokens + ">!");
     //    }
     //
-    
-    @ZenCodeType.Method
-    @BracketResolver("blockstateproperty")
-    public static MCBlockStateProperty getBlockStateProperty(String tokens) {
-        final MCBlockStateProperty fromString = MCBlockStateProperty.getFromString(tokens.toUpperCase());
-        if(fromString != null) {
-            return fromString;
-        }
-        throw new IllegalArgumentException("Could not find block state Property <blockstateproperty:" + tokens + ">!");
-    }
-    
     
 }

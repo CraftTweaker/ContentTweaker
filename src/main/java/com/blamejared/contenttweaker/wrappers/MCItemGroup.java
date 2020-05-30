@@ -13,7 +13,7 @@ import org.openzen.zencode.java.*;
  */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCItemGroup")
-@Document("mods/contenttweaker/item/MCItemGroup")
+@Document("mods/contenttweaker/API/item/MCItemGroup")
 @ZenWrapper(wrappedClass = "net.minecraft.item.ItemGroup", displayStringFormat = "%s.getCommandString()")
 public class MCItemGroup implements CommandStringDisplayable {
     
@@ -29,7 +29,7 @@ public class MCItemGroup implements CommandStringDisplayable {
     
     /**
      * Gets the path of the item group.
-     * The path is what you use in the Bracket Expression after teh `<itemgroup:` part.
+     * The path is what you use in the Bracket Expression after the `<itemgroup:` part.
      */
     @ZenCodeType.Getter("path")
     @ZenCodeType.Method

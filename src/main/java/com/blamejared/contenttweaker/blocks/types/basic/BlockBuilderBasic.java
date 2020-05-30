@@ -5,14 +5,22 @@ import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import com.blamejared.crafttweaker_annotations.annotations.*;
 import org.openzen.zencode.java.*;
 
+/**
+ * This builder builds the block type that is used by default in {@link BlockBuilder#build}
+ * This builder does not offer any special properties to set, you can only build it.
+ *
+ * @docParam this new BlockBuilder().withType<ItemBuilderBasic>()
+ */
 @ZenRegister
-@ZenCodeType.Name("mods.contenttweaker.block.basic.BuilderBasic")
-public class BuilderBasic extends BlockTypeBuilder {
+@Document("mods/contenttweaker/API/block/basic/BlockBuilderBasic")
+@ZenCodeType.Name("mods.contenttweaker.block.basic.BlockBuilderBasic")
+public class BlockBuilderBasic extends BlockTypeBuilder {
     
     
-    public BuilderBasic(BlockBuilder builder) {
+    public BlockBuilderBasic(BlockBuilder builder) {
         super(builder);
     }
     

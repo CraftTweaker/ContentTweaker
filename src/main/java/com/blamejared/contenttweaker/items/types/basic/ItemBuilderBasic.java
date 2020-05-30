@@ -8,13 +8,19 @@ import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import org.openzen.zencode.java.*;
 
+/**
+ * The basic builder for items, also called by {@link ItemBuilder#build}.
+ * Does not have any special properties, it exists.
+ *
+ * @docParam this new ItemBuilder().withType<ItemBuilderBasic>()
+ */
 @ZenRegister
-@ZenCodeType.Name("mods.contenttweaker.item.basic.BuilderBasic")
-@Document("mods/contenttweaker/item/basic/BuilderBasic")
-public class BuilderBasic extends ItemTypeBuilder {
+@ZenCodeType.Name("mods.contenttweaker.item.basic.ItemBuilderBasic")
+@Document("mods/contenttweaker/API/item/basic/ItemBuilderBasic")
+public class ItemBuilderBasic extends ItemTypeBuilder {
     
     
-    public BuilderBasic(ItemBuilder builder) {
+    public ItemBuilderBasic(ItemBuilder builder) {
         super(builder);
     }
     

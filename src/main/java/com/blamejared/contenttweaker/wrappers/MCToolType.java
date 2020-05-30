@@ -13,7 +13,7 @@ import org.openzen.zencode.java.*;
  */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCToolType")
-@Document("mods/contenttweaker/item/MCToolType")
+@Document("mods/contenttweaker/API/item/MCToolType")
 @ZenWrapper(wrappedClass = "net.minecraftforge.common.ToolType", displayStringFormat = "%s.getCommandString()")
 public class MCToolType implements CommandStringDisplayable {
     

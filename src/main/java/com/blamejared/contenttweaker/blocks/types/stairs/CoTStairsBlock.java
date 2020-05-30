@@ -15,13 +15,13 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     private final IIsCotItem item;
     private final MCResourceLocation top, bottom, sides;
     
-    public CoTStairsBlock(BuilderStairs builderStairs, MCResourceLocation location) {
-        super(Blocks.AIR::getDefaultState, builderStairs.getBlockBuilder().getBlockProperties());
+    public CoTStairsBlock(BlockBuilderStairs blockBuilderStairs, MCResourceLocation location) {
+        super(Blocks.AIR::getDefaultState, blockBuilderStairs.getBlockBuilder().getBlockProperties());
         this.setRegistryName(location.getInternal());
-        this.item = new CoTBlockItem(this, builderStairs.getBlockBuilder().getItemProperties());
-        this.top = builderStairs.getTop(location);
-        this.bottom = builderStairs.getBottom(location);
-        this.sides = builderStairs.getSides(location);
+        this.item = new CoTBlockItem(this, blockBuilderStairs.getBlockBuilder().getItemProperties());
+        this.top = blockBuilderStairs.getTop(location);
+        this.bottom = blockBuilderStairs.getBottom(location);
+        this.sides = blockBuilderStairs.getSides(location);
     }
     
     @Nonnull

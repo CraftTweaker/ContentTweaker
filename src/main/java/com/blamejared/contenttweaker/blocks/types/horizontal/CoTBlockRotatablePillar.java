@@ -16,12 +16,12 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     private final MCResourceLocation end;
     private final MCResourceLocation sides;
     
-    public CoTBlockRotatablePillar(BuilderPillarRotatable builderPillarRotatable, MCResourceLocation location) {
-        super(builderPillarRotatable.getBlockBuilder().getBlockProperties());
+    public CoTBlockRotatablePillar(BlockBuilderPillarRotatable blockBuilderPillarRotatable, MCResourceLocation location) {
+        super(blockBuilderPillarRotatable.getBlockBuilder().getBlockProperties());
         this.setRegistryName(location.getInternal());
-        item = new CoTBlockItem(this, builderPillarRotatable.getBlockBuilder().getItemProperties());
-        end = builderPillarRotatable.getEnd(location);
-        sides = builderPillarRotatable.getSides(location);
+        item = new CoTBlockItem(this, blockBuilderPillarRotatable.getBlockBuilder().getItemProperties());
+        end = blockBuilderPillarRotatable.getEnd(location);
+        sides = blockBuilderPillarRotatable.getSides(location);
     }
     
     @Nonnull

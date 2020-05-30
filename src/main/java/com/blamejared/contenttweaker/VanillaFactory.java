@@ -23,10 +23,12 @@ public class VanillaFactory {
     public static void registerBlock(IIsCoTBlock block) {
         registry.addBlock(block);
         registry.addItem(block.getItem());
+        CraftTweakerAPI.logInfo("Registered Block %s", block.getMCResourceLocation().getInternal());
     }
     
     public static void registerItem(IIsCotItem item) {
         registry.addItem(item);
+        CraftTweakerAPI.logInfo("Registered Item %s", item.getMCResourceLocation().getInternal());
     }
     
     public static void complete() {
