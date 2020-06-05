@@ -79,7 +79,6 @@ public class VanillaFactory {
     
     private static void writeData() {
         final File dataPackDir;
-        final File resourcePackDir;
         final ModList modList = ModList.get();
         if(modList.isLoaded("theloader")){
             dataPackDir = new File("the_loader/datapacks/contenttweaker");
@@ -88,6 +87,15 @@ public class VanillaFactory {
         } else {
             CraftTweakerAPI.logInfo("Could not find resource loader mod, no data pack will be generated!");
             return;
+        }
+    
+    
+        if(!new File(dataPackDir, "pack.mcmeta").exists()) {
+            try(final PrintWriter writer = new PrintWriter(new FileWriter(new File(dataPackDir, "pack.mcmeta")))) {
+                writer.write("{\n" + "   \"pack\": {\n" + "      \"pack_format\": 5,\n" + "      \"description\": \"ContentTweaker loottables and data\"\n" + "   }\n" + "}");
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
         }
         
         
