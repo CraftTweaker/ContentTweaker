@@ -12,6 +12,7 @@ import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
+import net.minecraftforge.registries.*;
 import org.openzen.zencode.java.*;
 
 import java.lang.reflect.*;
@@ -42,6 +43,31 @@ public class BlockBuilder implements IIsBuilder {
     public BlockBuilder(@ZenCodeType.Optional("<blockmaterial:iron>") MCMaterial material) {
         blockProperties = Block.Properties.create(material.getInternal());
         itemProperties = new Item.Properties().group(ItemGroup.MISC);
+    }
+    
+    @ZenCodeType.Constructor
+    public BlockBuilder(MCBlock block) {
+        final Block internal = block.getInternal();
+        blockProperties = Block.Properties.from(internal);
+        
+        //Uses ItemStack, since the other methods getters are deprecated
+        final Item asItem = internal.asItem();
+        final ItemStack itemStack = new ItemStack(asItem);
+        itemProperties = new Item.Properties();
+        itemProperties.rarity(itemStack.getRarity());
+        if(itemStack.isDamageable()) {
+            itemProperties.maxDamage(itemStack.getMaxDamage());
+        } else {
+            itemProperties.maxStackSize(itemStack.getMaxStackSize());
+        }
+        if(itemStack.hasContainerItem()){
+            itemProperties.containerItem(itemStack.getContainerItem().getItem());
+        }
+        
+        final ItemGroup group = asItem.getGroup();
+        if(group != null) {
+            itemProperties.group(group);
+        }
     }
     
     public Item.Properties getItemProperties() {
