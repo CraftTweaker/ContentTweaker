@@ -14,11 +14,11 @@ apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'idea'
 
-//apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/22e7d543a18cd30675277fbfa3669e3d9e206010/generic/secrets.gradle'
-//
-//if (project.hasProperty('secretFile')) {
-//    loadSecrets(new File((String) findProperty('secretFile')))
-//}
+apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/22e7d543a18cd30675277fbfa3669e3d9e206010/generic/secrets.gradle'
+
+if (project.hasProperty('secretFile')) {
+    loadSecrets(new File((String) findProperty('secretFile')))
+}
 
 subprojects {
     apply plugin: 'java'
@@ -138,5 +138,121 @@ sourceSets {
 idea {
     module {
         generatedSourceDirs += file("src/generated/java")
+    }
+}
+
+
+task genGitChangelog() {
+    def stdout = new ByteArrayOutputStream()
+    // first commit to check from, in our case the first commit of the branch
+    String firstCommit = "b762862ec40682cfa40f56e730d73b3bf3eb568f";
+    String repoLink = "https://github.com/The-Acronym-Coders/ContentTweaker/commit/"
+    // was having issues with grep and spaces in the regex
+    exec {
+        commandLine 'git', 'log', '-i', '--grep=version\\spush', '--grep=open\\sbeta\\sspecific\\scode', '--pretty=tformat:%H', '--date=local', firstCommit + '..@{0}'
+        standardOutput = stdout
+    }
+    if (stdout.toString().trim().indexOf("\n") >= 0) {
+        firstCommit = stdout.toString().split("\n")[0].trim();
+    }
+    System.out.println("Last version hash: \"" + firstCommit + "\"");
+    stdout = new ByteArrayOutputStream()
+    def test = exec {
+        commandLine 'git', 'log', '--pretty=tformat:- [%s](' + repoLink + '%H) - %aN - %cd', '--max-parents=1', '--date=local', firstCommit + "..@"
+        standardOutput = stdout
+    }
+    File file = new File("changelog_cot.md")
+    file.write("### Current version: " + project.version)
+    file.append("\n" + stdout.toString())
+    System.out.println("Changelog generated!")
+}
+
+
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    description = 'Creates a JAR containing the source code.'
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    description = 'Creates a JAR containing the JavaDocs.'
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+task deobfJar(type: Jar) {
+    description = 'Creates a JAR containing the non-obfuscated compiled code.'
+    from sourceSets.main.output
+    classifier = "deobf"
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+    archives deobfJar
+}
+
+publishing {
+
+    publications {
+
+        mavenJava(MavenPublication) {
+
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+
+            // Allows the maven pom file to be modified.
+            pom.withXml {
+
+                // Go through all the dependencies.
+                asNode().dependencies.dependency.each { dep ->
+
+                    println 'Surpressing artifact ' + dep.artifactId.last().value().last() + ' from maven dependencies.'
+                    assert dep.parent().remove(dep)
+                }
+            }
+
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+            artifact javadocJar {
+                classifier 'javadoc'
+            }
+            artifact deobfJar {
+                classifier 'deobf'
+            }
+        }
+    }
+
+    repositories {
+
+        maven {
+
+            url "file://" + System.getenv("local_maven")
+        }
+    }
+}
+
+curseforge {
+
+    apiKey = findProperty('curseforge_api_token') ?: 0
+    project {
+        id = "237065"
+        releaseType = 'beta'
+        changelog = file("changelog_cot.md")
+        changelogType = 'markdown'
+
+        mainArtifact(jar) {
+            relations {
+                requiredLibrary "crafttweaker"
+            }
+        }
+//        addArtifact(sourcesJar)
+//        addArtifact(javadocJar)
+        addArtifact(deobfJar)
     }
 }
