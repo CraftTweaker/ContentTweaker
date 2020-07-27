@@ -3,19 +3,23 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
     }
 }
+
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'idea'
-plugins {
-    id "com.matthewprenger.cursegradle" version "1.4.0"
-}
+apply plugin: 'com.matthewprenger.cursegradle'
 
 apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/22e7d543a18cd30675277fbfa3669e3d9e206010/generic/secrets.gradle'
 
@@ -37,6 +41,18 @@ group = 'com.blamejared.contenttweaker'
 archivesBaseName = 'ContentTweaker-1.15'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+//Shuts up javadoc failures
+if (JavaVersion.current().isJava8Compatible()) {
+
+    allprojects {
+
+        tasks.withType(Javadoc) {
+            options.tags += "docParam"
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
 
 minecraft {
     mappings channel: 'snapshot', version: '20200227-1.15.1'
@@ -242,7 +258,7 @@ publishing {
 
 curseforge {
 
-    apiKey = findProperty('curseforge_api_token') ?: 0
+    apiKey = findProperty('curseforge_api_token') ?: "825f87b4-a85b-4850-be7e-84205e21270a"
     project {
         id = "237065"
         releaseType = 'beta'
@@ -258,4 +274,8 @@ curseforge {
 //        addArtifact(javadocJar)
         addArtifact(deobfJar)
     }
+
+       options {
+    debug = true // defaults to false
+  }
 }

@@ -39,7 +39,7 @@ pipeline {
                     sh './gradlew publish'
 
                     echo 'Deploying to CurseForge (disabled for testing purposes)'
-                    //sh './gradlew curseforge'
+                    //sh './gradlew :curseforge'
                 }
             }
         }

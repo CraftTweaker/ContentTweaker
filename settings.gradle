@@ -2,15 +2,15 @@ rootProject.name = 'ContentTweaker'
 
 
 include(":CraftTweaker")
-project(":CraftTweaker").projectDir = new File(rootDir, "CraftTweaker");
+project(":CraftTweaker").projectDir = new File(rootDir, "CraftTweaker")
 
 
 include(":Crafttweaker_Annotations")
-project(":Crafttweaker_Annotations").projectDir = new File(rootDir, "CraftTweaker/Crafttweaker_Annotations");
+project(":Crafttweaker_Annotations").projectDir = new File(rootDir, "CraftTweaker/Crafttweaker_Annotations")
 
 
 include(":Crafttweaker_Annotation_Processors")
-project(":Crafttweaker_Annotation_Processors").projectDir = new File(rootDir, "CraftTweaker/Crafttweaker_Annotation_Processors");
+project(":Crafttweaker_Annotation_Processors").projectDir = new File(rootDir, "CraftTweaker/Crafttweaker_Annotation_Processors")
 
 
 // Find the directories containing a "build.gradle" file in the root directory
