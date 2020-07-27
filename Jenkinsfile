@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('SCM Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '775b496a-e913-4e0b-82a0-535b3c1fad10', url: 'https://github.com/CraftTweaker/ContentTweaker']]])
+                sh 'git submodule update --init --recursive'
             }
         }
 
