@@ -3,11 +3,6 @@
 pipeline {
     agent any
     stages {
-        stage('SCM Checkout') {
-            steps {
-                sh 'git submodule update --init --recursive'
-            }
-        }
 
         stage('Clean') {
             steps {
