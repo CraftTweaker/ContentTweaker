@@ -39,6 +39,14 @@ subprojects {
 
 
 version = '1.0.0'
+if(project.hasProperty('branch')) {
+    version += ("." + project.branch)
+}
+
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "." + System.getenv('BUILD_NUMBER')
+}
+
 group = 'com.blamejared.contenttweaker'
 archivesBaseName = 'ContentTweaker-1.15'
 
@@ -135,19 +143,6 @@ jar {
 }
 
 jar.finalizedBy('reobfJar')
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-        }
-    }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
-    }
-}
 
 sourceSets {
     main {
@@ -258,12 +253,18 @@ publishing {
     }
 }
 
+
+String relType = 'release';
+if(project.hasProperty('branch')) {
+    relType = (project.branch == 'develop' ? 'beta' : 'alpha')
+}
+
 curseforge {
 
-    apiKey = findProperty('curseforge_api_token') ?: "825f87b4-a85b-4850-be7e-84205e21270a"
+    apiKey = findProperty('curseforge_api_token') ?: "0"
     project {
         id = "237065"
-        releaseType = 'beta'
+        releaseType = relType
         changelog = file("changelog_cot.md")
         changelogType = 'markdown'
 
@@ -276,8 +277,4 @@ curseforge {
 //        addArtifact(javadocJar)
         addArtifact(deobfJar)
     }
-
-       options {
-    debug = true // defaults to false
-  }
 }

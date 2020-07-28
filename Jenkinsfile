@@ -25,7 +25,15 @@ pipeline {
                         sh './gradlew build'
                     }
                     echo 'Building'
-                    sh './gradlew build'
+                    script {
+                        if(env.BRANCH_NAME.startsWith("develop")) {
+                            sh './gradlew -Pbranch=develop build'
+                        } else if(env.BRANCH_NAME.startsWith("release")) {
+                            sh './gradlew build'
+                        } else {
+                            sh './gradlew -Pbranch=' + env.BRANCH_NAME + ' build'
+                        }
+                    }
                 }
             }
         }
@@ -43,11 +51,17 @@ pipeline {
                     //echo 'Updating version'
                     //sh './gradlew updateVersionTracker'
 
-                    echo 'Deploying to Maven'
-                    sh './gradlew publish'
-
-                    echo 'Deploying to CurseForge (disabled for testing purposes)'
-                    //sh './gradlew :curseforge'
+                    echo 'Deploying to CurseForge and Maven'
+                    script {
+                        if(env.BRANCH_NAME.startsWith("develop")) {
+                            sh './gradlew -Pbranch=develop :publish :curseForge'
+                        } else if(env.BRANCH_NAME.startsWith("release")) {
+                            sh './gradlew :publish :curseForge'
+                        } else {
+                            echo "Not Deploying to CurseForge because branch is ${env.BRANCH_NAME} is neither develop nor release"
+                            sh './gradlew -Pbranch=' + env.BRANCH_NAME + ' :publish'
+                        }
+                    }
                 }
             }
         }
