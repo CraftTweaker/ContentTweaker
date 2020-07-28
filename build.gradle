@@ -31,7 +31,9 @@ subprojects {
     apply plugin: 'java'
 
     if(name != "CraftTweaker") {
-        apply from: rootProject.file("common.gradle");
+        apply from: rootProject.file("common.gradle")
+    } else {
+        it.sourceSets.main.java.srcDirs += new File(it.projectDir, "src/generated/java")
     }
 }
 
