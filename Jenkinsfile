@@ -8,6 +8,10 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
                     echo 'Cleaning Project'
+                    dir('CraftTweaker') {
+                        sh 'chmod +x gradlew'
+                        sh './gradlew clean'
+                    }
                     sh 'chmod +x gradlew'
                     sh './gradlew clean'
                 }
@@ -16,6 +20,10 @@ pipeline {
         stage('Build') {
             steps {
                 withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
+                    dir('CraftTweaker') {
+                        echo 'Building CraftTweaker'
+                        sh './gradlew build'
+                    }
                     echo 'Building'
                     sh './gradlew build'
                 }
