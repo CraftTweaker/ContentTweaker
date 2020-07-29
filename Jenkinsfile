@@ -5,27 +5,33 @@ pipeline {
     stages {
         stage('Clean') {
             steps {
-                echo 'Cleaning Project'
-                sh 'chmod +x gradlew'
-                sh './gradlew clean'
+                withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
+                    echo 'Cleaning Project'
+                    sh 'chmod +x gradlew'
+                    sh './gradlew clean'
+                }
             }
         }
         stage('Setup') {
             steps {
-                echo 'Setting up Workspace'
-                sh './gradlew setupciworkspace'
+                withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
+                    echo 'Setting up Workspace'
+                    sh './gradlew setupciworkspace genGitChangelog'
+                }
             }
         }
         stage('Build and Deploy') {
             steps {
-                echo 'Building and Deploying to Maven'
-                script {
-                    if (env.BRANCH_NAME.contains("develop")) {
-                        sh './gradlew build --refresh-dependencies -Pbranch=Snapshot uploadArchives'
-                    } else if (env.BRANCH_NAME.contains("release")) {
-                        sh './gradlew build --refresh-dependencies uploadArchives'
-                    } else {
-                        sh './gradlew build --refresh-dependencies -Pbranch=' + env.BRANCH_NAME + ' uploadArchives'
+                withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
+                    echo 'Building and Deploying to Maven'
+                    script {
+                        if (env.BRANCH_NAME.contains("develop")) {
+                            sh './gradlew build --refresh-dependencies -Pbranch=Snapshot uploadArchives'
+                        } else if (env.BRANCH_NAME.contains("release")) {
+                            sh './gradlew build --refresh-dependencies uploadArchives curseForge'
+                        } else {
+                            sh './gradlew build --refresh-dependencies -Pbranch=' + env.BRANCH_NAME + ' uploadArchives'
+                        }
                     }
                 }
             }
