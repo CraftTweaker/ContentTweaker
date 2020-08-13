@@ -1,5 +1,6 @@
 package com.blamejared.contenttweaker.api.resources;
 
+import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.util.*;
 
@@ -14,10 +15,6 @@ public class WriteableResource {
     private final String path;
     private final String fileExtension;
     protected Supplier<byte[]> contentSupplier;
-    
-    public String getModId() {
-        return modId;
-    }
     
     public WriteableResource(ResourceType type, FileExtension fileExtension, String modId, String path) {
         this.type = type;
@@ -50,6 +47,10 @@ public class WriteableResource {
         return new MCResourceLocation(location.getNamespace(), prefix + "/" + location.getNamespace());
     }
     
+    public String getModId() {
+        return modId;
+    }
+    
     public WriteableResource withContent(String content, Object... args) {
         return withContent(String.format(content, args).getBytes());
     }
@@ -73,12 +74,12 @@ public class WriteableResource {
         return new File(resourcePackFolder, file);
     }
     
-    public void writeContentToFileRelativeTo(File resourcePackFolder) {
-        writeContentToFileRelativeTo(resourcePackFolder, false);
+    public void writeContentUsing(File resourcePackDirectory) {
+        writeContentUsing(resourcePackDirectory, false);
     }
     
-    public void writeContentToFileRelativeTo(File resourcePackFolder, boolean replace) {
-        final Path toWrite = getFile(resourcePackFolder).toPath();
+    public void writeContentUsing(File resourcePackDirectory, boolean replace) {
+        final Path toWrite = getFile(resourcePackDirectory).toPath();
         if(!replace && Files.exists(toWrite)) {
             return;
         }
@@ -86,7 +87,7 @@ public class WriteableResource {
         try {
             Files.createDirectories(toWrite.getParent());
         } catch(IOException e) {
-            e.printStackTrace();
+            CraftTweakerAPI.logThrowing("Could not create directory!", e);
             return;
         }
         
@@ -94,7 +95,7 @@ public class WriteableResource {
         try {
             Files.write(toWrite, contentSupplier.get());
         } catch(IOException e) {
-            e.printStackTrace();
+            CraftTweakerAPI.logThrowing("Could not write to file!", e);
         }
     }
     

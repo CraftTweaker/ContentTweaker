@@ -1,108 +1,130 @@
 package com.blamejared.contenttweaker;
 
+import com.blamejared.contenttweaker.actions.*;
 import com.blamejared.contenttweaker.api.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.items.*;
+import com.blamejared.contenttweaker.file_handling.*;
 import com.blamejared.crafttweaker.api.*;
-import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.common.thread.*;
 import net.minecraftforge.registries.*;
 
-import java.io.*;
-import java.nio.file.*;
 import java.util.*;
 
 public class VanillaFactory {
     
+    /**
+     * We will only generate data pack entries and resource pack entries for these mod ids.
+     * Modids can be added by calling {@link #generateStuffForMyModId(String)}
+     */
     private static final Set<String> modIdsToGenerateStuffFor = new HashSet<>();
     private static final CoTRegistry registry = new CoTRegistry();
     
+    private static boolean registerAllowed = true;
+    
+    /**
+     * Checks if adding content is allowed at the moment.
+     *
+     * Only while this is true calls to {@link #queueItemForRegistration(IIsCotItem)} or {@link #queueBlockForRegistration(IIsCoTBlock)} will succeed.
+     */
+    public static boolean isRegisterAllowed() {
+        return registerAllowed;
+    }
+    
+    /**
+     * Whitelists this modid to have resources and datapacks generated for.
+     * Should generally only be used for CoT addons.
+     *
+     * @param myModId The modid to whitelist
+     */
     public static void generateStuffForMyModId(String myModId) {
         modIdsToGenerateStuffFor.add(myModId);
     }
     
-    public static void registerBlock(IIsCoTBlock block) {
-        registry.addBlock(block);
-        registry.addItem(block.getItem());
-        CraftTweakerAPI.logInfo("Registered Block %s", block.getMCResourceLocation().getInternal());
+    /**
+     * Queues this block to be registered later.
+     * Needs to be done before {@link #forbidRegistration()} has been called!
+     * Blocks will actually be registered at {@link #complete()}.
+     *
+     * @param block The block to enqueue.
+     */
+    public static void queueBlockForRegistration(IIsCoTBlock block) {
+        CraftTweakerAPI.apply(new ActionQueueBlockForRegistration(block, registry));
     }
     
-    public static void registerItem(IIsCotItem item) {
-        registry.addItem(item);
-        CraftTweakerAPI.logInfo("Registered Item %s", item.getMCResourceLocation().getInternal());
+    /**
+     * Queues this item to be registered later.
+     * Needs to be done before {@link #forbidRegistration()} has been called!
+     * Items will actually be registered at {@link #complete()}.
+     *
+     * @param item The item to enqueue.
+     */
+    public static void queueItemForRegistration(IIsCotItem item) {
+        CraftTweakerAPI.apply(new ActionQueueItemForRegistration(item, registry));
     }
     
-    public static void complete() {
-        registry.getBlocksAsVanillaBlocks().forEach(ForgeRegistries.BLOCKS::register);
-        registry.getItemsAsVanillaItems().forEach(ForgeRegistries.ITEMS::register);
+    /**
+     * Prevents any more calls to
+     * {@link #queueBlockForRegistration(IIsCoTBlock)} or {@link #queueItemForRegistration(IIsCotItem)}
+     * from succeeding.
+     *
+     * Will make {@link #isRegisterAllowed()} false
+     */
+    static void forbidRegistration() {
+        registerAllowed = false;
+    }
     
+    /**
+     * Registers the blocks and creates the resource pack and data pack.
+     */
+    static void complete() {
+        registry.getBlocksAsVanillaBlocks().forEach(value -> {
+            CraftTweakerAPI.logDebug("Registering Block '%s'", value.getRegistryName());
+            ForgeRegistries.BLOCKS.register(value);
+        });
+        
+        registry.getItemsAsVanillaItems().forEach(value -> {
+            CraftTweakerAPI.logDebug("Registering Item '%s'", value.getRegistryName());
+            ForgeRegistries.ITEMS.register(value);
+        });
+        
         writeResourcePack();
-        writeData();
+        writeDataPack();
     }
     
     private static void writeResourcePack() {
-        final File resourcePackDir;
-        final ModList modList = ModList.get();
-        if(modList.isLoaded("theloader")){
-            resourcePackDir = new File("the_loader/resourcepacks/contenttweaker");
-        } else if (modList.isLoaded("openloader")){
-            resourcePackDir = new File("openloader/resources/contenttweaker");
-        } else {
+        if(!EffectiveSide.get().isClient()) {
+            CraftTweakerAPI.logInfo("Skipping writing resources for ContentTweaker, because we are on a server");
+            return;
+        }
+        
+        final ResourcePackInfo resourcePackInfo = ResourcePackInfo.get();
+        if(resourcePackInfo == null) {
             CraftTweakerAPI.logInfo("Could not find resource loader mod, no resource pack will be generated!");
             return;
         }
         
-        if(!resourcePackDir.exists()){
-            try {
-                Files.createDirectories(resourcePackDir.toPath());
-            } catch(IOException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-        
-        if(!new File(resourcePackDir, "pack.mcmeta").exists()) {
-            try(final PrintWriter writer = new PrintWriter(new FileWriter(new File(resourcePackDir, "pack.mcmeta")))) {
-                writer.write("{\n" + "   \"pack\": {\n" + "      \"pack_format\": 5,\n" + "      \"description\": \"ContentTweaker resources\"\n" + "   }\n" + "}");
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        
+        resourcePackInfo.createResourcePackIfNotExists();
         registry.getAssetResources()
                 .filter(w -> modIdsToGenerateStuffFor.contains(w.getModId()))
                 .forEach(w -> {
-                    w.writeContentToFileRelativeTo(resourcePackDir);
+                    w.writeContentUsing(resourcePackInfo.getResourcePackDirectory());
                     w.onWrite();
                 });
     }
     
-    private static void writeData() {
-        final File dataPackDir;
-        final ModList modList = ModList.get();
-        if(modList.isLoaded("theloader")){
-            dataPackDir = new File("the_loader/datapacks/contenttweaker");
-        } else if (modList.isLoaded("openloader")){
-            dataPackDir = new File("openloader/data/contenttweaker");
-        } else {
+    private static void writeDataPack() {
+        final ResourcePackInfo resourcePackInfo = ResourcePackInfo.get();
+        if(resourcePackInfo == null) {
             CraftTweakerAPI.logInfo("Could not find resource loader mod, no data pack will be generated!");
             return;
         }
-    
-    
-        if(!new File(dataPackDir, "pack.mcmeta").exists()) {
-            try(final PrintWriter writer = new PrintWriter(new FileWriter(new File(dataPackDir, "pack.mcmeta")))) {
-                writer.write("{\n" + "   \"pack\": {\n" + "      \"pack_format\": 5,\n" + "      \"description\": \"ContentTweaker loottables and data\"\n" + "   }\n" + "}");
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
-        }
         
-        
+        resourcePackInfo.createDataPackIfNotExists();
         registry.getDataResources()
                 .filter(w -> modIdsToGenerateStuffFor.contains(w.getModId()))
                 .forEach(w -> {
-                    w.writeContentToFileRelativeTo(dataPackDir);
+                    w.writeContentUsing(resourcePackInfo.getDataPackDirectory());
                     w.onWrite();
                 });
     }

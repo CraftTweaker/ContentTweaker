@@ -117,7 +117,7 @@ public class ItemBuilderTool extends ItemTypeBuilder {
     
     @Override
     public void build(MCResourceLocation location) {
-        VanillaFactory.registerItem(new CoTItemTool(this, location.getInternal()));
+        VanillaFactory.queueItemForRegistration(new CoTItemTool(this, location.getInternal()));
     }
     
     public double getAttackSpeed() {

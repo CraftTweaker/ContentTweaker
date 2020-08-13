@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[26,)"
-issueTrackerURL="https://github.com/CraftTweaker/CraftTweaker/issues"
+issueTrackerURL="https://github.com/CraftTweaker/ContentTweaker/issues"
 [[mods]]
 modId="contenttweaker"
 version="${file.jarVersion}"
@@ -24,6 +24,6 @@ description="Customize your minecraft experience!"
 [[dependencies.contenttweaker]]
     modId="crafttweaker"
     mandatory=true
-    versionRange="[6,)"
+    versionRange="[6.0.0.39,)"
     ordering="BEFORE"
     side="BOTH"

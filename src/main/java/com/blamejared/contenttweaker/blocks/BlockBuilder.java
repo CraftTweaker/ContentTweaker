@@ -262,7 +262,7 @@ public class BlockBuilder implements IIsBuilder {
             final Constructor<T> constructor = typeOfT.getConstructor(BlockBuilder.class);
             return constructor.newInstance(this);
         } catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            CraftTweakerAPI.logThrowing("Could not instantiate Builder!", e);
+            CraftTweakerAPI.logThrowing("Could not instantiate Specialized Block Builder!", e);
             return null;
         }
     }

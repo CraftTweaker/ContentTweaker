@@ -4,6 +4,7 @@ import com.blamejared.contenttweaker.api.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.items.types.basic.*;
 import com.blamejared.contenttweaker.wrappers.*;
+import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
@@ -122,7 +123,7 @@ public class ItemBuilder implements IIsBuilder {
             final Constructor<T> constructor = typeOfT.getConstructor(ItemBuilder.class);
             return constructor.newInstance(this);
         } catch(InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-            e.printStackTrace();
+            CraftTweakerAPI.logThrowing("Could not instantiate Specialized Item Builder!", e);
         }
         return null;
     }

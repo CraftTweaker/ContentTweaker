@@ -26,6 +26,6 @@ public class ItemBuilderBasic extends ItemTypeBuilder {
     
     @Override
     public void build(MCResourceLocation location) {
-        VanillaFactory.registerItem(new CoTItemBasic(itemBuilder.getItemProperties(), location.getInternal()));
+        VanillaFactory.queueItemForRegistration(new CoTItemBasic(itemBuilder.getItemProperties(), location.getInternal()));
     }
 }

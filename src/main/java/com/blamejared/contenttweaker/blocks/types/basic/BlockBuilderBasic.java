@@ -26,7 +26,7 @@ public class BlockBuilderBasic extends BlockTypeBuilder {
     
     @Override
     public void build(MCResourceLocation location) {
-        VanillaFactory.registerBlock(new CoTBlockBasic(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location
+        VanillaFactory.queueBlockForRegistration(new CoTBlockBasic(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location
                 .getInternal()));
     }
 }

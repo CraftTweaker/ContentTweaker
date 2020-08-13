@@ -138,6 +138,6 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
     
     @Override
     public void build(MCResourceLocation location) {
-        VanillaFactory.registerBlock(new CoTStairsBlock(this, location));
+        VanillaFactory.queueBlockForRegistration(new CoTStairsBlock(this, location));
     }
 }

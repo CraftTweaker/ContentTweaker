@@ -5,51 +5,33 @@ import net.minecraft.block.*;
 import net.minecraftforge.event.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
-import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.*;
-import net.minecraftforge.registries.*;
-import org.apache.logging.log4j.*;
 
 @Mod(ContentTweaker.MOD_ID)
 public class ContentTweaker {
     
     public static final String MOD_ID = "contenttweaker";
-    public static final String NAME = "ContentTweaker";
-    public static final Logger LOG = LogManager.getLogger(NAME);
     
     public ContentTweaker() {
         VanillaFactory.generateStuffForMyModId(MOD_ID);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get()
                 .getModEventBus()
-                .addListener(EventPriority.LOW, this::registerItems);
-        
-        //if(EffectiveSide.get().isClient()) {
-        //    ResourcePackInformation.createResourcePackFolders();
-        //}
-    }
-    
-    private void setup(final FMLCommonSetupEvent event) {
-        LOG.info("{} has loaded successfully!", NAME);
+                .addGenericListener(Block.class, EventPriority.LOW, this::registerItems);
     }
     
     /**
-     * Subscribed at low prio so that the blocks and items <i>should</i> already be there
+     * Loads the scripts and registers the items afterwards.
+     *
+     * Subscribed at low priority so that the blocks <i>should</i> already be there.
+     * Hopefully also some items, but I wouldn't count on it
      */
     private void registerItems(final RegistryEvent.Register<Block> registryEvent) {
-        if(registryEvent.getRegistry() != ForgeRegistries.BLOCKS) {
-            //Why though?
-            return;
-        }
+        final ScriptLoadingOptions scriptLoadingOptions = new ScriptLoadingOptions().setLoaderName(MOD_ID)
+                .execute()
+                .firstRun();
         
-        // VanillaFactory.registerAllowed = true;
-        CraftTweakerAPI.logWarning("Hello from CoT!");
-        CraftTweakerAPI.loadScripts(new ScriptLoadingOptions().execute().setLoaderName(MOD_ID));
-        // VanillaFactory.registerAllowed = false;
-        
-        // if(EffectiveSide.get().isClient()) {
-        //     VanillaFactory.writeResourcePack();
-        // }
+        CraftTweakerAPI.loadScripts(scriptLoadingOptions);
+        VanillaFactory.forbidRegistration();
         VanillaFactory.complete();
     }
 }
