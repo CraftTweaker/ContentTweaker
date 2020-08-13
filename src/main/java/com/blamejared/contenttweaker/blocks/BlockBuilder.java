@@ -120,12 +120,28 @@ public class BlockBuilder implements IIsBuilder {
     
     /**
      * Instructs CoT that this block will does not block movement.
+     * Will also set the block as {@link #notSolid()}
      *
      * @return This builder, used for chaining
      */
     @ZenCodeType.Method
     public BlockBuilder withoutMovementBlocking() {
         this.blockProperties.doesNotBlockMovement();
+        return this;
+    }
+    
+    /**
+     * Instructs CoT that this block is not solid.
+     *
+     * This is required if your model is not a full block (16x16x16).
+     * It is also required if your model is see-through (like glass).
+     * Set this if your block creates some X-Ray effects when it's placed.
+     *
+     * @return This builder, used for chaining
+     */
+    @ZenCodeType.Method
+    public BlockBuilder notSolid() {
+        this.blockProperties.notSolid();
         return this;
     }
     
