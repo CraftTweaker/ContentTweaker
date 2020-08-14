@@ -24,7 +24,7 @@ public class ActionQueueItemForRegistration implements IAction {
     
     @Override
     public String describe() {
-        return String.format("Queueing Item '%s' for registration", item.getMCResourceLocation().getInternal());
+        return String.format("Queueing Item '%s' for registration.", item.getMCResourceLocation().getInternal());
     }
     
     @Override

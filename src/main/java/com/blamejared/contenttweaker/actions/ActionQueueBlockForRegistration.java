@@ -28,7 +28,7 @@ public class ActionQueueBlockForRegistration implements IAction {
     
     @Override
     public String describe() {
-        return String.format("Queueing Block '%s' for registration", block.getMCResourceLocation().getInternal());
+        return String.format("Queueing Block '%s' for registration.", block.getMCResourceLocation().getInternal());
     }
     
     @Override
