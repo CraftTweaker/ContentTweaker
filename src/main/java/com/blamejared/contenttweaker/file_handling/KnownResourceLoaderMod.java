@@ -3,8 +3,8 @@ package com.blamejared.contenttweaker.file_handling;
 import java.io.*;
 
 public enum KnownResourceLoaderMod {
-    THE_LOADER("theloader", "the_loader/resourcepacks", "the_loader/datapacks"),
-    OPEN_LOADER("openloader", "openloader/resources", "openloader/data");
+    THE_LOADER("theloader", "the_loader/resourcepacks/contenttweaker", "the_loader/datapacks/contenttweaker"),
+    OPEN_LOADER("openloader", "openloader/resources/contenttweaker", "openloader/data/contenttweaker");
     
     final String modid;
     final File resourcePackDirectory;
