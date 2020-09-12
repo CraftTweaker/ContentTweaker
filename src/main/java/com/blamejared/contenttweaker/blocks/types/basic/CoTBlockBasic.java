@@ -7,8 +7,8 @@ import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
+import net.minecraft.loot.*;
 import net.minecraft.util.*;
-import net.minecraft.world.storage.loot.*;
 
 import javax.annotation.*;
 import java.util.*;

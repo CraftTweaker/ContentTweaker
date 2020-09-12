@@ -7,7 +7,7 @@ import java.io.*;
 public class PackMCMetaTemplate {
     
     private static final String template = "{\n   \"pack\": {\n      \"pack_format\": %d,\n      \"description\": \"%s\"\n   }\n}";
-    private static final int format = 5;
+    private static final int format = 6;
     private final String description;
     private final File mcmetaFile;
     

@@ -48,7 +48,7 @@ if (System.getenv('BUILD_NUMBER') != null) {
 }
 
 group = 'com.blamejared.contenttweaker'
-archivesBaseName = 'ContentTweaker-1.15'
+archivesBaseName = 'ContentTweaker-1.16'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -65,7 +65,7 @@ if (JavaVersion.current().isJava8Compatible()) {
 }
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200227-1.15.1'
+    mappings channel: 'snapshot', version: '20200820-1.16.1'
     runs {
         client {
             workingDirectory project.file('run')
@@ -118,14 +118,17 @@ repositories {
     maven {
         url "https://maven.blamejared.com"
     }
+    maven {
+        url "https://maven.mcmoddev.com"
+    }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.18'
-    compile fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2");
-    compile fg.deobf("com.teamacronymcoders:theloader:1.15.2-1.1.0");
+    minecraft 'net.minecraftforge:forge:1.16.2-33.0.7'
+    compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
     compile project(":CraftTweaker")
-    annotationProcessor project(":Crafttweaker_Annotation_Processors");
+    annotationProcessor project(":Crafttweaker_Annotation_Processors")
+    compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.2:6.0.2")
 }
 
 jar {

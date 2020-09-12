@@ -1,4 +1,4 @@
 [submodule "CraftTweaker"]
 	path = CraftTweaker
 	url = https://github.com/CraftTweaker/CraftTweaker.git
-	branch = 1.15
+	branch = 1.16

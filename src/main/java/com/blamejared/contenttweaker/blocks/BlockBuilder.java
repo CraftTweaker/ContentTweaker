@@ -167,7 +167,7 @@ public class BlockBuilder implements IIsBuilder {
      */
     @ZenCodeType.Method
     public BlockBuilder withLightValue(int lightValueIn) {
-        blockProperties.lightValue(lightValueIn);
+        blockProperties.setLightLevel(ignored -> lightValueIn);
         return this;
     }
     
