@@ -1,4 +1,4 @@
-package com.blamejared.contenttweaker;
+package com.blamejared.contenttweaker.brackets;
 
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;

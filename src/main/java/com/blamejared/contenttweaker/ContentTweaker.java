@@ -19,9 +19,10 @@ public class ContentTweaker {
                 .addGenericListener(Block.class, EventPriority.LOW, this::registerItems);
     }
     
+    
     /**
      * Loads the scripts and registers the items afterwards.
-     *
+     * <p>
      * Subscribed at low priority so that the blocks <i>should</i> already be there.
      * Hopefully also some items, but I wouldn't count on it
      */

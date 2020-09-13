@@ -15,7 +15,7 @@ public class VanillaFactory {
     
     /**
      * We will only generate data pack entries and resource pack entries for these mod ids.
-     * Modids can be added by calling {@link #generateStuffForMyModId(String)}
+     * ModIds can be added by calling {@link #generateStuffForMyModId(String)}
      */
     private static final Set<String> modIdsToGenerateStuffFor = new HashSet<>();
     private static final CoTRegistry registry = new CoTRegistry();
@@ -32,7 +32,7 @@ public class VanillaFactory {
     }
     
     /**
-     * Whitelists this modid to have resources and datapacks generated for.
+     * Whitelists this modid to have resource packs and data packs generated for.
      * Should generally only be used for CoT addons.
      *
      * @param myModId The modid to whitelist
