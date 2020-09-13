@@ -273,8 +273,8 @@ curseforge {
 
         mainArtifact(jar) {
             relations {
-                requiredLibrary "crafttweaker"
-                optionalDependency "the-loader"
+                requiredDependency "crafttweaker"
+                //optionalDependency "the-loader"
                 optionalDependency "open-loader"
             }
         }
