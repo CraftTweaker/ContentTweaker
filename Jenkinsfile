@@ -1,66 +1,112 @@
 #!/usr/bin/env groovy
 
+def docsOutDir = 'docsOut'
+def docsRepositoryUrl = 'git@github.com:CraftTweaker/CraftTweaker-Documentation.git'
+def shouldPushDocumentation = env.BRANCH_NAME.startsWith("develop") || env.BRANCH_NAME.startsWith("release")
+def docsRepositoryBranch = shouldPushDocumentation ? env.BRANCH_NAME.substring(8) : null
+def gitSshCredentialsId = 'crt_git_ssh_key'
+def botUsername = 'crtBot'
+def botEmail = 'crtbot@gmail.com'
+
+def documentationDir = 'CrafttweakerDocumentation'
+def exportDirInRepo = 'docs_exported/contenttweaker'
+
 pipeline {
     agent any
-    stages {
 
+    environment {
+        ORG_GRADLE_PROJECT_secretFile = credentials('mod_build_secrets')
+    }
+
+    stages {
         stage('Clean') {
             steps {
-                withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
-                    echo 'Cleaning Project'
-                    dir('CraftTweaker') {
-                        sh 'chmod +x gradlew'
-                        sh './gradlew clean'
-                    }
+                echo 'Cleaning Project'
+                dir('CraftTweaker') {
                     sh 'chmod +x gradlew'
                     sh './gradlew clean'
                 }
+                sh 'chmod +x gradlew'
+                sh './gradlew clean'
             }
         }
         stage('Build') {
             steps {
-                withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
-                    dir('CraftTweaker') {
-                        echo 'Building CraftTweaker'
+                dir('CraftTweaker') {
+                    echo 'Building CraftTweaker'
+                    sh './gradlew build'
+                }
+                echo 'Building'
+                script {
+                    if (env.BRANCH_NAME.startsWith("develop")) {
+                        sh './gradlew -Pbranch=develop build'
+                    } else if (env.BRANCH_NAME.startsWith("release")) {
                         sh './gradlew build'
-                    }
-                    echo 'Building'
-                    script {
-                        if(env.BRANCH_NAME.startsWith("develop")) {
-                            sh './gradlew -Pbranch=develop build'
-                        } else if(env.BRANCH_NAME.startsWith("release")) {
-                            sh './gradlew build'
-                        } else {
-                            sh './gradlew -Pbranch=' + env.BRANCH_NAME + ' build'
-                        }
+                    } else {
+                        sh "./gradlew -Pbranch=$env.BRANCH_NAME build"
                     }
                 }
             }
         }
         stage('Git Changelog') {
             steps {
-                withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
-                    sh './gradlew genGitChangelog'
-                }
+                sh './gradlew genGitChangelog'
             }
         }
 
         stage('Publish') {
             steps {
-                withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
-                    //echo 'Updating version'
-                    //sh './gradlew updateVersionTracker'
+                //echo 'Updating version'
+                //sh './gradlew updateVersionTracker'
 
-                    echo 'Deploying to CurseForge and Maven'
-                    script {
-                        if(env.BRANCH_NAME.startsWith("develop")) {
-                            sh './gradlew -Pbranch=develop :publish :curseForge'
-                        } else if(env.BRANCH_NAME.startsWith("release")) {
-                            sh './gradlew :publish :curseForge'
-                        } else {
-                            echo "Not Deploying to CurseForge because branch is ${env.BRANCH_NAME} is neither develop nor release"
-                            sh './gradlew -Pbranch=' + env.BRANCH_NAME + ' :publish'
-                        }
+                echo 'Deploying to CurseForge and Maven'
+                script {
+                    if (env.BRANCH_NAME.startsWith("develop")) {
+                        sh './gradlew -Pbranch=develop :publish :curseForge'
+                    } else if (env.BRANCH_NAME.startsWith("release")) {
+                        sh './gradlew :publish :curseForge'
+                    } else {
+                        echo "Not Deploying to CurseForge because branch is ${env.BRANCH_NAME} is neither develop nor release"
+                        sh "./gradlew -Pbranch=$env.BRANCH_NAME :publish"
+                    }
+                }
+            }
+        }
+
+        stage('Exporting Documentation') {
+            when {
+                expression {
+                    return shouldPushDocumentation
+                }
+            }
+
+            steps {
+                echo "Cloning Repository at Branch $docsRepositoryBranch"
+                dir(documentationDir) {
+                    git credentialsId: gitSshCredentialsId, url: docsRepositoryUrl, branch: docsRepositoryBranch, changelog: false
+                }
+
+
+                echo "Clearing existing Documentation export"
+                dir(documentationDir) {
+                    sh "rm --recursive --force ./$exportDirInRepo"
+                }
+
+
+                echo "Moving Generated Documentation to Local Clone"
+                sh "mkdir --parents ./$documentationDir/$exportDirInRepo"
+                sh "mv ./$docsOutDir/* ./$documentationDir/$exportDirInRepo/"
+
+
+                echo "Committing and Pushing to the repository"
+                dir(documentationDir) {
+                    sshagent([gitSshCredentialsId]) {
+                        sh "git config user.name $botUsername"
+                        sh "git config user.email $botEmail"
+                        sh 'git add -A'
+                        //Either nothing to commit, or we create a commit
+                        sh "git diff-index --quiet HEAD || git commit -m 'CI Doc export for build ${env.BRANCH_NAME}-${env.BUILD_NUMBER}\n\nMatches git commit ${env.GIT_COMMIT}'"
+                        sh "git push origin $docsRepositoryBranch"
                     }
                 }
             }
@@ -68,8 +114,8 @@ pipeline {
     }
     post {
         always {
-            archive 'build/libs/**.jar'
-            archive 'changelog_cot.md'
+            archiveArtifacts 'build/libs/**.jar'
+            archiveArtifacts 'changelog_cot.md'
         }
     }
 }
