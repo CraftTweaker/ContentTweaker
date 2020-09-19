@@ -129,7 +129,7 @@ dependencies {
     //compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
     compile project(":CraftTweaker")
     annotationProcessor project(":Crafttweaker_Annotation_Processors")
-    compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.3:7.0.1")
+    compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.3:7.0.3")
 }
 
 jar {
