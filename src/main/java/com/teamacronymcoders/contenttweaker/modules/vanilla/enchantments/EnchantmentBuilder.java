@@ -126,6 +126,11 @@ public class EnchantmentBuilder {
     }
 
     @ZenMethod
+    public void setTypeFeet() {
+        this.setTypeFeed();
+    }
+
+    @ZenMethod
     public void setTypeLegs() {
         type = EnumEnchantmentType.ARMOR_LEGS;
     }
