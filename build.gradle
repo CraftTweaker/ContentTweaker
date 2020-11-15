@@ -65,7 +65,7 @@ if (JavaVersion.current().isJava8Compatible()) {
 }
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200820-1.16.1'
+    mappings channel: 'snapshot', version: '20201028-1.16.3'
     runs {
         client {
             workingDirectory project.file('run')
@@ -124,7 +124,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.3-34.0.5'
+    minecraft 'net.minecraftforge:forge:1.16.4-35.0.1'
     //TODO: Reactivate once available
     //compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
     compile project(":CraftTweaker")
