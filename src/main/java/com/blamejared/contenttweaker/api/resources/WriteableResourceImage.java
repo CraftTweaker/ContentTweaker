@@ -6,7 +6,6 @@ import it.unimi.dsi.fastutil.bytes.*;
 import net.minecraft.util.*;
 
 import java.io.*;
-import java.util.*;
 
 public class WriteableResourceImage extends WriteableResource {
     
@@ -30,12 +29,14 @@ public class WriteableResourceImage extends WriteableResource {
         final String path = String.format(format, location.getNamespace(), location.getPath());
         final InputStream resourceAsStream = WriteableResourceImage.class.getResourceAsStream(path);
         if(resourceAsStream == null) {
-            System.err.println("Invalid Template resource: " + location);
+            ContentTweaker.LOG.error("Invalid Template resource: '" + path + '\'');
+            withContent(new byte[0]);
+            return this;
         }
         
         final ByteArrayList out = new ByteArrayList();
         //Try-with resources to make sure stream is closed properly
-        try (final InputStream stream = resourceAsStream){
+        try(final InputStream stream = resourceAsStream) {
             do {
                 int b = stream.read();
                 if(b == -1) {
@@ -43,8 +44,8 @@ public class WriteableResourceImage extends WriteableResource {
                 }
                 out.add((byte) b);
             } while(true);
-        } catch(IOException ignored) {
-            //TODO error
+        } catch(IOException e) {
+            ContentTweaker.LOG.warn("Could not read image at " + location + ":", e);
         }
         this.withContent(out.toByteArray());
         return this;

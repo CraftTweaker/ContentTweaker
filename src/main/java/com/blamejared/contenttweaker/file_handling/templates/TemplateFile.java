@@ -39,6 +39,7 @@ public class TemplateFile {
         
         final InputStream resourceAsStream = TemplateFile.class.getResourceAsStream(path);
         if(resourceAsStream == null) {
+            ContentTweaker.LOG.error("Invalid Template resource: '" + path + '\'');
             return null;
         }
         final BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));

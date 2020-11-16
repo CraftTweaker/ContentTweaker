@@ -158,6 +158,7 @@ sourceSets {
 idea {
     module {
         generatedSourceDirs += file("src/generated/java")
+        excludeDirs += [file("run"), file("runServer")]
     }
 }
 
@@ -165,19 +166,19 @@ idea {
 task genGitChangelog() {
     def stdout = new ByteArrayOutputStream()
     // first commit to check from, in our case the first commit of the branch
-    String firstCommit = "b762862ec40682cfa40f56e730d73b3bf3eb568f";
-    String repoLink = "https://github.com/The-Acronym-Coders/ContentTweaker/commit/"
+    String firstCommit = "b762862ec40682cfa40f56e730d73b3bf3eb568f"
+    String repoLink = "https://github.com/CraftTweaker/ContentTweaker/commit/"
     // was having issues with grep and spaces in the regex
     exec {
         commandLine 'git', 'log', '-i', '--grep=version\\spush', '--grep=open\\sbeta\\sspecific\\scode', '--pretty=tformat:%H', '--date=local', firstCommit + '..@{0}'
         standardOutput = stdout
     }
     if (stdout.toString().trim().indexOf("\n") >= 0) {
-        firstCommit = stdout.toString().split("\n")[0].trim();
+        firstCommit = stdout.toString().split("\n")[0].trim()
     }
-    System.out.println("Last version hash: \"" + firstCommit + "\"");
+    System.out.println("Last version hash: \"" + firstCommit + "\"")
     stdout = new ByteArrayOutputStream()
-    def test = exec {
+    exec {
         commandLine 'git', 'log', '--pretty=tformat:- [%s](' + repoLink + '%H) - %aN - %cd', '--max-parents=1', '--date=local', firstCommit + "..@"
         standardOutput = stdout
     }
@@ -258,7 +259,7 @@ publishing {
 }
 
 
-String relType = 'release';
+String relType = 'release'
 if(project.hasProperty('branch')) {
     relType = (project.branch == 'develop' ? 'beta' : 'alpha')
 }

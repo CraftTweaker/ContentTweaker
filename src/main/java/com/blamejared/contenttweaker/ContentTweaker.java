@@ -6,11 +6,15 @@ import net.minecraftforge.event.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.javafmlmod.*;
+import org.apache.logging.log4j.*;
 
 @Mod(ContentTweaker.MOD_ID)
 public class ContentTweaker {
     
     public static final String MOD_ID = "contenttweaker";
+    public static final String NAME = "ContentTweaker";
+    
+    public static final Logger LOG = LogManager.getLogger(NAME);
     
     public ContentTweaker() {
         VanillaFactory.generateStuffForMyModId(MOD_ID);
