@@ -6,6 +6,8 @@ import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.file_handling.*;
 import com.blamejared.crafttweaker.api.*;
+import net.minecraftforge.api.distmarker.*;
+import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.thread.*;
 import net.minecraftforge.registries.*;
 
@@ -87,8 +89,8 @@ public class VanillaFactory {
             CraftTweakerAPI.logDebug("Registering Item '%s'", value.getRegistryName());
             ForgeRegistries.ITEMS.register(value);
         });
-        
-        writeResourcePack();
+    
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> VanillaFactory::writeResourcePack);
         writeDataPack();
     }
     
