@@ -1,17 +1,19 @@
 package com.blamejared.contenttweaker.api.resources;
 
+import com.blamejared.contenttweaker.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import net.minecraft.util.*;
 
-public class WriteableResourceLootTableItem extends WriteableResource {
+public class WriteableResourceLootTableItem extends WriteableResourceTemplate {
     
     public WriteableResourceLootTableItem(MCResourceLocation block) {
-        super(ResourceType.DATA, FileExtension.JSON, block, "loot_tables", "blocks");
-        this.withContent("{\n" + "  \"type\": \"minecraft:block\",\n" + "  \"pools\": [\n" + "    {\n" + "      \"rolls\": 1,\n" + "      \"entries\": [\n" + "        {\n" + "          \"type\": \"minecraft:item\",\n" + "          \"name\": \"%s\"\n" + "        }\n" + "      ],\n" + "      \"conditions\": [\n" + "        {\n" + "          \"condition\": \"minecraft:survives_explosion\"\n" + "        }\n" + "      ]\n" + "    }\n" + "  ]\n" + "}", block
-                .getInternal()
-                .toString());
+        this(block, "block_basic");
     }
     
-    @Override
-    public void onWrite() {
+    public WriteableResourceLootTableItem(MCResourceLocation block, String name) {
+        super(ResourceType.DATA, block, "loot_tables", "blocks");
+    
+        final ResourceLocation location = new ResourceLocation(ContentTweaker.MOD_ID, "loot_tables/blocks/" + name);
+        this.withTemplate(ResourceType.DATA, location).setLocationProperty(block);
     }
 }

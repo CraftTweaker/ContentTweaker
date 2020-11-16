@@ -1,5 +1,6 @@
 package com.blamejared.contenttweaker.items.types.basic;
 
+import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.crafttweaker.impl.util.*;
@@ -21,10 +22,13 @@ public class CoTItemBasic extends Item implements IIsCotItem {
     public Collection<WriteableResource> getResourcePackResources() {
         final MCResourceLocation location = getMCResourceLocation();
         final List<WriteableResource> out = new ArrayList<>();
-        out.add(new WriteableResourceImage(ImageType.ITEM, location));
-        out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "models", "item").withContent(String
-                .format("{\n    \"parent\" : \"item/generated\",\n    \"textures\" : \n        {\"layer0\" : \"%s:item/%s\"\n    }\n}", location
-                        .getNamespace(), location.getPath())));
+        out.add(WriteableResourceImage.noImage(ImageType.ITEM, location));
+        
+        final WriteableResourceTemplate modelTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "models", "item")
+                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/item/item_basic"))
+                .setLocationProperty(location);
+        out.add(modelTemplate);
+        
         return out;
     }
     

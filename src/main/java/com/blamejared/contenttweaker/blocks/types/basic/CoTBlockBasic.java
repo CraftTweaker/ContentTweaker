@@ -1,5 +1,6 @@
 package com.blamejared.contenttweaker.blocks.types.basic;
 
+import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
@@ -34,15 +35,18 @@ final class CoTBlockBasic extends Block implements IIsCoTBlock {
     public Collection<WriteableResource> getResourcePackResources() {
         final MCResourceLocation location = getMCResourceLocation();
         final Collection<WriteableResource> out = new ArrayList<>();
-        out.add(new WriteableResourceImage(ImageType.BLOCK, location));
-        out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "models", "block")
-                .withContent("{\n" + "    \"parent\": \"block/cube_all\",\n" + "    \"textures\": {\n" + "        \"all\": \"%s:block/%s\"\n" + "    }\n" + "}\n", location
-                        .getNamespace(), location.getPath()));
         
-        out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "blockstates")
-                .withContent("{\n" + "    \"variants\": {\n" + "        \"\": {\"model\" : \"%s:block/%s\"}\n" + "    }\n" + "}\n", location
-                        .getNamespace(), location.getPath()));
+        out.add(WriteableResourceImage.noImage(ImageType.BLOCK, location));
         
+        final WriteableResourceTemplate modelTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "models", "block")
+                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/block/block_basic"))
+                .setLocationProperty(location);
+        out.add(modelTemplate);
+        
+        final WriteableResourceTemplate blockstateTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "blockstates")
+                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "blockstates/block_basic"))
+                .setLocationProperty(location);
+        out.add(blockstateTemplate);
         
         return out;
     }

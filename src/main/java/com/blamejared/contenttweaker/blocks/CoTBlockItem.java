@@ -1,10 +1,12 @@
 package com.blamejared.contenttweaker.blocks;
 
+import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.item.*;
+import net.minecraft.util.*;
 
 import javax.annotation.*;
 import java.util.*;
@@ -21,9 +23,11 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     public Collection<WriteableResource> getResourcePackResources() {
         final MCResourceLocation location = getMCResourceLocation();
         final List<WriteableResource> out = new ArrayList<>();
-        out.add(new WriteableResourceImage(ImageType.ITEM, location));
-        out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "models","item").withContent(String
-                .format("{\n    \"parent\" : \"%s:block/%s\"\n}", location.getNamespace(), location.getPath())));
+        out.add(WriteableResourceImage.noImage(ImageType.ITEM, location));
+        final WriteableResourceTemplate modelTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "models", "item")
+                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/item/item_block"))
+                .setLocationProperty(location);
+        out.add(modelTemplate);
         return out;
     }
     

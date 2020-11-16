@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y":  { "model": "$$NAMESPACE$$:block/$$PATH$$" },
+    "axis=z":   { "model": "$$NAMESPACE$$:block/$$PATH$$", "x": 90 },
+    "axis=x":   { "model": "$$NAMESPACE$$:block/$$PATH$$", "x": 90, "y": 90 }
+  }
+}

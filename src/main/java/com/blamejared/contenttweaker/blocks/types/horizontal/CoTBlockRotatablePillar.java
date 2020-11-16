@@ -1,11 +1,13 @@
 package com.blamejared.contenttweaker.blocks.types.horizontal;
 
+import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.block.*;
+import net.minecraft.util.*;
 
 import javax.annotation.*;
 import java.util.*;
@@ -19,7 +21,8 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     public CoTBlockRotatablePillar(BlockBuilderPillarRotatable blockBuilderPillarRotatable, MCResourceLocation location) {
         super(blockBuilderPillarRotatable.getBlockBuilder().getBlockProperties());
         this.setRegistryName(location.getInternal());
-        item = new CoTBlockItem(this, blockBuilderPillarRotatable.getBlockBuilder().getItemProperties());
+        item = new CoTBlockItem(this, blockBuilderPillarRotatable.getBlockBuilder()
+                .getItemProperties());
         end = blockBuilderPillarRotatable.getEnd(location);
         sides = blockBuilderPillarRotatable.getSides(location);
     }
@@ -35,19 +38,21 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     public Collection<WriteableResource> getResourcePackResources() {
         final MCResourceLocation location = getMCResourceLocation();
         final Collection<WriteableResource> out = new ArrayList<>();
-        out.add(new WriteableResourceImage(ImageType.BLOCK, end));
+        out.add(WriteableResourceImage.noImage(ImageType.BLOCK, end));
         if(!end.equals(sides)) {
-            out.add(new WriteableResourceImage(ImageType.BLOCK, sides));
+            out.add(WriteableResourceImage.noImage(ImageType.BLOCK, sides));
         }
         
-        out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "models/block")
-                .withContent("{\n" + "    \"parent\": \"block/cube_column\",\n" + "    \"textures\": {\n" + "        \"end\": \"%s:block/%s\",\n" + "        \"side\": \"%s:block/%s\"\n" + "    }\n" + "}", end
-                        .getNamespace(), end.getPath(), sides.getNamespace(), sides.getPath()));
+        final WriteableResourceTemplate blockModelTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "models", "block")
+                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/block/block_rotatable_pillar"))
+                .setLocationProperty(end, "END")
+                .setLocationProperty(sides, "SIDE");
+        out.add(blockModelTemplate);
         
-        out.add(new WriteableResource(ResourceType.ASSETS, FileExtension.JSON, location, "blockstates")
-                .withContent("{\n" + "    \"variants\": {\n" + "        \"axis=y\":  { \"model\": \"%1$s:block/%2$s\" },\n" + "        \"axis=z\":   { \"model\": \"%1$s:block/%2$s\", \"x\": 90 },\n" + "        \"axis=x\":   { \"model\": \"%1$s:block/%2$s\", \"x\": 90, \"y\": 90 }\n" + "    }\n" + "}", location
-                        .getNamespace(), location.getPath()));
-        
+        final WriteableResourceTemplate blockStateTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "blockstates")
+                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "blockstates/block_rotatable_pillar"))
+                .setLocationProperty(location);
+        out.add(blockStateTemplate);
         return out;
     }
     

@@ -1,11 +1,13 @@
 package com.blamejared.contenttweaker.blocks.types.stairs;
 
+import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.block.*;
+import net.minecraft.util.*;
 
 import javax.annotation.*;
 import java.util.*;
@@ -16,9 +18,11 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     private final MCResourceLocation top, bottom, sides;
     
     public CoTStairsBlock(BlockBuilderStairs blockBuilderStairs, MCResourceLocation location) {
-        super(Blocks.AIR::getDefaultState, blockBuilderStairs.getBlockBuilder().getBlockProperties());
+        super(Blocks.AIR::getDefaultState, blockBuilderStairs.getBlockBuilder()
+                .getBlockProperties());
         this.setRegistryName(location.getInternal());
-        this.item = new CoTBlockItem(this, blockBuilderStairs.getBlockBuilder().getItemProperties());
+        this.item = new CoTBlockItem(this, blockBuilderStairs.getBlockBuilder()
+                .getItemProperties());
         this.top = blockBuilderStairs.getTop(location);
         this.bottom = blockBuilderStairs.getBottom(location);
         this.sides = blockBuilderStairs.getSides(location);
@@ -36,10 +40,14 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
         final MCResourceLocation location = getMCResourceLocation();
         final Collection<WriteableResource> out = new ArrayList<>();
         for(MCResourceLocation texture : new HashSet<>(Arrays.asList(top, bottom, sides))) {
-            out.add(new WriteableResourceImage(ImageType.BLOCK, texture));
+            out.add(WriteableResourceImage.noImage(ImageType.BLOCK, texture));
         }
         
-        out.add(new WriteableResourceBlockStateStairs(location));
+        final WriteableResourceTemplate templateBlockState = new WriteableResourceTemplate(ResourceType.ASSETS, location, "blockstates")
+                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "blockstates/block_stairs"))
+                .setLocationProperty(location);
+        out.add(templateBlockState);
+        
         out.add(new WriteableResourceModelStairs(location, WriteableResourceModelStairs.ModelType.BASE, top, bottom, sides));
         out.add(new WriteableResourceModelStairs(location, WriteableResourceModelStairs.ModelType.INNER, top, bottom, sides));
         out.add(new WriteableResourceModelStairs(location, WriteableResourceModelStairs.ModelType.OUTER, top, bottom, sides));

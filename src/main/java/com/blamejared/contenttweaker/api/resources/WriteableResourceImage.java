@@ -1,21 +1,52 @@
 package com.blamejared.contenttweaker.api.resources;
 
+import com.blamejared.contenttweaker.*;
 import com.blamejared.crafttweaker.impl.util.*;
+import it.unimi.dsi.fastutil.bytes.*;
+import net.minecraft.util.*;
 
+import java.io.*;
 import java.util.*;
 
 public class WriteableResourceImage extends WriteableResource {
     
-    private static final byte[] NO_ICON = Base64.getDecoder()
-            .decode("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACgSURBVDhPhZLRCYAwDAWD3/lwCJGuILj/Kg7gAPE10dK0IR4Fo96BLZIwy3nKfUsOBGjMJKUI0U9jNrRSSK7rp+lsyFQfJY238UADEDaTDb4ADE1kgy4ArTmOuiYb+ADg9b5XFQuDt8FCAzjpdX1nDLgdeEOjffe21YWhPwOlC4Zdtv345gvCM4kaDULbmBrKbMM3eklso2v0985twxrmBzQGNQUhq3LZAAAAAElFTkSuQmCC");
-    
     public WriteableResourceImage(ImageType imageType, MCResourceLocation location) {
         super(ResourceType.ASSETS, FileExtension.PNG, location, "textures", imageType.getFolderName());
-        this.withContent(NO_ICON);
     }
     
     public WriteableResourceImage(MCResourceLocation location) {
         super(ResourceType.ASSETS, FileExtension.PNG, location, "textures");
-        this.withContent(NO_ICON);
+    }
+    
+    /**
+     * Creates the default image (red X on white background) for the given location/type
+     */
+    public static WriteableResourceImage noImage(ImageType imageType, MCResourceLocation location) {
+        return new WriteableResourceImage(imageType, location).setImageToCopy(new ResourceLocation(ContentTweaker.MOD_ID, "textures/generic/no_image"));
+    }
+    
+    public WriteableResourceImage setImageToCopy(ResourceLocation location) {
+        final String format = "/assets/%s/templates/%s.png";
+        final String path = String.format(format, location.getNamespace(), location.getPath());
+        final InputStream resourceAsStream = WriteableResourceImage.class.getResourceAsStream(path);
+        if(resourceAsStream == null) {
+            System.err.println("Invalid Template resource: " + location);
+        }
+        
+        final ByteArrayList out = new ByteArrayList();
+        //Try-with resources to make sure stream is closed properly
+        try (final InputStream stream = resourceAsStream){
+            do {
+                int b = stream.read();
+                if(b == -1) {
+                    break;
+                }
+                out.add((byte) b);
+            } while(true);
+        } catch(IOException ignored) {
+            //TODO error
+        }
+        this.withContent(out.toByteArray());
+        return this;
     }
 }

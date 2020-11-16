@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "$$NAMESPACE_END$$:block/$$PATH_END$$",
+    "side": "$$NAMESPACE_SIDE$$:block/$$PATH_SIDE$$"
+  }
+}
