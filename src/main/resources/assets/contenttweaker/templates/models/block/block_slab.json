@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/$$SLAB_PARENT$$",
+  "textures": {
+    "bottom": "$$NAMESPACE_BOTTOM$$:block/$$PATH_BOTTOM$$",
+    "top": "$$NAMESPACE_TOP$$:block/$$PATH_TOP$$",
+    "side": "$$NAMESPACE_SIDE$$:block/$$PATH_SIDE$$"
+  }
+}
