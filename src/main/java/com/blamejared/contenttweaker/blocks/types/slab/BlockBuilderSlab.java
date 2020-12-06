@@ -24,8 +24,8 @@ import java.util.function.*;
 @Document("mods/contenttweaker/API/block/slab/BlockBuilderSlab")
 public class BlockBuilderSlab extends BlockTypeBuilder {
     
-    private final Function<MCResourceLocation, MCResourceLocation> top;
-    private final Function<MCResourceLocation, MCResourceLocation> bottom;
+    private Function<MCResourceLocation, MCResourceLocation> top;
+    private Function<MCResourceLocation, MCResourceLocation> bottom;
     private Function<MCResourceLocation, MCResourceLocation> sides;
     
     
@@ -92,7 +92,7 @@ public class BlockBuilderSlab extends BlockTypeBuilder {
      */
     @ZenCodeType.Method
     public BlockBuilderSlab withTopTexture(MCResourceLocation topTexture) {
-        this.sides = ignored -> topTexture;
+        this.top = ignored -> topTexture;
         return this;
     }
     
@@ -107,7 +107,7 @@ public class BlockBuilderSlab extends BlockTypeBuilder {
      */
     @ZenCodeType.Method
     public BlockBuilderSlab withTopTexture(Function<MCResourceLocation, MCResourceLocation> topTexture) {
-        this.sides = topTexture;
+        this.top = topTexture;
         return this;
     }
     
@@ -121,7 +121,7 @@ public class BlockBuilderSlab extends BlockTypeBuilder {
      */
     @ZenCodeType.Method
     public BlockBuilderSlab withBottomTexture(MCResourceLocation bottomTexture) {
-        this.sides = ignored -> bottomTexture;
+        this.bottom = ignored -> bottomTexture;
         return this;
     }
     
@@ -136,7 +136,7 @@ public class BlockBuilderSlab extends BlockTypeBuilder {
      */
     @ZenCodeType.Method
     public BlockBuilderSlab withBottomTexture(Function<MCResourceLocation, MCResourceLocation> bottomTexture) {
-        this.sides = bottomTexture;
+        this.bottom = bottomTexture;
         return this;
     }
     

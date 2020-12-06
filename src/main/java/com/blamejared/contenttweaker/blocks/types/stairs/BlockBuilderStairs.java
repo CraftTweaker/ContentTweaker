@@ -87,7 +87,7 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
      */
     @ZenCodeType.Method
     public BlockBuilderStairs withSidesTexture(MCResourceLocation sidesTexture) {
-        this.top = ignored -> sidesTexture;
+        this.sides = ignored -> sidesTexture;
         return this;
     }
     
