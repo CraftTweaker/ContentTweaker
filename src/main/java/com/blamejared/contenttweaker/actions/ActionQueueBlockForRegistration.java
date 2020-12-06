@@ -3,9 +3,12 @@ package com.blamejared.contenttweaker.actions;
 import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.*;
 import com.blamejared.contenttweaker.api.blocks.*;
+import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.actions.*;
 import com.blamejared.crafttweaker.api.logger.*;
+import com.blamejared.crafttweaker.api.zencode.impl.loaders.*;
 import net.minecraftforge.fml.*;
+import org.openzen.zencode.shared.*;
 
 /**
  * Enqueues an item for registration
@@ -36,9 +39,11 @@ public class ActionQueueBlockForRegistration implements IAction {
         if(VanillaFactory.isRegisterAllowed()) {
             return true;
         }
-        logger.warning(String.format("Cannot register block '%s' since it was called too late. Registering must be done during '#loader contenttweaker'!", block
-                .getMCResourceLocation()
-                .getInternal()));
+        
+        final LoaderActions loaderActions = CraftTweakerAPI.getCurrentRun().getLoaderActions();
+        final CodePosition declaredScriptPosition = getDeclaredScriptPosition();
+        final String format = "Cannot register block '%s' since it was called too late. Registering must be done during '#loader contenttweaker', but file %s is loaded in '#loader %s'!";
+        logger.error(String.format(format, block.getMCResourceLocation().getInternal(), declaredScriptPosition.getFilename(), loaderActions.getLoaderName()));
         return false;
     }
     
