@@ -7,9 +7,9 @@ import net.minecraftforge.common.*;
 import org.openzen.zencode.java.*;
 
 /**
- * A Tooltype is used to identify what kind of blocks a tool can mine,
+ * A ToolType is used to identify what kind of blocks a tool can mine,
  * or inversely, what kind of tool is required to mine a given block.
- * @docParam this <tooltype:pickaxe>
+ * @docParam this <toolType:pickaxe>
  */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCToolType")
@@ -41,7 +41,7 @@ public class MCToolType implements CommandStringDisplayable {
     
     /**
      * Gets the name of this toolType.
-     * The name is what is used in the Bracket expression after the `<tooltype:`
+     * The name is what is used in the Bracket expression after the `<toolType:`
      */
     @ZenCodeType.Method
     @ZenCodeType.Getter("name")
@@ -51,7 +51,7 @@ public class MCToolType implements CommandStringDisplayable {
     
     @Override
     public String getCommandString() {
-        return "<tooltype:" + getName() + ">";
+        return "<toolType:" + getName() + ">";
     }
     
     /**

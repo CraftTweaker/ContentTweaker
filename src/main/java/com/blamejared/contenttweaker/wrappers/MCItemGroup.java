@@ -29,7 +29,7 @@ public class MCItemGroup implements CommandStringDisplayable {
     
     /**
      * Gets the path of the item group.
-     * The path is what you use in the Bracket Expression after the `<itemgroup:` part.
+     * The path is what you use in the Bracket Expression after the `<itemGroup:` part.
      */
     @ZenCodeType.Getter("path")
     @ZenCodeType.Method
@@ -40,8 +40,8 @@ public class MCItemGroup implements CommandStringDisplayable {
     
     /**
      * Sets the image name of the Background that is used for this tab in the creative menu
-     * @param texture The texture to be used
      *
+     * @param texture The texture to be used
      * @return This object for chaining
      */
     @ZenCodeType.Method
@@ -80,6 +80,6 @@ public class MCItemGroup implements CommandStringDisplayable {
     
     @Override
     public String getCommandString() {
-        return "<itemgroup:" + getPath() + ">";
+        return "<itemGroup:" + getPath() + ">";
     }
 }

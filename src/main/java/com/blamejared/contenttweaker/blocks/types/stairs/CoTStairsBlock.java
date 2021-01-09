@@ -5,7 +5,6 @@ import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.blocks.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
 
@@ -15,14 +14,12 @@ import java.util.*;
 final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     
     private final IIsCotItem item;
-    private final MCResourceLocation top, bottom, sides;
+    private final ResourceLocation top, bottom, sides;
     
-    public CoTStairsBlock(BlockBuilderStairs blockBuilderStairs, MCResourceLocation location) {
-        super(Blocks.AIR::getDefaultState, blockBuilderStairs.getBlockBuilder()
-                .getBlockProperties());
-        this.setRegistryName(location.getInternal());
-        this.item = new CoTBlockItem(this, blockBuilderStairs.getBlockBuilder()
-                .getItemProperties());
+    public CoTStairsBlock(BlockBuilderStairs blockBuilderStairs, ResourceLocation location) {
+        super(Blocks.AIR::getDefaultState, blockBuilderStairs.getBlockBuilder().getBlockProperties());
+        this.setRegistryName(location);
+        this.item = new CoTBlockItem(this, blockBuilderStairs.getBlockBuilder().getItemProperties());
         this.top = blockBuilderStairs.getTop(location);
         this.bottom = blockBuilderStairs.getBottom(location);
         this.sides = blockBuilderStairs.getSides(location);
@@ -37,15 +34,13 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     @Nonnull
     @Override
     public Collection<WriteableResource> getResourcePackResources() {
-        final MCResourceLocation location = getMCResourceLocation();
+        final ResourceLocation location = getRegistryNameNonNull();
         final Collection<WriteableResource> out = new ArrayList<>();
-        for(MCResourceLocation texture : new HashSet<>(Arrays.asList(top, bottom, sides))) {
+        for(ResourceLocation texture : new HashSet<>(Arrays.asList(top, bottom, sides))) {
             out.add(WriteableResourceImage.noImage(ImageType.BLOCK, texture));
         }
         
-        final WriteableResourceTemplate templateBlockState = new WriteableResourceTemplate(ResourceType.ASSETS, location, "blockstates")
-                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "blockstates/block_stairs"))
-                .setLocationProperty(location);
+        final WriteableResourceTemplate templateBlockState = new WriteableResourceTemplate(ResourceType.ASSETS, location, "blockstates").withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "blockstates/block_stairs")).setLocationProperty(location);
         out.add(templateBlockState);
         
         out.add(new WriteableResourceModelStairs(location, WriteableResourceModelStairs.ModelType.BASE, top, bottom, sides));
@@ -59,7 +54,7 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     @Override
     public Collection<WriteableResource> getDataPackResources() {
         final Collection<WriteableResource> out = new ArrayList<>();
-        out.add(new WriteableResourceLootTableItem(getMCResourceLocation()));
+        out.add(new WriteableResourceLootTableItem(getRegistryName()));
         return out;
     }
 }

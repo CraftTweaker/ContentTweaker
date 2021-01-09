@@ -26,7 +26,7 @@ public class VanillaFactory {
     
     /**
      * Checks if adding content is allowed at the moment.
-     *
+     * <p>
      * Only while this is true calls to {@link #queueItemForRegistration(IIsCotItem)} or {@link #queueBlockForRegistration(IIsCoTBlock)} will succeed.
      */
     public static boolean isRegisterAllowed() {
@@ -34,10 +34,10 @@ public class VanillaFactory {
     }
     
     /**
-     * Whitelists this modid to have resource packs and data packs generated for.
+     * Whitelists this mod-id to have resource packs and data packs generated for.
      * Should generally only be used for CoT addons.
      *
-     * @param myModId The modid to whitelist
+     * @param myModId The mod-id to whitelist
      */
     public static void generateStuffForMyModId(String myModId) {
         modIdsToGenerateStuffFor.add(myModId);
@@ -69,7 +69,7 @@ public class VanillaFactory {
      * Prevents any more calls to
      * {@link #queueBlockForRegistration(IIsCoTBlock)} or {@link #queueItemForRegistration(IIsCotItem)}
      * from succeeding.
-     *
+     * <p>
      * Will make {@link #isRegisterAllowed()} false
      */
     static void forbidRegistration() {
@@ -89,7 +89,7 @@ public class VanillaFactory {
             CraftTweakerAPI.logDebug("Registering Item '%s'", value.getRegistryName());
             ForgeRegistries.ITEMS.register(value);
         });
-    
+        
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> VanillaFactory::writeResourcePack);
         writeDataPack();
     }
@@ -107,12 +107,10 @@ public class VanillaFactory {
         }
         
         resourcePackInfo.createResourcePackIfNotExists();
-        registry.getAssetResources()
-                .filter(w -> modIdsToGenerateStuffFor.contains(w.getModId()))
-                .forEach(w -> {
-                    w.writeContentUsing(resourcePackInfo.getResourcePackDirectory());
-                    w.onWrite();
-                });
+        registry.getAssetResources().filter(w -> modIdsToGenerateStuffFor.contains(w.getModId())).forEach(w -> {
+            w.writeContentUsing(resourcePackInfo.getResourcePackDirectory());
+            w.onWrite();
+        });
     }
     
     private static void writeDataPack() {
@@ -123,11 +121,9 @@ public class VanillaFactory {
         }
         
         resourcePackInfo.createDataPackIfNotExists();
-        registry.getDataResources()
-                .filter(w -> modIdsToGenerateStuffFor.contains(w.getModId()))
-                .forEach(w -> {
-                    w.writeContentUsing(resourcePackInfo.getDataPackDirectory());
-                    w.onWrite();
-                });
+        registry.getDataResources().filter(w -> modIdsToGenerateStuffFor.contains(w.getModId())).forEach(w -> {
+            w.writeContentUsing(resourcePackInfo.getDataPackDirectory());
+            w.onWrite();
+        });
     }
 }

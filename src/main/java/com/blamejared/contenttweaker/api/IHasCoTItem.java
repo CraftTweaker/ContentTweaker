@@ -4,7 +4,7 @@ import com.blamejared.contenttweaker.api.items.*;
 
 import javax.annotation.*;
 
-public interface IHasCoTItem extends IHasMCResourceLocation {
+public interface IHasCoTItem extends IHasResourceLocation {
     @Nonnull
     IIsCotItem getItem();
 }

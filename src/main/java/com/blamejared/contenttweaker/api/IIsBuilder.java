@@ -2,8 +2,8 @@ package com.blamejared.contenttweaker.api;
 
 import com.blamejared.contenttweaker.*;
 import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
+import net.minecraft.util.*;
 import org.openzen.zencode.java.*;
 
 /**
@@ -23,7 +23,7 @@ public interface IIsBuilder {
      */
     @ZenCodeType.Method
     default void build(String resourceLocation) {
-        build(new MCResourceLocation(ContentTweaker.MOD_ID, resourceLocation));
+        build(new ResourceLocation(ContentTweaker.MOD_ID, resourceLocation));
     }
     
     /**
@@ -32,5 +32,5 @@ public interface IIsBuilder {
      *
      * @param location The name to give this block
      */
-    void build(MCResourceLocation location);
+    void build(ResourceLocation location);
 }

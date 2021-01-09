@@ -31,7 +31,7 @@ public class ActionQueueBlockForRegistration implements IAction {
     
     @Override
     public String describe() {
-        return String.format("Queueing Block '%s' for registration.", block.getMCResourceLocation().getInternal());
+        return String.format("Queueing Block '%s' for registration.", block.getRegistryName());
     }
     
     @Override
@@ -43,7 +43,7 @@ public class ActionQueueBlockForRegistration implements IAction {
         final LoaderActions loaderActions = CraftTweakerAPI.getCurrentRun().getLoaderActions();
         final CodePosition declaredScriptPosition = getDeclaredScriptPosition();
         final String format = "Cannot register block '%s' since it was called too late. Registering must be done during '#loader contenttweaker', but file %s is loaded in '#loader %s'!";
-        logger.error(String.format(format, block.getMCResourceLocation().getInternal(), declaredScriptPosition.getFilename(), loaderActions.getLoaderName()));
+        logger.error(String.format(format, block.getRegistryName(), declaredScriptPosition.getFilename(), loaderActions.getLoaderName()));
         return false;
     }
     

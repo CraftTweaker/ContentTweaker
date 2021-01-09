@@ -4,8 +4,8 @@ import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
+import net.minecraft.util.*;
 import org.openzen.zencode.java.*;
 
 import java.util.function.*;
@@ -25,27 +25,27 @@ import java.util.function.*;
 @Document("mods/contenttweaker/API/block/stairs/BlockBuilderStairs")
 public class BlockBuilderStairs extends BlockTypeBuilder {
     
-    private Function<MCResourceLocation, MCResourceLocation> top;
-    private Function<MCResourceLocation, MCResourceLocation> bottom;
-    private Function<MCResourceLocation, MCResourceLocation> sides;
+    private Function<ResourceLocation, ResourceLocation> top;
+    private Function<ResourceLocation, ResourceLocation> bottom;
+    private Function<ResourceLocation, ResourceLocation> sides;
     
     public BlockBuilderStairs(BlockBuilder blockBuilder) {
         super(blockBuilder);
-        top = location -> new MCResourceLocation(location.getNamespace(), location.getPath() + "_top");
-        bottom = location -> new MCResourceLocation(location.getNamespace(), location.getPath() + "_bottom");
-        sides = location -> new MCResourceLocation(location.getNamespace(), location.getPath() + "_sides");
+        top = location -> new ResourceLocation(location.getNamespace(), location.getPath() + "_top");
+        bottom = location -> new ResourceLocation(location.getNamespace(), location.getPath() + "_bottom");
+        sides = location -> new ResourceLocation(location.getNamespace(), location.getPath() + "_sides");
     }
     
     
-    public MCResourceLocation getTop(MCResourceLocation stairsName) {
+    public ResourceLocation getTop(ResourceLocation stairsName) {
         return top.apply(stairsName);
     }
     
-    public MCResourceLocation getBottom(MCResourceLocation stairsName) {
+    public ResourceLocation getBottom(ResourceLocation stairsName) {
         return bottom.apply(stairsName);
     }
     
-    public MCResourceLocation getSides(MCResourceLocation stairsName) {
+    public ResourceLocation getSides(ResourceLocation stairsName) {
         return sides.apply(stairsName);
     }
     
@@ -58,7 +58,7 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
      * @docParam topTexture <resource:contenttweaker:my_awesome_stairs_top>
      */
     @ZenCodeType.Method
-    public BlockBuilderStairs withTopTexture(MCResourceLocation topTexture) {
+    public BlockBuilderStairs withTopTexture(ResourceLocation topTexture) {
         this.top = ignored -> topTexture;
         return this;
     }
@@ -72,7 +72,7 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
      * @docParam topTexture <resource:contenttweaker:my_awesome_stairs_bottom>
      */
     @ZenCodeType.Method
-    public BlockBuilderStairs withBottomTexture(MCResourceLocation bottomTexture) {
+    public BlockBuilderStairs withBottomTexture(ResourceLocation bottomTexture) {
         this.bottom = ignored -> bottomTexture;
         return this;
     }
@@ -86,7 +86,7 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
      * @docParam topTexture <resource:contenttweaker:my_awesome_stairs_sides>
      */
     @ZenCodeType.Method
-    public BlockBuilderStairs withSidesTexture(MCResourceLocation sidesTexture) {
+    public BlockBuilderStairs withSidesTexture(ResourceLocation sidesTexture) {
         this.sides = ignored -> sidesTexture;
         return this;
     }
@@ -97,11 +97,11 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
      * Uses a function that takes the block's name as input and returns the end texture for it.
      *
      * @param topTexture The function to use
-     * @docParam endTexture (blockName as MCResourceLocation) => new MCResourceLocation(blockName.namespace, blockName.path + "_top")
      * @return This builder, used for method chaining
+     * @docParam endTexture (blockName as ResourceLocation) => new ResourceLocation(blockName.namespace, blockName.path + "_top")
      */
     @ZenCodeType.Method
-    public BlockBuilderStairs withTopTexture(Function<MCResourceLocation, MCResourceLocation> topTexture) {
+    public BlockBuilderStairs withTopTexture(Function<ResourceLocation, ResourceLocation> topTexture) {
         this.top = topTexture;
         return this;
     }
@@ -112,11 +112,11 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
      * Uses a function that takes the block's name as input and returns the end texture for it.
      *
      * @param bottomTexture The function to use
-     * @docParam bottomTexture (blockName as MCResourceLocation) => new MCResourceLocation(blockName.namespace, blockName.path + "_bottom")
      * @return This builder, used for method chaining
+     * @docParam bottomTexture (blockName as ResourceLocation) => new ResourceLocation(blockName.namespace, blockName.path + "_bottom")
      */
     @ZenCodeType.Method
-    public BlockBuilderStairs withBottomTexture(Function<MCResourceLocation, MCResourceLocation> bottomTexture) {
+    public BlockBuilderStairs withBottomTexture(Function<ResourceLocation, ResourceLocation> bottomTexture) {
         this.bottom = bottomTexture;
         return this;
     }
@@ -127,17 +127,17 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
      * Uses a function that takes the block's name as input and returns the end texture for it.
      *
      * @param sidesTexture The function to use
-     * @docParam sidesTexture (blockName as MCResourceLocation) => new MCResourceLocation(blockName.namespace, blockName.path + "_sides")
      * @return This builder, used for method chaining
+     * @docParam sidesTexture (blockName as ResourceLocation) => new ResourceLocation(blockName.namespace, blockName.path + "_sides")
      */
     @ZenCodeType.Method
-    public BlockBuilderStairs withSidesTexture(Function<MCResourceLocation, MCResourceLocation> sidesTexture) {
+    public BlockBuilderStairs withSidesTexture(Function<ResourceLocation, ResourceLocation> sidesTexture) {
         this.sides = sidesTexture;
         return this;
     }
     
     @Override
-    public void build(MCResourceLocation location) {
+    public void build(ResourceLocation location) {
         VanillaFactory.queueBlockForRegistration(new CoTStairsBlock(this, location));
     }
 }

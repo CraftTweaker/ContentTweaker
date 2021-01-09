@@ -6,9 +6,9 @@ import com.blamejared.contenttweaker.items.types.basic.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.item.*;
+import net.minecraft.util.*;
 import org.openzen.zencode.java.*;
 
 import java.lang.reflect.*;
@@ -19,7 +19,7 @@ import java.lang.reflect.*;
  * It allows you to set various properties that will change how the item behaves and what it can do.
  * You can also use {@link #withType} to switch to a more specialized builder, if there exist any.
  * <p>
- * To tell CoT that you want the item to appear ingame you need to call {@link #build(String)} and specify a valid resource location path.
+ * To tell CoT that you want the item to appear in-game you need to call {@link #build(String)} and specify a valid resource location path.
  *
  * @docParam this new ItemBuilder()
  */
@@ -77,7 +77,7 @@ public class ItemBuilder implements IIsBuilder {
      *
      * @param itemGroup The item group this item should appear in
      * @return This builder, used for method chaining
-     * @docParam itemGroup <itemgroup:misc>
+     * @docParam itemGroup <itemGroup:misc>
      */
     @ZenCodeType.Method
     public ItemBuilder withItemGroup(MCItemGroup itemGroup) {
@@ -100,6 +100,7 @@ public class ItemBuilder implements IIsBuilder {
     
     /**
      * Sets that this item may not be repaired in an anvil
+     *
      * @return This builder, used for method chaining
      */
     @ZenCodeType.Method
@@ -112,6 +113,7 @@ public class ItemBuilder implements IIsBuilder {
      * Sets the specific type of this item.
      * After this method is called the builder's context will switch to the more provided type builder.
      * That means that the methods of this builder will no longer be available, so any properties you wish to set should be set before you call this method.
+     *
      * @param typeOfT Internally used by ZC to handle the generic param
      * @param <T>     The Type of item that this should become
      * @return A builder with the given item.
@@ -129,7 +131,7 @@ public class ItemBuilder implements IIsBuilder {
     }
     
     @Override
-    public void build(MCResourceLocation location) {
+    public void build(ResourceLocation location) {
         withType(ItemBuilderBasic.class).build(location);
     }
 }

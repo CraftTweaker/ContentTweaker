@@ -5,7 +5,6 @@ import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.blocks.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.*;
@@ -33,19 +32,15 @@ final class CoTBlockBasic extends Block implements IIsCoTBlock {
     @Nonnull
     @Override
     public Collection<WriteableResource> getResourcePackResources() {
-        final MCResourceLocation location = getMCResourceLocation();
+        final ResourceLocation location = getRegistryNameNonNull();
         final Collection<WriteableResource> out = new ArrayList<>();
         
         out.add(WriteableResourceImage.noImage(ImageType.BLOCK, location));
         
-        final WriteableResourceTemplate modelTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "models", "block")
-                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/block/block_basic"))
-                .setLocationProperty(location);
+        final WriteableResourceTemplate modelTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "models", "block").withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/block/block_basic")).setLocationProperty(location);
         out.add(modelTemplate);
         
-        final WriteableResourceTemplate blockstateTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "blockstates")
-                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "blockstates/block_basic"))
-                .setLocationProperty(location);
+        final WriteableResourceTemplate blockstateTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "blockstates").withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "blockstates/block_basic")).setLocationProperty(location);
         out.add(blockstateTemplate);
         
         return out;
@@ -56,7 +51,7 @@ final class CoTBlockBasic extends Block implements IIsCoTBlock {
     public Collection<WriteableResource> getDataPackResources() {
         final Collection<WriteableResource> out = new ArrayList<>();
         if(getLootTable() != LootTables.EMPTY) {
-            out.add(new WriteableResourceLootTableItem(getMCResourceLocation()));
+            out.add(new WriteableResourceLootTableItem(getRegistryName()));
         }
         return out;
     }

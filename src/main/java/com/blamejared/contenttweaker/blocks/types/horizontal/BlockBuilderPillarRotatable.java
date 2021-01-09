@@ -4,8 +4,8 @@ import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
+import net.minecraft.util.*;
 import org.openzen.zencode.java.*;
 
 import java.util.function.*;
@@ -24,20 +24,20 @@ import java.util.function.*;
 @Document("mods/contenttweaker/API/block/pillar/BlockBuilderPillarRotatable")
 public class BlockBuilderPillarRotatable extends BlockTypeBuilder {
     
-    private Function<MCResourceLocation, MCResourceLocation> end;
-    private Function<MCResourceLocation, MCResourceLocation> sides;
+    private Function<ResourceLocation, ResourceLocation> end;
+    private Function<ResourceLocation, ResourceLocation> sides;
     
     public BlockBuilderPillarRotatable(BlockBuilder blockBuilder) {
         super(blockBuilder);
-        end = location -> new MCResourceLocation(location.getNamespace(), location.getPath() + "_end");
-        sides = location -> new MCResourceLocation(location.getNamespace(), location.getPath() + "_sides");
+        end = location -> new ResourceLocation(location.getNamespace(), location.getPath() + "_end");
+        sides = location -> new ResourceLocation(location.getNamespace(), location.getPath() + "_sides");
     }
     
-    public MCResourceLocation getEnd(MCResourceLocation name) {
+    public ResourceLocation getEnd(ResourceLocation name) {
         return end.apply(name);
     }
     
-    public MCResourceLocation getSides(MCResourceLocation name) {
+    public ResourceLocation getSides(ResourceLocation name) {
         return sides.apply(name);
     }
     
@@ -46,11 +46,11 @@ public class BlockBuilderPillarRotatable extends BlockTypeBuilder {
      * If that texture's namespace is in the namespace of CoT or any of its addons (that support it) then the image will be created by default.
      *
      * @param endTexture The texture to be used for the end sides.
-     * @docParam endTexture <resource:contenttweaker:my_awesome_pillar_end>
      * @return This builder, used for method chaining
+     * @docParam endTexture <resource:contenttweaker:my_awesome_pillar_end>
      */
     @ZenCodeType.Method
-    public BlockBuilderPillarRotatable withEndTexture(MCResourceLocation endTexture) {
+    public BlockBuilderPillarRotatable withEndTexture(ResourceLocation endTexture) {
         this.end = ignored -> endTexture;
         return this;
     }
@@ -60,11 +60,11 @@ public class BlockBuilderPillarRotatable extends BlockTypeBuilder {
      * If that texture's namespace is in the namespace of CoT or any of its addons (that support it) then the image will be created by default.
      *
      * @param sidesTexture The texture to be used for the sides.
-     * @docParam sidesTexture <resource:contenttweaker:my_awesome_pillar_side>
      * @return This builder, used for method chaining
+     * @docParam sidesTexture <resource:contenttweaker:my_awesome_pillar_side>
      */
     @ZenCodeType.Method
-    public BlockBuilderPillarRotatable withSideTexture(MCResourceLocation sidesTexture) {
+    public BlockBuilderPillarRotatable withSideTexture(ResourceLocation sidesTexture) {
         this.sides = ignored -> sidesTexture;
         return this;
     }
@@ -75,11 +75,11 @@ public class BlockBuilderPillarRotatable extends BlockTypeBuilder {
      * Uses a function that takes the block's name as input and returns the end texture for it.
      *
      * @param endTexture The function to use
-     * @docParam endTexture (blockName as MCResourceLocation) => new MCResourceLocation(blockName.namespace, blockName.path + "_end")
      * @return This builder, used for method chaining
+     * @docParam endTexture (blockName as ResourceLocation) => new ResourceLocation(blockName.namespace, blockName.path + "_end")
      */
     @ZenCodeType.Method
-    public BlockBuilderPillarRotatable withEndTexture(Function<MCResourceLocation, MCResourceLocation> endTexture) {
+    public BlockBuilderPillarRotatable withEndTexture(Function<ResourceLocation, ResourceLocation> endTexture) {
         this.end = endTexture;
         return this;
     }
@@ -90,17 +90,17 @@ public class BlockBuilderPillarRotatable extends BlockTypeBuilder {
      * Uses a function that takes the block's name as input and returns the side texture for it.
      *
      * @param sidesTexture The function to use
-     * @docParam sidesTexture (blockName as MCResourceLocation) => new MCResourceLocation(blockName.namespace, blockName.path + "_sides")
      * @return This builder, used for method chaining
+     * @docParam sidesTexture (blockName as ResourceLocation) => new ResourceLocation(blockName.namespace, blockName.path + "_sides")
      */
     @ZenCodeType.Method
-    public BlockBuilderPillarRotatable withSideTexture(Function<MCResourceLocation, MCResourceLocation> sidesTexture) {
+    public BlockBuilderPillarRotatable withSideTexture(Function<ResourceLocation, ResourceLocation> sidesTexture) {
         this.sides = sidesTexture;
         return this;
     }
     
     @Override
-    public void build(MCResourceLocation location) {
+    public void build(ResourceLocation location) {
         VanillaFactory.queueBlockForRegistration(new CoTBlockRotatablePillar(this, location));
     }
     

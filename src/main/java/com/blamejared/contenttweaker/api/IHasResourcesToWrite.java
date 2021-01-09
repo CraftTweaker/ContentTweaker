@@ -1,6 +1,5 @@
 package com.blamejared.contenttweaker.api;
 
-import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 
 import javax.annotation.*;

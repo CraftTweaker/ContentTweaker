@@ -4,8 +4,8 @@ import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.items.*;
 import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
+import net.minecraft.util.*;
 import org.openzen.zencode.java.*;
 
 /**
@@ -25,7 +25,7 @@ public class ItemBuilderBasic extends ItemTypeBuilder {
     }
     
     @Override
-    public void build(MCResourceLocation location) {
-        VanillaFactory.queueItemForRegistration(new CoTItemBasic(itemBuilder.getItemProperties(), location.getInternal()));
+    public void build(ResourceLocation location) {
+        VanillaFactory.queueItemForRegistration(new CoTItemBasic(itemBuilder.getItemProperties(), location));
     }
 }

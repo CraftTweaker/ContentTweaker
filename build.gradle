@@ -121,6 +121,9 @@ repositories {
     maven {
         url "https://maven.mcmoddev.com"
     }
+    maven {
+        url "http://mmd.blamejared.com/"
+    }
 }
 
 dependencies {
@@ -128,6 +131,7 @@ dependencies {
     //TODO: Reactivate once available
     //compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
     compile project(":CraftTweaker")
+    annotationProcessor project(":CraftTweaker")
     annotationProcessor project(":Crafttweaker_Annotation_Processors")
     compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.3:7.0.3")
 }
@@ -148,16 +152,8 @@ jar {
 
 jar.finalizedBy('reobfJar')
 
-sourceSets {
-    main {
-        java.srcDirs += "/src/generated/java/"
-    }
-
-}
-
 idea {
     module {
-        generatedSourceDirs += file("src/generated/java")
         excludeDirs += [file("run"), file("runServer")]
     }
 }
@@ -282,6 +278,6 @@ curseforge {
         }
 //        addArtifact(sourcesJar)
 //        addArtifact(javadocJar)
-        addArtifact(deobfJar)
+//        addArtifact(deobfJar)
     }
 }

@@ -5,8 +5,8 @@ import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.items.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
+import net.minecraft.util.*;
 import net.minecraftforge.common.*;
 import org.openzen.zencode.java.*;
 
@@ -116,8 +116,8 @@ public class ItemBuilderTool extends ItemTypeBuilder {
     }
     
     @Override
-    public void build(MCResourceLocation location) {
-        VanillaFactory.queueItemForRegistration(new CoTItemTool(this, location.getInternal()));
+    public void build(ResourceLocation location) {
+        VanillaFactory.queueItemForRegistration(new CoTItemTool(this, location));
     }
     
     public double getAttackSpeed() {

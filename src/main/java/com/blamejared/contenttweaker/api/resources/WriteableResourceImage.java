@@ -1,7 +1,6 @@
 package com.blamejared.contenttweaker.api.resources;
 
 import com.blamejared.contenttweaker.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import it.unimi.dsi.fastutil.bytes.*;
 import net.minecraft.util.*;
 
@@ -9,18 +8,18 @@ import java.io.*;
 
 public class WriteableResourceImage extends WriteableResource {
     
-    public WriteableResourceImage(ImageType imageType, MCResourceLocation location) {
+    public WriteableResourceImage(ImageType imageType, ResourceLocation location) {
         super(ResourceType.ASSETS, FileExtension.PNG, location, "textures", imageType.getFolderName());
     }
     
-    public WriteableResourceImage(MCResourceLocation location) {
+    public WriteableResourceImage(ResourceLocation location) {
         super(ResourceType.ASSETS, FileExtension.PNG, location, "textures");
     }
     
     /**
      * Creates the default image (red X on white background) for the given location/type
      */
-    public static WriteableResourceImage noImage(ImageType imageType, MCResourceLocation location) {
+    public static WriteableResourceImage noImage(ImageType imageType, ResourceLocation location) {
         return new WriteableResourceImage(imageType, location).setImageToCopy(new ResourceLocation(ContentTweaker.MOD_ID, "textures/generic/no_image"));
     }
     

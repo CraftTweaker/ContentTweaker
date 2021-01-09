@@ -18,9 +18,7 @@ public class ContentTweaker {
     
     public ContentTweaker() {
         VanillaFactory.generateStuffForMyModId(MOD_ID);
-        FMLJavaModLoadingContext.get()
-                .getModEventBus()
-                .addGenericListener(Block.class, EventPriority.LOW, this::registerItems);
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, EventPriority.LOW, this::registerItems);
     }
     
     
@@ -31,9 +29,7 @@ public class ContentTweaker {
      * Hopefully also some items, but I wouldn't count on it
      */
     private void registerItems(final RegistryEvent.Register<Block> registryEvent) {
-        final ScriptLoadingOptions scriptLoadingOptions = new ScriptLoadingOptions().setLoaderName(MOD_ID)
-                .execute()
-                .firstRun();
+        final ScriptLoadingOptions scriptLoadingOptions = new ScriptLoadingOptions().setLoaderName(MOD_ID).execute();
         
         CraftTweakerAPI.loadScripts(scriptLoadingOptions);
         VanillaFactory.forbidRegistration();

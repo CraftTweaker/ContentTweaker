@@ -1,19 +1,19 @@
 package com.blamejared.contenttweaker.api;
 
-import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.util.*;
 
 import javax.annotation.*;
+import java.util.*;
 
 @FunctionalInterface
-public interface IHasMCResourceLocation {
-    
-    @Nonnull
-    default MCResourceLocation getMCResourceLocation() {
-        return new MCResourceLocation(getRegistryName());
-    }
+public interface IHasResourceLocation {
     
     // Will never be null, but this makes nullable warnings shut up ^^
     @Nullable
     ResourceLocation getRegistryName();
+    
+    @Nonnull
+    default ResourceLocation getRegistryNameNonNull() {
+        return Objects.requireNonNull(getRegistryName());
+    }
 }

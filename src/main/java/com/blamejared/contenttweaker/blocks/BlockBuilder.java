@@ -6,13 +6,11 @@ import com.blamejared.contenttweaker.blocks.types.basic.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.impl.block.material.*;
-import com.blamejared.crafttweaker.impl.blocks.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.block.*;
+import net.minecraft.block.material.*;
 import net.minecraft.item.*;
-import net.minecraftforge.registries.*;
+import net.minecraft.util.*;
 import org.openzen.zencode.java.*;
 
 import java.lang.reflect.*;
@@ -40,18 +38,17 @@ public class BlockBuilder implements IIsBuilder {
      * @docParam material <blockmaterial:earth>
      */
     @ZenCodeType.Constructor
-    public BlockBuilder(@ZenCodeType.Optional("<blockmaterial:iron>") MCMaterial material) {
-        blockProperties = Block.Properties.create(material.getInternal());
+    public BlockBuilder(@ZenCodeType.Optional("<blockmaterial:iron>") Material material) {
+        blockProperties = Block.Properties.create(material);
         itemProperties = new Item.Properties().group(ItemGroup.MISC);
     }
     
     @ZenCodeType.Constructor
-    public BlockBuilder(MCBlock block) {
-        final Block internal = block.getInternal();
-        blockProperties = Block.Properties.from(internal);
+    public BlockBuilder(Block block) {
+        blockProperties = Block.Properties.from(block);
         
         //Uses ItemStack, since the other methods getters are deprecated
-        final Item asItem = internal.asItem();
+        final Item asItem = block.asItem();
         final ItemStack itemStack = new ItemStack(asItem);
         itemProperties = new Item.Properties();
         itemProperties.rarity(itemStack.getRarity());
@@ -60,7 +57,7 @@ public class BlockBuilder implements IIsBuilder {
         } else {
             itemProperties.maxStackSize(itemStack.getMaxStackSize());
         }
-        if(itemStack.hasContainerItem()){
+        if(itemStack.hasContainerItem()) {
             itemProperties.containerItem(itemStack.getContainerItem().getItem());
         }
         
@@ -132,7 +129,7 @@ public class BlockBuilder implements IIsBuilder {
     
     /**
      * Instructs CoT that this block is not solid.
-     *
+     * <p>
      * This is required if your model is not a full block (16x16x16).
      * It is also required if your model is see-through (like glass).
      * Set this if your block creates some X-Ray effects when it's placed.
@@ -257,8 +254,8 @@ public class BlockBuilder implements IIsBuilder {
      * @docParam blockIn <block:minecraft:diamond>
      */
     @ZenCodeType.Method
-    public BlockBuilder withLootFrom(MCBlock blockIn) {
-        blockProperties.lootFrom(blockIn.getInternal());
+    public BlockBuilder withLootFrom(Block blockIn) {
+        blockProperties.lootFrom(blockIn);
         return this;
     }
     
@@ -284,7 +281,7 @@ public class BlockBuilder implements IIsBuilder {
     }
     
     @Override
-    public void build(MCResourceLocation location) {
+    public void build(ResourceLocation location) {
         withType(BlockBuilderBasic.class).build(location);
     }
     

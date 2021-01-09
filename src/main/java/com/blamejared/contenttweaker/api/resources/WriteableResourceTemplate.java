@@ -1,20 +1,19 @@
 package com.blamejared.contenttweaker.api.resources;
 
 import com.blamejared.contenttweaker.file_handling.templates.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.util.*;
 
 public class WriteableResourceTemplate extends WriteableResource {
     
     private TemplateFile templateFile;
     
-    public WriteableResourceTemplate(ResourceType type, MCResourceLocation location, String... prefixes) {
+    public WriteableResourceTemplate(ResourceType type, ResourceLocation location, String... prefixes) {
         super(type, FileExtension.JSON, location, prefixes);
         this.contentSupplier = this::getContentArray;
     }
     
     public WriteableResourceTemplate(ResourceType type, String namespace, String path, String... prefixes) {
-        this(type, new MCResourceLocation(namespace, path), prefixes);
+        this(type, new ResourceLocation(namespace, path), prefixes);
     }
     
     private byte[] getContentArray() {
@@ -34,11 +33,11 @@ public class WriteableResourceTemplate extends WriteableResource {
     /**
      * Utility method that sets both NAMESPACE and PATH at once
      */
-    public WriteableResourceTemplate setLocationProperty(MCResourceLocation location) {
+    public WriteableResourceTemplate setLocationProperty(ResourceLocation location) {
         return setProperty("NAMESPACE", location.getNamespace()).setProperty("PATH", location.getPath());
     }
     
-    public WriteableResourceTemplate setLocationProperty(MCResourceLocation location, String suffix) {
+    public WriteableResourceTemplate setLocationProperty(ResourceLocation location, String suffix) {
         final String namespace = location.getNamespace();
         final String path = location.getPath();
         return setProperty("NAMESPACE" + "_" + suffix, namespace).setProperty("PATH" + "_" + suffix, path);

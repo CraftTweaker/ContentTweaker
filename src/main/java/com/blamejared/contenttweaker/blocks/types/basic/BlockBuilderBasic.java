@@ -4,8 +4,8 @@ import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.*;
 import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
+import net.minecraft.util.*;
 import org.openzen.zencode.java.*;
 
 /**
@@ -25,8 +25,7 @@ public class BlockBuilderBasic extends BlockTypeBuilder {
     }
     
     @Override
-    public void build(MCResourceLocation location) {
-        VanillaFactory.queueBlockForRegistration(new CoTBlockBasic(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location
-                .getInternal()));
+    public void build(ResourceLocation location) {
+        VanillaFactory.queueBlockForRegistration(new CoTBlockBasic(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location));
     }
 }

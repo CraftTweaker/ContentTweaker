@@ -3,7 +3,6 @@ package com.blamejared.contenttweaker.items.types.tool;
 import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import com.google.common.collect.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -78,13 +77,11 @@ final class CoTItemTool extends Item implements IIsCotItem {
     @Nonnull
     @Override
     public Collection<WriteableResource> getResourcePackResources() {
-        final MCResourceLocation location = getMCResourceLocation();
+        final ResourceLocation location = getRegistryNameNonNull();
         final List<WriteableResource> out = new ArrayList<>();
         out.add(WriteableResourceImage.noImage(ImageType.ITEM, location));
         
-        final WriteableResourceTemplate modelTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "models", "item")
-                .withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/item/item_tool"))
-                .setLocationProperty(location);
+        final WriteableResourceTemplate modelTemplate = new WriteableResourceTemplate(ResourceType.ASSETS, location, "models", "item").withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/item/item_tool")).setLocationProperty(location);
         out.add(modelTemplate);
         
         return out;

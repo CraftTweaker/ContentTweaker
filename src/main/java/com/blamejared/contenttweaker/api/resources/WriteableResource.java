@@ -1,7 +1,6 @@
 package com.blamejared.contenttweaker.api.resources;
 
 import com.blamejared.crafttweaker.api.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.util.*;
 
 import java.io.*;
@@ -35,16 +34,8 @@ public class WriteableResource {
         this(type, fileExtension, location.getNamespace(), location.getPath(), prefixes);
     }
     
-    public WriteableResource(ResourceType type, FileExtension fileExtension, MCResourceLocation location) {
-        this(type, fileExtension, location.getNamespace(), location.getPath());
-    }
-    
-    public WriteableResource(ResourceType type, FileExtension fileExtension, MCResourceLocation location, String... prefixes) {
-        this(type, fileExtension, location.getNamespace(), location.getPath(), prefixes);
-    }
-    
-    public static MCResourceLocation insertPrefix(MCResourceLocation location, String prefix) {
-        return new MCResourceLocation(location.getNamespace(), prefix + "/" + location.getNamespace());
+    public static ResourceLocation insertPrefix(ResourceLocation location, String prefix) {
+        return new ResourceLocation(location.getNamespace(), prefix + "/" + location.getNamespace());
     }
     
     public String getModId() {

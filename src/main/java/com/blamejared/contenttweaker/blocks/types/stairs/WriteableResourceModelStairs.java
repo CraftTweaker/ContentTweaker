@@ -2,19 +2,14 @@ package com.blamejared.contenttweaker.blocks.types.stairs;
 
 import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.resources.*;
-import com.blamejared.crafttweaker.impl.util.*;
 import net.minecraft.util.*;
 
 class WriteableResourceModelStairs extends WriteableResourceTemplate {
     
-    public WriteableResourceModelStairs(MCResourceLocation location, ModelType modelType, MCResourceLocation top, MCResourceLocation bottom, MCResourceLocation sides) {
+    public WriteableResourceModelStairs(ResourceLocation location, ModelType modelType, ResourceLocation top, ResourceLocation bottom, ResourceLocation sides) {
         super(ResourceType.ASSETS, location.getNamespace(), location.getPath() + modelType.getSuffix(), "models", "block");
         
-        this.withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/block/block_stairs"))
-                .setLocationProperty(top, "TOP")
-                .setLocationProperty(bottom, "BOTTOM")
-                .setLocationProperty(sides, "SIDE")
-                .setProperty("STAIRS_PARENT", modelType.modelName);
+        this.withTemplate(ResourceType.ASSETS, new ResourceLocation(ContentTweaker.MOD_ID, "models/block/block_stairs")).setLocationProperty(top, "TOP").setLocationProperty(bottom, "BOTTOM").setLocationProperty(sides, "SIDE").setProperty("STAIRS_PARENT", modelType.modelName);
     }
     
     public enum ModelType {
