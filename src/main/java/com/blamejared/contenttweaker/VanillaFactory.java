@@ -20,7 +20,7 @@ public class VanillaFactory {
      * ModIds can be added by calling {@link #generateStuffForMyModId(String)}
      */
     private static final Set<String> modIdsToGenerateStuffFor = new HashSet<>();
-    private static final CoTRegistry registry = new CoTRegistry();
+    public static final CoTRegistry REGISTRY = new CoTRegistry();
     
     private static boolean registerAllowed = true;
     
@@ -51,7 +51,7 @@ public class VanillaFactory {
      * @param block The block to enqueue.
      */
     public static void queueBlockForRegistration(IIsCoTBlock block) {
-        CraftTweakerAPI.apply(new ActionQueueBlockForRegistration(block, registry));
+        CraftTweakerAPI.apply(new ActionQueueBlockForRegistration(block, REGISTRY));
     }
     
     /**
@@ -62,7 +62,7 @@ public class VanillaFactory {
      * @param item The item to enqueue.
      */
     public static void queueItemForRegistration(IIsCotItem item) {
-        CraftTweakerAPI.apply(new ActionQueueItemForRegistration(item, registry));
+        CraftTweakerAPI.apply(new ActionQueueItemForRegistration(item, REGISTRY));
     }
     
     /**
@@ -80,12 +80,12 @@ public class VanillaFactory {
      * Registers the blocks and creates the resource pack and data pack.
      */
     static void complete() {
-        registry.getBlocksAsVanillaBlocks().forEach(value -> {
+        REGISTRY.getBlocksAsVanillaBlocks().forEach(value -> {
             CraftTweakerAPI.logDebug("Registering Block '%s'", value.getRegistryName());
             ForgeRegistries.BLOCKS.register(value);
         });
         
-        registry.getItemsAsVanillaItems().forEach(value -> {
+        REGISTRY.getItemsAsVanillaItems().forEach(value -> {
             CraftTweakerAPI.logDebug("Registering Item '%s'", value.getRegistryName());
             ForgeRegistries.ITEMS.register(value);
         });
@@ -107,7 +107,7 @@ public class VanillaFactory {
         }
         
         resourcePackInfo.createResourcePackIfNotExists();
-        registry.getAssetResources().filter(w -> modIdsToGenerateStuffFor.contains(w.getModId())).forEach(w -> {
+        REGISTRY.getAssetResources().filter(w -> modIdsToGenerateStuffFor.contains(w.getModId())).forEach(w -> {
             w.writeContentUsing(resourcePackInfo.getResourcePackDirectory());
             w.onWrite();
         });
@@ -121,7 +121,7 @@ public class VanillaFactory {
         }
         
         resourcePackInfo.createDataPackIfNotExists();
-        registry.getDataResources().filter(w -> modIdsToGenerateStuffFor.contains(w.getModId())).forEach(w -> {
+        REGISTRY.getDataResources().filter(w -> modIdsToGenerateStuffFor.contains(w.getModId())).forEach(w -> {
             w.writeContentUsing(resourcePackInfo.getDataPackDirectory());
             w.onWrite();
         });

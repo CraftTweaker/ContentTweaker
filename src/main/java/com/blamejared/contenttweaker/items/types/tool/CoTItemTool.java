@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.items.types.tool;
 import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
+import com.blamejared.contenttweaker.items.types.AbstractCoTItem;
 import com.google.common.collect.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -18,7 +19,7 @@ import javax.annotation.*;
 import java.util.*;
 
 @ParametersAreNonnullByDefault
-final class CoTItemTool extends Item implements IIsCotItem {
+final class CoTItemTool extends AbstractCoTItem implements IIsCotItem {
     
     private final Map<ToolType, Float> miningSpeeds;
     private final double attackDamage;

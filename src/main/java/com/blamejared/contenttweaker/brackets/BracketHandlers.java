@@ -1,5 +1,8 @@
 package com.blamejared.contenttweaker.brackets;
 
+import com.blamejared.contenttweaker.VanillaFactory;
+import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
+import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
@@ -66,5 +69,28 @@ public class BracketHandlers {
     //        throw new IllegalArgumentException("Could not find soundtype <soundtype:" + tokens + ">!");
     //    }
     //
-    
+
+    /**
+     * Gets the registered CoT item. Will throw an error if the item could not be found
+     * @param tokens What you would createDataCompound in the BEP call
+     * @return The found IIsCotItem
+     * @docParam tokens "test"
+     */
+    @ZenCodeType.Method
+    @BracketResolver("cotitem")
+    public static IIsCotItem getCoTItem(String tokens) {
+        return VanillaFactory.REGISTRY.getItem(tokens);
+    }
+
+    /**
+     * Gets the registered CoT block. Will throw an error if the block could not be found
+     * @param tokens What you would createDataCompound in the BEP call
+     * @return The found IIsCotBlock
+     * @docParam tokens "test"
+     */
+    @ZenCodeType.Method
+    @BracketResolver("cotblock")
+    public static IIsCoTBlock getCoTBlock(String tokens) {
+        return VanillaFactory.REGISTRY.getBlock(tokens);
+    }
 }

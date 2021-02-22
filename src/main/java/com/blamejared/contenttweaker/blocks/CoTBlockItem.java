@@ -2,6 +2,8 @@ package com.blamejared.contenttweaker.blocks;
 
 import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
+import com.blamejared.contenttweaker.api.functions.IItemRightClick;
+import com.blamejared.contenttweaker.api.functions.IItemUse;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import net.minecraft.item.*;
@@ -33,5 +35,14 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     public Collection<WriteableResource> getDataPackResources() {
         return Collections.emptyList();
     }
-    
+
+    @Override
+    public IIsCotItem setOnItemUse(IItemUse func) {
+        throw new UnsupportedOperationException("onItemUse is not available for Block Items");
+    }
+
+    @Override
+    public IIsCotItem setOnItemRightClick(IItemRightClick func) {
+        throw new UnsupportedOperationException("onItemRightClick is not available for Block Items");
+    }
 }

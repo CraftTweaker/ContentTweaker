@@ -3,13 +3,14 @@ package com.blamejared.contenttweaker.items.types.basic;
 import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
+import com.blamejared.contenttweaker.items.types.AbstractCoTItem;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 
 import javax.annotation.*;
 import java.util.*;
 
-public class CoTItemBasic extends Item implements IIsCotItem {
+public class CoTItemBasic extends AbstractCoTItem implements IIsCotItem {
     
     public CoTItemBasic(Properties properties, ResourceLocation location) {
         super(properties);
