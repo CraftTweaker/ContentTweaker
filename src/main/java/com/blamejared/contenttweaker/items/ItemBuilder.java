@@ -6,6 +6,7 @@ import com.blamejared.contenttweaker.items.types.basic.*;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.annotations.*;
+import com.blamejared.crafttweaker.impl.food.MCFood;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -108,7 +109,30 @@ public class ItemBuilder implements IIsBuilder {
         itemProperties.setNoRepair();
         return this;
     }
-    
+
+    /**
+     * Sets that this item is a food
+     *
+     * @param food the food
+     * @return The builder, used for method chaining
+     */
+    @ZenCodeType.Method
+    public ItemBuilder withFood(MCFood food) {
+        itemProperties.food(food.getInternal());
+        return this;
+    }
+
+    /**
+     * Sets that this item is immune to fire
+     *
+     * @return The builder, used for method chaining
+     */
+    @ZenCodeType.Method
+    public ItemBuilder isImmuneToFire() {
+        itemProperties.isImmuneToFire();
+        return this;
+    }
+
     /**
      * Sets the specific type of this item.
      * After this method is called the builder's context will switch to the more provided type builder.

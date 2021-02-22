@@ -258,6 +258,17 @@ public class BlockBuilder implements IIsBuilder {
         blockProperties.lootFrom(blockIn);
         return this;
     }
+
+    /**
+     * Sets the block needs tool to harvest.
+     *
+     * @return This builder, used for method chaining
+     */
+    @ZenCodeType.Method
+    public BlockBuilder setRequiresTool() {
+        blockProperties.setRequiresTool();
+        return this;
+    }
     
     /**
      * Sets the specific type of this block.
