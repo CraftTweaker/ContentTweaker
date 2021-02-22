@@ -74,10 +74,10 @@ public class BracketHandlers {
      * Gets the registered CoT item. Will throw an error if the item could not be found
      * @param tokens What you would createDataCompound in the BEP call
      * @return The found IIsCotItem
-     * @docParam tokens "test"
+     * @docParam tokens "test_item"
      */
     @ZenCodeType.Method
-    @BracketResolver("cotitem")
+    @BracketResolver("cotItem")
     public static IIsCotItem getCoTItem(String tokens) {
         return VanillaFactory.REGISTRY.getItem(tokens);
     }
@@ -86,10 +86,10 @@ public class BracketHandlers {
      * Gets the registered CoT block. Will throw an error if the block could not be found
      * @param tokens What you would createDataCompound in the BEP call
      * @return The found IIsCotBlock
-     * @docParam tokens "test"
+     * @docParam tokens "test_block"
      */
     @ZenCodeType.Method
-    @BracketResolver("cotblock")
+    @BracketResolver("cotBlock")
     public static IIsCoTBlock getCoTBlock(String tokens) {
         return VanillaFactory.REGISTRY.getBlock(tokens);
     }

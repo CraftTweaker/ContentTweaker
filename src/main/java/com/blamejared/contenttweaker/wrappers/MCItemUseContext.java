@@ -55,4 +55,8 @@ public class MCItemUseContext {
     public World getWorld() {
         return internal.getWorld();
     }
+
+    public ItemUseContext getInternal() {
+        return internal;
+    }
 }
