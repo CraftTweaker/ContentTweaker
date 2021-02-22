@@ -4,6 +4,7 @@ import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.items.types.AbstractCoTItem;
+import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import com.google.common.collect.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -71,8 +72,12 @@ final class CoTItemTool extends AbstractCoTItem implements IIsCotItem {
     
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damageItem(durabilityCostAttack, attacker, holder -> holder.sendBreakAnimation(EquipmentSlotType.MAINHAND));
-        return true;
+        if (this.itemHitEntity == null) {
+            stack.damageItem(durabilityCostAttack, attacker, holder -> holder.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+            return true;
+        } else {
+            return itemHitEntity.apply(new MCItemStackMutable(stack), target, attacker);
+        }
     }
     
     @Nonnull

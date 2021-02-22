@@ -1,13 +1,17 @@
 package com.blamejared.contenttweaker.blocks;
 
 import com.blamejared.contenttweaker.*;
+import com.blamejared.contenttweaker.actions.ActionSetBlockItemInventoryTick;
 import com.blamejared.contenttweaker.api.blocks.*;
-import com.blamejared.contenttweaker.api.functions.IItemRightClick;
-import com.blamejared.contenttweaker.api.functions.IItemUse;
+import com.blamejared.contenttweaker.api.functions.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
+import net.minecraft.world.World;
 
 import javax.annotation.*;
 import java.util.*;
@@ -18,6 +22,8 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
         super(blockIn.getBlock(), builder);
         this.setRegistryName(blockIn.getRegistryNameNonNull());
     }
+
+    public IItemInventoryTick itemInventoryTick;
     
     @Nonnull
     @Override
@@ -44,5 +50,30 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     @Override
     public IIsCotItem setOnItemRightClick(IItemRightClick func) {
         throw new UnsupportedOperationException("onItemRightClick is not available for Block Items");
+    }
+
+    @Override
+    public IIsCotItem setOnHitEntity(IItemHitEntity func) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public IIsCotItem setOnInteractWithEntity(IItemInteractWithEntity func) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public IIsCotItem setInventoryTick(IItemInventoryTick func) {
+        CraftTweakerAPI.apply(new ActionSetBlockItemInventoryTick(func, this));
+        return this;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (itemInventoryTick == null) {
+            super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
+        } else {
+            itemInventoryTick.apply(new MCItemStackMutable(stack), worldIn, entityIn, itemSlot, isSelected);
+        }
     }
 }
