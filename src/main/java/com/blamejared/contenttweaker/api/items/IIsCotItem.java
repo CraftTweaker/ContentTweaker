@@ -66,4 +66,12 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
      */
     @ZenCodeType.Method
     IIsCotItem setInventoryTick(IItemInventoryTick func);
+
+    /**
+     * The Set function will be called each tick while using the item
+     * @param func an IItemUsingTick function. The count argument of function is the amount of time in tick the item has been used for continuously.
+     * @return the IIsCotItem, used for method chaining
+     */
+    @ZenCodeType.Method
+    IIsCotItem setUsingTick(IItemUsingTick func);
 }

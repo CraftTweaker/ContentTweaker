@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -30,6 +31,7 @@ public abstract class AbstractCoTItem extends Item implements IIsCotItem {
     public IItemHitEntity itemHitEntity;
     public IItemInteractWithEntity itemInteractWithEntity;
     public IItemInventoryTick itemInventoryTick;
+    public IItemUsingTick itemUsingTick;
 
     @Override
     public IIsCotItem setOnItemUse(IItemUse func) {
@@ -61,6 +63,12 @@ public abstract class AbstractCoTItem extends Item implements IIsCotItem {
     @Override
     public IIsCotItem setInventoryTick(IItemInventoryTick func) {
         CraftTweakerAPI.apply(new ActionSetItemInventoryTick(func, this));
+        return this;
+    }
+
+    @Override
+    public IIsCotItem setUsingTick(IItemUsingTick func) {
+        CraftTweakerAPI.apply(new ActionSetItemUsingTick(func, this));
         return this;
     }
 
@@ -119,6 +127,15 @@ public abstract class AbstractCoTItem extends Item implements IIsCotItem {
             super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
         } else {
             itemInventoryTick.apply(new MCItemStackMutable(stack), worldIn, entityIn, itemSlot, isSelected);
+        }
+    }
+
+    @Override
+    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+        if (itemUsingTick == null) {
+            super.onUsingTick(stack, player, count);
+        } else {
+            itemUsingTick.apply(new MCItemStackMutable(stack), player, count);
         }
     }
 }
