@@ -197,15 +197,17 @@ public class BlockBuilder implements IIsBuilder {
         blockProperties.hardnessAndResistance(hardnessAndResistance);
         return this;
     }
-    
-    /*
-    This probably wont be needed
+
+
+    /**
+     * Sets the block is of a type that needs random ticking.
+     * @return The builder, used for method chaining.
+     */
     @ZenCodeType.Method
     public BlockBuilder withTickRandomly() {
         blockProperties.tickRandomly();
         return this;
     }
-     */
     
     /**
      * Sets the mining level required to mine this block
