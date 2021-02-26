@@ -1,6 +1,7 @@
 package com.blamejared.contenttweaker.items.types.tool;
 
 import com.blamejared.contenttweaker.*;
+import com.blamejared.contenttweaker.api.functions.IItemHitEntity;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.items.types.AbstractCoTItem;
@@ -20,7 +21,7 @@ import javax.annotation.*;
 import java.util.*;
 
 @ParametersAreNonnullByDefault
-final class CoTItemTool extends AbstractCoTItem implements IIsCotItem {
+public final class CoTItemTool extends AbstractCoTItem implements IIsCotItem {
     
     private final Map<ToolType, Float> miningSpeeds;
     private final double attackDamage;
@@ -72,11 +73,12 @@ final class CoTItemTool extends AbstractCoTItem implements IIsCotItem {
     
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (this.itemHitEntity == null) {
+        Optional<IItemHitEntity> itemHitEntity = VanillaFactory.REGISTRY.getFunction(this, IItemHitEntity.class);
+        if (itemHitEntity.isPresent()) {
+            return itemHitEntity.get().apply(new MCItemStackMutable(stack), target, attacker);
+        } else {
             stack.damageItem(durabilityCostAttack, attacker, holder -> holder.sendBreakAnimation(EquipmentSlotType.MAINHAND));
             return true;
-        } else {
-            return itemHitEntity.apply(new MCItemStackMutable(stack), target, attacker);
         }
     }
     

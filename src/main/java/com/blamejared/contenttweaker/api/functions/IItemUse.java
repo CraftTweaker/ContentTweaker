@@ -13,7 +13,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.functions.IItemUse")
 @Document("mods/contenttweaker/API/functions/IItemUse")
-public interface IItemUse {
+public interface IItemUse extends ICotFunction {
     @ZenCodeType.Method
     String apply(MCItemUseContext context);
 }

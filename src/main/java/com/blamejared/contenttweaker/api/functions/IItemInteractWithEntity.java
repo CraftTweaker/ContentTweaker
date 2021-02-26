@@ -11,7 +11,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.functions.IItemInteractWithEntity")
 @Document("mods/contenttweaker/API/functions/IItemInteractWithEntity")
-public interface IItemInteractWithEntity {
+public interface IItemInteractWithEntity extends ICotFunction{
     @ZenCodeType.Method
     String apply(MCItemStackMutable stack, PlayerEntity player, LivingEntity target, String hand);
 }

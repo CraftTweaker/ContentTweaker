@@ -10,7 +10,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.functions.IItemHitEntity")
 @Document("mods/contenttweaker/API/functions/IItemHitEntity")
-public interface IItemHitEntity {
+public interface IItemHitEntity extends ICotFunction {
     @ZenCodeType.Method
     boolean apply(MCItemStackMutable stack, LivingEntity target, LivingEntity attacker);
 }

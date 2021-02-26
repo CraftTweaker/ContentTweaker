@@ -1,12 +1,10 @@
 package com.blamejared.contenttweaker.blocks;
 
 import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.actions.ActionSetBlockItemInventoryTick;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.api.functions.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.*;
@@ -40,32 +38,6 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     @Override
     public Collection<WriteableResource> getDataPackResources() {
         return Collections.emptyList();
-    }
-
-    @Override
-    public IIsCotItem setOnItemUse(IItemUse func) {
-        throw new UnsupportedOperationException("onItemUse is not available for Block Items");
-    }
-
-    @Override
-    public IIsCotItem setOnItemRightClick(IItemRightClick func) {
-        throw new UnsupportedOperationException("onItemRightClick is not available for Block Items");
-    }
-
-    @Override
-    public IIsCotItem setOnHitEntity(IItemHitEntity func) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public IIsCotItem setOnInteractWithEntity(IItemInteractWithEntity func) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public IIsCotItem setInventoryTick(IItemInventoryTick func) {
-        CraftTweakerAPI.apply(new ActionSetBlockItemInventoryTick(func, this));
-        return this;
     }
 
     @Override

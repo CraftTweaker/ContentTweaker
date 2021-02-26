@@ -1,10 +1,12 @@
 package com.blamejared.contenttweaker.api.items;
 
+import com.blamejared.contenttweaker.actions.ActionSetFunction;
 import com.blamejared.contenttweaker.api.IHasResourceLocation;
 import com.blamejared.contenttweaker.api.IHasResourcesToWrite;
 import com.blamejared.contenttweaker.api.functions.*;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
+import net.minecraft.item.BlockItem;
 import net.minecraftforge.common.extensions.IForgeItem;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -26,7 +28,13 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
      * @return the IIsCotItem, used for method chaining
      */
     @ZenCodeType.Method
-    IIsCotItem setOnItemUse(IItemUse func);
+    default IIsCotItem setOnItemUse(IItemUse func) {
+        if (this.getItem() instanceof BlockItem) {
+            throw new UnsupportedOperationException("You could not set onItemRightClick to a block item!");
+        }
+        ActionSetFunction.applyNewAction(func, IItemUse.class, this);
+        return this;
+    }
 
     /**
      * Sets what will happen when the player right clicks with the item. If the item is food, you can't use it.
@@ -37,7 +45,13 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
      * @return the IIsCotItem, used for method chaining
      */
     @ZenCodeType.Method
-    IIsCotItem setOnItemRightClick(IItemRightClick func);
+    default IIsCotItem setOnItemRightClick(IItemRightClick func) {
+        if (this.getItem().isFood()) {
+            throw new UnsupportedOperationException("You could not set onItemRightClick to a food item!");
+        }
+        ActionSetFunction.applyNewAction(func, IItemRightClick.class, this);
+        return this;
+    }
 
     /**
      * Sets what will happen when a living entity attacks other entities.
@@ -46,7 +60,10 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
      * @return the IIsCotItem, used for method chaining
      */
     @ZenCodeType.Method
-    IIsCotItem setOnHitEntity(IItemHitEntity func);
+    default IIsCotItem setOnHitEntity(IItemHitEntity func) {
+        ActionSetFunction.applyNewAction(func, IItemHitEntity.class, this);
+        return this;
+    }
 
     /**
      * Sets what will happen when a player interacts (right-clicks) a entity.
@@ -57,7 +74,10 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
      * @return the IIsCotItem, used for method chaining
      */
     @ZenCodeType.Method
-    IIsCotItem setOnInteractWithEntity(IItemInteractWithEntity func);
+    default IIsCotItem setOnInteractWithEntity(IItemInteractWithEntity func) {
+        ActionSetFunction.applyNewAction(func, IItemInteractWithEntity.class, this);
+        return this;
+    }
 
     /**
      * The Set function will be called each tick as long the item is on a player inventory.
@@ -65,7 +85,10 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
      * @return the IIsCotItem, used for method chaining
      */
     @ZenCodeType.Method
-    IIsCotItem setInventoryTick(IItemInventoryTick func);
+    default IIsCotItem setInventoryTick(IItemInventoryTick func) {
+        ActionSetFunction.applyNewAction(func, IItemInventoryTick.class, this);
+        return this;
+    }
 
     /**
      * The Set function will be called each tick while using the item
@@ -73,5 +96,11 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
      * @return the IIsCotItem, used for method chaining
      */
     @ZenCodeType.Method
-    IIsCotItem setUsingTick(IItemUsingTick func);
+    default IIsCotItem setUsingTick(IItemUsingTick func) {
+        if (this.getItem() instanceof BlockItem) {
+            throw new UnsupportedOperationException("You could not set onUsingTick to a block item!");
+        }
+        ActionSetFunction.applyNewAction(func, IItemUsingTick.class, this);
+        return this;
+    }
 }

@@ -10,6 +10,6 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.functions.IItemUsingTick")
 @Document("mods/contenttweaker/API/functions/IItemUsingTick")
-public interface IItemUsingTick {
+public interface IItemUsingTick extends ICotFunction {
     void apply(MCItemStackMutable stack, LivingEntity player, int count);
 }

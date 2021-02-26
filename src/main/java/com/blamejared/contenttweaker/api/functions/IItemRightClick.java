@@ -11,7 +11,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.functions.IItemRightClick")
 @Document("mods/contenttweaker/API/functions/IItemRightClick")
-public interface IItemRightClick {
+public interface IItemRightClick extends ICotFunction {
     @ZenCodeType.Method
     String apply(MCItemStackMutable item, PlayerEntity playerEntity, World world, String hand);
 }

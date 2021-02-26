@@ -11,7 +11,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.functions.IItemRightClick")
 @Document("mods/contenttweaker/API/functions/IItemRightClick")
-public interface IItemInventoryTick {
+public interface IItemInventoryTick extends ICotFunction {
     @ZenCodeType.Method
     void apply(MCItemStackMutable stack, World world, Entity entity, int itemSlot, boolean isSelected);
 }
