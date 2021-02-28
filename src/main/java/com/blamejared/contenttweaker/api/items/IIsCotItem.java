@@ -7,7 +7,6 @@ import com.blamejared.contenttweaker.api.functions.*;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.BucketItem;
 import net.minecraftforge.common.extensions.IForgeItem;
 import org.openzen.zencode.java.ZenCodeType;
 

@@ -10,8 +10,6 @@ import com.blamejared.crafttweaker.api.*;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.*;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.common.extensions.*;

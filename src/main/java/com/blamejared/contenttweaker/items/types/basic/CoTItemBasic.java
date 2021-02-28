@@ -4,7 +4,6 @@ import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.contenttweaker.items.types.AbstractCoTItem;
-import net.minecraft.item.*;
 import net.minecraft.util.*;
 
 import javax.annotation.*;

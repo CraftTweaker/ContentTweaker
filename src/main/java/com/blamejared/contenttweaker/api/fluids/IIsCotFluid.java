@@ -1,7 +1,6 @@
 package com.blamejared.contenttweaker.api.fluids;
 
 import com.blamejared.contenttweaker.api.IHasResourceLocation;
-import com.blamejared.contenttweaker.api.IHasResourcesToWrite;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.block.FlowingFluidBlock;
