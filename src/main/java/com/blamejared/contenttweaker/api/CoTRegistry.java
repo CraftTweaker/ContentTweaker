@@ -2,6 +2,7 @@ package com.blamejared.contenttweaker.api;
 
 import com.blamejared.contenttweaker.ContentTweaker;
 import com.blamejared.contenttweaker.api.blocks.*;
+import com.blamejared.contenttweaker.api.fluids.IIsCotFluid;
 import com.blamejared.contenttweaker.api.functions.ICotFunction;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
@@ -9,6 +10,8 @@ import com.blamejared.crafttweaker.api.*;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.*;
+import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.common.extensions.*;
@@ -21,6 +24,7 @@ public class CoTRegistry {
     
     private final Map<ResourceLocation, IIsCoTBlock> blocks = new LinkedHashMap<>();
     private final Map<ResourceLocation, IIsCotItem> items = new LinkedHashMap<>();
+    private final Map<ResourceLocation, IIsCotFluid> fluids = new LinkedHashMap<>();
     private final Multimap<ResourceLocation, FunctionEntry> functions = HashMultimap.create();
 
     public void addBlock(IIsCoTBlock block) {
@@ -35,6 +39,13 @@ public class CoTRegistry {
             CraftTweakerAPI.logError("Registering item '%s' a second time, overriding the first one. Make sure your calls to .register() use unique names!", item.getRegistryName());
         }
         items.put(item.getRegistryName(), item);
+    }
+
+    public void addFluid(IIsCotFluid fluid) {
+        if (fluids.containsKey(fluid.getRegistryName())) {
+            CraftTweakerAPI.logError("Registering block '%s' a second time, overriding the first one. Make sure your calls to .register() use unique names!", fluid.getRegistryName());
+        }
+        fluids.put(fluid.getRegistryName(), fluid);
     }
     
     public Stream<Block> getBlocksAsVanillaBlocks() {
@@ -61,6 +72,10 @@ public class CoTRegistry {
         return getItems().stream().map(IForgeItem::getItem);
     }
 
+    public Collection<IIsCotFluid> getFluids() {
+        return fluids.values();
+    }
+
     public IIsCotItem getItem(ResourceLocation resourceLocation) {
         return Optional.ofNullable(items.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could find CoT item for " + resourceLocation.toString()));
     }
@@ -69,12 +84,20 @@ public class CoTRegistry {
         return Optional.ofNullable(blocks.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could find CoT block for " + resourceLocation.toString()));
     }
 
+    public IIsCotFluid getFluid(ResourceLocation resourceLocation) {
+        return Optional.ofNullable(fluids.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could find CoT fluid for " + resourceLocation.toString()));
+    }
+
     public IIsCotItem getItem(String location) {
         return getItem(new ResourceLocation(ContentTweaker.MOD_ID, location));
     }
 
     public IIsCoTBlock getBlock(String location) {
         return getBlock(new ResourceLocation(ContentTweaker.MOD_ID, location));
+    }
+
+    public IIsCotFluid getFluid(String location) {
+        return getFluid(new ResourceLocation(ContentTweaker.MOD_ID, location));
     }
 
     public <T> Optional<T> getFunction(IHasResourceLocation hasResourceLocation, Class<T> functionType) {
