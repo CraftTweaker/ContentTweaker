@@ -7,6 +7,7 @@ import com.blamejared.contenttweaker.api.functions.*;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.BucketItem;
 import net.minecraftforge.common.extensions.IForgeItem;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -101,6 +102,17 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
             throw new UnsupportedOperationException("You could not set onUsingTick to a block item!");
         }
         ActionSetFunction.applyNewAction(func, IItemUsingTick.class, this);
+        return this;
+    }
+
+    /**
+     * The item's color
+     * @param func an IItemColorSupplier, The tintIndex is `layerX` property of its model.
+     * @return the IIsCotItem, used for method chaining
+     */
+    @ZenCodeType.Method
+    default IIsCotItem setItemColorSupplier(IItemColorSupplier func) {
+        ActionSetFunction.applyNewAction(func, IItemColorSupplier.class, this);
         return this;
     }
 }

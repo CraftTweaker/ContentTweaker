@@ -2,28 +2,30 @@ package com.blamejared.contenttweaker.fluids;
 
 import com.blamejared.contenttweaker.ContentTweaker;
 import com.blamejared.contenttweaker.VanillaFactory;
+import com.blamejared.contenttweaker.actions.ActionSetFunction;
 import com.blamejared.contenttweaker.api.IIsBuilder;
 import com.blamejared.contenttweaker.api.fluids.IIsCotFluid;
 import com.blamejared.contenttweaker.api.resources.WriteableResource;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.impl.tag.MCTag;
+import com.blamejared.crafttweaker.impl.tag.manager.TagManagerFluid;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.openzen.zencode.java.ZenCodeType;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 
 @ZenRegister
@@ -130,6 +132,7 @@ public class FluidBuilder implements IIsBuilder {
         FlowingFluidBlock fluidBlock = new FlowingFluidBlock(stillFluid, fluidBlockProperties);
         CoTFluidBucketItem bucketItem = new CoTFluidBucketItem(stillFluid, new Item.Properties().maxStackSize(1).containerItem(Items.BUCKET).group(ItemGroup.MISC));
         bucketItem.setRegistryName(path + "_bucket");
+        bucketItem.setItemColorSupplier(((stack, tintIndex) -> tintIndex == 1 ? color : -1));
         fluidBlock.setRegistryName(stillFluid.getRegistryNameNonNull());
         properties.block(() -> fluidBlock);
         properties.bucket(() -> bucketItem);
