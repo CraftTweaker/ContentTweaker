@@ -13,5 +13,6 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.contenttweaker.functions.IBlockActivated")
 @Document("mods/contenttweaker/API/functions/IBlockActivated")
 public interface IBlockActivated extends ICotFunction {
+    @ZenCodeType.Method
     String apply(BlockState state, World world, BlockPos pos, PlayerEntity player, String hand);
 }

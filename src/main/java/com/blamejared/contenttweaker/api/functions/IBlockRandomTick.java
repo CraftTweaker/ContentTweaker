@@ -14,5 +14,6 @@ import java.util.Random;
 @ZenCodeType.Name("mods.contenttweaker.functions.IBlockRandomTick")
 @Document("mods/contenttweaker/API/functions/IBlockRandomTick")
 public interface IBlockRandomTick extends ICotFunction {
+    @ZenCodeType.Method
     void apply(BlockState state, ServerWorld world, BlockPos pos, Random random);
 }

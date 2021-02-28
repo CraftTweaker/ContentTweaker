@@ -12,5 +12,6 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.contenttweaker.functions.IBlockReplaced")
 @Document("mods/contenttweaker/API/functions/IBlockReplaced")
 public interface IBlockReplaced extends ICotFunction {
+    @ZenCodeType.Method
     void apply(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving);
 }

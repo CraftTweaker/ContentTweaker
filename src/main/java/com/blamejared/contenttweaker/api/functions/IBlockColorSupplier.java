@@ -12,5 +12,6 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.contenttweaker.functions.IBlockColorSupplier")
 @Document("mods/contenttweaker/API/functions/IBlockColorSupplier")
 public interface IBlockColorSupplier extends ICotFunction {
+    @ZenCodeType.Method
     int apply(BlockState state, @ZenCodeType.Nullable IBlockDisplayReader world, @ZenCodeType.Nullable BlockPos pos, int tintIndex);
 }

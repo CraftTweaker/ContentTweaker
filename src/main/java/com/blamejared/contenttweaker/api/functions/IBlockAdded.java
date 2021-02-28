@@ -12,5 +12,6 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.contenttweaker.functions.IBlockAdded")
 @Document("mods/contenttweaker/API/functions/IBlockAdded")
 public interface IBlockAdded extends ICotFunction {
+    @ZenCodeType.Method
     void apply(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving);
 }

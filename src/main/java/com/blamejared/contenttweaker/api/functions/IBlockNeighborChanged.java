@@ -13,5 +13,6 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.contenttweaker.functions.IBlockNeighborChanged")
 @Document("mods/contenttweaker/API/functions/IBlockNeighborChanged")
 public interface IBlockNeighborChanged extends ICotFunction {
+    @ZenCodeType.Method
     void apply(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving);
 }

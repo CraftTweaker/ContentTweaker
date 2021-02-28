@@ -10,5 +10,6 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.contenttweaker.functions.IItemColorSupplier")
 @Document("mods/contenttweaker/API/functions/IItemColorSupplier")
 public interface IItemColorSupplier extends ICotFunction {
+    @ZenCodeType.Method
     int apply(IItemStack stack, int tintIndex);
 }
