@@ -5,6 +5,7 @@ import com.blamejared.contenttweaker.api.IHasCoTItem;
 import com.blamejared.contenttweaker.api.IHasResourceLocation;
 import com.blamejared.contenttweaker.api.IHasResourcesToWrite;
 import com.blamejared.contenttweaker.api.functions.*;
+import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraftforge.common.extensions.IForgeBlock;
@@ -25,6 +26,7 @@ public interface IIsCoTBlock extends IHasCoTItem, IHasResourcesToWrite, IHasReso
      *
      * @return the IIsCoTBlock, used for method chaining
      */
+    @ZenCodeType.Method
     default IIsCoTBlock setOnAdded(IBlockAdded func) {
         ActionSetFunction.applyNewAction(func, IBlockAdded.class, this);
         return this;
@@ -35,6 +37,7 @@ public interface IIsCoTBlock extends IHasCoTItem, IHasResourcesToWrite, IHasReso
      *
      * @return the IIsCoTBlock, used for method chaining
      */
+    @ZenCodeType.Method
     default IIsCoTBlock setOnNeighborChanged(IBlockNeighborChanged func) {
         ActionSetFunction.applyNewAction(func, IBlockNeighborChanged.class, this);
         return this;
@@ -45,6 +48,7 @@ public interface IIsCoTBlock extends IHasCoTItem, IHasResourcesToWrite, IHasReso
      *
      * @return the IIsCoTBlock, used for method chaining
      */
+    @ZenCodeType.Method
     default IIsCoTBlock setOnRandomTick(IBlockRandomTick func) {
         if (!this.getBlock().ticksRandomly(this.getBlock().getDefaultState())) {
             throw new UnsupportedOperationException("You should set the block ticks randomly first! Add `withTickRandomly` to linked block builder.");
@@ -58,6 +62,7 @@ public interface IIsCoTBlock extends IHasCoTItem, IHasResourcesToWrite, IHasReso
      *
      * @return the IIsCoTBlock, used for method chaining
      */
+    @ZenCodeType.Method
     default IIsCoTBlock setOnReplaced(IBlockReplaced func) {
         ActionSetFunction.applyNewAction(func, IBlockReplaced.class, this);
         return this;
@@ -70,8 +75,27 @@ public interface IIsCoTBlock extends IHasCoTItem, IHasResourcesToWrite, IHasReso
      *             ("SUCCESS", "PASS", "FAIL", "CONSUME")
      * @return the IIsCoTBlock, used for method chaining
      */
+    @ZenCodeType.Method
     default IIsCoTBlock setOnActivated(IBlockActivated func) {
         ActionSetFunction.applyNewAction(func, IBlockActivated.class, this);
         return this;
     }
+
+    /**
+     * The block's color
+     * @param func an IBlockColorSupplier. The tintIndex argument is a hardcode of its model
+     * @return the IIsCoTBlock, used for method chaining.
+     */
+    @ZenCodeType.Method
+    default IIsCoTBlock setBlockColorSupplier(IBlockColorSupplier func) {
+        ActionSetFunction.applyNewAction(func, IBlockColorSupplier.class, this);
+        return this;
+    }
+
+    /**
+     * Gets The block's item
+     * @return the block's item
+     */
+    @ZenCodeType.Method
+    IIsCotItem getItem();
 }
