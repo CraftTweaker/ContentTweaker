@@ -134,7 +134,7 @@ public class CoTRegistry {
         }
 
         public boolean isTypeEqual(Type type) {
-            return this.type.getTypeName().equals(type.getTypeName());
+            return this.type == type;
         }
     }
 }
