@@ -11,7 +11,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @NativeTypeRegistration(value = Hand.class, zenCodeName = "mods.contenttweaker.MCHand")
 public class ExpandHand {
     @ZenCodeType.Caster(implicit = true)
-    public String getName(Hand internal) {
+    public static String getName(Hand internal) {
         return internal.name();
     }
 }
