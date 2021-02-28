@@ -23,6 +23,7 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     private final IIsCotItem item;
     private final ResourceLocation end;
     private final ResourceLocation sides;
+    private boolean allowTinted;
     
     public CoTBlockRotatablePillar(BlockBuilderPillarRotatable blockBuilderPillarRotatable, ResourceLocation location) {
         super(blockBuilderPillarRotatable.getBlockBuilder().getBlockProperties());
@@ -55,6 +56,16 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
         out.add(blockStateTemplate);
         return out;
     }
+
+    @Override
+    public boolean allowTinted() {
+        return allowTinted;
+    }
+
+    @Override
+    public void setAllowTinted() {
+        allowTinted = true;
+    }
     
     @Nonnull
     @Override
@@ -78,7 +89,7 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         return VanillaFactory.REGISTRY.getFunction(this, IBlockActivated.class)
-                .map(iBlockActivated -> ActionResultType.valueOf(iBlockActivated.apply(state, worldIn, pos, player, handIn.name())))
+                .map(iBlockActivated -> ActionResultType.valueOf(iBlockActivated.apply(state, worldIn, pos, player, handIn)))
                 .orElseGet(() -> super.onBlockActivated(state, worldIn, pos, player, handIn, hit));
     }
 

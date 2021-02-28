@@ -25,6 +25,8 @@ public abstract class AbstractCoTItem extends Item implements IIsCotItem {
         super(properties);
     }
 
+    private boolean allowTinted;
+
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         return VanillaFactory.REGISTRY.getFunction(this, IItemUse.class)
@@ -37,7 +39,7 @@ public abstract class AbstractCoTItem extends Item implements IIsCotItem {
         return VanillaFactory.REGISTRY.getFunction(this, IItemRightClick.class)
                 .map(iItemRightClick -> {
                     ItemStack stack = playerIn.getHeldItem(handIn);
-                    switch (iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn.name())) {
+                    switch (iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn)) {
                         case "SUCCESS":
                             return ActionResult.resultSuccess(stack);
                         case "PASS":
@@ -63,7 +65,7 @@ public abstract class AbstractCoTItem extends Item implements IIsCotItem {
     @Override
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         return VanillaFactory.REGISTRY.getFunction(this, IItemInteractWithEntity.class)
-                .map(iItemInteractWithEntity -> ActionResultType.valueOf(iItemInteractWithEntity.apply(new MCItemStackMutable(stack), playerIn, target, hand.name())))
+                .map(iItemInteractWithEntity -> ActionResultType.valueOf(iItemInteractWithEntity.apply(new MCItemStackMutable(stack), playerIn, target, hand)))
                 .orElseGet(() -> super.itemInteractionForEntity(stack, playerIn, target, hand));
     }
 
@@ -91,5 +93,15 @@ public abstract class AbstractCoTItem extends Item implements IIsCotItem {
                     super.onUsingTick(stack, player, count);
                     return 0;
                 });
+    }
+
+    @Override
+    public boolean allowTinted() {
+        return allowTinted;
+    }
+
+    @Override
+    public void setAllowTinted() {
+        allowTinted = true;
     }
 }

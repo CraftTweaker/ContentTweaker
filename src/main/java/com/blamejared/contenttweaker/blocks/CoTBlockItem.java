@@ -59,7 +59,7 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
         return VanillaFactory.REGISTRY.getFunction(this, IItemRightClick.class)
                 .map(iItemRightClick -> {
                     ItemStack stack = playerIn.getHeldItem(handIn);
-                    switch (iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn.name())) {
+                    switch (iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn)) {
                         case "SUCCESS":
                             return ActionResult.resultSuccess(stack);
                         case "PASS":
@@ -85,7 +85,17 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     @Override
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         return VanillaFactory.REGISTRY.getFunction(this, IItemInteractWithEntity.class)
-                .map(iItemInteractWithEntity -> ActionResultType.valueOf(iItemInteractWithEntity.apply(new MCItemStackMutable(stack), playerIn, target, hand.name())))
+                .map(iItemInteractWithEntity -> ActionResultType.valueOf(iItemInteractWithEntity.apply(new MCItemStackMutable(stack), playerIn, target, hand)))
                 .orElseGet(() -> super.itemInteractionForEntity(stack, playerIn, target, hand));
+    }
+
+    @Override
+    public boolean allowTinted() {
+        return ((IIsCoTBlock) this.getBlock()).allowTinted();
+    }
+
+    @Override
+    public void setAllowTinted() {
+        throw new UnsupportedOperationException();
     }
 }

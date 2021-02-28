@@ -31,4 +31,14 @@ public class CoTFluidBucketItem extends BucketItem implements IIsCotItem {
     public Collection<WriteableResource> getDataPackResources() {
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean allowTinted() {
+        return true;
+    }
+
+    @Override
+    public void setAllowTinted() {
+        throw new UnsupportedOperationException();
+    }
 }

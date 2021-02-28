@@ -111,7 +111,14 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
      */
     @ZenCodeType.Method
     default IIsCotItem setItemColorSupplier(IItemColorSupplier func) {
+        if (!this.allowTinted()) {
+            throw new UnsupportedOperationException("You should set the item can be tinted first! Add `allowTinted` to linked item builder.");
+        }
         ActionSetFunction.applyNewAction(func, IItemColorSupplier.class, this);
         return this;
     }
+
+    boolean allowTinted();
+
+    void setAllowTinted();
 }

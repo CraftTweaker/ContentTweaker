@@ -10,6 +10,8 @@ import net.minecraft.block.Block;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.common.extensions.IForgeBlock;
+import net.minecraftforge.common.extensions.IForgeItem;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -21,7 +23,7 @@ public class ColorHandler {
                         VanillaFactory.REGISTRY.getFunction(((IIsCotItem) stack.getItem()), IItemColorSupplier.class)
                                 .map(iItemColorSupplier -> iItemColorSupplier.apply(new MCItemStack(stack), tintIndex))
                                 .orElse(-1),
-                VanillaFactory.REGISTRY.getItemsAsVanillaItems().toArray(IItemProvider[]::new));
+                VanillaFactory.REGISTRY.getItems().stream().filter(IIsCotItem::allowTinted).map(IForgeItem::getItem).toArray(IItemProvider[]::new));
     }
 
     @SubscribeEvent
@@ -30,7 +32,7 @@ public class ColorHandler {
                         VanillaFactory.REGISTRY.getFunction(((IIsCoTBlock) state.getBlock()), IBlockColorSupplier.class)
                                 .map(iBlockColorSupplier -> iBlockColorSupplier.apply(state, world, pos, tintIndex))
                                 .orElse(-1),
-                VanillaFactory.REGISTRY.getBlocksAsVanillaBlocks().toArray(Block[]::new)
+                VanillaFactory.REGISTRY.getBlocks().stream().filter(IIsCoTBlock::allowTinted).map(IForgeBlock::getBlock).toArray(Block[]::new)
         );
     }
 }

@@ -29,6 +29,7 @@ public class BlockBuilder implements IIsBuilder {
     
     private final Block.Properties blockProperties;
     private final Item.Properties itemProperties;
+    public boolean allowTinted;
     
     /**
      * Creates a new BlockBuilder.
@@ -269,6 +270,16 @@ public class BlockBuilder implements IIsBuilder {
     @ZenCodeType.Method
     public BlockBuilder setRequiresTool() {
         blockProperties.setRequiresTool();
+        return this;
+    }
+
+    /**
+     * Sets the block can be tinted
+     * @return This builder, used for method chaining
+     */
+    @ZenCodeType.Method
+    public BlockBuilder allowTinted() {
+        allowTinted = true;
         return this;
     }
     

@@ -101,7 +101,11 @@ public class BlockBuilderPillarRotatable extends BlockTypeBuilder {
     
     @Override
     public void build(ResourceLocation location) {
-        VanillaFactory.queueBlockForRegistration(new CoTBlockRotatablePillar(this, location));
+        CoTBlockRotatablePillar blockRotatablePillar = new CoTBlockRotatablePillar(this, location);
+        if (blockBuilder.allowTinted) {
+            blockRotatablePillar.setAllowTinted();
+        }
+        VanillaFactory.queueBlockForRegistration(blockRotatablePillar);
     }
     
 }

@@ -22,6 +22,7 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     
     private final IIsCotItem item;
     private final ResourceLocation top, bottom, sides;
+    private boolean allowTinted;
     
     public CoTStairsBlock(BlockBuilderStairs blockBuilderStairs, ResourceLocation location) {
         super(Blocks.AIR::getDefaultState, blockBuilderStairs.getBlockBuilder().getBlockProperties());
@@ -36,6 +37,16 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     @Override
     public IIsCotItem getItem() {
         return item;
+    }
+
+    @Override
+    public boolean allowTinted() {
+        return allowTinted;
+    }
+
+    @Override
+    public void setAllowTinted() {
+        allowTinted = true;
     }
     
     @Nonnull
@@ -81,7 +92,7 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         return VanillaFactory.REGISTRY.getFunction(this, IBlockActivated.class)
-                .map(iBlockActivated -> ActionResultType.valueOf(iBlockActivated.apply(state, worldIn, pos, player, handIn.name())))
+                .map(iBlockActivated -> ActionResultType.valueOf(iBlockActivated.apply(state, worldIn, pos, player, handIn)))
                 .orElseGet(() -> super.onBlockActivated(state, worldIn, pos, player, handIn, hit));
     }
 

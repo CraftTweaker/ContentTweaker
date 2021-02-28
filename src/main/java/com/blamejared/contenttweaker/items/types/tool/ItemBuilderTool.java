@@ -117,7 +117,11 @@ public class ItemBuilderTool extends ItemTypeBuilder {
     
     @Override
     public void build(ResourceLocation location) {
-        VanillaFactory.queueItemForRegistration(new CoTItemTool(this, location));
+        CoTItemTool itemTool = new CoTItemTool(this, location);
+        if (this.itemBuilder.allowTinted) {
+            itemTool.setAllowTinted();
+        }
+        VanillaFactory.queueItemForRegistration(itemTool);
     }
     
     public double getAttackSpeed() {

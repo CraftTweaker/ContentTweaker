@@ -36,10 +36,22 @@ final class CoTBlockBasic extends Block implements IIsCoTBlock {
         item = new CoTBlockItem(this, itemProperties);
     }
 
+    private boolean allowTinted;
+
     @Nonnull
     @Override
     public IIsCotItem getItem() {
         return item;
+    }
+
+    @Override
+    public boolean allowTinted() {
+        return allowTinted;
+    }
+
+    @Override
+    public void setAllowTinted() {
+        allowTinted = true;
     }
 
     @Nonnull
@@ -85,7 +97,7 @@ final class CoTBlockBasic extends Block implements IIsCoTBlock {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         return VanillaFactory.REGISTRY.getFunction(this, IBlockActivated.class)
-                .map(iBlockActivated -> ActionResultType.valueOf(iBlockActivated.apply(state, worldIn, pos, player, handIn.name())))
+                .map(iBlockActivated -> ActionResultType.valueOf(iBlockActivated.apply(state, worldIn, pos, player, handIn)))
                 .orElseGet(() -> super.onBlockActivated(state, worldIn, pos, player, handIn, hit));
     }
 

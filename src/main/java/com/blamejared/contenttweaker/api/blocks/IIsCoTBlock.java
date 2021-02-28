@@ -88,6 +88,9 @@ public interface IIsCoTBlock extends IHasCoTItem, IHasResourcesToWrite, IHasReso
      */
     @ZenCodeType.Method
     default IIsCoTBlock setBlockColorSupplier(IBlockColorSupplier func) {
+        if (!this.allowTinted()) {
+            throw new UnsupportedOperationException("You should set the block can be tinted first! Add `allowTinted` to linked block builder.");
+        }
         ActionSetFunction.applyNewAction(func, IBlockColorSupplier.class, this);
         return this;
     }
@@ -98,4 +101,8 @@ public interface IIsCoTBlock extends IHasCoTItem, IHasResourcesToWrite, IHasReso
      */
     @ZenCodeType.Method
     IIsCotItem getItem();
+
+    boolean allowTinted();
+
+    void setAllowTinted();
 }

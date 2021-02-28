@@ -138,6 +138,10 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
     
     @Override
     public void build(ResourceLocation location) {
-        VanillaFactory.queueBlockForRegistration(new CoTStairsBlock(this, location));
+        CoTStairsBlock cotStairs = new CoTStairsBlock(this, location);
+        if (blockBuilder.allowTinted) {
+            cotStairs.setAllowTinted();
+        }
+        VanillaFactory.queueBlockForRegistration(cotStairs);
     }
 }

@@ -26,6 +26,10 @@ public class BlockBuilderBasic extends BlockTypeBuilder {
     
     @Override
     public void build(ResourceLocation location) {
-        VanillaFactory.queueBlockForRegistration(new CoTBlockBasic(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location));
+        CoTBlockBasic blockBasic = new CoTBlockBasic(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location);
+        if (blockBuilder.allowTinted) {
+            blockBasic.setAllowTinted();
+        }
+        VanillaFactory.queueBlockForRegistration(blockBasic);
     }
 }
