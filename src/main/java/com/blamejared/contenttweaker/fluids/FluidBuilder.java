@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.openzen.zencode.java.ZenCodeType;
@@ -41,10 +42,8 @@ public class FluidBuilder implements IIsBuilder {
      */
     @ZenCodeType.Constructor
     public FluidBuilder(boolean isMolten, int color) {
-        this.builder = FluidAttributes.builder(isMolten ? MOLTEN_STILL_TEXTURE : LIQUID_STILL_TEXTURE, isMolten ? MOLTEN_FLOW_TEXTURE : LIQUID_FLOW_TEXTURE);
+        this(isMolten, color, isMolten ? MOLTEN_STILL_TEXTURE : LIQUID_STILL_TEXTURE, isMolten ? MOLTEN_FLOW_TEXTURE : LIQUID_FLOW_TEXTURE);
         builder.color(color);
-        this.isMolten = isMolten;
-        this.color = color;
     }
 
     /**
@@ -59,6 +58,37 @@ public class FluidBuilder implements IIsBuilder {
         this.builder = FluidAttributes.builder(stillTexture, flowTexture);
         this.isMolten = isMolten;
         this.color = color;
+        builder.sound(isMolten ? SoundEvents.ITEM_BUCKET_FILL_LAVA : SoundEvents.ITEM_BUCKET_FILL, isMolten ? SoundEvents.ITEM_BUCKET_EMPTY_LAVA : SoundEvents.ITEM_BUCKET_EMPTY);
+    }
+
+    @ZenCodeType.Method
+    public FluidBuilder luminosity(int luminosity) {
+        builder.luminosity(luminosity);
+        return this;
+    }
+
+    @ZenCodeType.Method
+    public FluidBuilder density(int density) {
+        builder.density(density);
+        return this;
+    }
+
+    @ZenCodeType.Method
+    public FluidBuilder temperature(int temperature) {
+        builder.temperature(temperature);
+        return this;
+    }
+
+    @ZenCodeType.Method
+    public FluidBuilder viscosity(int viscosity) {
+        builder.viscosity(viscosity);
+        return this;
+    }
+
+    @ZenCodeType.Method
+    public FluidBuilder gaseous() {
+        builder.gaseous();
+        return this;
     }
 
     @Override
