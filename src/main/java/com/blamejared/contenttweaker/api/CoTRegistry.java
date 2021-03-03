@@ -1,29 +1,28 @@
 package com.blamejared.contenttweaker.api;
 
 import com.blamejared.contenttweaker.ContentTweaker;
-import com.blamejared.contenttweaker.api.blocks.*;
+import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
 import com.blamejared.contenttweaker.api.fluids.IIsCotFluid;
 import com.blamejared.contenttweaker.api.functions.ICotFunction;
-import com.blamejared.contenttweaker.api.items.*;
-import com.blamejared.contenttweaker.api.resources.*;
-import com.blamejared.crafttweaker.api.*;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import net.minecraft.block.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraftforge.common.extensions.*;
+import com.blamejared.contenttweaker.api.items.IIsCotItem;
+import com.blamejared.contenttweaker.api.resources.WriteableResource;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.extensions.IForgeBlock;
+import net.minecraftforge.common.extensions.IForgeItem;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.lang.reflect.Type;
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 public class CoTRegistry {
     
     private final Map<ResourceLocation, IIsCoTBlock> blocks = new LinkedHashMap<>();
     private final Map<ResourceLocation, IIsCotItem> items = new LinkedHashMap<>();
     private final Map<ResourceLocation, IIsCotFluid> fluids = new LinkedHashMap<>();
-    private final Multimap<ResourceLocation, FunctionEntry> functions = HashMultimap.create();
+    private final Map<Pair<ResourceLocation, Class<? extends ICotFunction>>, ICotFunction> functions = new HashMap<>();
 
     public void addBlock(IIsCoTBlock block) {
         if(blocks.containsKey(block.getRegistryName())) {
@@ -99,42 +98,16 @@ public class CoTRegistry {
     }
 
     public <T> Optional<T> getFunction(IHasResourceLocation hasResourceLocation, Class<T> functionType) {
-        return functions.get(hasResourceLocation.getRegistryName())
-                .stream()
-                .filter(functionEntry -> functionEntry.isTypeEqual(functionType))
-                .map(FunctionEntry::getFunction)
+        return Optional.ofNullable(functions.get(Pair.of(hasResourceLocation.getRegistryNameNonNull(), functionType)))
                 .filter(functionType::isInstance)
-                .map(functionType::cast)
-                .findFirst();
+                .map(functionType::cast);
     }
 
-    public void putFunction(IHasResourceLocation hasResourceLocation, ICotFunction function, Type functionType) {
-        functions.put(hasResourceLocation.getRegistryName(), new FunctionEntry(function, functionType));
+    public <T extends ICotFunction, U extends T> void putFunction(IHasResourceLocation hasResourceLocation, U function, Class<T> functionType) {
+        functions.put(Pair.of(hasResourceLocation.getRegistryNameNonNull(), functionType), function);
     }
 
-    public void removeFunction(IHasResourceLocation hasResourceLocation, Type functionType) {
-        functions.get(hasResourceLocation.getRegistryName()).removeIf(functionEntry -> functionEntry.isTypeEqual(functionType));
-    }
-
-    public static class FunctionEntry {
-        private final ICotFunction function;
-        private final Type type;
-
-        public FunctionEntry(ICotFunction function, Type type) {
-            this.function = function;
-            this.type = type;
-        }
-
-        public ICotFunction getFunction() {
-            return function;
-        }
-
-        public Type getType() {
-            return type;
-        }
-
-        public boolean isTypeEqual(Type type) {
-            return this.type == type;
-        }
+    public void removeFunction(IHasResourceLocation hasResourceLocation, Class<?> functionType) {
+        functions.remove(Pair.of(hasResourceLocation.getRegistryNameNonNull(), functionType));
     }
 }

@@ -6,21 +6,19 @@ import com.blamejared.contenttweaker.api.functions.ICotFunction;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
 
-import java.lang.reflect.Type;
-
-public class ActionSetFunction implements IUndoableAction {
-    private final ICotFunction function;
-    private final Type functionType;
+public class ActionSetFunction<T extends ICotFunction> implements IUndoableAction {
+    private final T function;
+    private final Class<T> functionType;
     private final IHasResourceLocation hasResourceLocation;
 
-    public ActionSetFunction(ICotFunction function, Type functionType, IHasResourceLocation hasResourceLocation) {
+    public ActionSetFunction(T function, Class<T> functionType, IHasResourceLocation hasResourceLocation) {
         this.function = function;
         this.functionType = functionType;
         this.hasResourceLocation = hasResourceLocation;
     }
 
-    public static void applyNewAction(ICotFunction function, Type functionType, IHasResourceLocation hasResourceLocation) {
-        CraftTweakerAPI.apply(new ActionSetFunction(function, functionType, hasResourceLocation));
+    public static <T extends ICotFunction> void applyNewAction(T function, Class<T> functionType, IHasResourceLocation hasResourceLocation) {
+        CraftTweakerAPI.apply(new ActionSetFunction<>(function, functionType, hasResourceLocation));
     }
 
     @Override
