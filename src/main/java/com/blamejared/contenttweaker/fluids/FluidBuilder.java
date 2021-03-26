@@ -61,30 +61,53 @@ public class FluidBuilder implements IIsBuilder {
         builder.sound(isMolten ? SoundEvents.ITEM_BUCKET_FILL_LAVA : SoundEvents.ITEM_BUCKET_FILL, isMolten ? SoundEvents.ITEM_BUCKET_EMPTY_LAVA : SoundEvents.ITEM_BUCKET_EMPTY);
     }
 
+    /**
+     * The light-level emitted by the fluid
+     *
+     * default value is 0
+     */
     @ZenCodeType.Method
     public FluidBuilder luminosity(int luminosity) {
         builder.luminosity(luminosity);
         return this;
     }
 
+    /**
+     * How fast you can walk in the fluid?
+     *
+     * default value is 1000
+     */
     @ZenCodeType.Method
     public FluidBuilder density(int density) {
         builder.density(density);
         return this;
     }
 
+    /**
+     * The Fluid's temperature
+     *
+     * default value is 300
+     */
     @ZenCodeType.Method
     public FluidBuilder temperature(int temperature) {
         builder.temperature(temperature);
         return this;
     }
 
+    /**
+     * How quickly the fluid spreads
+     *
+     * default value is 1000
+     */
     @ZenCodeType.Method
     public FluidBuilder viscosity(int viscosity) {
         builder.viscosity(viscosity);
         return this;
     }
 
+    /**
+     * Is the fluid gaseous (flows upwards instead of downwards)?
+     */
     @ZenCodeType.Method
     public FluidBuilder gaseous() {
         builder.gaseous();
