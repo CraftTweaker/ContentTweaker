@@ -1,7 +1,8 @@
 package com.blamejared.contenttweaker.wrappers;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
+import com.blamejared.crafttweaker.api.item.*;
+import com.blamejared.crafttweaker.impl.item.*;
 import com.blamejared.crafttweaker.impl.util.MCDirection;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.crafttweaker_annotations.annotations.ZenWrapper;
@@ -42,8 +43,8 @@ public class MCItemUseContext {
     }
 
     @ZenCodeType.Getter("item")
-    public MCItemStackMutable getItem() {
-        return new MCItemStackMutable(internal.getItem());
+    public IItemStack getItem() {
+        return new MCItemStack(internal.getItem());
     }
 
     @ZenCodeType.Getter("hasSecondaryUseForPlayer")

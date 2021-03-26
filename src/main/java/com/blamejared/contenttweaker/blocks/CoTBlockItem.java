@@ -6,7 +6,8 @@ import com.blamejared.contenttweaker.api.functions.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
+import com.blamejared.crafttweaker.impl.item.*;
+import mcp.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +18,8 @@ import net.minecraft.world.World;
 import javax.annotation.*;
 import java.util.*;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class CoTBlockItem extends BlockItem implements IIsCotItem {
     
     public CoTBlockItem(IIsCoTBlock blockIn, Item.Properties builder) {
@@ -45,7 +48,7 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         VanillaFactory.REGISTRY.getFunction(this, IItemInventoryTick.class)
                 .map(iItemInventoryTick -> {
-                    iItemInventoryTick.apply(new MCItemStackMutable(stack), worldIn, entityIn, itemSlot, isSelected);
+                    iItemInventoryTick.apply(new MCItemStack(stack), worldIn, entityIn, itemSlot, isSelected);
                     return 0;
                 })
                 .orElseGet(() -> {
@@ -59,7 +62,7 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
         return VanillaFactory.REGISTRY.getFunction(this, IItemRightClick.class)
                 .map(iItemRightClick -> {
                     ItemStack stack = playerIn.getHeldItem(handIn);
-                    switch (iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn)) {
+                    switch (iItemRightClick.apply(new MCItemStack(stack), playerIn, worldIn, handIn)) {
                         case "SUCCESS":
                             return ActionResult.resultSuccess(stack);
                         case "PASS":
@@ -78,14 +81,14 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         return VanillaFactory.REGISTRY.getFunction(this, IItemHitEntity.class)
-                .map(iItemHitEntity -> iItemHitEntity.apply(new MCItemStackMutable(stack), target, attacker))
+                .map(iItemHitEntity -> iItemHitEntity.apply(new MCItemStack(stack), target, attacker))
                 .orElseGet(() -> super.hitEntity(stack, target, attacker));
     }
 
     @Override
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         return VanillaFactory.REGISTRY.getFunction(this, IItemInteractWithEntity.class)
-                .map(iItemInteractWithEntity -> ActionResultType.valueOf(iItemInteractWithEntity.apply(new MCItemStackMutable(stack), playerIn, target, hand)))
+                .map(iItemInteractWithEntity -> ActionResultType.valueOf(iItemInteractWithEntity.apply(new MCItemStack(stack), playerIn, target, hand)))
                 .orElseGet(() -> super.itemInteractionForEntity(stack, playerIn, target, hand));
     }
 

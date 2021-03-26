@@ -1,7 +1,7 @@
 package com.blamejared.contenttweaker.api.functions;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
+import com.blamejared.crafttweaker.api.item.*;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,5 +14,5 @@ import org.openzen.zencode.java.ZenCodeType;
 @Document("mods/contenttweaker/API/functions/IItemInteractWithEntity")
 public interface IItemInteractWithEntity extends ICotFunction{
     @ZenCodeType.Method
-    String apply(MCItemStackMutable stack, PlayerEntity player, LivingEntity target, Hand hand);
+    String apply(IItemStack stack, PlayerEntity player, LivingEntity target, Hand hand);
 }
