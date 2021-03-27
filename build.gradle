@@ -53,6 +53,10 @@ if (JavaVersion.current().isJava8Compatible()) {
     }
 }
 
+compileJava {
+    options.compilerArgs += ["-Acrafttweaker.processor.document.output_directory=${file('docsOut')}"]
+}
+
 minecraft {
     mappings channel: 'snapshot', version: '20201028-1.16.3'
     runs {
@@ -110,14 +114,14 @@ dependencies {
     //TODO: Reactivate once available
     //compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
     compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.3:7.0.3")
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.175")
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.176")
 
     annotationProcessor 'com.google.code.gson:gson:2.8.6'
     annotationProcessor 'org.reflections:reflections:0.9.10'
 
     annotationProcessor minecraft('net.minecraftforge:forge:1.16.5-36.0.0')
-    annotationProcessor fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.175")
-    annotationProcessor fg.deobf("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.4:1.0.0.175")
+    annotationProcessor fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.176")
+    annotationProcessor fg.deobf("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.176")
 
 }
 
@@ -140,8 +144,6 @@ jar.finalizedBy('reobfJar')
 idea {
     module {
         excludeDirs += [file("run"), file("runServer"), file("CraftTweaker")]
-        downloadJavadoc = true
-        downloadSources = true
     }
 }
 
