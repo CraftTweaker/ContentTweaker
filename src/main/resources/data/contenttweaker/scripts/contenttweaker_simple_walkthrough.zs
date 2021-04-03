@@ -13,7 +13,7 @@ import mods.contenttweaker.block.basic.BlockBuilderBasic;
 import mods.contenttweaker.block.pillar.BlockBuilderPillarRotatable;
 import mods.contenttweaker.fluid.FluidBuilder;
 
-====== ITEMS =====
+// ====== ITEMS =====
 
 // This is the simplest way to creating items
 new ItemBuilder().build("generic_item");
@@ -56,7 +56,7 @@ new BlockBuilder()
     .withType<BlockBuilderStairs>()
     .build("stairs_noarg");
 
-====== FLUIDS =====
+// ====== FLUIDS =====
 
 // This is the simplest way to creating fluids.
 // The builder constructor argument is:
@@ -77,7 +77,7 @@ new FluidBuilder(true, 0x66ccff)
 // There still is a color argument, but it is only used for bucket, not applied to the fluid
 new FluidBuilder(false, 0x999999, <resource:contenttweaker:fluid/generic_fluid2_still>, <resource:contenttweaker:fluid/generic_fluid2_flow>).build("generic_fluid_2");
 
-====== TEXTURES AND NAMES =====
+// ====== TEXTURES AND NAMES =====
 /*
 They need a RESOURCE PACK, not SCRIPTS. You are supposed to install a resource manager mod. You can use one of below:
 https://www.curseforge.com/minecraft/mc-mods/the-loader
@@ -112,6 +112,8 @@ TLDR: <resoruce_pack>/assets/contenttweaker/lang/en_us.json.
   "item.contenttweaker.generic_item_3": "Generic Item the charmed one",
   "fluid.contenttweaker.generic_fluid": "Generic Fluid",
   "fluid.contenttweaker.generic_fluid_2": "Generic Fluid the 2nd"
+  "item.contenttweaker.generic_fluid_bucket": "Generic Fluid Bucket"
+  "item.contenttweaker.generic_fluid_2_bucket": "Generic Fluid the 2nd Bucket"
 }
 
 */

@@ -1,7 +1,9 @@
 package com.blamejared.contenttweaker;
 
 import com.blamejared.crafttweaker.api.*;
+import com.blamejared.crafttweaker.impl.commands.script_examples.ExampleCollectionEvent;
 import net.minecraft.block.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
@@ -20,7 +22,11 @@ public class ContentTweaker {
         VanillaFactory.generateStuffForMyModId(MOD_ID);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, EventPriority.LOW, this::registerItems);
     }
-    
+
+    @SubscribeEvent
+    public void addExampleScriptFiles(ExampleCollectionEvent event) {
+        event.addResource(new ResourceLocation(MOD_ID, "contenttweaker_simple_walkthrough"));
+    }
     
     /**
      * Loads the scripts and registers the items afterwards.
