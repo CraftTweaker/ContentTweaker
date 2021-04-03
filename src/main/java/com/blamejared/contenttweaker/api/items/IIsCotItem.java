@@ -1,6 +1,7 @@
 package com.blamejared.contenttweaker.api.items;
 
 import com.blamejared.contenttweaker.actions.ActionSetFunction;
+import com.blamejared.contenttweaker.actions.ActionSetFunctionClient;
 import com.blamejared.contenttweaker.api.IHasResourceLocation;
 import com.blamejared.contenttweaker.api.IHasResourcesToWrite;
 import com.blamejared.contenttweaker.api.functions.*;
@@ -105,7 +106,7 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
     }
 
     /**
-     * The item's color
+     * The item's color. Before using it, you should set the item can be tinted first via adding `allowTinted` to linked item builder.
      * @param func an IItemColorSupplier, The tintIndex is `layerX` property of its model.
      * @return the IIsCotItem, used for method chaining
      */
@@ -114,7 +115,7 @@ public interface IIsCotItem extends IHasResourceLocation, IHasResourcesToWrite, 
         if (!this.allowTinted()) {
             throw new UnsupportedOperationException("You should set the item can be tinted first! Add `allowTinted` to linked item builder.");
         }
-        ActionSetFunction.applyNewAction(func, IItemColorSupplier.class, this);
+        ActionSetFunctionClient.applyNewAction(func, IItemColorSupplier.class, this);
         return this;
     }
 

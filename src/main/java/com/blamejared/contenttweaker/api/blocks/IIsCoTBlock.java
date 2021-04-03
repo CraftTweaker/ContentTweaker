@@ -1,6 +1,7 @@
 package com.blamejared.contenttweaker.api.blocks;
 
 import com.blamejared.contenttweaker.actions.ActionSetFunction;
+import com.blamejared.contenttweaker.actions.ActionSetFunctionClient;
 import com.blamejared.contenttweaker.api.IHasCoTItem;
 import com.blamejared.contenttweaker.api.IHasResourceLocation;
 import com.blamejared.contenttweaker.api.IHasResourcesToWrite;
@@ -91,7 +92,7 @@ public interface IIsCoTBlock extends IHasCoTItem, IHasResourcesToWrite, IHasReso
         if (!this.allowTinted()) {
             throw new UnsupportedOperationException("You should set the block can be tinted first! Add `allowTinted` to linked block builder.");
         }
-        ActionSetFunction.applyNewAction(func, IBlockColorSupplier.class, this);
+        ActionSetFunctionClient.applyNewAction(func, IBlockColorSupplier.class, this);
         return this;
     }
 

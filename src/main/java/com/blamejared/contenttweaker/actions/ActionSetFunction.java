@@ -5,6 +5,7 @@ import com.blamejared.contenttweaker.api.IHasResourceLocation;
 import com.blamejared.contenttweaker.api.functions.ICotFunction;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
+import com.blamejared.crafttweaker.api.logger.ILogger;
 
 public class ActionSetFunction<T extends ICotFunction> implements IUndoableAction {
     private final T function;
@@ -39,5 +40,10 @@ public class ActionSetFunction<T extends ICotFunction> implements IUndoableActio
     @Override
     public String describeUndo() {
         return "Undoing " + functionType.getTypeName() + " to CoT registry entry: " + hasResourceLocation.getRegistryName();
+    }
+
+    @Override
+    public boolean validate(ILogger logger) {
+        return assertLoader(CraftTweakerAPI.getDefaultLoaderName());
     }
 }
