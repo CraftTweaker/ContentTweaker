@@ -1,14 +1,17 @@
 package com.blamejared.contenttweaker;
 
-import com.blamejared.crafttweaker.api.*;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
 import com.blamejared.crafttweaker.impl.commands.script_examples.ExampleCollectionEvent;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.*;
-import net.minecraftforge.eventbus.api.*;
-import net.minecraftforge.fml.common.*;
-import net.minecraftforge.fml.javafmlmod.*;
-import org.apache.logging.log4j.*;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(ContentTweaker.MOD_ID)
 public class ContentTweaker {
@@ -21,11 +24,12 @@ public class ContentTweaker {
     public ContentTweaker() {
         VanillaFactory.generateStuffForMyModId(MOD_ID);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, EventPriority.LOW, this::registerItems);
+        MinecraftForge.EVENT_BUS.addListener(this::addExampleScriptFiles);
     }
 
-    @SubscribeEvent
-    public void addExampleScriptFiles(ExampleCollectionEvent event) {
+    private void addExampleScriptFiles(ExampleCollectionEvent event) {
         event.addResource(new ResourceLocation(MOD_ID, "contenttweaker_simple_walkthrough"));
+        event.addResource(new ResourceLocation(MOD_ID, "contenttweaker_advanced_function"));
     }
     
     /**
