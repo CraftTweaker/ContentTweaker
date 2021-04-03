@@ -77,7 +77,7 @@ public class BracketHandlers {
      * @docParam tokens "test_item"
      */
     @ZenCodeType.Method
-    @BracketResolver("cotItem")
+    @BracketResolver("cotitem")
     public static IIsCotItem getCoTItem(String tokens) {
         return VanillaFactory.REGISTRY.getItem(tokens);
     }
@@ -89,7 +89,7 @@ public class BracketHandlers {
      * @docParam tokens "test_block"
      */
     @ZenCodeType.Method
-    @BracketResolver("cotBlock")
+    @BracketResolver("cotblock")
     public static IIsCoTBlock getCoTBlock(String tokens) {
         return VanillaFactory.REGISTRY.getBlock(tokens);
     }
