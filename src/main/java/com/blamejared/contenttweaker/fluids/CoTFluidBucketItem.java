@@ -39,6 +39,6 @@ public class CoTFluidBucketItem extends BucketItem implements IIsCotItem {
 
     @Override
     public void setAllowTinted() {
-        throw new UnsupportedOperationException();
+
     }
 }
