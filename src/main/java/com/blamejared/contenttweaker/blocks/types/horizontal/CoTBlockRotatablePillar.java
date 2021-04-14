@@ -17,7 +17,6 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.*;
 import java.util.*;
 
-@SuppressWarnings("deprecation")
 final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoTBlock {
     
     private final IIsCotItem item;
@@ -74,6 +73,7 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockAdded.class)
                 .map(iBlockAdded -> {
@@ -87,6 +87,7 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         return VanillaFactory.REGISTRY.getFunction(this, IBlockActivated.class)
                 .map(iBlockActivated -> ActionResultType.valueOf(iBlockActivated.apply(state, worldIn, pos, player, handIn)))
@@ -94,6 +95,7 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockNeighborChanged.class)
                 .map(iBlockNeighborChanged -> {
@@ -107,6 +109,7 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockRandomTick.class)
                 .map(iBlockRandomTick -> {
@@ -120,6 +123,7 @@ final class CoTBlockRotatablePillar extends RotatedPillarBlock implements IIsCoT
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockReplaced.class)
                 .map(iBlockReplaced -> {

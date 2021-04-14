@@ -17,7 +17,6 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.*;
 import java.util.*;
 
-@SuppressWarnings("deprecation")
 public class CoTBlockSlab extends SlabBlock implements IIsCoTBlock {
     
     private final IIsCotItem item;
@@ -85,6 +84,7 @@ public class CoTBlockSlab extends SlabBlock implements IIsCoTBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockAdded.class)
                 .map(iBlockAdded -> {
@@ -98,6 +98,7 @@ public class CoTBlockSlab extends SlabBlock implements IIsCoTBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         return VanillaFactory.REGISTRY.getFunction(this, IBlockActivated.class)
                 .map(iBlockActivated -> ActionResultType.valueOf(iBlockActivated.apply(state, worldIn, pos, player, handIn)))
@@ -105,6 +106,7 @@ public class CoTBlockSlab extends SlabBlock implements IIsCoTBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockNeighborChanged.class)
                 .map(iBlockNeighborChanged -> {
@@ -118,6 +120,7 @@ public class CoTBlockSlab extends SlabBlock implements IIsCoTBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockRandomTick.class)
                 .map(iBlockRandomTick -> {
@@ -131,6 +134,7 @@ public class CoTBlockSlab extends SlabBlock implements IIsCoTBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockReplaced.class)
                 .map(iBlockReplaced -> {

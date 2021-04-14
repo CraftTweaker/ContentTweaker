@@ -17,7 +17,6 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.*;
 import java.util.*;
 
-@SuppressWarnings("deprecation")
 final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     
     private final IIsCotItem item;
@@ -97,6 +96,7 @@ final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         VanillaFactory.REGISTRY.getFunction(this, IBlockNeighborChanged.class)
                 .map(iBlockNeighborChanged -> {
