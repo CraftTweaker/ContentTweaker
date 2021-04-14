@@ -37,7 +37,7 @@ public class MCItemUseContext {
     }
 
     @ZenCodeType.Getter("face")
-    public MCDirection getDirection() {
+    public MCDirection getFace() {
         return MCDirection.get(internal.getFace());
     }
 
