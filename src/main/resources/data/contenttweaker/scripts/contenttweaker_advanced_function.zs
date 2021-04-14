@@ -9,8 +9,9 @@
 
 // Makes the item like a infinite duration flint and steel
 // The on item use function is called whenever the item is used on a block.
+// Before it, you should use ItemBuilder in CoT scripts to add an item named "inf_flint_and_steel"
 // For more info, see documentation.
-<cotitem:generic_item>.setOnItemUse((context) => {
+<cotitem:inf_flint_and_steel>.setOnItemUse((context) => {
     val pos = context.pos;
     val direction = context.face;
     val firePos = pos.offset(direction);

@@ -35,7 +35,7 @@ new ItemBuilder()
     .withDurabilityCostAttack(1) //By default: 2
     .build("my_tool");
 
-====== BLOCKS =====
+// ====== BLOCKS =====
 
 // This is the simplest way to creating blocks, uses <blockmaterial:iron> and basic builder (to create a full cube block)
 new BlockBuilder().build("generic_block");
