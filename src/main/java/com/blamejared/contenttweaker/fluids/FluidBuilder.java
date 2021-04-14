@@ -19,9 +19,6 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.openzen.zencode.java.ZenCodeType;
 
-import javax.annotation.Nullable;
-import java.util.Objects;
-
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.fluid.FluidBuilder")
 @Document("mods/contenttweaker/API/fluid/FluidBuilder")
@@ -117,59 +114,9 @@ public class FluidBuilder implements IIsBuilder {
     @Override
     public void build(ResourceLocation location) {
         String path = location.getPath();
-        IIsCotFluid stillFluid = new IIsCotFluid() {
-            private ForgeFlowingFluid.Source fluid;
-            private FlowingFluidBlock fluidBlock;
+        IIsCotFluid stillFluid = new CoTStillFluid(location);
+        IIsCotFluid flowingFluid = new CoTFlowingFluid(location);
 
-            @Override
-            public ResourceLocation getRegistryName() {
-                return location;
-            }
-
-            @Override
-            public FlowingFluid get() {
-                return Objects.requireNonNull(fluid);
-            }
-
-            @Override
-            public FlowingFluidBlock getFluidBlock() {
-                return Objects.requireNonNull(fluidBlock);
-            }
-
-            @Override
-            public void updateFluid(FlowingFluid fluid) {
-                this.fluid = (ForgeFlowingFluid.Source) fluid;
-            }
-
-            @Override
-            public void setFluidBlock(FlowingFluidBlock fluidBlock) {
-                this.fluidBlock = fluidBlock;
-            }
-        };
-        IIsCotFluid flowingFluid = new IIsCotFluid() {
-            private ForgeFlowingFluid.Flowing fluid;
-
-            @Override
-            public ResourceLocation getRegistryName() {
-                return new ResourceLocation(ContentTweaker.MOD_ID, path + "_flowing");
-            }
-
-            @Override
-            public FlowingFluid get() {
-                return Objects.requireNonNull(fluid);
-            }
-
-            @Nullable
-            @Override
-            public FlowingFluidBlock getFluidBlock() {
-                return null;
-            }
-
-            @Override
-            public void updateFluid(FlowingFluid fluid) {
-                this.fluid = (ForgeFlowingFluid.Flowing) fluid;
-            }
-        };
         ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(stillFluid, flowingFluid, builder);
         AbstractBlock.Properties fluidBlockProperties = AbstractBlock.Properties.create(isMolten ? Material.WATER : Material.LAVA)
                 .doesNotBlockMovement()
@@ -177,6 +124,7 @@ public class FluidBuilder implements IIsBuilder {
                 .noDrops();
         FlowingFluidBlock fluidBlock = new FlowingFluidBlock(stillFluid, fluidBlockProperties);
         CoTFluidBucketItem bucketItem = new CoTFluidBucketItem(stillFluid, new Item.Properties().maxStackSize(1).containerItem(Items.BUCKET).group(ItemGroup.MISC));
+
         bucketItem.setRegistryName(path + "_bucket");
         bucketItem.setItemColorSupplier(((stack, tintIndex) -> tintIndex == 1 ? color : -1));
         fluidBlock.setRegistryName(stillFluid.getRegistryNameNonNull());
@@ -185,6 +133,7 @@ public class FluidBuilder implements IIsBuilder {
         stillFluid.setFluidBlock(fluidBlock);
         flowingFluid.updateFluid((FlowingFluid) new ForgeFlowingFluid.Flowing(properties).setRegistryName(flowingFluid.getRegistryNameNonNull()));
         stillFluid.updateFluid((FlowingFluid) new ForgeFlowingFluid.Source(properties).setRegistryName(stillFluid.getRegistryNameNonNull()));
+
         VanillaFactory.queueFluidForRegistration(stillFluid);
         VanillaFactory.queueFluidForRegistration(flowingFluid);
         VanillaFactory.queueItemForRegistration(bucketItem);
