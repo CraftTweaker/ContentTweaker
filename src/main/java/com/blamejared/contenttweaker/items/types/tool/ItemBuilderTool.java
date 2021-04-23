@@ -55,9 +55,9 @@ public class ItemBuilderTool extends ItemTypeBuilder {
      * @docParam miningSpeed 2.0f
      */
     @ZenCodeType.Method
-    public ItemBuilderTool withToolType(MCToolType toolType, int miningLevel, @ZenCodeType.OptionalFloat(1.0F) float miningSpeed) {
-        itemBuilder.getItemProperties().addToolType(toolType.getInternal(), miningLevel);
-        miningSpeeds.put(toolType.getInternal(), miningSpeed);
+    public ItemBuilderTool withToolType(ToolType toolType, int miningLevel, @ZenCodeType.OptionalFloat(1.0F) float miningSpeed) {
+        itemBuilder.getItemProperties().addToolType(toolType, miningLevel);
+        miningSpeeds.put(toolType, miningSpeed);
         return this;
     }
     
