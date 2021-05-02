@@ -16,7 +16,7 @@ public class CreativeTabRepresentation implements IRepresentation<CreativeTabs>,
 
     private boolean hasSearch = false;
     private String backGroundImage = "items.png";
-    private boolean noScrollBar = true;
+    private boolean noScrollBar = false;
     private boolean noTitle = false;
 
     public String getUnlocalizedName() {
