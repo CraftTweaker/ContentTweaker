@@ -57,7 +57,7 @@ public class CoTEnchantment extends Enchantment {
         if (enchantabilityMin != null) {
             return enchantabilityMin.handle(thisDefinition, enchantmentLevel);
         }
-        return super.getMaxEnchantability(enchantmentLevel);
+        return super.getMinEnchantability(enchantmentLevel);
     }
 
     @Override

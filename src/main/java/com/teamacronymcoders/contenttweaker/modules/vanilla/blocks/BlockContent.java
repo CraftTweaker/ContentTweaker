@@ -14,19 +14,22 @@ import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.MCBlockPos;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.MCBlockState;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
-import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.PushReaction;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.FaceShape;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.enums.Facing;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.itemlist.CTItemList;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.resourcelocation.CTResourceLocation;
 import com.teamacronymcoders.contenttweaker.api.ctobjects.world.MCWorld;
 import com.teamacronymcoders.contenttweaker.api.utils.CTUtils;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockAction;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockColorSupplier;
+import com.teamacronymcoders.contenttweaker.modules.vanilla.functions.IBlockFaceSupplier;
 import com.teamacronymcoders.contenttweaker.modules.vanilla.tileentity.TileEntityContent;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.world.MCBlockAccess;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.EnumPushReaction;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -342,5 +345,25 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
     @Override
     public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState state, EntityPlayer player) {
         return blockRepresentation.canSilkHarvest;
+    }
+
+    @Nonnull
+    @Override
+    @Deprecated
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
+        IBlockFaceSupplier blockFaceSupplier = blockRepresentation.getBlockFaceSupplier();
+        if (blockFaceSupplier == null) {
+            return super.getBlockFaceShape(world, state, pos, face);
+        }
+        crafttweaker.api.world.IBlockAccess blockAccess = null;
+        if (world instanceof World) {
+            blockAccess = new MCWorld((World) world);
+        } else if (world != null) {
+            blockAccess = new MCBlockAccess(world);
+        }
+        IBlockPos blockPos = pos == null ? null : new MCBlockPos(pos);
+        Facing facing = face == null ? null : Facing.of(face);
+        FaceShape faceShape = blockFaceSupplier.getBlockFaceShape(blockAccess, new MCBlockState(state), blockPos, facing);
+        return faceShape != null ? faceShape.getInternal() : super.getBlockFaceShape(world, state, pos, face);
     }
 }

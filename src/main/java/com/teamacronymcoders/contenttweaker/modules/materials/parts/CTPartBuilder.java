@@ -40,7 +40,7 @@ public class CTPartBuilder implements IPartBuilder {
 
     @Override
     public IPartBuilder setHasOverlay(boolean hasOverlay) {
-        this.partBuilder.setOverlay(true);
+        this.partBuilder.setOverlay(hasOverlay);
         return this;
     }
 
