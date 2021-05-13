@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net' }
         jcenter()
         mavenCentral()
         maven {
@@ -127,7 +127,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.0'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.0.14'
     //TODO: Reactivate once available
     //compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
     compile project(":CraftTweaker")
