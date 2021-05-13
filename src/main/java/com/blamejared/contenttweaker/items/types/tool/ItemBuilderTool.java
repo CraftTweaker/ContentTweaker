@@ -118,9 +118,6 @@ public class ItemBuilderTool extends ItemTypeBuilder {
     @Override
     public void build(ResourceLocation location) {
         CoTItemTool itemTool = new CoTItemTool(this, location);
-        if (this.itemBuilder.allowTinted) {
-            itemTool.setAllowTinted();
-        }
         VanillaFactory.queueItemForRegistration(itemTool);
     }
     

@@ -1,27 +1,29 @@
 package com.blamejared.contenttweaker.items.types.tool;
 
-import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.functions.IItemHitEntity;
-import com.blamejared.contenttweaker.api.items.*;
+import com.blamejared.contenttweaker.ContentTweaker;
+import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.api.resources.*;
-import com.blamejared.contenttweaker.items.types.AbstractCoTItem;
-import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
-import com.google.common.collect.*;
-import net.minecraft.block.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.util.math.*;
-import net.minecraft.world.*;
-import net.minecraftforge.common.*;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
 @ParametersAreNonnullByDefault
-public final class CoTItemTool extends AbstractCoTItem implements IIsCotItem {
+public final class CoTItemTool extends Item implements IIsCotItem {
     
     private final Map<ToolType, Float> miningSpeeds;
     private final double attackDamage;
@@ -73,13 +75,8 @@ public final class CoTItemTool extends AbstractCoTItem implements IIsCotItem {
     
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        Optional<IItemHitEntity> itemHitEntity = VanillaFactory.REGISTRY.getFunction(this, IItemHitEntity.class);
-        if (itemHitEntity.isPresent()) {
-            return itemHitEntity.get().apply(new MCItemStackMutable(stack), target, attacker);
-        } else {
-            stack.damageItem(durabilityCostAttack, attacker, holder -> holder.sendBreakAnimation(EquipmentSlotType.MAINHAND));
-            return true;
-        }
+        stack.damageItem(durabilityCostAttack, attacker, holder -> holder.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+        return true;
     }
     
     @Nonnull

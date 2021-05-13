@@ -27,9 +27,6 @@ public class ItemBuilderBasic extends ItemTypeBuilder {
     @Override
     public void build(ResourceLocation location) {
         CoTItemBasic itemBasic = new CoTItemBasic(itemBuilder.getItemProperties(), location);
-        if (itemBuilder.allowTinted) {
-            itemBasic.setAllowTinted();
-        }
         VanillaFactory.queueItemForRegistration(itemBasic);
     }
 }

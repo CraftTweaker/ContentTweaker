@@ -5,8 +5,10 @@ import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.api.resources.ResourceType;
 import com.blamejared.contenttweaker.api.resources.WriteableResource;
 import com.blamejared.contenttweaker.api.resources.WriteableResourceTemplate;
+import com.blamejared.contenttweaker.color.IItemHasColor;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -14,7 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Supplier;
 
-public class CoTFluidBucketItem extends BucketItem implements IIsCotItem {
+public class CoTFluidBucketItem extends BucketItem implements IIsCotItem, IItemHasColor {
     public CoTFluidBucketItem(Supplier<? extends Fluid> supplier, Properties builder) {
         super(supplier, builder);
     }
@@ -33,12 +35,7 @@ public class CoTFluidBucketItem extends BucketItem implements IIsCotItem {
     }
 
     @Override
-    public boolean allowTinted() {
-        return true;
-    }
-
-    @Override
-    public void setAllowTinted() {
-
+    public int getColor(ItemStack stack, int tintIndex) {
+        return this.getFluid().getAttributes().getColor();
     }
 }

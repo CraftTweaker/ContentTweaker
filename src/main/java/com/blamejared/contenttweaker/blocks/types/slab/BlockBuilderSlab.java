@@ -51,9 +51,6 @@ public class BlockBuilderSlab extends BlockTypeBuilder {
     @Override
     public void build(ResourceLocation location) {
         CoTBlockSlab blockSlab = new CoTBlockSlab(this, location);
-        if (blockBuilder.allowTinted) {
-            blockSlab.setAllowTinted();
-        }
         VanillaFactory.queueBlockForRegistration(blockSlab);
     }
     

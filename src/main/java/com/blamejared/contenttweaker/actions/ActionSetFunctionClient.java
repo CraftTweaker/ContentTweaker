@@ -5,13 +5,24 @@ import com.blamejared.contenttweaker.api.functions.ICotFunction;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import net.minecraftforge.fml.LogicalSide;
 
-public class ActionSetFunctionClient<T extends ICotFunction> extends ActionSetFunction<T> {
-    public ActionSetFunctionClient(T function, Class<T> functionType, IHasResourceLocation hasResourceLocation) {
-        super(function, functionType, hasResourceLocation);
+import java.util.function.BiConsumer;
+
+public class ActionSetFunctionClient<T extends IHasResourceLocation, F extends ICotFunction> extends ActionSetFunction<T, F> {
+
+    public ActionSetFunctionClient(String type, T target, F function, BiConsumer<T, F> setFunctionConsumer) {
+        super(type, target, function, setFunctionConsumer);
     }
 
-    public static <T extends ICotFunction> void applyNewAction(T function, Class<T> functionType, IHasResourceLocation hasResourceLocation) {
-        CraftTweakerAPI.apply(new ActionSetFunctionClient<>(function, functionType, hasResourceLocation));
+    public ActionSetFunctionClient(String type, T target, F function, F defaultFunction, BiConsumer<T, F> setFunctionConsumer) {
+        super(type, target, function, defaultFunction, setFunctionConsumer);
+    }
+
+    public static <T extends IHasResourceLocation, F extends ICotFunction> void applyNewAction(String type, T target, F function, BiConsumer<T, F> setFunctionConsumer) {
+        CraftTweakerAPI.apply(new ActionSetFunctionClient<>(type, target, function, setFunctionConsumer));
+    }
+
+    public static <T extends IHasResourceLocation, F extends ICotFunction> void applyNewAction(String type, T target, F function, F defaultFunction, BiConsumer<T, F> setFunctionConsumer) {
+        CraftTweakerAPI.apply(new ActionSetFunctionClient<>(type, target, function, defaultFunction, setFunctionConsumer));
     }
 
     @Override

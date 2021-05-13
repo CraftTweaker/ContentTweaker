@@ -1,21 +1,18 @@
 package com.blamejared.contenttweaker.blocks;
 
-import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.blocks.*;
-import com.blamejared.contenttweaker.api.functions.*;
-import com.blamejared.contenttweaker.api.items.*;
+import com.blamejared.contenttweaker.ContentTweaker;
+import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
+import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.api.resources.*;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.World;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class CoTBlockItem extends BlockItem implements IIsCotItem {
     
@@ -39,63 +36,5 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     @Override
     public Collection<WriteableResource> getDataPackResources() {
         return Collections.emptyList();
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        VanillaFactory.REGISTRY.getFunction(this, IItemInventoryTick.class)
-                .map(iItemInventoryTick -> {
-                    iItemInventoryTick.apply(new MCItemStackMutable(stack), worldIn, entityIn, itemSlot, isSelected);
-                    return 0;
-                })
-                .orElseGet(() -> {
-                    super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-                    return 0;
-                });
-    }
-
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        return VanillaFactory.REGISTRY.getFunction(this, IItemRightClick.class)
-                .map(iItemRightClick -> {
-                    ItemStack stack = playerIn.getHeldItem(handIn);
-                    switch (iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn)) {
-                        case "SUCCESS":
-                            return ActionResult.resultSuccess(stack);
-                        case "PASS":
-                            return ActionResult.resultPass(stack);
-                        case "FAIL":
-                            return ActionResult.resultFail(stack);
-                        case "CONSUME":
-                            return ActionResult.resultConsume(stack);
-                        default:
-                            CraftTweakerAPI.logWarning("invalid action result type! Set PASS by default.");
-                            return ActionResult.resultPass(stack);
-                    }
-                }).orElseGet(() -> super.onItemRightClick(worldIn, playerIn, handIn));
-    }
-
-    @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return VanillaFactory.REGISTRY.getFunction(this, IItemHitEntity.class)
-                .map(iItemHitEntity -> iItemHitEntity.apply(new MCItemStackMutable(stack), target, attacker))
-                .orElseGet(() -> super.hitEntity(stack, target, attacker));
-    }
-
-    @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
-        return VanillaFactory.REGISTRY.getFunction(this, IItemInteractWithEntity.class)
-                .map(iItemInteractWithEntity -> ActionResultType.valueOf(iItemInteractWithEntity.apply(new MCItemStackMutable(stack), playerIn, target, hand)))
-                .orElseGet(() -> super.itemInteractionForEntity(stack, playerIn, target, hand));
-    }
-
-    @Override
-    public boolean allowTinted() {
-        return ((IIsCoTBlock) this.getBlock()).allowTinted();
-    }
-
-    @Override
-    public void setAllowTinted() {
-        throw new UnsupportedOperationException();
     }
 }

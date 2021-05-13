@@ -126,7 +126,6 @@ public class FluidBuilder implements IIsBuilder {
         CoTFluidBucketItem bucketItem = new CoTFluidBucketItem(stillFluid, new Item.Properties().maxStackSize(1).containerItem(Items.BUCKET).group(ItemGroup.MISC));
 
         bucketItem.setRegistryName(path + "_bucket");
-        bucketItem.setItemColorSupplier(((stack, tintIndex) -> tintIndex == 1 ? color : -1));
         fluidBlock.setRegistryName(stillFluid.getRegistryNameNonNull());
         properties.block(() -> fluidBlock);
         properties.bucket(() -> bucketItem);
