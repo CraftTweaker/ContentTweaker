@@ -4,6 +4,7 @@ import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.openzen.zencode.java.ZenCodeType;
@@ -14,5 +15,5 @@ import org.openzen.zencode.java.ZenCodeType;
 @Document("mods/contenttweaker/API/functions/IItemRightClick")
 public interface IItemRightClick extends ICotFunction {
     @ZenCodeType.Method
-    String apply(MCItemStackMutable item, PlayerEntity playerEntity, World world, Hand hand);
+    ActionResultType apply(MCItemStackMutable item, PlayerEntity playerEntity, World world, Hand hand);
 }

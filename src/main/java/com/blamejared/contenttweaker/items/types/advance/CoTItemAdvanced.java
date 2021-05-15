@@ -7,7 +7,6 @@ import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.color.IItemHasColor;
 import com.blamejared.contenttweaker.items.types.basic.CoTItemBasic;
 import com.blamejared.contenttweaker.wrappers.MCItemUseContext;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.impl.item.MCItemStack;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
@@ -142,7 +141,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         if (itemUse != null) {
-            return ActionResultType.valueOf(itemUse.apply(new MCItemUseContext(context)));
+            return itemUse.apply(new MCItemUseContext(context));
         } else {
             return super.onItemUse(context);
         }
@@ -153,19 +152,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
         return Optional.ofNullable(itemRightClick)
                 .map(iItemRightClick -> {
                     ItemStack stack = playerIn.getHeldItem(handIn);
-                    switch (iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn)) {
-                        case "SUCCESS":
-                            return ActionResult.resultSuccess(stack);
-                        case "PASS":
-                            return ActionResult.resultPass(stack);
-                        case "FAIL":
-                            return ActionResult.resultFail(stack);
-                        case "CONSUME":
-                            return ActionResult.resultConsume(stack);
-                        default:
-                            CraftTweakerAPI.logWarning("invalid action result type! Set PASS by default.");
-                            return ActionResult.resultPass(stack);
-                    }
+                    return new ActionResult<>(iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn), stack);
                 }).orElseGet(() -> super.onItemRightClick(worldIn, playerIn, handIn));
     }
 
@@ -181,7 +168,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     @Override
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         if (itemInteractWithEntity != null) {
-            return ActionResultType.valueOf(itemInteractWithEntity.apply(new MCItemStackMutable(stack), playerIn, target, hand));
+            return itemInteractWithEntity.apply(new MCItemStackMutable(stack), playerIn, target, hand);
         } else {
             return super.itemInteractionForEntity(stack, playerIn, target, hand);
         }
