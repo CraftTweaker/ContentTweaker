@@ -4,6 +4,7 @@ import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,5 +16,5 @@ import org.openzen.zencode.java.ZenCodeType;
 @Document("mods/contenttweaker/API/functions/IBlockActivated")
 public interface IBlockActivated extends ICotFunction {
     @ZenCodeType.Method
-    String apply(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand);
+    ActionResultType apply(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand);
 }

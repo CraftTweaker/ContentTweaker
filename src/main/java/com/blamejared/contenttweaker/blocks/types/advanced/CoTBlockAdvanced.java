@@ -96,8 +96,7 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     /**
      * Sets what will happen when a player right-clicks the block
      *
-     * @param func an IBlockActivated function, the function should return a string representing action result
-     *             ("SUCCESS", "PASS", "FAIL", "CONSUME")
+     * @param func an IBlockActivated function, the function should return an ActionResultType
      * @return the CoTBlockAdvanced, used for method chaining
      */
     @ZenCodeType.Method
@@ -109,10 +108,10 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     /**
      * The block's color
      * @param func an IBlockColorSupplier. The tintIndex argument is a hardcode of its model
-     * @return the IIsCoTBlock, used for method chaining.
+     * @return the CoTBlockAdvanced, used for method chaining.
      */
     @ZenCodeType.Method
-    public IIsCoTBlock setBlockColorSupplier(IBlockColorSupplier func) {
+    public CoTBlockAdvanced setBlockColorSupplier(IBlockColorSupplier func) {
         ActionSetFunctionClient.applyNewAction("blockColorSupplier", this, func, IBlockColorSupplier.DEFAULT, (block, fun) -> block.blockColorSupplier = func);
         return this;
     }
@@ -131,7 +130,7 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (blockActivated != null) {
-            return ActionResultType.valueOf(blockActivated.apply(state, worldIn, pos, player, handIn));
+            return blockActivated.apply(state, worldIn, pos, player, handIn);
         } else {
             return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
         }

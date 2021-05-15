@@ -52,8 +52,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     /**
      * Sets what will happen when the player uses on a block with the item
      *
-     * @param func an IItemUse function, the function should return a string representing action result
-     *             ("SUCCESS", "PASS", "FAIL", "CONSUME")
+     * @param func an IItemUse function, the function should return an ActionResultType
      * @return the CoTItemAdvanced, used for method chaining
      */
     @ZenCodeType.Method
@@ -66,8 +65,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      * Sets what will happen when the player right clicks with the item. If the item is food, you can't use it.
      * Because food handling also needs it.
      *
-     * @param func an IItemRightClick function, the function should return a string representing action result
-     *             ("SUCCESS", "PASS", "FAIL", "CONSUME")
+     * @param func an IItemRightClick function, the function should return an ActionResultType
      * @return the CoTItemAdvanced, used for method chaining
      */
     @ZenCodeType.Method
@@ -94,8 +92,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     /**
      * Sets what will happen when a player interacts (right-clicks) a entity.
      *
-     * @param func an IItemInteractWithEntity function, the function should return a string representing action result
-     *             ("SUCCESS", "PASS", "FAIL", "CONSUME")
+     * @param func an IItemInteractWithEntity function, the function should return an ActionResultType
      *
      * @return the CoTItemAdvanced, used for method chaining
      */
