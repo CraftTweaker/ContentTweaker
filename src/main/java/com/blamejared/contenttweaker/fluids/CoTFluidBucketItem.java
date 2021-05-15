@@ -36,6 +36,6 @@ public class CoTFluidBucketItem extends BucketItem implements IIsCotItem, IItemH
 
     @Override
     public int getColor(ItemStack stack, int tintIndex) {
-        return this.getFluid().getAttributes().getColor();
+        return tintIndex == 1 ? this.getFluid().getAttributes().getColor() : -1;
     }
 }
