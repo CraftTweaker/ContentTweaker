@@ -7,8 +7,10 @@
 
 import mods.contenttweaker.item.ItemBuilder;
 import mods.contenttweaker.item.tool.ItemBuilderTool;
+import mods.contenttweaker.item.advance.ItemBuilderAdvanced;
 import mods.contenttweaker.block.BlockBuilder;
 import mods.contenttweaker.block.stairs.BlockBuilderStairs;
+import mods.contenttweaker.block.advance.BlockBuilderAdvanced;
 import mods.contenttweaker.block.basic.BlockBuilderBasic;
 import mods.contenttweaker.block.pillar.BlockBuilderPillarRotatable;
 import mods.contenttweaker.fluid.FluidBuilder;
@@ -35,6 +37,11 @@ new ItemBuilder()
     .withDurabilityCostAttack(1) //By default: 2
     .build("my_tool");
 
+// Creating an advanced item. See contenttweaker_advanced_function.zs
+new ItemBuilder()
+    .withType<ItemBuilderAdvanced>()
+    .build("inf_flint_and_steel");
+
 // ====== BLOCKS =====
 
 // This is the simplest way to creating blocks, uses <blockmaterial:iron> and basic builder (to create a full cube block)
@@ -55,6 +62,11 @@ new BlockBuilder()
 new BlockBuilder()
     .withType<BlockBuilderStairs>()
     .build("stairs_noarg");
+
+// Creating an advanced block. See contenttweaker_advanced_function.zs
+new ItemBuilder()
+    .withType<BlockBuilderAdvanced>()
+    .build("test_block");
 
 // ====== FLUIDS =====
 

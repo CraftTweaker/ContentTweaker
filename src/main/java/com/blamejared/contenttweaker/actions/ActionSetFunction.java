@@ -43,7 +43,7 @@ public class ActionSetFunction<T extends IHasResourceLocation, F extends ICotFun
 
     @Override
     public String describe() {
-        return "Setting " + type + " to CoT registry entry: " + target.getRegistryName();
+        return "Setting " + type + " function to CoT registry entry: " + target.getRegistryName();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ActionSetFunction<T extends IHasResourceLocation, F extends ICotFun
 
     @Override
     public String describeUndo() {
-        return "Undoing " + type + " to CoT registry entry: " + target.getRegistryName();
+        return "Undoing " + type + " function to CoT registry entry: " + target.getRegistryName();
     }
 
     @Override
