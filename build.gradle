@@ -110,10 +110,10 @@ repositories {
 }
 
 dependencies {
-    String crafttweakerBuildVersion = "285"
+    String crafttweakerBuildVersion = "290"
     String forgeVersion = "1.16.4-35.0.1"
 
-    minecraft "net.minecraftforge:forge:$forgeVersion"
+    minecraft("net.minecraftforge:forge:$forgeVersion")
     //TODO: Reactivate once available
     //compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
     compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.3:7.0.3")
@@ -124,7 +124,7 @@ dependencies {
 
     annotationProcessor minecraft("net.minecraftforge:forge:$forgeVersion")
     annotationProcessor fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.$crafttweakerBuildVersion")
-    annotationProcessor fg.deobf("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.$crafttweakerBuildVersion")
+    annotationProcessor "com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.$crafttweakerBuildVersion"
 
 }
 

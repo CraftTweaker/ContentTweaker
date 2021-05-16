@@ -22,20 +22,12 @@ pipeline {
         stage('Clean') {
             steps {
                 echo 'Cleaning Project'
-                dir('CraftTweaker') {
-                    sh 'chmod +x gradlew'
-                    sh './gradlew clean'
-                }
                 sh 'chmod +x gradlew'
                 sh './gradlew clean'
             }
         }
         stage('Build') {
             steps {
-                dir('CraftTweaker') {
-                    echo 'Building CraftTweaker'
-                    sh './gradlew build'
-                }
                 echo 'Building'
                 script {
                     if (env.BRANCH_NAME.startsWith("develop")) {
