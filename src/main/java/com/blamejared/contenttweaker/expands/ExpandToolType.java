@@ -12,7 +12,7 @@ import org.openzen.zencode.java.ZenCodeType;
 public class ExpandToolType {
     
     @ZenCodeType.Caster()
-    public MCToolType asMCToolType(ToolType internal){
+    public static MCToolType asMCToolType(ToolType internal){
         return new MCToolType(internal);
     }
     
