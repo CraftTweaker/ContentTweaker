@@ -11,6 +11,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
+import net.minecraftforge.common.ToolType;
 import org.openzen.zencode.java.*;
 
 import java.lang.reflect.*;
@@ -228,8 +229,8 @@ public class BlockBuilder implements IIsBuilder {
      * @docParam harvestTool <tooltype:shovel>
      */
     @ZenCodeType.Method
-    public BlockBuilder withHarvestTool(MCToolType harvestTool) {
-        blockProperties.harvestTool(harvestTool.getInternal());
+    public BlockBuilder withHarvestTool(ToolType harvestTool) {
+        blockProperties.harvestTool(harvestTool);
         return this;
     }
     

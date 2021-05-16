@@ -1,6 +1,8 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://maven.blamejared.com' }
+
         jcenter()
         mavenCentral()
         maven {
@@ -10,30 +12,23 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+        classpath group: 'com.blamejared', name: 'ModTemplate', version: '1.+', changing: true
     }
 }
 
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'com.blamejared.modtemplate'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'com.matthewprenger.cursegradle'
 
-apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/22e7d543a18cd30675277fbfa3669e3d9e206010/generic/secrets.gradle'
-
-if (project.hasProperty('secretFile')) {
-    loadSecrets(new File((String) findProperty('secretFile')))
-}
 
 version = '1.0.0'
 if(project.hasProperty('branch')) {
     version += ("." + project.branch)
-}
-
-if (System.getenv('BUILD_NUMBER') != null) {
-    version += "." + System.getenv('BUILD_NUMBER')
 }
 
 group = 'com.blamejared.contenttweaker'
@@ -94,6 +89,25 @@ minecraft {
     }
 }
 
+modTemplate {
+    mcVersion "1.16.5"
+    curseHomepage "https://www.curseforge.com/minecraft/mc-mods/contenttweaker"
+    displayName "ContentTweaker"
+
+    changelog {
+        enabled true
+        firstCommit "b762862ec40682cfa40f56e730d73b3bf3eb568f"
+        repo "https://github.com/CraftTweaker/ContentTweaker"
+        changelogFile "changelog_cot.md"
+    }
+    webhook {
+        enabled true
+        curseId "237065"
+        avatarUrl "https://media.forgecdn.net/avatars/27/212/635805863586208322.jpeg"
+    }
+}
+
+
 repositories {
     maven {
         url "https://dvs1.progwml6.com/files/maven"
@@ -111,11 +125,10 @@ repositories {
 
 dependencies {
     String crafttweakerBuildVersion = "290"
-    String forgeVersion = "1.16.4-35.0.1"
+    String forgeVersion = "1.16.5-36.0.14"
 
     minecraft("net.minecraftforge:forge:$forgeVersion")
-    //TODO: Reactivate once available
-    //compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
+    compile fg.deobf("mezz.jei:jei-1.16.4:7.6.1.65")
     compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.3:7.0.3")
     compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.$crafttweakerBuildVersion")
 
@@ -150,31 +163,6 @@ idea {
     }
 }
 
-
-task genGitChangelog() {
-    def stdout = new ByteArrayOutputStream()
-    // first commit to check from, in our case the first commit of the branch
-    String firstCommit = "b762862ec40682cfa40f56e730d73b3bf3eb568f"
-    String repoLink = "https://github.com/CraftTweaker/ContentTweaker/commit/"
-    // was having issues with grep and spaces in the regex
-    exec {
-        commandLine 'git', 'log', '-i', '--grep=version\\spush', '--grep=open\\sbeta\\sspecific\\scode', '--pretty=tformat:%H', '--date=local', firstCommit + '..@{0}'
-        standardOutput = stdout
-    }
-    if (stdout.toString().trim().indexOf("\n") >= 0) {
-        firstCommit = stdout.toString().split("\n")[0].trim()
-    }
-    System.out.println("Last version hash: \"" + firstCommit + "\"")
-    stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'log', '--pretty=tformat:- [%s](' + repoLink + '%H) - %aN - %cd', '--max-parents=1', '--date=local', firstCommit + "..@"
-        standardOutput = stdout
-    }
-    File file = new File("changelog_cot.md")
-    file.write("### Current version: " + project.version)
-    file.append("\n" + stdout.toString())
-    System.out.println("Changelog generated!")
-}
 
 
 
