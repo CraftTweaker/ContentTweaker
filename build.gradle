@@ -98,7 +98,7 @@ modTemplate {
         enabled true
         firstCommit "b762862ec40682cfa40f56e730d73b3bf3eb568f"
         repo "https://github.com/CraftTweaker/ContentTweaker"
-        changelogFile "changelog_cot.md"
+        changelogFile "changelog.md"
     }
     webhook {
         enabled true
@@ -246,7 +246,7 @@ curseforge {
     project {
         id = "237065"
         releaseType = relType
-        changelog = file("changelog_cot.md")
+        changelog = file("changelog.md")
         changelogType = 'markdown'
 
         mainArtifact(jar) {

@@ -107,7 +107,7 @@ pipeline {
     post {
         always {
             archiveArtifacts 'build/libs/**.jar'
-            archiveArtifacts 'changelog_cot.md'
+            archiveArtifacts 'changelog.md'
         }
     }
 }
