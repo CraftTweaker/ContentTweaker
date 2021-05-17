@@ -1,19 +1,19 @@
 package com.blamejared.contenttweaker.wrappers;
 
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.api.brackets.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraftforge.common.*;
 import org.openzen.zencode.java.*;
 
+// TODO remove this next breaking change - now merged into CraftTweaker itself
 /**
  * A ToolType is used to identify what kind of blocks a tool can mine,
  * or inversely, what kind of tool is required to mine a given block.
- * @docParam this <toolType:pickaxe>
  */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCToolType")
-@Document("mods/contenttweaker/API/item/MCToolType")
 @ZenWrapper(wrappedClass = "net.minecraftforge.common.ToolType", displayStringFormat = "%s.getCommandString()")
 public class MCToolType implements CommandStringDisplayable {
     
@@ -21,6 +21,8 @@ public class MCToolType implements CommandStringDisplayable {
     
     public MCToolType(ToolType internal) {
         this.internal = internal;
+        // If someone is using this class, tell them to stop
+        CraftTweakerAPI.logWarning("MCToolType is now part of CraftTweaker, you should only be using `crafttweaker.api.tool.ToolType` instead!");
     }
     
     /**
@@ -92,4 +94,10 @@ public class MCToolType implements CommandStringDisplayable {
     public int hashCode() {
         return internal.hashCode();
     }
+    
+    @ZenCodeType.Caster(implicit = true)
+    public ToolType asToolType(){
+        return internal;
+    }
+    
 }
