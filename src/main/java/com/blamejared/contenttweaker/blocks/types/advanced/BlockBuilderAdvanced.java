@@ -14,7 +14,7 @@ import org.openzen.zencode.java.ZenCodeType;
  * extra methods. You should use advanced item bracket handler to get {@link CoTItemAdvanced} instance
  * and set functions in CraftTweaker scripts later.
  *
- * @docParam this new BlockBuilder().withType<BlockBuilderAdvanced>
+ * @docParam this new BlockBuilder().withType<BlockBuilderAdvanced>()
  */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.advance.BlockBuilderAdvanced")
