@@ -139,6 +139,6 @@ public class BlockBuilderStairs extends BlockTypeBuilder {
     @Override
     public void build(ResourceLocation location) {
         CoTStairsBlock cotStairs = new CoTStairsBlock(this, location);
-        VanillaFactory.queueBlockForRegistration(cotStairs);
+        VanillaFactory.queueBlockForRegistration(cotStairs, this.blockBuilder.getRenderType());
     }
 }

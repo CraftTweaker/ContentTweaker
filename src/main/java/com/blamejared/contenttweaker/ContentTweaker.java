@@ -1,11 +1,13 @@
 package com.blamejared.contenttweaker;
 
+import com.blamejared.contenttweaker.blocks.render.BlockRenderTypeCollection;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +23,7 @@ public class ContentTweaker {
     public ContentTweaker() {
         VanillaFactory.generateStuffForMyModId(MOD_ID);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, EventPriority.LOW, this::registerItems);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
     }
     
     /**
@@ -35,5 +38,9 @@ public class ContentTweaker {
         CraftTweakerAPI.loadScripts(scriptLoadingOptions);
         VanillaFactory.forbidRegistration();
         VanillaFactory.complete();
+    }
+
+    private void onClientSetup(final FMLClientSetupEvent event) {
+        event.enqueueWork(BlockRenderTypeCollection::registerAllRenderTypeRules);
     }
 }

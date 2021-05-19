@@ -52,7 +52,7 @@ public class ExpandItemUseContext {
     }
 
     @ZenCodeType.Getter("hasSecondaryUseForPlayer")
-    public boolean hasSecondaryUseForPlayer(ItemUseContext internal) {
+    public static boolean hasSecondaryUseForPlayer(ItemUseContext internal) {
         return internal.hasSecondaryUseForPlayer();
     }
 
@@ -60,7 +60,7 @@ public class ExpandItemUseContext {
      * @return the player's horizontal facing, returns north if the player is null
      */
     @ZenCodeType.Getter("placementHorizontalFacing")
-    public MCDirection getPlacementHorizontalFacing(ItemUseContext internal) {
+    public static MCDirection getPlacementHorizontalFacing(ItemUseContext internal) {
         return MCDirection.get(internal.getPlacementHorizontalFacing());
     }
 }

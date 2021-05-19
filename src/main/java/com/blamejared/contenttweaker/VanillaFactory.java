@@ -8,6 +8,7 @@ import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
 import com.blamejared.contenttweaker.api.fluids.IIsCotFluid;
 import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.file_handling.ResourcePackInfo;
+import com.blamejared.contenttweaker.blocks.render.BlockRenderType;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -30,7 +31,7 @@ public class VanillaFactory {
     /**
      * Checks if adding content is allowed at the moment.
      * <p>
-     * Only while this is true calls to {@link #queueItemForRegistration(IIsCotItem)} or {@link #queueBlockForRegistration(IIsCoTBlock)} will succeed.
+     * Only while this is true calls to {@link #queueItemForRegistration(IIsCotItem)} or {@link #queueBlockForRegistration(IIsCoTBlock, BlockRenderType)} will succeed.
      */
     public static boolean isRegisterAllowed() {
         return registerAllowed;
@@ -53,8 +54,8 @@ public class VanillaFactory {
      *
      * @param block The block to enqueue.
      */
-    public static void queueBlockForRegistration(IIsCoTBlock block) {
-        CraftTweakerAPI.apply(new ActionQueueBlockForRegistration(block, REGISTRY));
+    public static void queueBlockForRegistration(IIsCoTBlock block, BlockRenderType renderType) {
+        CraftTweakerAPI.apply(new ActionQueueBlockForRegistration(block, REGISTRY, renderType));
     }
 
     /**
@@ -74,7 +75,7 @@ public class VanillaFactory {
 
     /**
      * Prevents any more calls to
-     * {@link #queueBlockForRegistration(IIsCoTBlock)} or {@link #queueItemForRegistration(IIsCotItem)}
+     * {@link #queueBlockForRegistration(IIsCoTBlock, BlockRenderType)} or {@link #queueItemForRegistration(IIsCotItem)}
      * from succeeding.
      * <p>
      * Will make {@link #isRegisterAllowed()} false

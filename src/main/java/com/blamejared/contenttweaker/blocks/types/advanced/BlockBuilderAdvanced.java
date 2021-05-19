@@ -26,6 +26,6 @@ public class BlockBuilderAdvanced extends BlockTypeBuilder {
 
     @Override
     public void build(ResourceLocation location) {
-        VanillaFactory.queueBlockForRegistration(new CoTBlockAdvanced(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location));
+        VanillaFactory.queueBlockForRegistration(new CoTBlockAdvanced(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location), this.blockBuilder.getRenderType());
     }
 }

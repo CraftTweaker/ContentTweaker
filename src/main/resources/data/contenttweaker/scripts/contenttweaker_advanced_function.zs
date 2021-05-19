@@ -3,6 +3,8 @@
 // So set function actions should be run in loader crafttweaker and reloadable.
 // Since the default loader is crafttweaker, you can omit the loader preprocessor, just clarify it here.
 
+import mods.contenttweaker.util.ActionResultType;
+
 // Uses BEP to get an CoTItemAdvanced and CoTBlockAdvanced instance.
 // <advanceditem:test_item>
 // <advancedblock:test_block>
@@ -13,11 +15,11 @@
 // For more info, see documentation.
 <advanceditem:inf_flint_and_steel>.setOnItemUse((context) => {
     val pos = context.pos;
-    val direction = context.face;
+    val direction = context.direction;
     val firePos = pos.offset(direction);
     val world = context.world;
     if (world.isAir(firePos)) {
         world.setBlockState(firePos, <blockstate:minecraft:fire>);
     }
-    return "SUCCESS";
+    return ActionResultType.SUCCESS;
 });
