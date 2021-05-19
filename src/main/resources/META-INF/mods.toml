@@ -13,18 +13,18 @@ description="Customize your minecraft experience!"
 [[dependencies.contenttweaker]]
     modId="forge"
     mandatory=true
-    versionRange="[31,)"
+    versionRange="[34,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.contenttweaker]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3, 1.17)"
+    versionRange="[1.16.3,1.17)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.contenttweaker]]
     modId="crafttweaker"
     mandatory=true
-    versionRange="[7,)"
+    versionRange="[7.1.0.231,)"
     ordering="BEFORE"
     side="BOTH"

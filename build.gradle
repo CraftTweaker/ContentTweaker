@@ -1,6 +1,8 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://maven.blamejared.com' }
+
         jcenter()
         mavenCentral()
         maven {
@@ -10,41 +12,23 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+        classpath group: 'com.blamejared', name: 'ModTemplate', version: '1.+', changing: true
     }
 }
 
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'com.blamejared.modtemplate'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'com.matthewprenger.cursegradle'
 
-apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/22e7d543a18cd30675277fbfa3669e3d9e206010/generic/secrets.gradle'
-
-if (project.hasProperty('secretFile')) {
-    loadSecrets(new File((String) findProperty('secretFile')))
-}
-
-subprojects {
-    apply plugin: 'java'
-
-    if(name != "CraftTweaker") {
-        apply from: rootProject.file("common.gradle")
-    } else {
-        it.sourceSets.main.java.srcDirs += new File(it.projectDir, "src/generated/java")
-    }
-}
-
 
 version = '1.0.0'
 if(project.hasProperty('branch')) {
     version += ("." + project.branch)
-}
-
-if (System.getenv('BUILD_NUMBER') != null) {
-    version += "." + System.getenv('BUILD_NUMBER')
 }
 
 group = 'com.blamejared.contenttweaker'
@@ -64,6 +48,10 @@ if (JavaVersion.current().isJava8Compatible()) {
     }
 }
 
+compileJava {
+    options.compilerArgs += ["-Acrafttweaker.processor.document.output_directory=${file('docsOut')}"]
+}
+
 minecraft {
     mappings channel: 'snapshot', version: '20201028-1.16.3'
     runs {
@@ -74,10 +62,6 @@ minecraft {
                 contenttweaker {
                     source sourceSets.main
                 }
-
-                crafttweaker {
-                    source project(":CraftTweaker").sourceSets.main
-                }
             }
         }
 
@@ -87,9 +71,6 @@ minecraft {
             mods {
                 contenttweaker {
                     source sourceSets.main
-                }
-                crafttweaker {
-                    source project(":CraftTweaker").sourceSets.main
                 }
             }
         }
@@ -103,13 +84,29 @@ minecraft {
                 contenttweaker {
                     source sourceSets.main
                 }
-                crafttweaker {
-                    source project(":CraftTweaker").sourceSets.main
-                }
             }
         }
     }
 }
+
+modTemplate {
+    mcVersion "1.16.5"
+    curseHomepage "https://www.curseforge.com/minecraft/mc-mods/contenttweaker"
+    displayName "ContentTweaker"
+
+    changelog {
+        enabled true
+        firstCommit "b762862ec40682cfa40f56e730d73b3bf3eb568f"
+        repo "https://github.com/CraftTweaker/ContentTweaker"
+        changelogFile "changelog.md"
+    }
+    webhook {
+        enabled true
+        curseId "237065"
+        avatarUrl "https://media.forgecdn.net/avatars/27/212/635805863586208322.jpeg"
+    }
+}
+
 
 repositories {
     maven {
@@ -127,13 +124,21 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.14'
-    //TODO: Reactivate once available
-    //compile fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
-    compile project(":CraftTweaker")
-    annotationProcessor project(":CraftTweaker")
-    annotationProcessor project(":Crafttweaker_Annotation_Processors")
+    String crafttweakerBuildVersion = "290"
+    String forgeVersion = "1.16.5-36.0.14"
+
+    minecraft("net.minecraftforge:forge:$forgeVersion")
+    compile fg.deobf("mezz.jei:jei-1.16.4:7.6.1.65")
     compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.3:7.0.3")
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.$crafttweakerBuildVersion")
+
+    annotationProcessor 'com.google.code.gson:gson:2.8.6'
+    annotationProcessor 'org.reflections:reflections:0.9.10'
+
+    annotationProcessor minecraft("net.minecraftforge:forge:$forgeVersion")
+    annotationProcessor fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.$crafttweakerBuildVersion")
+    annotationProcessor "com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.$crafttweakerBuildVersion"
+
 }
 
 jar {
@@ -154,35 +159,10 @@ jar.finalizedBy('reobfJar')
 
 idea {
     module {
-        excludeDirs += [file("run"), file("runServer")]
+        excludeDirs += [file("run"), file("runServer"), file("CraftTweaker")]
     }
 }
 
-
-task genGitChangelog() {
-    def stdout = new ByteArrayOutputStream()
-    // first commit to check from, in our case the first commit of the branch
-    String firstCommit = "b762862ec40682cfa40f56e730d73b3bf3eb568f"
-    String repoLink = "https://github.com/CraftTweaker/ContentTweaker/commit/"
-    // was having issues with grep and spaces in the regex
-    exec {
-        commandLine 'git', 'log', '-i', '--grep=version\\spush', '--grep=open\\sbeta\\sspecific\\scode', '--pretty=tformat:%H', '--date=local', firstCommit + '..@{0}'
-        standardOutput = stdout
-    }
-    if (stdout.toString().trim().indexOf("\n") >= 0) {
-        firstCommit = stdout.toString().split("\n")[0].trim()
-    }
-    System.out.println("Last version hash: \"" + firstCommit + "\"")
-    stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'log', '--pretty=tformat:- [%s](' + repoLink + '%H) - %aN - %cd', '--max-parents=1', '--date=local', firstCommit + "..@"
-        standardOutput = stdout
-    }
-    File file = new File("changelog_cot.md")
-    file.write("### Current version: " + project.version)
-    file.append("\n" + stdout.toString())
-    System.out.println("Changelog generated!")
-}
 
 
 
@@ -266,7 +246,7 @@ curseforge {
     project {
         id = "237065"
         releaseType = relType
-        changelog = file("changelog_cot.md")
+        changelog = file("changelog.md")
         changelogType = 'markdown'
 
         mainArtifact(jar) {
@@ -276,8 +256,5 @@ curseforge {
                 optionalDependency "open-loader"
             }
         }
-//        addArtifact(sourcesJar)
-//        addArtifact(javadocJar)
-//        addArtifact(deobfJar)
     }
 }

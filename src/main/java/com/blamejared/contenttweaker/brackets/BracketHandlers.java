@@ -41,18 +41,6 @@ public class BracketHandlers {
     }
     
     
-    /**
-     * Gets a {@link MCToolType}. Will create a new one if the given one does not exist.
-     *
-     * @param tokens What you would createDataCompound in the BEP call
-     * @return The {@link MCToolType} if found, or a new MCToolType
-     * @docParam tokens "shovel"
-     */
-    @ZenCodeType.Method
-    @BracketResolver("tooltype")
-    public static MCToolType getToolType(String tokens) {
-        return new MCToolType(ToolType.get(tokens));
-    }
     //
     //    /**
     //     * Gets the {@link MCSoundType}. Will throw an exception if not found.
