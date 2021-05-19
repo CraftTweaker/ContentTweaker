@@ -15,12 +15,12 @@ final class CoTFlowingFluid implements IIsCotFluid {
     private final ResourceLocation resourceLocation;
 
     public CoTFlowingFluid(ResourceLocation resourceLocation) {
-        this.resourceLocation = resourceLocation;
+        this.resourceLocation = new ResourceLocation(ContentTweaker.MOD_ID, resourceLocation.getPath() + "_flowing");
     }
 
     @Override
     public ResourceLocation getRegistryName() {
-        return new ResourceLocation(ContentTweaker.MOD_ID, resourceLocation.getPath() + "_flowing");
+        return resourceLocation;
     }
 
     @Override

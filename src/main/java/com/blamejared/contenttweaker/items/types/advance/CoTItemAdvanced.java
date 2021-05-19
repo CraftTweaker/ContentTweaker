@@ -23,8 +23,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.openzen.zencode.java.ZenCodeType;
 
-import java.util.Optional;
-
 /**
  * A registered CoT Item. Used for advanced functionality. like onItemUse, onItemRightClick etc.
  *
@@ -146,11 +144,12 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        return Optional.ofNullable(itemRightClick)
-                .map(iItemRightClick -> {
-                    ItemStack stack = playerIn.getHeldItem(handIn);
-                    return new ActionResult<>(iItemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn), stack);
-                }).orElseGet(() -> super.onItemRightClick(worldIn, playerIn, handIn));
+        if (itemRightClick != null) {
+            ItemStack stack = playerIn.getHeldItem(handIn);
+            return new ActionResult<>(itemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn), stack);
+        } else {
+            return super.onItemRightClick(worldIn, playerIn, handIn);
+        }
     }
 
     @Override
