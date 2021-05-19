@@ -1,13 +1,9 @@
 package com.blamejared.contenttweaker.native_type;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.data.IData;
-import com.blamejared.crafttweaker.api.data.NBTConverter;
-import com.blamejared.crafttweaker.impl.data.MapData;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.crafttweaker_annotations.annotations.NativeTypeRegistration;
 import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
@@ -18,18 +14,17 @@ import org.openzen.zencode.java.ZenCodeType;
 @NativeTypeRegistration(value = IBlockDisplayReader.class, zenCodeName = "mods.contenttweaker.world.MCBlockDisplayReader")
 public class ExpandBlockDisplayReader {
     /**
-     * Gets the tile entity data for a tile entity at a given position.
+     * Gets the tile entity at a given position.
      *
      * @param pos The position of the tile entity.
-     * @return The data of the tile entity.
+     * @return The tile entity.
      *
      * @docParam pos new BlockPos(0, 1, 2)
      */
     @ZenCodeType.Method
-    public static IData getTileData(IBlockDisplayReader internal, BlockPos pos) {
-        CompoundNBT nbt = new CompoundNBT();
-        TileEntity te = internal.getTileEntity(pos);
-        return te == null ? new MapData() : NBTConverter.convert(te.write(nbt));
+    @ZenCodeType.Nullable
+    public static TileEntity getTileEntity(IBlockDisplayReader internal, BlockPos pos) {
+        return internal.getTileEntity(pos);
     }
 
     /**
