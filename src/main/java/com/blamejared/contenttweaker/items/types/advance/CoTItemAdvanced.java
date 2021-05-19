@@ -82,7 +82,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      */
     @ZenCodeType.Method
     public CoTItemAdvanced setOnHitEntity(IItemHitEntity func) {
-        ActionSetFunction.applyNewAction("onHitEntity", this, func, (item, fun) -> item.itemHitEntity = itemHitEntity);
+        ActionSetFunction.applyNewAction("onHitEntity", this, func, (item, fun) -> item.itemHitEntity = fun);
         return this;
     }
 
@@ -95,7 +95,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      */
     @ZenCodeType.Method
     public CoTItemAdvanced setOnInteractWithEntity(IItemInteractWithEntity func) {
-        ActionSetFunction.applyNewAction("onInteractWithEntity", this, func, (item, fun) -> item.itemInteractWithEntity = func);
+        ActionSetFunction.applyNewAction("onInteractWithEntity", this, func, (item, fun) -> item.itemInteractWithEntity = fun);
         return this;
     }
 
@@ -117,7 +117,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      */
     @ZenCodeType.Method
     public CoTItemAdvanced setUsingTick(IItemUsingTick func) {
-        ActionSetFunction.applyNewAction("usingTick", this, func, (item, fun) -> item.itemUsingTick = itemUsingTick);
+        ActionSetFunction.applyNewAction("usingTick", this, func, (item, fun) -> item.itemUsingTick = fun);
         return this;
     }
 
@@ -128,7 +128,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      */
     @ZenCodeType.Method
     public CoTItemAdvanced setItemColorSupplier(IItemColorSupplier func) {
-        ActionSetFunctionClient.applyNewAction("itemColorSupplier", this, func, IItemColorSupplier.DEFAULT, (item, fun) -> item.itemColorSupplier = itemColorSupplier);
+        ActionSetFunctionClient.applyNewAction("itemColorSupplier", this, func, IItemColorSupplier.DEFAULT, (item, fun) -> item.itemColorSupplier = fun);
         return this;
     }
 

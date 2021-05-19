@@ -112,7 +112,7 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
      */
     @ZenCodeType.Method
     public CoTBlockAdvanced setBlockColorSupplier(IBlockColorSupplier func) {
-        ActionSetFunctionClient.applyNewAction("blockColorSupplier", this, func, IBlockColorSupplier.DEFAULT, (block, fun) -> block.blockColorSupplier = func);
+        ActionSetFunctionClient.applyNewAction("blockColorSupplier", this, func, IBlockColorSupplier.DEFAULT, (block, fun) -> block.blockColorSupplier = fun);
         return this;
     }
 
