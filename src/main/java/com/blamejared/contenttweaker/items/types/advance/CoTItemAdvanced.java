@@ -6,7 +6,6 @@ import com.blamejared.contenttweaker.api.functions.*;
 import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.color.IItemHasColor;
 import com.blamejared.contenttweaker.items.types.basic.CoTItemBasic;
-import com.blamejared.contenttweaker.wrappers.MCItemUseContext;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.impl.item.MCItemStack;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
@@ -136,7 +135,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         if (itemUse != null) {
-            return itemUse.apply(new MCItemUseContext(context));
+            return itemUse.apply(context);
         } else {
             return super.onItemUse(context);
         }
