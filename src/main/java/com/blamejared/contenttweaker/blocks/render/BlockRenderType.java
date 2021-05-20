@@ -9,6 +9,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.util.Collection;
+
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.block.BlockRenderType")
 @Document("mods/contenttweaker/API/block/BlockRenderType")
@@ -54,8 +56,8 @@ public enum BlockRenderType {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void registerToBlock(IIsCoTBlock block) {
-        RenderTypeLookup.setRenderLayer(block.getBlock(), this.getVanillaRenderType());
+    public void registerToBlocks(Collection<IIsCoTBlock> blocks) {
+        blocks.forEach(block -> RenderTypeLookup.setRenderLayer(block.getBlock(), this.getVanillaRenderType()));
     }
 
     public boolean notSolid() {
