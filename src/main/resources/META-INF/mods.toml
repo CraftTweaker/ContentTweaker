@@ -25,6 +25,6 @@ description="Customize your minecraft experience!"
 [[dependencies.contenttweaker]]
     modId="crafttweaker"
     mandatory=true
-    versionRange="[7.1.0.231,)"
+    versionRange="[7.1.0.292,)"
     ordering="BEFORE"
     side="BOTH"
