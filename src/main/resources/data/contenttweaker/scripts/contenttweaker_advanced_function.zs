@@ -3,7 +3,7 @@
 // So set function actions should be run in loader crafttweaker and reloadable.
 // Since the default loader is crafttweaker, you can omit the loader preprocessor, just clarify it here.
 
-import mods.contenttweaker.util.ActionResultType;
+import crafttweaker.api.util.ActionResultType;
 
 // Uses BEP to get an CoTItemAdvanced and CoTBlockAdvanced instance.
 // <advanceditem:test_item>
