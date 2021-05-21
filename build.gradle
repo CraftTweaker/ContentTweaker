@@ -103,7 +103,7 @@ modTemplate {
     webhook {
         enabled true
         curseId "237065"
-        avatarUrl "https://media.forgecdn.net/avatars/27/212/635805863586208322.jpeg"
+        avatarUrl "https://i.blamejared.com/cot.png"
     }
 }
 
