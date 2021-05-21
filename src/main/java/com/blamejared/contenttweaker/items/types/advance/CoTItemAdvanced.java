@@ -121,7 +121,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     }
 
     /**
-     * The item's color. Before using it, you should set the item to be tintable first via adding `allowTinted` to linked item builder.
+     * The item's color.
      * @param func an IItemColorSupplier, The tintIndex is `layerX` property of its model.
      * @return the CoTItemAdvanced, used for method chaining
      */
