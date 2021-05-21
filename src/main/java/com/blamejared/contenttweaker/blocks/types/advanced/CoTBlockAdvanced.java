@@ -69,7 +69,7 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     }
 
     /**
-     * Sets what will happen when the block receive a random tick. Throws an exception if the block does tick randomly.
+     * Sets what will happen when the block receive a random tick. Throws an exception if the block does not tick randomly.
      *
      * @return the CoTBlockAdvanced, used for method chaining
      */

@@ -2,8 +2,6 @@ package com.blamejared.contenttweaker.blocks.render;
 
 import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
 import net.minecraft.util.Util;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +15,6 @@ public class BlockRenderTypeCollection {
         }
     });
 
-    @OnlyIn(Dist.CLIENT)
     public static void registerAllRenderTypeRules() {
         blockRenderTypeMap.forEach(BlockRenderType::registerToBlocks);
     }
