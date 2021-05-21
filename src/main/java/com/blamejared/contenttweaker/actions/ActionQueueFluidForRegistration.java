@@ -31,7 +31,7 @@ public class ActionQueueFluidForRegistration implements IAction {
 
         final LoaderActions loaderActions = CraftTweakerAPI.getCurrentRun().getLoaderActions();
         final CodePosition declaredScriptPosition = getDeclaredScriptPosition();
-        final String format = "Cannot register Item '%s' since it was called too late. Registering must be done during '#loader contenttweaker', but file %s is loaded in '#loader %s'!";
+        final String format = "Cannot register Fluid '%s' since it was called too late. Registering must be done during '#loader contenttweaker', but file %s is loaded in '#loader %s'!";
         logger.error(String.format(format, fluid.getRegistryName(), declaredScriptPosition.getFilename(), loaderActions.getLoaderName()));
         return false;
     }
