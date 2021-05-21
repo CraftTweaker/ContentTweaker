@@ -47,7 +47,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     private IItemInventoryTick itemInventoryTick;
 
     /**
-     * Sets what will happen when the player uses on a block with the item
+     * Sets what will happen when the player uses this item on a block
      *
      * @param func an IItemUse function, the function should return an ActionResultType
      * @return the CoTItemAdvanced, used for method chaining
