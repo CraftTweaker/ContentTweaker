@@ -1,14 +1,16 @@
 package com.blamejared.contenttweaker.actions;
 
-import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.*;
-import com.blamejared.contenttweaker.api.blocks.*;
-import com.blamejared.crafttweaker.api.*;
-import com.blamejared.crafttweaker.api.actions.*;
-import com.blamejared.crafttweaker.api.logger.*;
-import com.blamejared.crafttweaker.api.zencode.impl.loaders.*;
-import net.minecraftforge.fml.*;
-import org.openzen.zencode.shared.*;
+import com.blamejared.contenttweaker.VanillaFactory;
+import com.blamejared.contenttweaker.api.CoTRegistry;
+import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
+import com.blamejared.contenttweaker.blocks.render.BlockRenderType;
+import com.blamejared.contenttweaker.blocks.render.BlockRenderTypeCollection;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.api.actions.IAction;
+import com.blamejared.crafttweaker.api.logger.ILogger;
+import com.blamejared.crafttweaker.api.zencode.impl.loaders.LoaderActions;
+import net.minecraftforge.fml.LogicalSide;
+import org.openzen.zencode.shared.CodePosition;
 
 /**
  * Enqueues an item for registration
@@ -17,16 +19,19 @@ public class ActionQueueBlockForRegistration implements IAction {
     
     private final IIsCoTBlock block;
     private final CoTRegistry registry;
+    private final BlockRenderType renderType;
     
-    public ActionQueueBlockForRegistration(IIsCoTBlock block, CoTRegistry registry) {
+    public ActionQueueBlockForRegistration(IIsCoTBlock block, CoTRegistry registry, BlockRenderType renderType) {
         this.block = block;
         this.registry = registry;
+        this.renderType = renderType;
     }
     
     @Override
     public void apply() {
         registry.addBlock(block);
         registry.addItem(block.getItem());
+        BlockRenderTypeCollection.addRenderTypeRule(block, renderType);
     }
     
     @Override

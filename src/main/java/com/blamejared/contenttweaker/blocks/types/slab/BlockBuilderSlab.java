@@ -50,7 +50,8 @@ public class BlockBuilderSlab extends BlockTypeBuilder {
     
     @Override
     public void build(ResourceLocation location) {
-        VanillaFactory.queueBlockForRegistration(new CoTBlockSlab(this, location));
+        CoTBlockSlab blockSlab = new CoTBlockSlab(this, location);
+        VanillaFactory.queueBlockForRegistration(blockSlab, this.blockBuilder.getRenderType());
     }
     
     /**

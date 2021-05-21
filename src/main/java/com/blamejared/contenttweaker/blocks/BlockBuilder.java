@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.blocks;
 import com.blamejared.contenttweaker.api.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.types.basic.*;
+import com.blamejared.contenttweaker.blocks.render.BlockRenderType;
 import com.blamejared.contenttweaker.wrappers.*;
 import com.blamejared.crafttweaker.api.*;
 import com.blamejared.crafttweaker.api.annotations.*;
@@ -30,6 +31,7 @@ public class BlockBuilder implements IIsBuilder {
     
     private final Block.Properties blockProperties;
     private final Item.Properties itemProperties;
+    private BlockRenderType renderType = BlockRenderType.SOLID;
     
     /**
      * Creates a new BlockBuilder.
@@ -74,6 +76,10 @@ public class BlockBuilder implements IIsBuilder {
     
     public Block.Properties getBlockProperties() {
         return blockProperties;
+    }
+
+    public BlockRenderType getRenderType() {
+        return renderType;
     }
     
     /**
@@ -198,15 +204,17 @@ public class BlockBuilder implements IIsBuilder {
         blockProperties.hardnessAndResistance(hardnessAndResistance);
         return this;
     }
-    
-    /*
-    This probably wont be needed
+
+
+    /**
+     * Sets that the block should be ticked randomly.
+     * @return The builder, used for method chaining.
+     */
     @ZenCodeType.Method
     public BlockBuilder withTickRandomly() {
         blockProperties.tickRandomly();
         return this;
     }
-     */
     
     /**
      * Sets the mining level required to mine this block
@@ -259,7 +267,31 @@ public class BlockBuilder implements IIsBuilder {
         blockProperties.lootFrom(blockIn);
         return this;
     }
-    
+
+    /**
+     * Sets that the block needs a tool to harvest.
+     *
+     * @return This builder, used for method chaining
+     */
+    @ZenCodeType.Method
+    public BlockBuilder setRequiresTool() {
+        blockProperties.setRequiresTool();
+        return this;
+    }
+
+    /**
+     * Sets the block's render type.
+     * Will also set the block as {@link #notSolid()} if the argument is not solid
+     * @return This builder, used for method chaining
+     */
+    @ZenCodeType.Method
+    public BlockBuilder withRenderType(BlockRenderType renderType) {
+        this.renderType = renderType;
+        if (renderType.notSolid())
+            this.notSolid();
+        return this;
+    }
+
     /**
      * Sets the specific type of this block.
      * After this method is called the builder's context will switch to the more provided type builder.

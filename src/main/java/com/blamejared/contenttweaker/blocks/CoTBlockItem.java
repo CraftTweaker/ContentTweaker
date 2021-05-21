@@ -1,14 +1,18 @@
 package com.blamejared.contenttweaker.blocks;
 
-import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.blocks.*;
-import com.blamejared.contenttweaker.api.items.*;
+import com.blamejared.contenttweaker.ContentTweaker;
+import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
+import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.api.resources.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class CoTBlockItem extends BlockItem implements IIsCotItem {
     
@@ -33,5 +37,4 @@ public class CoTBlockItem extends BlockItem implements IIsCotItem {
     public Collection<WriteableResource> getDataPackResources() {
         return Collections.emptyList();
     }
-    
 }

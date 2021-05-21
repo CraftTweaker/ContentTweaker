@@ -26,6 +26,7 @@ public class ItemBuilderBasic extends ItemTypeBuilder {
     
     @Override
     public void build(ResourceLocation location) {
-        VanillaFactory.queueItemForRegistration(new CoTItemBasic(itemBuilder.getItemProperties(), location));
+        CoTItemBasic itemBasic = new CoTItemBasic(itemBuilder.getItemProperties(), location);
+        VanillaFactory.queueItemForRegistration(itemBasic);
     }
 }

@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.blocks.types.basic;
 import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.blocks.*;
 import com.blamejared.contenttweaker.blocks.*;
+import com.blamejared.contenttweaker.blocks.render.BlockRenderType;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.util.*;
@@ -26,6 +27,8 @@ public class BlockBuilderBasic extends BlockTypeBuilder {
     
     @Override
     public void build(ResourceLocation location) {
-        VanillaFactory.queueBlockForRegistration(new CoTBlockBasic(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location));
+        CoTBlockBasic blockBasic = new CoTBlockBasic(blockBuilder.getBlockProperties(), blockBuilder.getItemProperties(), location);
+        BlockRenderType renderType = this.blockBuilder.getRenderType();
+        VanillaFactory.queueBlockForRegistration(blockBasic, renderType);
     }
 }

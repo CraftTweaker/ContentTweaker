@@ -3,7 +3,7 @@ package com.blamejared.contenttweaker.items.types.basic;
 import com.blamejared.contenttweaker.*;
 import com.blamejared.contenttweaker.api.items.*;
 import com.blamejared.contenttweaker.api.resources.*;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
 import net.minecraft.util.*;
 
 import javax.annotation.*;

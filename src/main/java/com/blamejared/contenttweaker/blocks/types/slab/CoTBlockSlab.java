@@ -1,15 +1,17 @@
 package com.blamejared.contenttweaker.blocks.types.slab;
 
-import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.blocks.*;
-import com.blamejared.contenttweaker.api.items.*;
+import com.blamejared.contenttweaker.ContentTweaker;
+import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
+import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.api.resources.*;
-import com.blamejared.contenttweaker.blocks.*;
-import net.minecraft.block.*;
-import net.minecraft.util.*;
+import com.blamejared.contenttweaker.blocks.CoTBlockItem;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.util.ResourceLocation;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class CoTBlockSlab extends SlabBlock implements IIsCoTBlock {
     

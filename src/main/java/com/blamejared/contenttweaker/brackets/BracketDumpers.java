@@ -15,7 +15,7 @@ import java.util.stream.*;
 public class BracketDumpers {
     
     @ZenCodeType.Method
-    @BracketDumper(value = "itemGroup")
+    @BracketDumper(value = "itemgroup")
     public static Collection<String> getItemGroupBracketDump() {
         return Arrays.stream(ItemGroup.GROUPS).map(itemGroup -> new MCItemGroup(itemGroup).getCommandString()).collect(Collectors.toList());
     }

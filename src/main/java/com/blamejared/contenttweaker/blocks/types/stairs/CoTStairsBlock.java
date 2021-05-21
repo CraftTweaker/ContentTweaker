@@ -1,15 +1,19 @@
 package com.blamejared.contenttweaker.blocks.types.stairs;
 
-import com.blamejared.contenttweaker.*;
-import com.blamejared.contenttweaker.api.blocks.*;
-import com.blamejared.contenttweaker.api.items.*;
+import com.blamejared.contenttweaker.ContentTweaker;
+import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
+import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.api.resources.*;
-import com.blamejared.contenttweaker.blocks.*;
-import net.minecraft.block.*;
-import net.minecraft.util.*;
+import com.blamejared.contenttweaker.blocks.CoTBlockItem;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.util.ResourceLocation;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 
 final class CoTStairsBlock extends StairsBlock implements IIsCoTBlock {
     
