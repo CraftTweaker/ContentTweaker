@@ -30,7 +30,6 @@ import java.lang.reflect.*;
 public class ItemBuilder implements IIsBuilder {
     
     private final Item.Properties itemProperties;
-    public boolean allowTinted;
     
     /**
      * Creates a new ItemBuilder.
@@ -131,16 +130,6 @@ public class ItemBuilder implements IIsBuilder {
     @ZenCodeType.Method
     public ItemBuilder isImmuneToFire() {
         itemProperties.isImmuneToFire();
-        return this;
-    }
-
-    /**
-     * Sets that this item can be tinted.
-     * @return The builder, used for method chaining
-     */
-    @ZenCodeType.Method
-    public ItemBuilder allowTinted() {
-        this.allowTinted = true;
         return this;
     }
 
