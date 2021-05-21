@@ -207,7 +207,7 @@ public class BlockBuilder implements IIsBuilder {
 
 
     /**
-     * Sets the block is of a type that needs random ticking.
+     * Sets that the block should be ticked randomly.
      * @return The builder, used for method chaining.
      */
     @ZenCodeType.Method
@@ -269,7 +269,7 @@ public class BlockBuilder implements IIsBuilder {
     }
 
     /**
-     * Sets the block needs tool to harvest.
+     * Sets that the block needs a tool to harvest.
      *
      * @return This builder, used for method chaining
      */

@@ -58,7 +58,7 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     }
 
     /**
-     * Sets what will happen when neighbor of the block is changed
+     * Sets what will happen when a neighbour of the block is changed
      *
      * @return the CoTBlockAdvanced, used for method chaining
      */
@@ -69,14 +69,14 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     }
 
     /**
-     * Sets what will happen when the block receive a random tick. Throws an exception if the block is not ticks randomly.
+     * Sets what will happen when the block receive a random tick. Throws an exception if the block does tick randomly.
      *
      * @return the CoTBlockAdvanced, used for method chaining
      */
     @ZenCodeType.Method
     public CoTBlockAdvanced setOnRandomTick(IBlockRandomTick func) {
         if (!this.getBlock().ticksRandomly(this.getBlock().getDefaultState())) {
-            throw new UnsupportedOperationException("You should set the block ticks randomly first! Add `withTickRandomly` to linked block builder.");
+            throw new UnsupportedOperationException("This block does not tick randomly! You can set it to tick randomly with `withTickRandomly` when building the block!");
         }
         ActionSetFunction.applyNewAction("onRandomTick", this, func, (block, fun) -> block.blockRandomTick = fun);
         return this;
@@ -96,7 +96,7 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     /**
      * Sets what will happen when a player right-clicks the block
      *
-     * @param func an IBlockActivated function, the function should return an ActionResultType
+     * @param func An IBlockActivated function, the function should return an ActionResultType
      * @return the CoTBlockAdvanced, used for method chaining
      */
     @ZenCodeType.Method
@@ -107,7 +107,8 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
 
     /**
      * The block's color
-     * @param func an IBlockColorSupplier. The tintIndex argument is a hardcode of its model
+     * 
+     * @param func An IBlockColorSupplier. The tintIndex argument is defined by its model
      * @return the CoTBlockAdvanced, used for method chaining.
      */
     @ZenCodeType.Method

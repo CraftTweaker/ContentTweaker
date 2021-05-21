@@ -1,7 +1,7 @@
 #loader crafttweaker
 // Advanced functions is called on game runtime.
 // So set function actions should be run in loader crafttweaker and reloadable.
-// Since the default loader is crafttweaker, you can omit the loader preprocessor, just clarify it here.
+// Since the default loader is crafttweaker, you can omit the loader preprocessor, it is present here for clarification 
 
 import crafttweaker.api.util.ActionResultType;
 
@@ -9,7 +9,7 @@ import crafttweaker.api.util.ActionResultType;
 // <advanceditem:test_item>
 // <advancedblock:test_block>
 
-// Makes the item like a infinite duration flint and steel
+// Makes the item like an infinite duration flint and steel
 // The on item use function is called whenever the item is used on a block.
 // Before it, you should use ItemBuilder in CoT scripts to add an advanced item named "inf_flint_and_steel"
 // For more info, see documentation.

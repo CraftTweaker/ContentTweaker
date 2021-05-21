@@ -1,7 +1,7 @@
 #loader contenttweaker
 // Since CraftTweaker in 1.14+ will load while the server is up and running, we need a way to load scripts somewhere else.
 // That is what the #loader contenttweaker is for!
-// You can simply put it somewhere in (preferable the top of) your file and you're set to go.
+// You can simply put it somewhere in your file (preferable the top of the file) and you're set to go.
 // All registry stuff are supposed to be run in ContentTweaker scripts, otherwise, nothing will be registered!
 // And remember no crafttweaker scripts are allowed in #loader contenttweaker as they run at different phases of the load cycle!
 

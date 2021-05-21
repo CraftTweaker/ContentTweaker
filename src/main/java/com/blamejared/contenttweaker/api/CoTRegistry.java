@@ -40,7 +40,7 @@ public class CoTRegistry {
 
     public void addFluid(IIsCotFluid fluid) {
         if (fluids.containsKey(fluid.getRegistryName())) {
-            CraftTweakerAPI.logError("Registering block '%s' a second time, overriding the first one. Make sure your calls to .register() use unique names!", fluid.getRegistryName());
+            CraftTweakerAPI.logError("Registering fluid '%s' a second time, overriding the first one. Make sure your calls to .register() use unique names!", fluid.getRegistryName());
         }
         fluids.put(fluid.getRegistryName(), fluid);
     }
@@ -74,15 +74,15 @@ public class CoTRegistry {
     }
 
     public IIsCotItem getItem(ResourceLocation resourceLocation) {
-        return Optional.ofNullable(items.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could find CoT item for " + resourceLocation.toString()));
+        return Optional.ofNullable(items.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could not find CoT item for " + resourceLocation.toString()));
     }
 
     public IIsCoTBlock getBlock(ResourceLocation resourceLocation) {
-        return Optional.ofNullable(blocks.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could find CoT block for " + resourceLocation.toString()));
+        return Optional.ofNullable(blocks.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could not find CoT block for " + resourceLocation.toString()));
     }
 
     public IIsCotFluid getFluid(ResourceLocation resourceLocation) {
-        return Optional.ofNullable(fluids.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could find CoT fluid for " + resourceLocation.toString()));
+        return Optional.ofNullable(fluids.get(resourceLocation)).orElseThrow(() -> new IllegalArgumentException("Could not find CoT fluid for " + resourceLocation.toString()));
     }
 
     public IIsCotItem getItem(String location) {

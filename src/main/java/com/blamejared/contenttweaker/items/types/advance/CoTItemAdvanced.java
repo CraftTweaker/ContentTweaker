@@ -59,8 +59,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     }
 
     /**
-     * Sets what will happen when the player right clicks with the item. If the item is food, you can't use it.
-     * Because food handling also needs it.
+     * Sets what will happen when the player right clicks with the item. If the item is food, then you cannot use this method as the food mechanics also use this method.
      *
      * @param func an IItemRightClick function, the function should return an ActionResultType
      * @return the CoTItemAdvanced, used for method chaining
@@ -68,14 +67,14 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     @ZenCodeType.Method
     public CoTItemAdvanced setOnItemRightClick(IItemRightClick func) {
         if (this.getItem().isFood()) {
-            throw new UnsupportedOperationException("You could not set onItemRightClick to a food item!");
+            throw new UnsupportedOperationException("Unable to set onItemRightClick on a food item!");
         }
         ActionSetFunction.applyNewAction("onItemRightClick", this, func, (item, fun) -> item.itemRightClick = fun);
         return this;
     }
 
     /**
-     * Sets what will happen when a living entity attacks other entities.
+     * Sets what will happen when a living entity attacks other entities with this item.
      *
      * @param func an IItemHitEntity function, the function return whether can attack or not.
      * @return the CoTItemAdvanced, used for method chaining
@@ -87,7 +86,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     }
 
     /**
-     * Sets what will happen when a player interacts (right-clicks) a entity.
+     * Sets what will happen when a player interacts (right-clicks) an entity with this item.
      *
      * @param func an IItemInteractWithEntity function, the function should return an ActionResultType
      *
@@ -100,7 +99,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     }
 
     /**
-     * The Set function will be called each tick as long the item is on a player inventory.
+     * Sets what will happen when the item is ticked in an inventory. 
      * @param func an IItemInventoryTick function
      * @return the CoTItemAdvanced, used for method chaining
      */
@@ -122,7 +121,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     }
 
     /**
-     * The item's color. Before using it, you should set the item can be tinted first via adding `allowTinted` to linked item builder.
+     * The item's color. Before using it, you should set the item to be tintable first via adding `allowTinted` to linked item builder.
      * @param func an IItemColorSupplier, The tintIndex is `layerX` property of its model.
      * @return the CoTItemAdvanced, used for method chaining
      */

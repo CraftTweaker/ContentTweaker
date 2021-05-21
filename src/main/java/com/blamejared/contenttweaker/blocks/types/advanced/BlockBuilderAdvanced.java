@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
 /**
- * A special builder that allows you create blocks with advanced functionality. This builder doesn't provide
- * extra methods. You should use advanced block bracket handler to get {@link CoTBlockAdvanced} instance
+ * A special builder that allows you to create blocks with advanced functionality. This builder doesn't provide
+ * extra methods. You should use advanced block bracket handler to get a {@link CoTBlockAdvanced} instance
  * and set functions in CraftTweaker scripts later.
  *
  * @docParam this new BlockBuilder().withType<BlockBuilderAdvanced>()
