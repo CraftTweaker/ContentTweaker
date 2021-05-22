@@ -17,8 +17,11 @@ import java.util.Collections;
 import java.util.function.Supplier;
 
 public class CoTFluidBucketItem extends BucketItem implements IIsCotItem, IItemHasColor {
-    public CoTFluidBucketItem(Supplier<? extends Fluid> supplier, Properties builder) {
+    private final int color;
+
+    public CoTFluidBucketItem(Supplier<? extends Fluid> supplier, Properties builder, int color) {
         super(supplier, builder);
+        this.color = color;
     }
 
     @Nonnull
@@ -36,6 +39,6 @@ public class CoTFluidBucketItem extends BucketItem implements IIsCotItem, IItemH
 
     @Override
     public int getColor(ItemStack stack, int tintIndex) {
-        return tintIndex == 1 ? this.getFluid().getAttributes().getColor() : -1;
+        return tintIndex == 1 ? color : -1;
     }
 }

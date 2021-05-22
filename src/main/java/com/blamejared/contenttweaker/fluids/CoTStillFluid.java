@@ -12,9 +12,13 @@ final class CoTStillFluid implements IIsCotFluid {
     private ForgeFlowingFluid.Source fluid;
     private FlowingFluidBlock fluidBlock;
     private final ResourceLocation location;
+    private final boolean isMolten;
+    private final boolean tagged;
 
-    public CoTStillFluid(ResourceLocation location) {
+    public CoTStillFluid(ResourceLocation location, boolean isMolten, boolean tagged) {
         this.location = location;
+        this.isMolten = isMolten;
+        this.tagged = tagged;
     }
 
     @Override
@@ -40,5 +44,15 @@ final class CoTStillFluid implements IIsCotFluid {
     @Override
     public void setFluidBlock(FlowingFluidBlock fluidBlock) {
         this.fluidBlock = fluidBlock;
+    }
+
+    @Override
+    public boolean isMolten() {
+        return isMolten;
+    }
+
+    @Override
+    public boolean isTagged() {
+        return tagged;
     }
 }

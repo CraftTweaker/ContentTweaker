@@ -30,12 +30,16 @@ public class FluidBuilder implements IIsBuilder {
 
     private final FluidAttributes.Builder builder;
     private final boolean isMolten;
+    private boolean tagged = true;
     private final int color;
 
     /**
      * Creates a new FluidBuilder with default colorized textures
      * @param isMolten if the fluid is molten
      * @param color the color of the fluid
+     *
+     * @docParam isMolten true
+     * @docParam color 0x66ccff
      */
     @ZenCodeType.Constructor
     public FluidBuilder(boolean isMolten, int color) {
@@ -49,6 +53,11 @@ public class FluidBuilder implements IIsBuilder {
      * @param color the bucket fluid color
      * @param stillTexture the texture resource location of still fluid block
      * @param flowTexture the texture resource location of flowing fluid block
+     *
+     * @docParam isMolten true
+     * @docParam color 0x66ccff
+     * @docParam stillTexture <resource:contenttweaker:fluid/liquid>
+     * @docParam flowTexture <resource:contenttweaker:fluid/liquid_flowing>
      */
     @ZenCodeType.Constructor
     public FluidBuilder(boolean isMolten, int color, ResourceLocation stillTexture, ResourceLocation flowTexture) {
@@ -62,6 +71,8 @@ public class FluidBuilder implements IIsBuilder {
      * The light-level emitted by the fluid
      *
      * default value is 0
+     *
+     * @docParam luminosity 15
      */
     @ZenCodeType.Method
     public FluidBuilder luminosity(int luminosity) {
@@ -73,6 +84,8 @@ public class FluidBuilder implements IIsBuilder {
      * How fast you can walk in the fluid?
      *
      * default value is 1000
+     *
+     * @docParam density 1400
      */
     @ZenCodeType.Method
     public FluidBuilder density(int density) {
@@ -84,6 +97,8 @@ public class FluidBuilder implements IIsBuilder {
      * The Fluid's temperature
      *
      * default value is 300
+     *
+     * @docParam temperature 500
      */
     @ZenCodeType.Method
     public FluidBuilder temperature(int temperature) {
@@ -95,6 +110,8 @@ public class FluidBuilder implements IIsBuilder {
      * How quickly the fluid spreads
      *
      * default value is 1000
+     *
+     * @docParam viscosity 800
      */
     @ZenCodeType.Method
     public FluidBuilder viscosity(int viscosity) {
@@ -111,19 +128,30 @@ public class FluidBuilder implements IIsBuilder {
         return this;
     }
 
+    /**
+     * By default, the fluid will be tagged as `<tags:fluids:minecraft:water>` or `<tags:fluids:minecraft:lava>` automatically.
+     *
+     * If you don't want to tag this fluid, call the method to deny it.
+     */
+    @ZenCodeType.Method
+    public FluidBuilder notTagged() {
+        this.tagged = false;
+        return this;
+    }
+
     @Override
     public void build(ResourceLocation location) {
         String path = location.getPath();
-        IIsCotFluid stillFluid = new CoTStillFluid(location);
-        IIsCotFluid flowingFluid = new CoTFlowingFluid(location);
+        IIsCotFluid stillFluid = new CoTStillFluid(location, isMolten, tagged);
+        IIsCotFluid flowingFluid = new CoTFlowingFluid(location, isMolten, tagged);
 
         ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(stillFluid, flowingFluid, builder);
-        AbstractBlock.Properties fluidBlockProperties = AbstractBlock.Properties.create(isMolten ? Material.WATER : Material.LAVA)
+        AbstractBlock.Properties fluidBlockProperties = AbstractBlock.Properties.create(isMolten ? Material.LAVA : Material.WATER)
                 .doesNotBlockMovement()
                 .hardnessAndResistance(100.0f)
                 .noDrops();
         FlowingFluidBlock fluidBlock = new FlowingFluidBlock(stillFluid, fluidBlockProperties);
-        CoTFluidBucketItem bucketItem = new CoTFluidBucketItem(stillFluid, new Item.Properties().maxStackSize(1).containerItem(Items.BUCKET).group(ItemGroup.MISC));
+        CoTFluidBucketItem bucketItem = new CoTFluidBucketItem(stillFluid, new Item.Properties().maxStackSize(1).containerItem(Items.BUCKET).group(ItemGroup.MISC), color);
 
         bucketItem.setRegistryName(path + "_bucket");
         fluidBlock.setRegistryName(stillFluid.getRegistryNameNonNull());
