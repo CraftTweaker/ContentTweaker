@@ -30,7 +30,6 @@ public class FluidBuilder implements IIsBuilder {
 
     private final FluidAttributes.Builder builder;
     private final boolean isMolten;
-    private boolean tagged = true;
     private final int color;
 
     /**
@@ -128,22 +127,11 @@ public class FluidBuilder implements IIsBuilder {
         return this;
     }
 
-    /**
-     * By default, the fluid will be tagged as `<tags:fluids:minecraft:water>` or `<tags:fluids:minecraft:lava>` automatically.
-     *
-     * If you don't want to tag this fluid, call the method to deny it.
-     */
-    @ZenCodeType.Method
-    public FluidBuilder notTagged() {
-        this.tagged = false;
-        return this;
-    }
-
     @Override
     public void build(ResourceLocation location) {
         String path = location.getPath();
-        IIsCotFluid stillFluid = new CoTStillFluid(location, isMolten, tagged);
-        IIsCotFluid flowingFluid = new CoTFlowingFluid(location, isMolten, tagged);
+        IIsCotFluid stillFluid = new CoTStillFluid(location, isMolten);
+        IIsCotFluid flowingFluid = new CoTFlowingFluid(location, isMolten);
 
         ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(stillFluid, flowingFluid, builder);
         AbstractBlock.Properties fluidBlockProperties = AbstractBlock.Properties.create(isMolten ? Material.LAVA : Material.WATER)

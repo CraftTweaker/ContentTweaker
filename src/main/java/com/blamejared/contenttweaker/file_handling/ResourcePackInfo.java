@@ -1,13 +1,12 @@
 package com.blamejared.contenttweaker.file_handling;
 
-import com.blamejared.contenttweaker.api.fluids.IIsCotFluid;
-import com.blamejared.crafttweaker.api.*;
-import net.minecraftforge.fml.*;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import net.minecraftforge.fml.ModList;
 
-import javax.annotation.*;
-import java.io.*;
-import java.nio.file.*;
-import java.util.Collection;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class ResourcePackInfo {
     
@@ -39,10 +38,6 @@ public class ResourcePackInfo {
         createDirectoryIfNotExists(usedModLoader.datapackDirectory);
         final PackMCMetaTemplate packMcmeta = new PackMCMetaTemplate(usedModLoader.datapackDirectory, "ContentTweaker loot tables and maybe more");
         packMcmeta.writeIfNotExists();
-    }
-
-    public void writeFluidTags(Collection<IIsCotFluid> fluids) {
-        new FluidTagsWriter(fluids, usedModLoader.datapackDirectory).write();
     }
     
     private void createDirectoryIfNotExists(File directory) {

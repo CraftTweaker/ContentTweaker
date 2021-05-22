@@ -140,8 +140,6 @@ public class VanillaFactory {
             w.writeContentUsing(resourcePackInfo.getDataPackDirectory());
             w.onWrite();
         });
-
-        resourcePackInfo.writeFluidTags(REGISTRY.getFluids());
     }
 
 }

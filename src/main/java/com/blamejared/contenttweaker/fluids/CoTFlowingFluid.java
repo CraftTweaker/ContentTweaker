@@ -14,12 +14,10 @@ final class CoTFlowingFluid implements IIsCotFluid {
     private ForgeFlowingFluid.Flowing fluid;
     private final ResourceLocation resourceLocation;
     private final boolean isMolten;
-    private final boolean tagged;
 
-    public CoTFlowingFluid(ResourceLocation resourceLocation, boolean isMolten, boolean tagged) {
+    public CoTFlowingFluid(ResourceLocation resourceLocation, boolean isMolten) {
         this.resourceLocation = new ResourceLocation(ContentTweaker.MOD_ID, resourceLocation.getPath() + "_flowing");
         this.isMolten = isMolten;
-        this.tagged = tagged;
     }
 
     @Override
@@ -46,10 +44,5 @@ final class CoTFlowingFluid implements IIsCotFluid {
     @Override
     public boolean isMolten() {
         return isMolten;
-    }
-
-    @Override
-    public boolean isTagged() {
-        return tagged;
     }
 }

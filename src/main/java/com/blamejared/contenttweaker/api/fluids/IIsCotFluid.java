@@ -28,9 +28,4 @@ public interface IIsCotFluid extends IHasResourceLocation, Supplier<FlowingFluid
      * @return if the fluid is molten
      */
     boolean isMolten();
-
-    /**
-     * @return if the fluid should be tagged as water or lava.
-     */
-    boolean isTagged();
 }
