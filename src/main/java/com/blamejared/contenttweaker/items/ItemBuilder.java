@@ -116,7 +116,7 @@ public class ItemBuilder implements IIsBuilder {
      * @param food the food
      * @return The builder, used for method chaining
      *
-     * @docParam new MCFood(2, 4.0)
+     * @docParam new MCFood(2, 4.0f)
      */
     @ZenCodeType.Method
     public ItemBuilder withFood(MCFood food) {
