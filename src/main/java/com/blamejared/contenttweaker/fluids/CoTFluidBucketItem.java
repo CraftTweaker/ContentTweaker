@@ -9,9 +9,13 @@ import com.blamejared.contenttweaker.color.IItemHasColor;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Supplier;
@@ -22,6 +26,11 @@ public class CoTFluidBucketItem extends BucketItem implements IIsCotItem, IItemH
     public CoTFluidBucketItem(Supplier<? extends Fluid> supplier, Properties builder, int color) {
         super(supplier, builder);
         this.color = color;
+    }
+
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+        return new FluidBucketWrapper(stack);
     }
 
     @Nonnull
