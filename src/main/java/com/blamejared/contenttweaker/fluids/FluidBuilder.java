@@ -35,10 +35,10 @@ public class FluidBuilder implements IIsBuilder {
     /**
      * Creates a new FluidBuilder with default colorized textures
      * @param isMolten if the fluid is molten
-     * @param color the color of the fluid
+     * @param color the color of the fluid, ARGB
      *
      * @docParam isMolten true
-     * @docParam color 0x66ccff
+     * @docParam color 0xff66ccff
      */
     @ZenCodeType.Constructor
     public FluidBuilder(boolean isMolten, int color) {
@@ -49,12 +49,12 @@ public class FluidBuilder implements IIsBuilder {
     /**
      * Creates a new FluidBuilder with two textures
      * @param isMolten if the fluid is molten
-     * @param color the bucket fluid color
+     * @param color the bucket fluid color, ARGB
      * @param stillTexture the texture resource location of still fluid block
      * @param flowTexture the texture resource location of flowing fluid block
      *
      * @docParam isMolten true
-     * @docParam color 0x66ccff
+     * @docParam color 0xff66ccff
      * @docParam stillTexture <resource:contenttweaker:fluid/liquid>
      * @docParam flowTexture <resource:contenttweaker:fluid/liquid_flowing>
      */
