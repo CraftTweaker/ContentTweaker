@@ -43,6 +43,7 @@ public class FluidBuilder implements IIsBuilder {
     @ZenCodeType.Constructor
     public FluidBuilder(boolean isMolten, int color) {
         this(isMolten, color, isMolten ? MOLTEN_STILL_TEXTURE : LIQUID_STILL_TEXTURE, isMolten ? MOLTEN_FLOW_TEXTURE : LIQUID_FLOW_TEXTURE);
+        color = setTotallyOpaqueWhenNotDefineAlphaChannel(color);
         builder.color(color);
     }
 
@@ -60,6 +61,7 @@ public class FluidBuilder implements IIsBuilder {
      */
     @ZenCodeType.Constructor
     public FluidBuilder(boolean isMolten, int color, ResourceLocation stillTexture, ResourceLocation flowTexture) {
+        color = setTotallyOpaqueWhenNotDefineAlphaChannel(color);
         this.builder = FluidAttributes.builder(stillTexture, flowTexture);
         this.isMolten = isMolten;
         this.color = color;
@@ -152,5 +154,9 @@ public class FluidBuilder implements IIsBuilder {
         VanillaFactory.queueFluidForRegistration(stillFluid);
         VanillaFactory.queueFluidForRegistration(flowingFluid);
         VanillaFactory.queueItemForRegistration(bucketItem);
+    }
+
+    private static int setTotallyOpaqueWhenNotDefineAlphaChannel(int color) {
+        return color >> 24 == 0 ? (color | 0xff000000) : color;
     }
 }
