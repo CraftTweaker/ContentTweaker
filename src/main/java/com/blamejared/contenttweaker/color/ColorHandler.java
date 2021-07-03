@@ -19,7 +19,7 @@ public class ColorHandler {
 
     @SubscribeEvent
     public static void onBlockColor(ColorHandlerEvent.Block event) {
-        VanillaFactory.REGISTRY.getItems().stream()
+        VanillaFactory.REGISTRY.getBlocks().stream()
                 .filter(CoTBlockAdvanced.class::isInstance)
                 .map(CoTBlockAdvanced.class::cast)
                 .forEach(block -> event.getBlockColors().register(block::getColor, block));
