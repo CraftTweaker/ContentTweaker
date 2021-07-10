@@ -13,9 +13,11 @@ import java.util.Objects;
 final class CoTFlowingFluid implements IIsCotFluid {
     private ForgeFlowingFluid.Flowing fluid;
     private final ResourceLocation resourceLocation;
+    private final boolean isMolten;
 
-    public CoTFlowingFluid(ResourceLocation resourceLocation) {
+    public CoTFlowingFluid(ResourceLocation resourceLocation, boolean isMolten) {
         this.resourceLocation = new ResourceLocation(ContentTweaker.MOD_ID, resourceLocation.getPath() + "_flowing");
+        this.isMolten = isMolten;
     }
 
     @Override
@@ -37,5 +39,10 @@ final class CoTFlowingFluid implements IIsCotFluid {
     @Override
     public void updateFluid(FlowingFluid fluid) {
         this.fluid = (ForgeFlowingFluid.Flowing) fluid;
+    }
+
+    @Override
+    public boolean isMolten() {
+        return isMolten;
     }
 }

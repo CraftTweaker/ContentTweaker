@@ -283,6 +283,8 @@ public class BlockBuilder implements IIsBuilder {
      * Sets the block's render type.
      * Will also set the block as {@link #notSolid()} if the argument is not solid
      * @return This builder, used for method chaining
+     *
+     * @docParam renderType BlockRenderType.TRANSLUCENT
      */
     @ZenCodeType.Method
     public BlockBuilder withRenderType(BlockRenderType renderType) {

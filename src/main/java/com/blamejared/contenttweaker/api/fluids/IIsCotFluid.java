@@ -23,4 +23,9 @@ public interface IIsCotFluid extends IHasResourceLocation, Supplier<FlowingFluid
      * Sets block of the fluid, shouldn't be overridden if the fluid is flowing type
      */
     default void setFluidBlock(FlowingFluidBlock flowingFluidBlock) {}
+
+    /**
+     * @return if the fluid is molten
+     */
+    boolean isMolten();
 }

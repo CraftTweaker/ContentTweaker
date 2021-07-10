@@ -1,11 +1,12 @@
 package com.blamejared.contenttweaker.file_handling;
 
-import com.blamejared.crafttweaker.api.*;
-import net.minecraftforge.fml.*;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import net.minecraftforge.fml.ModList;
 
-import javax.annotation.*;
-import java.io.*;
-import java.nio.file.*;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class ResourcePackInfo {
     
