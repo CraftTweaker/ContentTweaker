@@ -156,11 +156,14 @@ public class ItemRepresentation implements IRepresentation<Item> {
     }
 
     @ZenMethod
-    public IItemInteractionForEntity getItemInteractionForEntity() { return this.itemInteractionForEntity; }
+    public IItemInteractionForEntity getItemInteractionForEntity() {
+        return this.itemInteractionForEntity;
+    }
 
     @ZenMethod
-    public void setItemInteractionForEntity(IItemInteractionForEntity itemInteractionForEntity) { this.itemInteractionForEntity = itemInteractionForEntity; }
-
+    public void setItemInteractionForEntity(IItemInteractionForEntity itemInteractionForEntity) {
+        this.itemInteractionForEntity = itemInteractionForEntity;
+    }
     @ZenMethod
     public String getItemUseAction() {
         return itemUseAction;
