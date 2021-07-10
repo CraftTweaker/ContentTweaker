@@ -33,17 +33,34 @@ public class ItemBracketHandler implements IBracketHandler {
 
         if (tokens.size() > 2) {
             if ("item".equalsIgnoreCase(tokens.get(0).getValue())) {
-                String blockName;
-                int meta = 0;
-                if (tokens.size() >= 5) {
-                    blockName = tokens.get(2).getValue() + ":" + tokens.get(4).getValue();
-                    if (tokens.size() >= 7) {
-                        meta = Integer.parseInt(tokens.get(6).getValue());
+                int stage = 0;
+                StringBuilder blockName = new StringBuilder();
+                StringBuilder metaValue = new StringBuilder();
+
+                for(Token tok: tokens.subList(2, tokens.size())) {
+                    if(stage == 0) { // mod-id construction
+                        if(":".equalsIgnoreCase(tok.getValue())) {
+                            blockName.append(":");
+                            stage = 1;
+                        } else {
+                            blockName.append(tok.getValue());
+                        }
+                    } else if (stage == 1) { // item name construction
+                        if(":".equalsIgnoreCase(tok.getValue())) {
+                            stage = 2;
+                        } else {
+                            blockName.append(tok.getValue());
+                        }
+                    } else { // meta value gathering
+                        metaValue.append(tok.getValue());
                     }
-                } else {
-                    blockName = tokens.get(2).getValue();
                 }
-                zenSymbol = new StringIntSymbol(environment, blockName, meta, method);
+
+                int meta = 0;
+                if(!metaValue.toString().equalsIgnoreCase("")) {
+                    meta = Integer.parseInt(metaValue.toString());
+                }
+                zenSymbol = new StringIntSymbol(environment, blockName.toString(), meta, method);
             }
         }
 
