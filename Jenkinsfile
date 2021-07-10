@@ -13,6 +13,10 @@ def exportDirInRepo = 'docs_exported/contenttweaker'
 
 pipeline {
     agent any
+    
+    tools {
+        jdk "jdk8u292-b10"
+    }
 
     environment {
         ORG_GRADLE_PROJECT_secretFile = credentials('mod_build_secrets')
