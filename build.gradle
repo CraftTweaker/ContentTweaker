@@ -101,7 +101,7 @@ modTemplate {
         changelogFile "changelog.md"
     }
     webhook {
-        enabled false
+        enabled true
         curseId "237065"
         avatarUrl "https://i.blamejared.com/cot.png"
     }
