@@ -150,6 +150,16 @@ public class ItemContent extends ItemBase implements IHasModel, IHasGeneratedMod
     }
 
     @Override
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
+        if(itemRepresentation.getItemInteractionForEntity() != null) {
+            return itemRepresentation.getItemInteractionForEntity().interactionForEntity(new MCMutableItemStack(stack),
+                    new CTPlayer(player), EntityHelper.getIEntityLivingBase(target), hand.name()
+            );
+        }
+        return super.itemInteractionForEntity(stack, player, target, hand);
+    }
+
+    @Override
     @Nonnull
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
                                       float hitX, float hitY, float hitZ) {

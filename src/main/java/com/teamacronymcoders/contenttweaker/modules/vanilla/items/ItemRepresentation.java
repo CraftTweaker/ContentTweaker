@@ -39,6 +39,8 @@ public class ItemRepresentation implements IRepresentation<Item> {
     @ZenProperty
     public IItemRightClick itemRightClick = null;
     @ZenProperty
+    public IItemInteractionForEntity itemInteractionForEntity = null;
+    @ZenProperty
     public String itemUseAction = EnumAction.NONE.toString();
     @ZenProperty
     public boolean glowing;
@@ -153,6 +155,15 @@ public class ItemRepresentation implements IRepresentation<Item> {
         this.itemRightClick = itemRightClick;
     }
 
+    @ZenMethod
+    public IItemInteractionForEntity getItemInteractionForEntity() {
+        return this.itemInteractionForEntity;
+    }
+
+    @ZenMethod
+    public void setItemInteractionForEntity(IItemInteractionForEntity itemInteractionForEntity) {
+        this.itemInteractionForEntity = itemInteractionForEntity;
+    }
     @ZenMethod
     public String getItemUseAction() {
         return itemUseAction;
