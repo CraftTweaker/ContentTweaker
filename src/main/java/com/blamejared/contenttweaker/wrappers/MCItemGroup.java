@@ -1,10 +1,16 @@
 package com.blamejared.contenttweaker.wrappers;
 
-import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.api.brackets.*;
-import com.blamejared.crafttweaker_annotations.annotations.*;
-import net.minecraft.item.*;
-import org.openzen.zencode.java.*;
+import com.blamejared.contenttweaker.api.functions.IIconSupplier;
+import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
+import com.blamejared.crafttweaker_annotations.annotations.ZenWrapper;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import org.openzen.zencode.java.ZenCodeType;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * An item Group (a.k.a. Creative Tab) is a grouping of items based on category.
@@ -18,6 +24,7 @@ import org.openzen.zencode.java.*;
 public class MCItemGroup implements CommandStringDisplayable {
     
     private final ItemGroup internal;
+    private static final Set<String> USED_GROUP_NAMES = new HashSet<>();
     
     public MCItemGroup(ItemGroup internal) {
         this.internal = internal;
@@ -25,6 +32,29 @@ public class MCItemGroup implements CommandStringDisplayable {
     
     public ItemGroup getInternal() {
         return internal;
+    }
+
+    /**
+     * Creates a new item group. Throws an exception when trying creating two item groups with the same name.
+     * @param name the name of the item group
+     * @param iconSupplier the function to get the icon of the item group
+     * @return the new item group
+     *
+     * @docParam name "contenttweaker"
+     * @docParam iconSupplier () => <item:minecraft:dragon_egg>
+     */
+    @ZenCodeType.Method
+    public static MCItemGroup create(String name, IIconSupplier iconSupplier) {
+        if (USED_GROUP_NAMES.contains(name)) {
+            throw new UnsupportedOperationException("cannot create two item groups with the same name");
+        }
+        USED_GROUP_NAMES.add(name);
+        return new MCItemGroup(new ItemGroup(name) {
+            @Override
+            public ItemStack createIcon() {
+                return iconSupplier.supply().getInternal();
+            }
+        });
     }
     
     /**
