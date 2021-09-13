@@ -113,13 +113,15 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setUnlocalizedName(String unlocalizedName) {
+    public BlockRepresentation setUnlocalizedName(String unlocalizedName) {
         this.unlocalizedName = unlocalizedName;
+        return this;
     }
 
     @ZenMethod
-    public void setCreativeTab(ICreativeTab creativeTab) {
+    public BlockRepresentation setCreativeTab(ICreativeTab creativeTab) {
         this.creativeTab = creativeTab;
+        return this;
     }
 
     @ZenMethod
@@ -133,8 +135,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setFullBlock(boolean fullBlock) {
+    public BlockRepresentation setFullBlock(boolean fullBlock) {
         this.fullBlock = fullBlock;
+        return this;
     }
 
     @ZenMethod
@@ -143,8 +146,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setHasGravity(boolean gravity) {
+    public BlockRepresentation setHasGravity(boolean gravity) {
         this.gravity = gravity;
+        return this;
     }
 
     @ZenMethod
@@ -153,8 +157,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setLightOpacity(int lightOpacity) {
+    public BlockRepresentation setLightOpacity(int lightOpacity) {
         this.lightOpacity = lightOpacity;
+        return this;
     }
 
     @ZenMethod
@@ -163,8 +168,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setTranslucent(boolean translucent) {
+    public BlockRepresentation setTranslucent(boolean translucent) {
         this.translucent = translucent;
+        return this;
     }
 
     @ZenMethod
@@ -173,8 +179,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setLightValue(float lightValue) {
+    public BlockRepresentation setLightValue(float lightValue) {
         this.lightValue = lightValue;
+        return this;
     }
 
     @ZenMethod
@@ -183,8 +190,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setBlockHardness(float blockHardness) {
+    public BlockRepresentation setBlockHardness(float blockHardness) {
         this.blockHardness = blockHardness;
+        return this;
     }
 
     @ZenMethod
@@ -193,8 +201,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setBlockResistance(float blockResistance) {
+    public BlockRepresentation setBlockResistance(float blockResistance) {
         this.blockResistance = blockResistance;
+        return this;
     }
 
     @ZenMethod
@@ -203,8 +212,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setToolClass(String toolClass) {
+    public BlockRepresentation setToolClass(String toolClass) {
         this.toolClass = toolClass;
+        return this;
     }
 
     @ZenMethod
@@ -213,8 +223,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setToolLevel(int toolLevel) {
+    public BlockRepresentation setToolLevel(int toolLevel) {
         this.toolLevel = toolLevel;
+        return this;
     }
 
     @ZenMethod
@@ -223,8 +234,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setBlockSoundType(ISoundTypeDefinition blockSoundType) {
+    public BlockRepresentation setBlockSoundType(ISoundTypeDefinition blockSoundType) {
         this.blockSoundType = blockSoundType;
+        return this;
     }
 
     @ZenMethod
@@ -233,13 +245,15 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setBlockMaterial(IBlockMaterialDefinition material) {
+    public BlockRepresentation setBlockMaterial(IBlockMaterialDefinition material) {
         this.blockMaterial = material;
+        return this;
     }
 
     @ZenMethod
-    public void setEnchantPowerBonus(float enchantPowerBonus) {
+    public BlockRepresentation setEnchantPowerBonus(float enchantPowerBonus) {
         this.enchantPowerBonus = enchantPowerBonus;
+        return this;
     }
 
     @ZenMethod
@@ -248,8 +262,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setEnumBlockRenderType(String blockRenderType) {
+    public BlockRepresentation setEnumBlockRenderType(String blockRenderType) {
         this.enumBlockRenderType = blockRenderType;
+        return this;
     }
 
     @ZenMethod
@@ -258,8 +273,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setSlipperiness(float slipperiness) {
+    public BlockRepresentation setSlipperiness(float slipperiness) {
         this.slipperiness = slipperiness;
+        return this;
     }
 
     @ZenMethod
@@ -268,8 +284,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setOnBlockBreak(IBlockAction iBlockAction) {
+    public BlockRepresentation setOnBlockBreak(IBlockAction iBlockAction) {
         this.onBlockBreak = iBlockAction;
+        return this;
     }
 
     @ZenMethod
@@ -278,8 +295,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setOnBlockPlace(IBlockAction iBlockAction) {
+    public BlockRepresentation setOnBlockPlace(IBlockAction iBlockAction) {
         this.onBlockPlace = iBlockAction;
+        return this;
     }
 
     @ZenMethod
@@ -288,8 +306,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setBlockLayer(String blockLayer) {
+    public BlockRepresentation setBlockLayer(String blockLayer) {
         this.blockLayer = blockLayer;
+        return this;
     }
 
     @ZenMethod
@@ -303,8 +322,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setAxisAlignedBB(MCAxisAlignedBB axisAlignedBB) {
+    public BlockRepresentation setAxisAlignedBB(MCAxisAlignedBB axisAlignedBB) {
         this.axisAlignedBB = axisAlignedBB;
+        return this;
     }
 
     @ZenMethod
@@ -313,8 +333,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setOnUpdateTick(IBlockAction onUpdateTick) {
+    public BlockRepresentation setOnUpdateTick(IBlockAction onUpdateTick) {
         this.onUpdateTick = onUpdateTick;
+        return this;
     }
 
     @ZenMethod
@@ -323,8 +344,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setOnRandomTick(IBlockAction onRandomTick) {
+    public BlockRepresentation setOnRandomTick(IBlockAction onRandomTick) {
         this.onRandomTick = onRandomTick;
+        return this;
     }
 
     @ZenMethod
@@ -333,8 +355,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setMobilityFlag(PushReaction mobilityFlag) {
+    public BlockRepresentation setMobilityFlag(PushReaction mobilityFlag) {
         this.mobilityFlag = mobilityFlag;
+        return this;
     }
 
     @ZenMethod
@@ -343,13 +366,15 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setPassable(boolean passable) {
+    public BlockRepresentation setPassable(boolean passable) {
         this.passable = passable;
+        return this;
     }
 
     @ZenMethod
-    public void setReplaceable(boolean replaceable) {
+    public BlockRepresentation setReplaceable(boolean replaceable) {
         this.replaceable = replaceable;
+        return this;
     }
 
     @ZenMethod
@@ -358,8 +383,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setEntitySpawnable(boolean entitySpawnable) {
+    public BlockRepresentation setEntitySpawnable(boolean entitySpawnable) {
         this.entitySpawnable = entitySpawnable;
+        return this;
     }
 
     @ZenMethod
@@ -368,8 +394,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setWitherProof(boolean witherProof) {
+    public BlockRepresentation setWitherProof(boolean witherProof) {
         this.witherProof = witherProof;
+        return this;
     }
 
     @ZenMethod
@@ -383,8 +410,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setDropHandler(IBlockDropHandler dropHandler) {
+    public BlockRepresentation setDropHandler(IBlockDropHandler dropHandler) {
         this.dropHandler = dropHandler;
+        return this;
     }
 
     @ZenMethod
@@ -393,8 +421,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setBlockColorSupplier(IBlockColorSupplier blockColorSupplier) {
+    public BlockRepresentation setBlockColorSupplier(IBlockColorSupplier blockColorSupplier) {
         this.blockColorSupplier = blockColorSupplier;
+        return this;
     }
 
     @ZenMethod
@@ -403,13 +432,15 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setItemColorSupplier(IItemColorSupplier itemColorSupplier) {
+    public BlockRepresentation setItemColorSupplier(IItemColorSupplier itemColorSupplier) {
         this.itemColorSupplier = itemColorSupplier;
+        return this;
     }
 
     @ZenMethod
-    public void setBlockFaceSupplier(IBlockFaceSupplier blockFaceSupplier) {
+    public BlockRepresentation setBlockFaceSupplier(IBlockFaceSupplier blockFaceSupplier) {
         this.blockFaceSupplier = blockFaceSupplier;
+        return this;
     }
 
     @ZenMethod
@@ -423,8 +454,9 @@ public class BlockRepresentation implements IRepresentation<Block> {
     }
 
     @ZenMethod
-    public void setTextureLocation(CTResourceLocation resourceLocation) {
+    public BlockRepresentation setTextureLocation(CTResourceLocation resourceLocation) {
         this.textureLocation = resourceLocation;
+        return this;
     }
 
     @Override
