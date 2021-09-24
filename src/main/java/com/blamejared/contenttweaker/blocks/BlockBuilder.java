@@ -163,6 +163,33 @@ public class BlockBuilder implements IIsBuilder {
     }
     
     /**
+     * Sets the jump factor.
+     *
+     * @param jumpFactorIn The value to set
+     * @return This builder, used for method chaining
+     * @docParam jumpFactorIn 2.5f
+     */
+    @ZenCodeType.Method
+    public BlockBuilder withJumpFactor(float jumpFactorIn) {
+        blockProperties.jumpFactor(jumpFactorIn);
+        return this;
+    }
+    
+    /**
+     * Sets the speed factor.
+     *
+     * @param speedFactorIn The value to set
+     * @return This builder, used for method chaining
+     * @docParam speedFactorIn 2.5f
+     */
+    @ZenCodeType.Method
+    public BlockBuilder withSpeedFactor(float speedFactorIn) {
+        blockProperties.speedFactor(speedFactorIn);
+        return this;
+    }
+    
+    
+    /**
      * Sets the block's light value.
      *
      * @param lightValueIn The light level to set
@@ -215,6 +242,17 @@ public class BlockBuilder implements IIsBuilder {
         blockProperties.tickRandomly();
         return this;
     }
+    
+    /**
+     * Sets that the block has variable opacity.
+     * @return The builder, used for method chaining.
+     */
+    @ZenCodeType.Method
+    public BlockBuilder withVariableOpacity() {
+        blockProperties.variableOpacity();
+        return this;
+    }
+    
     
     /**
      * Sets the mining level required to mine this block
