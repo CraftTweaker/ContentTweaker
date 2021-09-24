@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-        classpath group: 'com.blamejared', name: 'ModTemplate', version: '1.+', changing: true
+        classpath group: 'com.blamejared', name: 'ModTemplate', version: '2.+', changing: true
     }
 }
 
@@ -25,11 +25,14 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'com.matthewprenger.cursegradle'
 
+import com.blamejared.modtemplate.Utils
+
 
 version = '1.0.0'
 if(project.hasProperty('branch')) {
     version += ("." + project.branch)
 }
+version = Utils.updatingVersion(version);
 
 group = 'com.blamejared.contenttweaker'
 archivesBaseName = 'ContentTweaker-1.16'
@@ -124,19 +127,19 @@ repositories {
 }
 
 dependencies {
-    String crafttweakerBuildVersion = "292"
-    String forgeVersion = "1.16.5-36.0.14"
+    String crafttweakerBuildVersion = "435"
+    String forgeVersion = "1.16.5-36.2.5"
 
     minecraft("net.minecraftforge:forge:$forgeVersion")
     compile fg.deobf("mezz.jei:jei-1.16.4:7.6.1.65")
     compile fg.deobf("net.darkhax.openloader:OpenLoader-1.16.3:7.0.3")
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.$crafttweakerBuildVersion")
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.2.$crafttweakerBuildVersion")
 
     annotationProcessor 'com.google.code.gson:gson:2.8.6'
     annotationProcessor 'org.reflections:reflections:0.9.10'
 
     annotationProcessor minecraft("net.minecraftforge:forge:$forgeVersion")
-    annotationProcessor fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.$crafttweakerBuildVersion")
+    annotationProcessor fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.2.$crafttweakerBuildVersion")
     annotationProcessor "com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.$crafttweakerBuildVersion"
 
 }
