@@ -104,8 +104,8 @@ public class BlockBuilder implements IIsBuilder {
      * @docParam group <itemgroup:building_blocks>
      */
     @ZenCodeType.Method
-    public BlockBuilder withItemGroup(MCItemGroup group) {
-        this.itemProperties.group(group.getInternal());
+    public BlockBuilder withItemGroup(ItemGroup group) {
+        this.itemProperties.group(group);
         return this;
     }
     

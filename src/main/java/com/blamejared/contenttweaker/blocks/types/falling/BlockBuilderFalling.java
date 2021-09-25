@@ -41,7 +41,7 @@ public class BlockBuilderFalling extends BlockTypeBuilder {
      *
      * @param dustFunc The function that provides the dust color.
      * @return This builder, used for method chaining
-     * @docParam dustFunc ((thisBlock, state, reader, pos) => 0xFF55FF)
+     * @docParam dustFunc (thisBlock, state, reader, pos) => 0xFF55FF
      */
     @ZenCodeType.Method
     public BlockBuilderFalling withDustColor(IFallingBlockDustColorSupplier dustFunc) {

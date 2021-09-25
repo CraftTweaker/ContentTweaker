@@ -1,15 +1,19 @@
 package com.blamejared.contenttweaker.wrappers;
 
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.*;
 import com.blamejared.crafttweaker.api.brackets.*;
 import com.blamejared.crafttweaker_annotations.annotations.*;
 import net.minecraft.item.*;
+import net.minecraftforge.common.ToolType;
 import org.openzen.zencode.java.*;
 
 /**
  * An item Group (a.k.a. Creative Tab) is a grouping of items based on category.
  *
  * @docParam this <itemgroup:misc>
+ *
+ * @deprecated This class has been replaced by `crafttweaker.api.item.ItemGroup`
  */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCItemGroup")
@@ -21,6 +25,8 @@ public class MCItemGroup implements CommandStringDisplayable {
     
     public MCItemGroup(ItemGroup internal) {
         this.internal = internal;
+        // If someone is using this class, tell them to stop
+        CraftTweakerAPI.logWarning("MCItemGroup is now part of CraftTweaker, you should only be using `crafttweaker.api.item.ItemGroup` instead!");
     }
     
     public ItemGroup getInternal() {
@@ -81,5 +87,10 @@ public class MCItemGroup implements CommandStringDisplayable {
     @Override
     public String getCommandString() {
         return "<itemGroup:" + getPath() + ">";
+    }
+    
+    @ZenCodeType.Caster(implicit = true)
+    public ItemGroup asItemGroup(){
+        return internal;
     }
 }

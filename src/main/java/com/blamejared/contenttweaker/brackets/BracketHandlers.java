@@ -27,20 +27,6 @@ import java.util.*;
 @Document("mods/contenttweaker/API/BracketHandlers")
 public class BracketHandlers {
     
-    /**
-     * Gets the itemGroup. Will throw an error if the group could not be found
-     *
-     * @param tokens What you createDataCompound in the BEP call
-     * @return The found MCItemGroup
-     * @docParam tokens "misc"
-     */
-    @ZenCodeType.Method
-    @BracketResolver("itemgroup")
-    public static MCItemGroup getItemGroup(String tokens) {
-        return Arrays.stream(ItemGroup.GROUPS).filter(g -> g.getPath().equals(tokens)).map(MCItemGroup::new).findAny().orElseThrow(() -> new IllegalArgumentException("Could not find itemgroup for '<itemgroup:" + tokens + ">'!"));
-    }
-    
-    
     //
     //    /**
     //     * Gets the {@link MCSoundType}. Will throw an exception if not found.
