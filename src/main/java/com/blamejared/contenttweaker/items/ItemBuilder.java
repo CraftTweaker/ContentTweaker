@@ -81,8 +81,8 @@ public class ItemBuilder implements IIsBuilder {
      * @docParam itemGroup <itemGroup:misc>
      */
     @ZenCodeType.Method
-    public ItemBuilder withItemGroup(MCItemGroup itemGroup) {
-        itemProperties.group(itemGroup.getInternal());
+    public ItemBuilder withItemGroup(ItemGroup itemGroup) {
+        itemProperties.group(itemGroup);
         return this;
     }
     

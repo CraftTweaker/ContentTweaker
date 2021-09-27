@@ -6,12 +6,14 @@ import com.blamejared.contenttweaker.api.blocks.IIsCoTBlock;
 import com.blamejared.contenttweaker.api.functions.*;
 import com.blamejared.contenttweaker.blocks.types.basic.CoTBlockBasic;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.impl.util.MCDirection;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -45,6 +47,7 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     private IBlockReplaced blockReplaced;
     private IBlockActivated blockActivated;
     private IBlockColorSupplier blockColorSupplier = IBlockColorSupplier.DEFAULT;
+    private IBlockIsSideInvisible blockIsSideInvisible = (thisBlock, state, adjacentBlockState, side) -> false;
 
     /**
      * Sets what will happen when the block is added.
@@ -116,6 +119,12 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
         ActionSetFunctionClient.applyNewAction("blockColorSupplier", this, func, IBlockColorSupplier.DEFAULT, (block, fun) -> block.blockColorSupplier = fun);
         return this;
     }
+    
+    @ZenCodeType.Method
+    public CoTBlockAdvanced setIsSideInvisible(IBlockIsSideInvisible func) {
+        ActionSetFunctionClient.applyNewAction("isSideInvisible", this, func, (thisBlock, state, adjacentBlockState, side) -> false, (block, fun) -> block.blockIsSideInvisible = fun);
+        return this;
+    }
 
     @Override
     @SuppressWarnings("deprecation")
@@ -166,7 +175,12 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
     }
-
+    
+    @Override
+    public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+        return blockIsSideInvisible.apply(this,state, adjacentBlockState, MCDirection.get(side));
+    }
+    
     public int getColor(BlockState state, IBlockDisplayReader world, BlockPos pos, int tintIndex) {
         return blockColorSupplier.apply(state, world, pos, tintIndex);
     }

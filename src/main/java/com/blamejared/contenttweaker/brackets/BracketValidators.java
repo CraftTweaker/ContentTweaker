@@ -12,9 +12,4 @@ import java.util.*;
 @ZenCodeType.Name("mods.contenttweaker.api.BracketValidators")
 public class BracketValidators {
     
-    @ZenCodeType.Method
-    @BracketValidator("itemgroup")
-    public static boolean validateItemGroupBracket(String tokens) {
-        return Arrays.stream(ItemGroup.GROUPS).anyMatch(group -> group.getPath().equals(tokens));
-    }
 }
