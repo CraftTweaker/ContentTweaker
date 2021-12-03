@@ -3,7 +3,6 @@ package com.blamejared.contenttweaker.wrappers;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
-import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.crafttweaker_annotations.annotations.ZenWrapper;
 import net.minecraft.item.ItemGroup;
 import org.openzen.zencode.java.ZenCodeType;
@@ -17,7 +16,6 @@ import org.openzen.zencode.java.ZenCodeType;
  */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCItemGroup")
-@Document("mods/contenttweaker/API/item/MCItemGroup")
 @ZenWrapper(wrappedClass = "net.minecraft.item.ItemGroup", displayStringFormat = "%s.getCommandString()")
 public class MCItemGroup implements CommandStringDisplayable {
     
