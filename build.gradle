@@ -127,7 +127,7 @@ repositories {
 }
 
 dependencies {
-    String crafttweakerBuildVersion = "436"
+    String crafttweakerBuildVersion = "470"
     String forgeVersion = "1.16.5-36.2.5"
 
     minecraft("net.minecraftforge:forge:$forgeVersion")
