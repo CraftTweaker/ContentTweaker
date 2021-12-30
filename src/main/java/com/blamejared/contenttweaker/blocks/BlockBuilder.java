@@ -150,6 +150,16 @@ public class BlockBuilder implements IIsBuilder {
     }
     
     /**
+     * Sets that the block is opaque, like vanilla glass.
+     * @return The builder, used for method chaining.
+     */
+    @ZenCodeType.Method
+    public BlockBuilder opaque() {
+        blockProperties.setOpaque((state, reader, pos) -> false);
+        return this;
+    }
+    
+    /**
      * Sets the slipperiness.
      *
      * @param slipperinessIn The value to set
