@@ -118,16 +118,10 @@ repositories {
     maven {
         url "https://maven.blamejared.com"
     }
-    maven {
-        url "https://maven.mcmoddev.com"
-    }
-    maven {
-        url "http://mmd.blamejared.com/"
-    }
 }
 
 dependencies {
-    String crafttweakerBuildVersion = "436"
+    String crafttweakerBuildVersion = "454"
     String forgeVersion = "1.16.5-36.2.5"
 
     minecraft("net.minecraftforge:forge:$forgeVersion")
