@@ -3,7 +3,7 @@
 def docsOutDir = 'docsOut'
 def docsRepositoryUrl = 'git@github.com:CraftTweaker/CraftTweaker-Documentation.git'
 def shouldPushDocumentation = env.BRANCH_NAME.startsWith("develop") || env.BRANCH_NAME.startsWith("release")
-def docsRepositoryBranch = shouldPushDocumentation ? env.BRANCH_NAME.substring(8) : null
+def docsRepositoryBranch = "main"
 def gitSshCredentialsId = 'crt_git_ssh_key'
 def botUsername = 'crafttweakerbot'
 def botEmail = 'crafttweakerbot@gmail.com'
