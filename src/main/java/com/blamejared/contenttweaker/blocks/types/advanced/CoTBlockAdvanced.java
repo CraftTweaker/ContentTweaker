@@ -48,7 +48,8 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     private IBlockActivated blockActivated;
     private IBlockColorSupplier blockColorSupplier = IBlockColorSupplier.DEFAULT;
     private IBlockIsSideInvisible blockIsSideInvisible = (thisBlock, state, adjacentBlockState, side) -> false;
-
+    private IBlockIsTransparent isTransparent = IBlockIsTransparent.ALWAYS_FALSE;
+    
     /**
      * Sets what will happen when the block is added.
      *
@@ -110,7 +111,7 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
 
     /**
      * The block's color
-     * 
+     *
      * @param func An IBlockColorSupplier. The tintIndex argument is defined by its model
      * @return the CoTBlockAdvanced, used for method chaining.
      */
@@ -123,6 +124,12 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     @ZenCodeType.Method
     public CoTBlockAdvanced setIsSideInvisible(IBlockIsSideInvisible func) {
         ActionSetFunctionClient.applyNewAction("isSideInvisible", this, func, (thisBlock, state, adjacentBlockState, side) -> false, (block, fun) -> block.blockIsSideInvisible = fun);
+        return this;
+    }
+    
+    @ZenCodeType.Method
+    public CoTBlockAdvanced setIsTransparent(IBlockIsTransparent func) {
+        ActionSetFunctionClient.applyNewAction("blockIsTransparent", this, func, (thisBlock, state) -> false, (block, fun) -> block.isTransparent = fun);
         return this;
     }
 
@@ -183,5 +190,14 @@ public class CoTBlockAdvanced extends CoTBlockBasic implements IIsCoTBlock {
     
     public int getColor(BlockState state, IBlockDisplayReader world, BlockPos pos, int tintIndex) {
         return blockColorSupplier.apply(state, world, pos, tintIndex);
+    }
+    
+    @Override
+    public boolean isTransparent(BlockState state) {
+        if (isTransparent != null) {
+           return isTransparent.apply(this, state);
+        } else {
+           return super.isTransparent(state);
+        }
     }
 }
