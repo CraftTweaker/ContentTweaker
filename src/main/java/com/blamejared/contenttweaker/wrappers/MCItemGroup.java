@@ -1,12 +1,11 @@
 package com.blamejared.contenttweaker.wrappers;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotations.*;
-import com.blamejared.crafttweaker.api.brackets.*;
-import com.blamejared.crafttweaker_annotations.annotations.*;
-import net.minecraft.item.*;
-import net.minecraftforge.common.ToolType;
-import org.openzen.zencode.java.*;
+import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
+import com.blamejared.crafttweaker_annotations.annotations.ZenWrapper;
+import net.minecraft.item.ItemGroup;
+import org.openzen.zencode.java.ZenCodeType;
 
 /**
  * An item Group (a.k.a. Creative Tab) is a grouping of items based on category.
@@ -17,12 +16,11 @@ import org.openzen.zencode.java.*;
  */
 @ZenRegister
 @ZenCodeType.Name("mods.contenttweaker.item.MCItemGroup")
-@Document("mods/contenttweaker/API/item/MCItemGroup")
 @ZenWrapper(wrappedClass = "net.minecraft.item.ItemGroup", displayStringFormat = "%s.getCommandString()")
 public class MCItemGroup implements CommandStringDisplayable {
     
     private final ItemGroup internal;
-    
+
     public MCItemGroup(ItemGroup internal) {
         this.internal = internal;
         // If someone is using this class, tell them to stop
@@ -32,7 +30,7 @@ public class MCItemGroup implements CommandStringDisplayable {
     public ItemGroup getInternal() {
         return internal;
     }
-    
+
     /**
      * Gets the path of the item group.
      * The path is what you use in the Bracket Expression after the `<itemGroup:` part.
@@ -88,7 +86,7 @@ public class MCItemGroup implements CommandStringDisplayable {
     public String getCommandString() {
         return "<itemGroup:" + getPath() + ">";
     }
-    
+
     @ZenCodeType.Caster(implicit = true)
     public ItemGroup asItemGroup(){
         return internal;
