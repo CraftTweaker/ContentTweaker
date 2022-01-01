@@ -118,12 +118,6 @@ repositories {
     maven {
         url "https://maven.blamejared.com"
     }
-    maven {
-        url "https://maven.mcmoddev.com"
-    }
-    maven {
-        url "http://mmd.blamejared.com/"
-    }
 }
 
 dependencies {
