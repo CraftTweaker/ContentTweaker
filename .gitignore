@@ -42,3 +42,6 @@ runServer/
 cot_changelog.md
 
 secrets.json
+
+buildSrc/.gradle/
+Fabric/.gradle/
