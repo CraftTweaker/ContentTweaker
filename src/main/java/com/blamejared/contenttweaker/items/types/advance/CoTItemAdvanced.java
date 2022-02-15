@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -45,6 +46,9 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     private IItemUsingTick itemUsingTick;
     private IItemColorSupplier itemColorSupplier = IItemColorSupplier.DEFAULT;
     private IItemInventoryTick itemInventoryTick;
+    private IItemUseActionSupplier itemUseActionSupplier = stack -> stack.getInternal().getItem().isFood() ? UseAction.EAT : UseAction.NONE;
+    private IItemUseFinish itemUseFinish = (stack, worldIn, entityLiving) -> stack.getInternal().getItem().isFood() ? entityLiving.onFoodEaten(worldIn, stack.getInternal()) : stack.getInternal();
+
 
     /**
      * Sets what will happen when the player uses this item on a block
@@ -99,7 +103,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     }
 
     /**
-     * Sets what will happen when the item is ticked in an inventory. 
+     * Sets what will happen when the item is ticked in an inventory.
      * @param func an IItemInventoryTick function
      * @return the CoTItemAdvanced, used for method chaining
      */
@@ -131,6 +135,34 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
         return this;
     }
 
+    /**
+     * Sets what will happen when the player finishes using this Item (like when finishing eating).
+     *
+     * Not called when the player stops using this Item before the action is complete
+     *
+     * @param func an IItemUseFinish function, the function should return the new ItemStack
+     * @return the CoTItemAdvanced, used for method chaining
+     */
+    @ZenCodeType.Method
+    public CoTItemAdvanced setOnItemUseFinish(IItemUseFinish func) {
+        ActionSetFunction.applyNewAction("onItemUseFinish", this, func, (item, fun) -> item.itemUseFinish = fun);
+        return this;
+    }
+
+    /**
+     * Sets the use action of this Item.
+     *
+     * By default, if this item is a food, the use action will be "EAT".
+     *
+     * @param func an IItemUseFinish function, the function should return the new ItemStack
+     * @return the CoTItemAdvanced, used for method chaining
+     */
+    @ZenCodeType.Method
+    public CoTItemAdvanced setItemUseAction(IItemUseActionSupplier func) {
+        ActionSetFunction.applyNewAction("itemUseAction", this, func, (item, fun) -> item.itemUseActionSupplier = fun);
+        return this;
+    }
+
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         if (itemUse != null) {
@@ -138,6 +170,16 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
         } else {
             return super.onItemUse(context);
         }
+    }
+
+    @Override
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+        return itemUseFinish.apply(new MCItemStackMutable(stack), worldIn, entityLiving);
+    }
+
+    @Override
+    public UseAction getUseAction(ItemStack stack) {
+        return itemUseActionSupplier.apply(new MCItemStack(stack));
     }
 
     @Override
