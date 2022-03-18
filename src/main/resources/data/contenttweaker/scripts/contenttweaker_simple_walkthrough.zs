@@ -64,7 +64,7 @@ new BlockBuilder()
     .build("stairs_noarg");
 
 // Creating an advanced block. See contenttweaker_advanced_function.zs
-new ItemBuilder()
+new BlockBuilder()
     .withType<BlockBuilderAdvanced>()
     .build("test_block");
 
@@ -123,8 +123,8 @@ TLDR: <resoruce_pack>/assets/contenttweaker/lang/en_us.json.
   "item.contenttweaker.generic_item_2": "Generic Item the 2nd",
   "item.contenttweaker.generic_item_3": "Generic Item the charmed one",
   "fluid.contenttweaker.generic_fluid": "Generic Fluid",
-  "fluid.contenttweaker.generic_fluid_2": "Generic Fluid the 2nd"
-  "item.contenttweaker.generic_fluid_bucket": "Generic Fluid Bucket"
+  "fluid.contenttweaker.generic_fluid_2": "Generic Fluid the 2nd",
+  "item.contenttweaker.generic_fluid_bucket": "Generic Fluid Bucket",
   "item.contenttweaker.generic_fluid_2_bucket": "Generic Fluid the 2nd Bucket"
 }
 
