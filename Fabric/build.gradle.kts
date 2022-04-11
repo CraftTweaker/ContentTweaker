@@ -56,9 +56,6 @@ repositories {
     maven("https://maven.shedaniel.me") {
         name = "shedaniel"
     }
-    maven("https://storage.googleapis.com/devan-maven/") {
-        name = "Devan"
-    }
 }
 
 dependencies {
@@ -76,7 +73,6 @@ dependencies {
     }
     modImplementation(group = "net.fabricmc", name = "fabric-loader", version = project.extra["fl.version"] as String)
     modImplementation(group = "net.fabricmc.fabric-api", name = "fabric-api", version = project.extra["fapi.version"] as String)
-    modImplementation(group = "net.devtech", name = "arrp", version = project.extra["arrp.version"] as String)
 
     runtimeOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version = project.extra["rei.version"] as String)
 }

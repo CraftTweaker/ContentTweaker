@@ -71,10 +71,9 @@ dependencies {
     minecraft(group = "net.minecraftforge", name = "forge", version = "$mcVersion-${project.extra["minecraft.forge.version"]}")
 
     implementation(project(":Common"))
-    implementation(group = "com.blamejared.crafttweaker", name = "CraftTweaker-forge-$mcVersion", version = ctVersion)
-    implementation(group = "net.darkhax.openloader", name = "OpenLoader-Forge-$mcVersion", version = project.extra["ol.version"] as String)
+    implementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-$mcVersion:$ctVersion"))
 
-    runtimeOnly(group = "mezz.jei", name = "jei-$mcVersion", version = project.extra["jei.version"] as String)
+    runtimeOnly(fg.deobf("mezz.jei:jei-$mcVersion-forge:${project.extra["jei.forge.version"]}"))
 }
 
 tasks {
