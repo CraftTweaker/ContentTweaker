@@ -7,6 +7,7 @@ plugins {
     id("org.spongepowered.mixin") version "0.7-SNAPSHOT"
 }
 
+val modId = project.extra["mod.id"] as String
 val mcVersion = extra["minecraft.version"] as String
 
 base.archivesName.set("${extra["mod.name"]}-forge-$mcVersion")
@@ -23,8 +24,6 @@ curseforge {
 }
 
 minecraft {
-    val modId = project.extra["mod.id"] as String
-
     mappings(project.extra["minecraft.forge.mappings.channel"] as String, project.extra["minecraft.forge.mappings.version"] as String)
 
     runs {
