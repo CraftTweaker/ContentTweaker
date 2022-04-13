@@ -1,5 +1,17 @@
 import com.matthewprenger.cursegradle.CurseProject
 
+// TODO("Remove when ForgeGradle does this itself OR when IntelliJ fixes the -1 bug")
+buildscript {
+    configurations.classpath.configure {
+        resolutionStrategy {
+            force(
+                "org.apache.logging.log4j:log4j-api:2.11.2",
+                "org.apache.logging.log4j:log4j-core:2.11.2"
+            )
+        }
+    }
+}
+
 plugins {
     id("com.blamejared.contenttweaker.java-conventions")
     id("net.minecraftforge.gradle") version "5.1.+"
