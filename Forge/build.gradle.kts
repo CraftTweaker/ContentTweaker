@@ -42,6 +42,7 @@ minecraft {
         create("client") {
             workingDirectory(project.file("run"))
             ideaModule("${rootProject.name}.${project.name}.main")
+            args("-mixin.config=${modId}.forge.mixins.json")
             mods {
                 create(modId) {
                     source(sourceSets.main.get())
@@ -52,7 +53,7 @@ minecraft {
         create("server") {
             workingDirectory(project.file("run_server"))
             ideaModule("${rootProject.name}.${project.name}.main")
-            args("nogui")
+            args("-mixin.config=${modId}.forge.mixins.json", "nogui")
             mods {
                 create(modId) {
                     source(sourceSets.main.get())
@@ -61,6 +62,12 @@ minecraft {
             }
         }
     }
+}
+
+mixin {
+    add(sourceSets.main.get(), "${modId}.refmap.json")
+
+    config("${modId}.forge.mixins.json")
 }
 
 modTemplate {

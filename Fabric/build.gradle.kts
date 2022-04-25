@@ -74,7 +74,7 @@ dependencies {
     modImplementation(group = "net.fabricmc", name = "fabric-loader", version = project.extra["fl.version"] as String)
     modImplementation(group = "net.fabricmc.fabric-api", name = "fabric-api", version = project.extra["fapi.version"] as String)
 
-    modRuntimeOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version = project.extra["rei.version"] as String)
+    modRuntimeOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version = project.extra["rei.fabric.version"] as String)
 }
 
 tasks {

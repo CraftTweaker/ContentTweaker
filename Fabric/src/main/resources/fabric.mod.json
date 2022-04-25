@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "contenttweaker",
+  "version": "${version}",
+  "name": "ContentTweaker",
+  "description": "Customize your Minecraft experience with new blocks and items!",
+  "authors": [
+    "Jaredlll08",
+    "kindlich",
+    "Skysom",
+    "StanH"
+  ],
+  "contact": {
+    "homepage": "https://minecraft.curseforge.com/projects/contenttweaker",
+    "sources": "https://github.com/CraftTweaker/ContentTweaker",
+    "issues": "https://github.com/CraftTweaker/ContentTweaker/issues"
+  },
+  "license": "MIT",
+  "icon": "contenttweaker_logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.blamejared.contenttweaker.fabric.ContentTweaker"
+    ],
+    "client": [
+      "com.blamejared.contenttweaker.fabric.ContentTweakerClient"
+    ]
+  },
+  "mixins": [
+    "contenttweaker.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "~1.18.2",
+    "java": ">=17",
+    "crafttweaker": "9.1.*"
+  }
+}
