@@ -130,7 +130,11 @@ public final class FactoryBracketExpressionParser implements BracketExpressionPa
     private static final String META_FACTORY_CLASS = ContentTweakerZenConstants.RT_PACKAGE + ".FactoryBracketMetaFactory";
 
     public static Stream<String> dump() {
-        return null;
+        return Registry.REGISTRY.stream()
+                .map(Registry::key)
+                .map(ResourceKey::location)
+                .map(ResourceLocation::toString)
+                .map("<factory:%s>"::formatted);
     }
 
     @Override
