@@ -3,8 +3,8 @@ package com.blamejared.contenttweaker.gradle
 import com.blamejared.modtemplate.ModTemplatePlugin
 import com.blamejared.modtemplate.Utils
 import com.blamejared.modtemplate.extensions.ModTemplateExtension
-import com.matthewprenger.cursegradle.CurseExtension
-import com.matthewprenger.cursegradle.CurseGradlePlugin
+import net.darkhax.curseforgegradle.CurseForgeGradlePlugin
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -130,10 +130,11 @@ class JavaConventionsPlugin implements Plugin<Project> {
     }
 
     private static void applyCurseTemplate(final Project project) {
-        project.plugins.apply CurseGradlePlugin
+        project.plugins.apply CurseForgeGradlePlugin
 
-        final curse = project.extensions.getByType CurseExtension
-        curse.apiKey = System.getenv('curseforgeApiToken') ?: 0
+        final targetTask = project.tasks.create 'publishToCurseForge', TaskPublishCurseForge
+        targetTask.group = 'publishing'
+        targetTask.apiToken = System.getenv('curseforgeApiToken') ?: 0
     }
 
     private static void setUpDefaults(final Project project, final ext) {

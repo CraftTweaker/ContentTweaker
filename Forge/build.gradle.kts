@@ -1,5 +1,3 @@
-import com.matthewprenger.cursegradle.CurseProject
-
 // TODO("Remove when ForgeGradle does this itself OR when IntelliJ fixes the -1 bug")
 buildscript {
     configurations.classpath.configure {
@@ -23,17 +21,6 @@ val modId = project.extra["mod.id"] as String
 val mcVersion = extra["minecraft.version"] as String
 
 base.archivesName.set("${extra["mod.name"]}-forge-$mcVersion")
-
-curseforge {
-    project(closureOf<CurseProject> {
-        id = project.extra["mod.curse-id"]
-        releaseType = "release"
-        changelog = project.file("changelog.md")
-        changelogType = "markdown"
-        addGameVersion("Forge")
-        addGameVersion(mcVersion)
-    })
-}
 
 minecraft {
     mappings(project.extra["minecraft.forge.mappings.channel"] as String, project.extra["minecraft.forge.mappings.version"] as String)
@@ -95,6 +82,16 @@ dependencies {
 }
 
 tasks {
+    publishToCurseForge {
+        with(upload(project.extra["mod.curse-id"], project.buildDir.resolve("libs/${base.archivesName.get()}-${project.extra["mod.version"]}.jar"))) {
+            changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
+            changelog = project.file("changelog.md")
+            releaseType = net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_RELEASE
+            addJavaVersion("Java ${project.extra["java.version"]}")
+            addGameVersion(mcVersion)
+            addRequirement("crafttweaker")
+        }
+    }
     jar {
         sequenceOf(project, project(":Common")).map { it.sourceSets.main.get().output }.forEach { from(it) }
     }

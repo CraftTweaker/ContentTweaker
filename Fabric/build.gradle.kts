@@ -7,27 +7,6 @@ val mcVersion = extra["minecraft.version"] as String
 
 base.archivesName.set("${extra["mod.name"]}-fabric-$mcVersion")
 
-curseforge {
-    project(closureOf<com.matthewprenger.cursegradle.CurseProject> {
-        id = project.extra["mod.curse-id"]
-        releaseType = "release"
-        changelog = project.file("changelog.md")
-        changelogType = "markdown"
-        addGameVersion("Fabric")
-        addGameVersion(mcVersion)
-        mainArtifact(project.buildDir.resolve("libs/${base.archivesName.get()}-${project.extra["mod.version"]}.jar"))
-        relations(closureOf<com.matthewprenger.cursegradle.CurseRelation> {
-            requiredDependency("crafttweaker")
-        })
-        afterEvaluate {
-            uploadTask.dependsOn(tasks.remapJar)
-        }
-    })
-    options(closureOf<com.matthewprenger.cursegradle.Options> {
-        forgeGradleIntegration = false
-    })
-}
-
 loom {
     runs {
         named("client") {
@@ -89,8 +68,19 @@ tasks {
             expand("version" to project.version)
         }
     }
+    publishToCurseForge {
+        with(upload(project.extra["mod.curse-id"], project.buildDir.resolve("libs/${base.archivesName.get()}-${project.extra["mod.version"]}.jar"))) {
+            changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
+            changelog = project.file("changelog.md")
+            releaseType = net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_RELEASE
+            addJavaVersion("Java ${project.extra["java.version"]}")
+            addGameVersion("Fabric")
+            addGameVersion(mcVersion)
+            addRequirement("crafttweaker")
+        }
+        dependsOn(project.tasks.remapJar)
+    }
     jar {
         sequenceOf(project, project(":Common")).map { it.sourceSets.main.get().output }.forEach { from(it) }
     }
 }
-

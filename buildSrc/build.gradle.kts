@@ -18,7 +18,7 @@ repositories {
 dependencies {
     gradleApi()
     implementation(group = "com.blamejared", name = "ModTemplate", version = "2.0.0.35")
-    implementation(group = "gradle.plugin.com.matthewprenger", name = "CurseGradle", version = "1.4.0")
+    implementation(group = "net.darkhax.curseforgegradle", name = "CurseForgeGradle", version = "1.0.10")
 }
 
 gradlePlugin {
