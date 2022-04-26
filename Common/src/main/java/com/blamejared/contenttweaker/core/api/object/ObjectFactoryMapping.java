@@ -1,14 +1,12 @@
 package com.blamejared.contenttweaker.core.api.object;
 
+import com.blamejared.crafttweaker.api.util.InstantiationUtil;
+
 @FunctionalInterface
 public interface ObjectFactoryMapping<T, U extends ObjectFactory<T>> {
     Class<U> type();
 
     default U of() {
-        try {
-            return this.type().getConstructor().newInstance();
-        } catch (final ReflectiveOperationException e) {
-            throw new RuntimeException(e);
-        }
+        return InstantiationUtil.getOrCreateInstance(this.type());
     }
 }

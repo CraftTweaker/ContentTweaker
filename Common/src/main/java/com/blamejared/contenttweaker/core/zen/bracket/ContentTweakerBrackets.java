@@ -16,7 +16,7 @@ public final class ContentTweakerBrackets {
     private ContentTweakerBrackets() {}
 
     public static void registerBrackets(final IBracketParserRegistrationHandler handler) {
-        bracket(handler, "factory", new FactoryBracketExpressionParser(), FactoryBracketExpressionParser::dump); // TODO("")
+        bracket(handler, "factory", new FactoryBracketExpressionParser(), FactoryBracketExpressionParser::dump);
     }
 
     private static void bracket(final IBracketParserRegistrationHandler handler, final String name, final BracketExpressionParser parser, final Supplier<Stream<String>> dumper) {
