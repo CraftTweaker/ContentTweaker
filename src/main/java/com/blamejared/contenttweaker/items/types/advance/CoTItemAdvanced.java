@@ -47,7 +47,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     private IItemColorSupplier itemColorSupplier = IItemColorSupplier.DEFAULT;
     private IItemInventoryTick itemInventoryTick;
     private IItemUseActionSupplier itemUseActionSupplier = stack -> stack.getInternal().getItem().isFood() ? UseAction.EAT : UseAction.NONE;
-    private IItemUseFinish itemUseFinish = (stack, worldIn, entityLiving) -> stack.getInternal().getItem().isFood() ? entityLiving.onFoodEaten(worldIn, stack.getInternal()) : stack.getInternal();
+    private IItemUseFinish itemUseFinish = IItemUseFinish.DEFAULT;
 
 
     /**
@@ -147,7 +147,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      */
     @ZenCodeType.Method
     public CoTItemAdvanced setOnItemUseFinish(IItemUseFinish func) {
-        ActionSetFunction.applyNewAction("onItemUseFinish", this, func, (item, fun) -> item.itemUseFinish = fun);
+        ActionSetFunction.applyNewAction("onItemUseFinish", this, func, IItemUseFinish.DEFAULT, (item, fun) -> item.itemUseFinish = fun);
         return this;
     }
 
@@ -188,7 +188,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack stack = playerIn.getHeldItem(handIn);
         ActionResultType result = null;
-        if (itemUseFinish != null) {
+        if (itemUseFinish != IItemUseFinish.DEFAULT) {
             result = ActionResultType.SUCCESS;
         }
         if (itemRightClick != null) {
