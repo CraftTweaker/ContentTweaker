@@ -25,7 +25,7 @@ import org.openzen.zencode.java.ZenCodeType;
 
 /**
  * A registered CoT Item. Used for advanced functionality. like onItemUse, onItemRightClick etc.
- *
+ * <p>
  * These functions should be run in CraftTweaker scripts, instead of ContentTweaker ones. And they are reloadable.
  * You can get it via advanced item BEP.
  *
@@ -93,7 +93,6 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      * Sets what will happen when a player interacts (right-clicks) an entity with this item.
      *
      * @param func an IItemInteractWithEntity function, the function should return an ActionResultType
-     *
      * @return the CoTItemAdvanced, used for method chaining
      */
     @ZenCodeType.Method
@@ -104,6 +103,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
 
     /**
      * Sets what will happen when the item is ticked in an inventory.
+     *
      * @param func an IItemInventoryTick function
      * @return the CoTItemAdvanced, used for method chaining
      */
@@ -115,6 +115,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
 
     /**
      * The Set function will be called each tick while using the item
+     *
      * @param func an IItemUsingTick function. The count argument of function is the amount of time in tick the item has been used for continuously.
      * @return the CoTItemAdvanced, used for method chaining
      */
@@ -126,6 +127,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
 
     /**
      * The item's color.
+     *
      * @param func an IItemColorSupplier, The tintIndex is `layerX` property of its model.
      * @return the CoTItemAdvanced, used for method chaining
      */
@@ -184,12 +186,20 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (itemRightClick != null) {
-            ItemStack stack = playerIn.getHeldItem(handIn);
-            return new ActionResult<>(itemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn), stack);
-        } else {
-            return super.onItemRightClick(worldIn, playerIn, handIn);
+        ItemStack stack = playerIn.getHeldItem(handIn);
+        ActionResultType result = null;
+        if (itemUseFinish != null) {
+            result = ActionResultType.SUCCESS;
         }
+        if (itemRightClick != null) {
+            result = itemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn);
+        }
+        if (result == null) {
+            return super.onItemRightClick(worldIn, playerIn, handIn);
+        } else if (result == ActionResultType.SUCCESS) {
+            playerIn.setActiveHand(handIn);
+        }
+        return new ActionResult<>(result, stack);
     }
 
     @Override
