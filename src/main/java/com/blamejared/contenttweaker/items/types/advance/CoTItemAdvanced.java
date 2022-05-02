@@ -48,6 +48,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     private IItemInventoryTick itemInventoryTick;
     private IItemUseActionSupplier itemUseActionSupplier = stack -> stack.getInternal().getItem().isFood() ? UseAction.EAT : UseAction.NONE;
     private IItemUseFinish itemUseFinish = IItemUseFinish.DEFAULT;
+    private IItemUseDurationSupplier itemUseDurationSupplier = null;
 
 
     /**
@@ -165,6 +166,19 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
         return this;
     }
 
+    /**
+     * How long it takes to use or consume an item.
+     *
+     * By default, if the use finish function is defined or the item is a food, it will be 32.
+     * @param func an IItemUseDurationSupplier function
+     * @return the CoTItemAdvanced, used for method chaining
+     */
+    @ZenCodeType.Method
+    public CoTItemAdvanced setItemUseDuration(IItemUseDurationSupplier func) {
+        ActionSetFunction.applyNewAction("itemUseDuration", this, func, (item, fun) -> item.itemUseDurationSupplier = fun);
+        return this;
+    }
+
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         if (itemUse != null) {
@@ -182,6 +196,17 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     @Override
     public UseAction getUseAction(ItemStack stack) {
         return itemUseActionSupplier.apply(new MCItemStack(stack));
+    }
+
+    @Override
+    public int getUseDuration(ItemStack stack) {
+        if (itemUseDurationSupplier != null) {
+            return itemUseDurationSupplier.apply(new MCItemStackMutable(stack));
+        }
+        if (itemUseFinish != IItemUseFinish.DEFAULT) {
+            return 32;
+        }
+        return super.getUseDuration(stack);
     }
 
     @Override
