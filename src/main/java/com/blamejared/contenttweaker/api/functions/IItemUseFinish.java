@@ -13,6 +13,8 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.contenttweaker.functions.IItemUseFinish")
 @Document("mods/contenttweaker/API/functions/IItemUseFinish")
 public interface IItemUseFinish extends ICotFunction {
+    IItemUseFinish DEFAULT = (stack, worldIn, entityLiving) -> stack.getInternal().getItem().isFood() ? entityLiving.onFoodEaten(worldIn, stack.getInternal()) : stack.getInternal();
+
     @ZenCodeType.Method
     ItemStack apply(IItemStack stack, World worldIn, LivingEntity entityLiving);
 }

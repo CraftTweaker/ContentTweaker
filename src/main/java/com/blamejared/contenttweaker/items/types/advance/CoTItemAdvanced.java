@@ -25,7 +25,7 @@ import org.openzen.zencode.java.ZenCodeType;
 
 /**
  * A registered CoT Item. Used for advanced functionality. like onItemUse, onItemRightClick etc.
- *
+ * <p>
  * These functions should be run in CraftTweaker scripts, instead of ContentTweaker ones. And they are reloadable.
  * You can get it via advanced item BEP.
  *
@@ -47,7 +47,8 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     private IItemColorSupplier itemColorSupplier = IItemColorSupplier.DEFAULT;
     private IItemInventoryTick itemInventoryTick;
     private IItemUseActionSupplier itemUseActionSupplier = stack -> stack.getInternal().getItem().isFood() ? UseAction.EAT : UseAction.NONE;
-    private IItemUseFinish itemUseFinish = (stack, worldIn, entityLiving) -> stack.getInternal().getItem().isFood() ? entityLiving.onFoodEaten(worldIn, stack.getInternal()) : stack.getInternal();
+    private IItemUseFinish itemUseFinish = IItemUseFinish.DEFAULT;
+    private IItemUseDurationSupplier itemUseDurationSupplier = null;
 
 
     /**
@@ -93,7 +94,6 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      * Sets what will happen when a player interacts (right-clicks) an entity with this item.
      *
      * @param func an IItemInteractWithEntity function, the function should return an ActionResultType
-     *
      * @return the CoTItemAdvanced, used for method chaining
      */
     @ZenCodeType.Method
@@ -104,6 +104,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
 
     /**
      * Sets what will happen when the item is ticked in an inventory.
+     *
      * @param func an IItemInventoryTick function
      * @return the CoTItemAdvanced, used for method chaining
      */
@@ -115,6 +116,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
 
     /**
      * The Set function will be called each tick while using the item
+     *
      * @param func an IItemUsingTick function. The count argument of function is the amount of time in tick the item has been used for continuously.
      * @return the CoTItemAdvanced, used for method chaining
      */
@@ -126,6 +128,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
 
     /**
      * The item's color.
+     *
      * @param func an IItemColorSupplier, The tintIndex is `layerX` property of its model.
      * @return the CoTItemAdvanced, used for method chaining
      */
@@ -145,7 +148,7 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
      */
     @ZenCodeType.Method
     public CoTItemAdvanced setOnItemUseFinish(IItemUseFinish func) {
-        ActionSetFunction.applyNewAction("onItemUseFinish", this, func, (item, fun) -> item.itemUseFinish = fun);
+        ActionSetFunction.applyNewAction("onItemUseFinish", this, func, IItemUseFinish.DEFAULT, (item, fun) -> item.itemUseFinish = fun);
         return this;
     }
 
@@ -160,6 +163,19 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     @ZenCodeType.Method
     public CoTItemAdvanced setItemUseAction(IItemUseActionSupplier func) {
         ActionSetFunction.applyNewAction("itemUseAction", this, func, (item, fun) -> item.itemUseActionSupplier = fun);
+        return this;
+    }
+
+    /**
+     * How long it takes to use or consume an item.
+     *
+     * By default, if the use finish function is defined or the item is a food, it will be 32.
+     * @param func an IItemUseDurationSupplier function
+     * @return the CoTItemAdvanced, used for method chaining
+     */
+    @ZenCodeType.Method
+    public CoTItemAdvanced setItemUseDuration(IItemUseDurationSupplier func) {
+        ActionSetFunction.applyNewAction("itemUseDuration", this, func, (item, fun) -> item.itemUseDurationSupplier = fun);
         return this;
     }
 
@@ -183,13 +199,32 @@ public class CoTItemAdvanced extends CoTItemBasic implements IIsCotItem, IItemHa
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (itemRightClick != null) {
-            ItemStack stack = playerIn.getHeldItem(handIn);
-            return new ActionResult<>(itemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn), stack);
-        } else {
-            return super.onItemRightClick(worldIn, playerIn, handIn);
+    public int getUseDuration(ItemStack stack) {
+        if (itemUseDurationSupplier != null) {
+            return itemUseDurationSupplier.apply(new MCItemStackMutable(stack));
         }
+        if (itemUseFinish != IItemUseFinish.DEFAULT) {
+            return 32;
+        }
+        return super.getUseDuration(stack);
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        ItemStack stack = playerIn.getHeldItem(handIn);
+        ActionResultType result = null;
+        if (itemUseFinish != IItemUseFinish.DEFAULT) {
+            result = ActionResultType.SUCCESS;
+        }
+        if (itemRightClick != null) {
+            result = itemRightClick.apply(new MCItemStackMutable(stack), playerIn, worldIn, handIn);
+        }
+        if (result == null) {
+            return super.onItemRightClick(worldIn, playerIn, handIn);
+        } else if (result == ActionResultType.SUCCESS) {
+            playerIn.setActiveHand(handIn);
+        }
+        return new ActionResult<>(result, stack);
     }
 
     @Override
