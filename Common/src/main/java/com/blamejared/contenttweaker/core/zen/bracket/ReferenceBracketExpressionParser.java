@@ -1,15 +1,11 @@
 package com.blamejared.contenttweaker.core.zen.bracket;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
-import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
-import com.blamejared.contenttweaker.core.api.zen.object.Reference;
-import com.blamejared.contenttweaker.core.registry.MetaRegistry;
-import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
+import com.blamejared.contenttweaker.core.zen.rt.ReferenceMetaFactory;
 import com.blamejared.contenttweaker.core.zen.rt.Unknown;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
 import com.blamejared.crafttweaker.api.zencode.IZenClassRegistry;
@@ -17,7 +13,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
-import org.openzen.zencode.java.ZenCodeType;
 import org.openzen.zencode.shared.CodePosition;
 import org.openzen.zencode.shared.CompileException;
 import org.openzen.zenscript.codemodel.partial.IPartialExpression;
@@ -37,21 +32,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public final class ReferenceBracketExpressionParser implements BracketExpressionParser {
-    @SuppressWarnings("unused")
-    @ZenCodeType.Name(META_FACTORY_CLASS)
-    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-    public static final class MetaFactory {
-        private MetaFactory() {}
-
-        @ZenCodeType.Method("of")
-        public static <T> Reference<T> of(final Class<T> reifiedT, final ResourceLocation registryId, final ResourceLocation id) {
-            final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
-            final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
-            final ObjectType<T> type = metaRegistry.objectTypes().get(key);
-            return new Reference<>(type, id) {}; // TODO("")
-        }
-    }
-
     private static final class ReferenceExpression<T> extends ParsedExpression {
         private final ObjectType<T> type;
         private final ResourceLocation registry;
@@ -66,7 +46,7 @@ public final class ReferenceBracketExpressionParser implements BracketExpression
 
         @Override
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
-            final ParsedExpression metaFactory = ParseUtil.staticMemberExpression(this.position, META_FACTORY_CLASS);
+            final ParsedExpression metaFactory = ParseUtil.staticMemberExpression(this.position, ReferenceMetaFactory.ZEN_NAME);
             final ParsedExpression of = new ParsedExpressionMember(this.position, metaFactory, "of", null);
             final ParsedCallArguments arguments = new ParsedCallArguments(this.parsedType(), this.arguments());
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, of, arguments);
@@ -101,8 +81,6 @@ public final class ReferenceBracketExpressionParser implements BracketExpression
             return "<reference:%s:%s>".formatted(this.registry(), this.object());
         }
     }
-
-    private static final String META_FACTORY_CLASS = ContentTweakerZenConstants.RT_PACKAGE + ".ReferenceBracketMetaFactory";
 
     public static Stream<String> dump() {
         return Registry.REGISTRY.stream()

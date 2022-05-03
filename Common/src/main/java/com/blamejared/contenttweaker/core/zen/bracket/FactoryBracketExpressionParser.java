@@ -1,16 +1,10 @@
 package com.blamejared.contenttweaker.core.zen.bracket;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
-import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
-import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
-import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
-import com.blamejared.contenttweaker.core.registry.MetaRegistry;
-import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
-import com.blamejared.contenttweaker.core.zen.rt.Unknown;
+import com.blamejared.contenttweaker.core.zen.rt.FactoryMetaFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
@@ -19,7 +13,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
-import org.openzen.zencode.java.ZenCodeType;
 import org.openzen.zencode.shared.CodePosition;
 import org.openzen.zencode.shared.CompileException;
 import org.openzen.zenscript.codemodel.partial.IPartialExpression;
@@ -37,28 +30,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public final class FactoryBracketExpressionParser implements BracketExpressionParser {
-
-    @SuppressWarnings("unused")
-    @ZenCodeType.Name(META_FACTORY_CLASS)
-    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-    public static final class MetaFactory {
-        private MetaFactory() {}
-
-        @ZenCodeType.Method("factoryFor")
-        public static <T, U extends ObjectFactory<T>> U factoryFor(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation registryId) {
-            final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
-            final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
-            final ObjectType<T> type = metaRegistry.objectTypes().get(key);
-            final ObjectFactoryMapping<T, U> factoryClass = metaRegistry.factoryMappings().findMappingFor(type);
-            return factoryClass.of();
-        }
-
-        @ZenCodeType.Method("factoryFor")
-        public static ObjectFactory<Unknown> factoryFor() {
-            return Unknown.Factory.INSTANCE;
-        }
-    }
-
     private static final class BracketMetaFactoryExpression<T> extends ParsedExpression {
         private final ObjectType<T> type;
 
@@ -69,7 +40,7 @@ public final class FactoryBracketExpressionParser implements BracketExpressionPa
 
         @Override
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
-            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, META_FACTORY_CLASS);
+            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, FactoryMetaFactory.ZEN_NAME);
             final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factoryFor", null);
             final ParsedCallArguments arguments = this.type == null? this.abstractCall() : this.concreteCall();
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, factoryMethod, arguments);
@@ -111,8 +82,6 @@ public final class FactoryBracketExpressionParser implements BracketExpressionPa
             return classes.getNameFor(loader, type).orElseThrow();
         }
     }
-
-    private static final String META_FACTORY_CLASS = ContentTweakerZenConstants.RT_PACKAGE + ".FactoryBracketMetaFactory";
 
     public static Stream<String> dump() {
         return Registry.REGISTRY.stream()
