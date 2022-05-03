@@ -5,6 +5,7 @@ import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
 import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
+import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
 import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
 import com.blamejared.contenttweaker.core.zen.rt.Unknown;
@@ -21,7 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import org.openzen.zencode.java.ZenCodeType;
 import org.openzen.zencode.shared.CodePosition;
 import org.openzen.zencode.shared.CompileException;
-import org.openzen.zencode.shared.CompileExceptionCode;
 import org.openzen.zenscript.codemodel.partial.IPartialExpression;
 import org.openzen.zenscript.codemodel.scope.ExpressionScope;
 import org.openzen.zenscript.lexer.ParseException;
@@ -60,11 +60,6 @@ public final class FactoryBracketExpressionParser implements BracketExpressionPa
     }
 
     private static final class BracketMetaFactoryExpression<T> extends ParsedExpression {
-        @FunctionalInterface
-        private interface ParseOperation<T> {
-            T run() throws ParseException;
-        }
-
         private final ObjectType<T> type;
 
         public BracketMetaFactoryExpression(final CodePosition position, final ObjectType<T> type) {
@@ -103,27 +98,17 @@ public final class FactoryBracketExpressionParser implements BracketExpressionPa
         }
 
         private ParsedExpression findArgument() throws CompileException {
-            return this.rethrowing(() -> ParseUtil.createResourceLocationArgument(this.position, this.type.id().location()));
+            return BracketHelper.parseToCompile(this.position, () -> BracketHelper.locationArgument(this.position, this.type.id().location()));
         }
 
         private <L> IParsedType readParsedType(final Class<L> type) throws CompileException {
-            return this.rethrowing(() -> ParseUtil.readParsedType(this.findClassNameFor(type), this.position));
+            return BracketHelper.parseToCompile(this.position, () -> ParseUtil.readParsedType(this.findClassNameFor(type), this.position));
         }
 
         private <L> String findClassNameFor(final Class<L> type) {
             final IScriptLoader loader = CraftTweakerAPI.getScriptRunManager().currentRunInfo().loader();
             final IZenClassRegistry classes = CraftTweakerAPI.getRegistry().getZenClassRegistry();
             return classes.getNameFor(loader, type).orElseThrow();
-        }
-
-        private <F> F rethrowing(final ParseOperation<F> operation) throws CompileException {
-            try {
-                return operation.run();
-            } catch (final ParseException e) {
-                final CompileException exception = new CompileException(this.position, CompileExceptionCode.PARSE_ERROR, e.message);
-                exception.initCause(e);
-                throw exception;
-            }
         }
     }
 
@@ -133,6 +118,7 @@ public final class FactoryBracketExpressionParser implements BracketExpressionPa
         return Registry.REGISTRY.stream()
                 .map(Registry::key)
                 .map(ResourceKey::location)
+                .sorted()
                 .map(ResourceLocation::toString)
                 .map("<factory:%s>"::formatted);
     }
@@ -146,7 +132,7 @@ public final class FactoryBracketExpressionParser implements BracketExpressionPa
 
     private ResourceLocation findRegistryId(final CodePosition position, final ZSTokenParser tokens) throws ParseException {
         final String bracketContents = ParseUtil.readBracketContent(position, tokens);
-        return ContentTweakerBrackets.locationOrThrow(
+        return BracketHelper.locationOrThrow(
                 position,
                 bracketContents,
                 () -> "Expected a registry identifier in the form <factory:modid:name>, but instead found " + bracketContents

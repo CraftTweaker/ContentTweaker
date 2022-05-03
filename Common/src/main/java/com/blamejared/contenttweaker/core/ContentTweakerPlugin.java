@@ -1,15 +1,11 @@
 package com.blamejared.contenttweaker.core;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
-import com.blamejared.contenttweaker.core.plugin.PluginManager;
-import com.blamejared.contenttweaker.core.service.ServiceManager;
 import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
 import com.blamejared.contenttweaker.core.zen.bracket.ContentTweakerBrackets;
-import com.blamejared.crafttweaker.api.CraftTweakerConstants;
 import com.blamejared.crafttweaker.api.plugin.CraftTweakerPlugin;
 import com.blamejared.crafttweaker.api.plugin.IBracketParserRegistrationHandler;
 import com.blamejared.crafttweaker.api.plugin.ICraftTweakerPlugin;
-import com.blamejared.crafttweaker.api.plugin.IJavaNativeIntegrationRegistrationHandler;
 import com.blamejared.crafttweaker.api.plugin.IListenerRegistrationHandler;
 import com.blamejared.crafttweaker.api.plugin.ILoaderRegistrationHandler;
 import com.blamejared.crafttweaker.api.plugin.IScriptLoadSourceRegistrationHandler;
