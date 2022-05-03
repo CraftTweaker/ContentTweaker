@@ -68,7 +68,7 @@ public final class ReferenceExpression<T, U extends Reference<T>> extends Parsed
     @Override
     public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
         final ParsedExpression metaFactory = ParseUtil.staticMemberExpression(this.position, ReferenceMetaFactory.ZEN_NAME);
-        final ParsedExpression of = new ParsedExpressionMember(this.position, metaFactory, "of", null);
+        final ParsedExpression of = new ParsedExpressionMember(this.position, metaFactory, "reference", null);
         final ParsedCallArguments arguments = new ParsedCallArguments(this.generics(), this.arguments());
         final ParsedExpression invocation = new ParsedExpressionCall(this.position, of, arguments);
         return invocation.compile(scope);

@@ -21,7 +21,7 @@ public final class FactoryMetaFactory {
     private FactoryMetaFactory() {}
 
     @SuppressWarnings("unused") // Reified types need to exist, but we do not use them
-    @ZenCodeType.Method("factoryFor")
+    @ZenCodeType.Method("factory")
     public static <T, U extends ObjectFactory<T>> U factory(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation registryId) {
         final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
         final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
@@ -30,7 +30,7 @@ public final class FactoryMetaFactory {
         return factoryClass.of();
     }
 
-    @ZenCodeType.Method("factoryFor")
+    @ZenCodeType.Method("factory")
     public static ObjectFactory<Unknown> factory() {
         return Unknown.Factory.INSTANCE;
     }

@@ -20,8 +20,8 @@ public final class ReferenceMetaFactory {
     private ReferenceMetaFactory() {}
 
     @SuppressWarnings("unused") // Reified types
-    @ZenCodeType.Method("of")
-    public static <T, U extends Reference<T>> U of(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation registryId, final ResourceLocation id) {
+    @ZenCodeType.Method("reference")
+    public static <T, U extends Reference<T>> U reference(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation registryId, final ResourceLocation id) {
         final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
         final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
         final ObjectType<T> type = metaRegistry.objectTypes().get(key);

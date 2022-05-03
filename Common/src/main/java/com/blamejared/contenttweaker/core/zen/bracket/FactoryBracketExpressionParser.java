@@ -41,7 +41,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         @Override
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
             final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, FactoryMetaFactory.ZEN_NAME);
-            final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factoryFor", null);
+            final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factory", null);
             final ParsedCallArguments arguments = this.type == null? this.abstractCall() : this.concreteCall();
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, factoryMethod, arguments);
             return invocation.compile(scope);
