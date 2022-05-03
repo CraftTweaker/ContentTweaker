@@ -1,6 +1,7 @@
 package com.blamejared.contenttweaker.core.plugin;
 
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPluginProvider;
+import com.blamejared.contenttweaker.core.api.plugin.CustomBracketRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.FactoryMappingRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ObjectTypeRegistration;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,11 @@ record DecoratedContentTweakerPlugin(ResourceLocation id, ContentTweakerPluginPr
     @Override
     public void registerFactoryMappings(final FactoryMappingRegistration registration) {
         this.wrapped().registerFactoryMappings(registration);
+    }
+
+    @Override
+    public void registerCustomBrackets(final CustomBracketRegistration registration) {
+        this.wrapped().registerCustomBrackets(registration);
     }
 
     @Override

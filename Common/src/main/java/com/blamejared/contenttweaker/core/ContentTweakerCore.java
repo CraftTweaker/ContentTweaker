@@ -4,6 +4,7 @@ import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.plugin.PluginManager;
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.api.plugin.IBracketParserRegistrationHandler;
 import com.blamejared.crafttweaker.api.zencode.scriptrun.IScriptRun;
 import com.blamejared.crafttweaker.api.zencode.scriptrun.ScriptRunConfiguration;
 import com.mojang.logging.LogUtils;
@@ -35,6 +36,10 @@ public final class ContentTweakerCore {
         this.pluginManager.initializePlugins(this.metaRegistry);
     }
 
+    public void registerPluginBrackets(final IBracketParserRegistrationHandler handler) {
+        this.pluginManager.registerPluginBrackets(handler);
+    }
+
     public void loadContentScripts() {
         final ScriptRunConfiguration configuration = new ScriptRunConfiguration(
                 ContentTweakerConstants.CONTENT_LOADER_ID,
@@ -45,7 +50,7 @@ public final class ContentTweakerCore {
         try {
             run.execute();
         } catch (final Throwable e) {
-            throw new RuntimeException(e);
+            CraftTweakerAPI.LOGGER.error("An error occurred while trying to run ContentTweaker scripts", e);
         }
     }
 

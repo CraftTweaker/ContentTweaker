@@ -1,12 +1,14 @@
 package com.blamejared.contenttweaker.core.plugin;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
+import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPlugin;
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPluginProvider;
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
 import com.blamejared.contenttweaker.core.registry.ObjectTypeRegistry;
 import com.blamejared.contenttweaker.core.util.FreezableList;
 import com.blamejared.contenttweaker.core.util.NonApiCraftTweakerWrapper;
+import com.blamejared.crafttweaker.api.plugin.IBracketParserRegistrationHandler;
 import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.ResourceLocationException;
@@ -34,6 +36,11 @@ public final class PluginManager {
         final ObjectTypeRegistry objectTypeRegistry = metaRegistry.objectTypes();
         objectTypeRegistry.registerTypes(ObjectTypeRegistrationManager.gather(this.onEach(ContentTweakerPluginProvider::registerObjectTypes)));
         metaRegistry.factoryMappings().registerMappings(objectTypeRegistry, FactoryMappingRegistrationManager.gather(this.onEach(ContentTweakerPluginProvider::registerFactoryMappings)));
+    }
+
+    public void registerPluginBrackets(final IBracketParserRegistrationHandler handler) {
+        this.onEach(ContentTweakerPluginProvider::registerCustomBrackets)
+                .accept((name, parser, dumperData) -> handler.registerParserFor(ContentTweakerConstants.CONTENT_LOADER_ID, name, parser, dumperData));
     }
 
     private List<? extends ContentTweakerPluginProvider> buildPluginList() {
@@ -86,5 +93,4 @@ public final class PluginManager {
         Objects.requireNonNull(consumer);
         return t -> this.providers.get().forEach(o -> consumer.accept(o, t));
     }
-
 }
