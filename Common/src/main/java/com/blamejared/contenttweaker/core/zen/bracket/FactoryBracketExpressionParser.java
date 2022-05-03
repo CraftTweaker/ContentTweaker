@@ -95,8 +95,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
     @Override
     public ParsedExpression parse(final CodePosition position, final ZSTokenParser tokens) throws ParseException {
         final ResourceLocation id = this.findRegistryId(position, tokens);
-        final Registry<?> registry = this.grabRegistry(position, id);
-        return this.createExpression(position, registry);
+        return this.createExpression(position, ResourceKey.createRegistryKey(id));
     }
 
     private ResourceLocation findRegistryId(final CodePosition position, final ZSTokenParser tokens) throws ParseException {
@@ -108,17 +107,12 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         );
     }
 
-    private Registry<?> grabRegistry(final CodePosition position, final ResourceLocation targetedRegistry) throws ParseException {
-        return Registry.REGISTRY.getOptional(targetedRegistry)
-                .orElseThrow(() -> new ParseException(position, "No such registry with id " + targetedRegistry));
-    }
-
-    private <T> ParsedExpression createExpression(final CodePosition position, final Registry<T> registry) {
-        return new BracketMetaFactoryExpression<>(position, this.grabType(registry));
+    private <T> ParsedExpression createExpression(final CodePosition position, final ResourceKey<? extends Registry<T>> registryKey) {
+        return new BracketMetaFactoryExpression<>(position, this.grabType(registryKey));
     }
 
     @Nullable
-    private <T> ObjectType<T> grabType(final Registry<? extends T> registry) {
-        return GenericUtil.uncheck(ContentTweakerCore.core().metaRegistry().objectTypes().get(registry.key()));
+    private <T> ObjectType<T> grabType(final ResourceKey<? extends Registry<T>> registryKey) {
+        return GenericUtil.uncheck(ContentTweakerCore.core().metaRegistry().objectTypes().get(registryKey));
     }
 }
