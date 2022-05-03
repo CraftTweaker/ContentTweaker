@@ -35,4 +35,9 @@ public final class Winston implements RegistryButler {
                 .map(GenericUtil::<ObjectHolder<T>>uncheck)
                 .toList();
     }
+
+    @Override
+    public String toString() {
+        return "Winston, at your service";
+    }
 }

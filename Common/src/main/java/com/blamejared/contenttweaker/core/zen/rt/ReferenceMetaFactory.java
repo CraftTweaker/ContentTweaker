@@ -21,10 +21,10 @@ public final class ReferenceMetaFactory {
 
     @SuppressWarnings("unused") // Reified types
     @ZenCodeType.Method("of")
-    public static <T> Reference<T> of(final Class<T> reifiedT, final ResourceLocation registryId, final ResourceLocation id) {
+    public static <T, U extends Reference<T>> U of(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation registryId, final ResourceLocation id) {
         final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
         final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
         final ObjectType<T> type = metaRegistry.objectTypes().get(key);
-        return new Reference<>(type, id) {}; // TODO("")
+        return (U) new Reference<>(type, id) {}; // TODO("Work in progress: probably a system similar to object factories")
     }
 }

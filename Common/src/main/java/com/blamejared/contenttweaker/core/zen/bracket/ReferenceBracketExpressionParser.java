@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.core.zen.bracket;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
+import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.contenttweaker.core.zen.rt.ReferenceMetaFactory;
 import com.blamejared.contenttweaker.core.zen.rt.Unknown;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
@@ -48,25 +49,27 @@ public final class ReferenceBracketExpressionParser implements BracketExpression
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
             final ParsedExpression metaFactory = ParseUtil.staticMemberExpression(this.position, ReferenceMetaFactory.ZEN_NAME);
             final ParsedExpression of = new ParsedExpressionMember(this.position, metaFactory, "of", null);
-            final ParsedCallArguments arguments = new ParsedCallArguments(this.parsedType(), this.arguments());
+            final ParsedCallArguments arguments = new ParsedCallArguments(this.generics(), this.arguments());
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, of, arguments);
             return invocation.compile(scope);
         }
 
-        private List<IParsedType> parsedType() throws CompileException {
+        private List<IParsedType> generics() throws CompileException {
             final IScriptLoader loader = CraftTweakerAPI.getScriptRunManager().currentRunInfo().loader();
             final IZenClassRegistry classes = CraftTweakerAPI.getRegistry().getZenClassRegistry();
-            final Class<?> type = this.type == null? Unknown.class : this.type.type();
-            final String name = classes.getNameFor(loader, type).orElseThrow();
-            final IParsedType parsedType = BracketHelper.parseToCompile(this.position, () -> ParseUtil.readParsedType(name, this.position));
-            return List.of(parsedType);
+            final Class<?> objectType = this.type == null? Unknown.class : this.type.type();
+            final String objectName = classes.getNameFor(loader, objectType).orElseThrow();
+            final String referenceName = classes.getNameFor(loader, Reference.class).orElseThrow();
+            final String generifiedName = "%s<%s>".formatted(referenceName, objectName);
+            final IParsedType object = BracketHelper.parseToCompile(this.position, () -> ParseUtil.readParsedType(objectName, this.position));
+            final IParsedType reference = BracketHelper.parseToCompile(this.position, () -> ParseUtil.readParsedType(generifiedName, this.position));
+            return List.of(object, reference);
         }
 
         private List<ParsedExpression> arguments() {
-            return List.of(
-                    BracketHelper.locationArgument(this.position, this.registry),
-                    BracketHelper.locationArgument(this.position, this.id)
-            );
+            final ParsedExpression registryId = BracketHelper.locationArgument(this.position, this.registry);
+            final ParsedExpression objectId = BracketHelper.locationArgument(this.position, this.id);
+            return List.of(registryId, objectId);
         }
 
         @Override
@@ -98,7 +101,6 @@ public final class ReferenceBracketExpressionParser implements BracketExpression
 
     @Override
     public ParsedExpression parse(final CodePosition position, final ZSTokenParser tokens) throws ParseException {
-        // <reference:minecraft:item:minecraft:leather>
         final String contents = ParseUtil.readBracketContent(position, tokens);
         final int colons = contents.replaceAll("[^:]", "").length();
         final String[] split = contents.split(Pattern.quote(":"), 4);
