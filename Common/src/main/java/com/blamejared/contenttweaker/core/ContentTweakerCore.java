@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.core;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.plugin.PluginManager;
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
+import com.blamejared.contenttweaker.core.registry.Winston;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.plugin.IBracketParserRegistrationHandler;
 import com.blamejared.crafttweaker.api.zencode.scriptrun.IScriptRun;
@@ -18,10 +19,12 @@ public final class ContentTweakerCore {
 
     private final MetaRegistry metaRegistry;
     private final PluginManager pluginManager;
+    private final Winston registryButler;
 
     private ContentTweakerCore() {
         this.metaRegistry = MetaRegistry.of();
         this.pluginManager = PluginManager.of();
+        this.registryButler = Winston.of();
     }
 
     public static ContentTweakerCore core() {
@@ -56,5 +59,9 @@ public final class ContentTweakerCore {
 
     public MetaRegistry metaRegistry() {
         return this.metaRegistry;
+    }
+
+    public Winston registryButler() {
+        return this.registryButler;
     }
 }

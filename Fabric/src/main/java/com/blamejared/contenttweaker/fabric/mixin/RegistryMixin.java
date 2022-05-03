@@ -1,7 +1,12 @@
 package com.blamejared.contenttweaker.fabric.mixin;
 
+import com.blamejared.contenttweaker.core.ContentTweakerCore;
+import com.blamejared.contenttweaker.core.api.object.ObjectType;
+import com.blamejared.contenttweaker.fabric.registry.FabricGameRegistry;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import net.minecraft.core.Registry;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,6 +30,18 @@ public abstract class RegistryMixin {
             final Iterator<?> $$0,
             final Registry<?> $$1
     ) {
-        //
+        contenttweaker$freezeBuiltins$registerCotObjects0($$1);
+    }
+
+    @Unique
+    private static <T> void contenttweaker$freezeBuiltins$registerCotObjects0(final Registry<T> registry) {
+        final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(registry.key());
+        if (type == null) return;
+        try {
+            ContentTweakerCore.core().registryButler().executeForRegistry(FabricGameRegistry.of(registry, type));
+        } catch (final Throwable e) {
+            CraftTweakerAPI.LOGGER.error("A critical internal ContentTweaker error occurred", e);
+            ContentTweakerCore.LOGGER.error("A critical internal ContentTweaker error occurred", e);
+        }
     }
 }
