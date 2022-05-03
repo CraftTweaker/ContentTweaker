@@ -29,7 +29,7 @@ import org.openzen.zenscript.parser.type.IParsedType;
 import java.util.List;
 import java.util.stream.Stream;
 
-public final class FactoryBracketExpressionParser implements BracketExpressionParser {
+final class FactoryBracketExpressionParser implements BracketExpressionParser {
     private static final class BracketMetaFactoryExpression<T> extends ParsedExpression {
         private final ObjectType<T> type;
 

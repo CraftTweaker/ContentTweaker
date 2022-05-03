@@ -3,81 +3,25 @@ package com.blamejared.contenttweaker.core.zen.bracket;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
+import com.blamejared.contenttweaker.core.api.zen.bracket.ReferenceExpression;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
-import com.blamejared.contenttweaker.core.zen.rt.ReferenceMetaFactory;
-import com.blamejared.contenttweaker.core.zen.rt.Unknown;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
-import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
-import com.blamejared.crafttweaker.api.zencode.IZenClassRegistry;
+import com.google.gson.reflect.TypeToken;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.openzen.zencode.shared.CodePosition;
-import org.openzen.zencode.shared.CompileException;
-import org.openzen.zenscript.codemodel.partial.IPartialExpression;
-import org.openzen.zenscript.codemodel.scope.ExpressionScope;
 import org.openzen.zenscript.lexer.ParseException;
 import org.openzen.zenscript.lexer.ZSTokenParser;
 import org.openzen.zenscript.parser.BracketExpressionParser;
-import org.openzen.zenscript.parser.expression.ParsedCallArguments;
 import org.openzen.zenscript.parser.expression.ParsedExpression;
-import org.openzen.zenscript.parser.expression.ParsedExpressionCall;
-import org.openzen.zenscript.parser.expression.ParsedExpressionMember;
-import org.openzen.zenscript.parser.type.IParsedType;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public final class ReferenceBracketExpressionParser implements BracketExpressionParser {
-    private static final class ReferenceExpression<T> extends ParsedExpression {
-        private final ObjectType<T> type;
-        private final ResourceLocation registry;
-        private final ResourceLocation id;
-
-        ReferenceExpression(final CodePosition position, final ObjectType<T> type, final ResourceLocation registry, final ResourceLocation id) {
-            super(position);
-            this.type = type;
-            this.registry = registry;
-            this.id = id;
-        }
-
-        @Override
-        public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
-            final ParsedExpression metaFactory = ParseUtil.staticMemberExpression(this.position, ReferenceMetaFactory.ZEN_NAME);
-            final ParsedExpression of = new ParsedExpressionMember(this.position, metaFactory, "of", null);
-            final ParsedCallArguments arguments = new ParsedCallArguments(this.generics(), this.arguments());
-            final ParsedExpression invocation = new ParsedExpressionCall(this.position, of, arguments);
-            return invocation.compile(scope);
-        }
-
-        private List<IParsedType> generics() throws CompileException {
-            final IScriptLoader loader = CraftTweakerAPI.getScriptRunManager().currentRunInfo().loader();
-            final IZenClassRegistry classes = CraftTweakerAPI.getRegistry().getZenClassRegistry();
-            final Class<?> objectType = this.type == null? Unknown.class : this.type.type();
-            final String objectName = classes.getNameFor(loader, objectType).orElseThrow();
-            final String referenceName = classes.getNameFor(loader, Reference.class).orElseThrow();
-            final String generifiedName = "%s<%s>".formatted(referenceName, objectName);
-            final IParsedType object = BracketHelper.parseToCompile(this.position, () -> ParseUtil.readParsedType(objectName, this.position));
-            final IParsedType reference = BracketHelper.parseToCompile(this.position, () -> ParseUtil.readParsedType(generifiedName, this.position));
-            return List.of(object, reference);
-        }
-
-        private List<ParsedExpression> arguments() {
-            final ParsedExpression registryId = BracketHelper.locationArgument(this.position, this.registry);
-            final ParsedExpression objectId = BracketHelper.locationArgument(this.position, this.id);
-            return List.of(registryId, objectId);
-        }
-
-        @Override
-        public boolean hasStrongType() {
-            return true;
-        }
-    }
-
+final class ReferenceBracketExpressionParser implements BracketExpressionParser {
     private record EntryData(ResourceLocation registry, ResourceLocation object) {
         @Override
         public String toString() {
@@ -134,8 +78,12 @@ public final class ReferenceBracketExpressionParser implements BracketExpression
     }
 
     private ParsedExpression createExpression(final CodePosition position, final ResourceLocation registry, final ResourceLocation id) {
+        return createExpression(position, this.grabType(ResourceKey.createRegistryKey(registry)), registry, id);
+    }
+
+    private <T> ParsedExpression createExpression(final CodePosition position, final ObjectType<T> type, final ResourceLocation registry, final ResourceLocation id) {
         // Scripts run before registry creation and object registration, so no validation has to be performed
-        return new ReferenceExpression<>(position, this.grabType(ResourceKey.createRegistryKey(registry)), registry, id);
+        return new ReferenceExpression<>(position, type, new TypeToken<>() {}, registry, id);
     }
 
     private ParseException fail(final CodePosition position, final String contents) throws ParseException {
