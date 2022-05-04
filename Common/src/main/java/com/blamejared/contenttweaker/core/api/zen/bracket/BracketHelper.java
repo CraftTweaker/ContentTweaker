@@ -1,6 +1,6 @@
 package com.blamejared.contenttweaker.core.api.zen.bracket;
 
-import com.blamejared.contenttweaker.core.zen.rt.ResourceLocationNative;
+import com.blamejared.contenttweaker.core.api.zen.rt.ResourceLocationNative;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceLocation;

@@ -4,13 +4,11 @@ import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
 import com.blamejared.contenttweaker.core.api.zen.bracket.ReferenceExpression;
-import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
 import org.openzen.zencode.shared.CodePosition;
 import org.openzen.zenscript.lexer.ParseException;
 import org.openzen.zenscript.lexer.ZSTokenParser;
@@ -78,12 +76,12 @@ final class ReferenceBracketExpressionParser implements BracketExpressionParser 
     }
 
     private ParsedExpression createExpression(final CodePosition position, final ResourceLocation registry, final ResourceLocation id) {
-        return createExpression(position, this.grabType(ResourceKey.createRegistryKey(registry)), registry, id);
+        return createExpression(position, this.grabType(ResourceKey.createRegistryKey(registry)), id);
     }
 
-    private <T> ParsedExpression createExpression(final CodePosition position, final ObjectType<T> type, final ResourceLocation registry, final ResourceLocation id) {
+    private <T> ParsedExpression createExpression(final CodePosition position, final ObjectType<T> type, final ResourceLocation id) {
         // Scripts run before registry creation and object registration, so no validation has to be performed
-        return new ReferenceExpression<>(position, type, new TypeToken<>() {}, registry, id);
+        return new ReferenceExpression<>(position, type, new TypeToken<>() {}, id);
     }
 
     private ParseException fail(final CodePosition position, final String contents) throws ParseException {
@@ -93,8 +91,7 @@ final class ReferenceBracketExpressionParser implements BracketExpressionParser 
         throw new ParseException(position, message);
     }
 
-    @Nullable
     private <T> ObjectType<T> grabType(final ResourceKey<? extends Registry<T>> registryKey) {
-        return ContentTweakerCore.core().metaRegistry().objectTypes().get(registryKey);
+        return ContentTweakerCore.core().metaRegistry().objectTypes().getOrUnknown(registryKey);
     }
 }

@@ -3,7 +3,7 @@ package com.blamejared.contenttweaker.core.api.zen.bracket;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.contenttweaker.core.zen.rt.ReferenceMetaFactory;
-import com.blamejared.contenttweaker.core.zen.rt.Unknown;
+import com.blamejared.contenttweaker.core.api.zen.rt.Unknown;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
@@ -31,30 +31,18 @@ import java.util.stream.Collectors;
 public final class ReferenceExpression<T, U extends Reference<T>> extends ParsedExpression {
     private final ObjectType<T> objectType;
     private final TypeToken<U> referenceToken;
-    private final ResourceLocation registryId;
     private final ResourceLocation objectId;
 
     public ReferenceExpression(
             final CodePosition position,
             final ObjectType<T> objectType,
             final TypeToken<U> referenceToken,
-            final ResourceLocation registryId,
             final ResourceLocation objectId
     ) {
         super(Objects.requireNonNull(position));
-        this.objectType = objectType;
+        this.objectType = Objects.requireNonNull(objectType);
         this.referenceToken = checkToken(Objects.requireNonNull(referenceToken));
-        this.registryId = Objects.requireNonNull(registryId);
         this.objectId = Objects.requireNonNull(objectId);
-    }
-
-    public ReferenceExpression(
-            final CodePosition position,
-            final ObjectType<T> objectType,
-            final TypeToken<U> referenceToken,
-            final ResourceLocation objectId
-    ) {
-        this(position, Objects.requireNonNull(objectType), referenceToken, objectType.id().location(), objectId);
     }
 
     private static <R> TypeToken<R> checkToken(final TypeToken<R> token) {
@@ -110,7 +98,7 @@ public final class ReferenceExpression<T, U extends Reference<T>> extends Parsed
     }
 
     private List<ParsedExpression> arguments() {
-        final ParsedExpression registryId = BracketHelper.locationArgument(this.position, this.registryId);
+        final ParsedExpression registryId = BracketHelper.locationArgument(this.position, this.objectType.id().location());
         final ParsedExpression objectId = BracketHelper.locationArgument(this.position, this.objectId);
         return List.of(registryId, objectId);
     }

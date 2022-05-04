@@ -3,16 +3,15 @@ package com.blamejared.contenttweaker.core.zen.bracket;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
+import com.blamejared.contenttweaker.core.api.zen.rt.Unknown;
 import com.blamejared.contenttweaker.core.zen.rt.FactoryMetaFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.util.GenericUtil;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
 import com.blamejared.crafttweaker.api.zencode.IZenClassRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
 import org.openzen.zencode.shared.CodePosition;
 import org.openzen.zencode.shared.CompileException;
 import org.openzen.zenscript.codemodel.partial.IPartialExpression;
@@ -42,7 +41,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
             final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, FactoryMetaFactory.ZEN_NAME);
             final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factory", null);
-            final ParsedCallArguments arguments = this.type == null? this.abstractCall() : this.concreteCall();
+            final ParsedCallArguments arguments = this.makeCall();
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, factoryMethod, arguments);
             return invocation.compile(scope);
         }
@@ -52,11 +51,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
             return true;
         }
 
-        private ParsedCallArguments abstractCall() {
-            return ParsedCallArguments.NONE;
-        }
-
-        private ParsedCallArguments concreteCall() throws CompileException {
+        private ParsedCallArguments makeCall() throws CompileException {
             return new ParsedCallArguments(List.of(this.findTypeGeneric(), this.findFactoryGeneric()), List.of(this.findArgument()));
         }
 
@@ -111,8 +106,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         return new BracketMetaFactoryExpression<>(position, this.grabType(registryKey));
     }
 
-    @Nullable
     private <T> ObjectType<T> grabType(final ResourceKey<? extends Registry<T>> registryKey) {
-        return GenericUtil.uncheck(ContentTweakerCore.core().metaRegistry().objectTypes().get(registryKey));
+        return ContentTweakerCore.core().metaRegistry().objectTypes().getOrUnknown(registryKey);
     }
 }

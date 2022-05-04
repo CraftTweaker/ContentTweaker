@@ -9,6 +9,7 @@ import com.google.common.collect.Multimap;
 
 import java.util.Collection;
 
+// Handles registration of the various objects
 public final class Winston implements RegistryButler {
     private final Multimap<ObjectType<?>, ObjectHolder<?>> commands;
 

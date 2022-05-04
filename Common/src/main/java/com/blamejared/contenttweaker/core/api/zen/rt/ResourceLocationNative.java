@@ -1,4 +1,4 @@
-package com.blamejared.contenttweaker.core.zen.rt;
+package com.blamejared.contenttweaker.core.api.zen.rt;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
