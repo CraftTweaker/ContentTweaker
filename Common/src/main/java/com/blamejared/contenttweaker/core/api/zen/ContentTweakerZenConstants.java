@@ -1,4 +1,4 @@
-package com.blamejared.contenttweaker.core.zen;
+package com.blamejared.contenttweaker.core.api.zen;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 
@@ -12,6 +12,7 @@ public final class ContentTweakerZenConstants {
     public static final String NATIVE_PACKAGE = RT_PACKAGE + ".natives";
     public static final String UNKNOWN_CLASS_MARKER = RT_PACKAGE + ".Unknown";
     public static final String UNKNOWN_FACTORY_CLASS_MARKER = RT_PACKAGE + ".UnknownFactory";
+    public static final String UNKNOWN_REFERENCE_CLASS_MARKER = RT_PACKAGE + ".UnknownReference";
 
     private ContentTweakerZenConstants() {}
 }
