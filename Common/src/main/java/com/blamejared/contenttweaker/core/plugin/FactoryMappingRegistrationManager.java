@@ -17,7 +17,7 @@ final class FactoryMappingRegistrationManager implements FactoryMappingRegistrat
         this.mappings = new HashMap<>();
     }
 
-    public static Map<ObjectType<?>, ObjectFactoryMapping<?, ?>> gather(final Consumer<FactoryMappingRegistration> consumer) {
+    public static Map<ObjectType<?>, ObjectFactoryMapping<?, ?>> get(final Consumer<FactoryMappingRegistration> consumer) {
         final FactoryMappingRegistrationManager registration = new FactoryMappingRegistrationManager();
         consumer.accept(registration);
         return Collections.unmodifiableMap(registration.mappings);
@@ -31,5 +31,4 @@ final class FactoryMappingRegistrationManager implements FactoryMappingRegistrat
         }
         this.mappings.put(type, mapping);
     }
-
 }

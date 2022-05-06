@@ -17,7 +17,7 @@ final class ObjectTypeRegistrationManager implements ObjectTypeRegistration {
         this.types = new HashMap<>();
     }
 
-    public static Map<ResourceKey<? extends Registry<?>>, ObjectType<?>> gather(final Consumer<ObjectTypeRegistration> consumer) {
+    public static Map<ResourceKey<? extends Registry<?>>, ObjectType<?>> get(final Consumer<ObjectTypeRegistration> consumer) {
         final ObjectTypeRegistrationManager registration = new ObjectTypeRegistrationManager();
         consumer.accept(registration);
         return Collections.unmodifiableMap(registration.types);

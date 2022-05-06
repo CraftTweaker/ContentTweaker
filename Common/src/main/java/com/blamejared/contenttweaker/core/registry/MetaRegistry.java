@@ -3,10 +3,12 @@ package com.blamejared.contenttweaker.core.registry;
 public final class MetaRegistry {
     private final FactoryMappingsRegistry factoryMappings;
     private final ObjectTypeRegistry objectTypes;
+    private final ReferenceFactoryRegistry referenceFactories;
 
     private MetaRegistry() {
         this.factoryMappings = new FactoryMappingsRegistry();
         this.objectTypes = new ObjectTypeRegistry();
+        this.referenceFactories = new ReferenceFactoryRegistry();
     }
 
     public static MetaRegistry of() {
@@ -19,5 +21,9 @@ public final class MetaRegistry {
 
     public ObjectTypeRegistry objectTypes() {
         return this.objectTypes;
+    }
+
+    public ReferenceFactoryRegistry referenceFactories() {
+        return this.referenceFactories;
     }
 }

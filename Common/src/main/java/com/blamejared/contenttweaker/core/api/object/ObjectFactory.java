@@ -1,6 +1,6 @@
 package com.blamejared.contenttweaker.core.api.object;
 
-import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
+import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import org.openzen.zencode.java.ZenCodeType;
 

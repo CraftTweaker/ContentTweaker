@@ -6,7 +6,7 @@ import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
 import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
-import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
+import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

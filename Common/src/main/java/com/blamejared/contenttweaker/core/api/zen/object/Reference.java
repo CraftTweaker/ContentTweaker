@@ -2,7 +2,7 @@ package com.blamejared.contenttweaker.core.api.zen.object;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
-import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
+import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.minecraft.core.Registry;

@@ -1,7 +1,7 @@
 package com.blamejared.contenttweaker.core.api.zen.rt;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
-import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
+import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.NativeTypeRegistration;
 import net.minecraft.resources.ResourceLocation;

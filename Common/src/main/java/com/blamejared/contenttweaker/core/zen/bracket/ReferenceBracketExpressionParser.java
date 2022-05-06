@@ -2,8 +2,10 @@ package com.blamejared.contenttweaker.core.zen.bracket;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
+import com.blamejared.contenttweaker.core.api.object.ReferenceFactory;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
 import com.blamejared.contenttweaker.core.api.zen.bracket.ReferenceExpression;
+import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.core.Registry;
@@ -79,9 +81,10 @@ final class ReferenceBracketExpressionParser implements BracketExpressionParser 
         return createExpression(position, this.grabType(ResourceKey.createRegistryKey(registry)), id);
     }
 
-    private <T> ParsedExpression createExpression(final CodePosition position, final ObjectType<T> type, final ResourceLocation id) {
+    private <T, U extends Reference<T>> ParsedExpression createExpression(final CodePosition position, final ObjectType<T> type, final ResourceLocation id) {
         // Scripts run before registry creation and object registration, so no validation has to be performed
-        return new ReferenceExpression<>(position, type, new TypeToken<>() {}, id);
+        final ReferenceFactory<T, U> factory = ContentTweakerCore.core().metaRegistry().referenceFactories().findFactoryFor(type);
+        return new ReferenceExpression<>(position, type, factory.type(), id);
     }
 
     private ParseException fail(final CodePosition position, final String contents) throws ParseException {

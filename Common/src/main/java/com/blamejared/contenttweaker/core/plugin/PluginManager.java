@@ -34,12 +34,13 @@ public final class PluginManager {
 
     public void initializePlugins(final MetaRegistry metaRegistry) {
         final ObjectTypeRegistry objectTypeRegistry = metaRegistry.objectTypes();
-        objectTypeRegistry.registerTypes(ObjectTypeRegistrationManager.gather(this.onEach(ContentTweakerPluginProvider::registerObjectTypes)));
-        metaRegistry.factoryMappings().registerMappings(objectTypeRegistry, FactoryMappingRegistrationManager.gather(this.onEach(ContentTweakerPluginProvider::registerFactoryMappings)));
+        objectTypeRegistry.registerTypes(ObjectTypeRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerObjectTypes)));
+        metaRegistry.factoryMappings().registerMappings(objectTypeRegistry, FactoryMappingRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerFactoryMappings)));
+        metaRegistry.referenceFactories().registerFactories(objectTypeRegistry, ReferenceFactoryRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerReferenceFactories)));
     }
 
     public void registerPluginBrackets(final IBracketParserRegistrationHandler handler) {
-        this.onEach(ContentTweakerPluginProvider::registerCustomBrackets)
+        this.each(ContentTweakerPluginProvider::registerCustomBrackets)
                 .accept((name, parser, dumperData) -> handler.registerParserFor(ContentTweakerConstants.CONTENT_LOADER_ID, name, parser, dumperData));
     }
 
@@ -89,7 +90,7 @@ public final class PluginManager {
         }
     }
 
-    private <T> Consumer<T> onEach(final BiConsumer<ContentTweakerPluginProvider, T> consumer) {
+    private <T> Consumer<T> each(final BiConsumer<ContentTweakerPluginProvider, T> consumer) {
         Objects.requireNonNull(consumer);
         return t -> this.providers.get().forEach(o -> consumer.accept(o, t));
     }

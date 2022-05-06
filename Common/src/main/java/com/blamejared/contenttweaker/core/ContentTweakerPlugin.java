@@ -1,7 +1,7 @@
 package com.blamejared.contenttweaker.core;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
-import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
+import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.contenttweaker.core.zen.bracket.ContentTweakerBrackets;
 import com.blamejared.crafttweaker.api.plugin.CraftTweakerPlugin;
 import com.blamejared.crafttweaker.api.plugin.IBracketParserRegistrationHandler;

@@ -3,9 +3,10 @@ package com.blamejared.contenttweaker.core.zen.rt;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
+import com.blamejared.contenttweaker.core.api.object.ReferenceFactory;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
-import com.blamejared.contenttweaker.core.zen.ContentTweakerZenConstants;
+import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -25,6 +26,7 @@ public final class ReferenceMetaFactory {
         final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
         final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
         final ObjectType<T> type = metaRegistry.objectTypes().get(key);
-        return (U) new Reference<>(type, id) {}; // TODO("Work in progress: probably a system similar to object factories")
+        final ReferenceFactory<T, U> factory = metaRegistry.referenceFactories().findFactoryFor(type);
+        return factory.of(type, id);
     }
 }
