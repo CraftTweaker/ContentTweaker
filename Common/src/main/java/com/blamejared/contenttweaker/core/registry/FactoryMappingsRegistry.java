@@ -4,6 +4,7 @@ import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
 import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.rt.Unknown;
+import com.blamejared.contenttweaker.core.api.zen.rt.UnknownFactory;
 import com.blamejared.contenttweaker.core.util.FreezableMap;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 
@@ -40,15 +41,15 @@ public final class FactoryMappingsRegistry {
     }
 
     private <T, U extends ObjectFactory<T>> ObjectFactoryMapping<T, U> createUnknownFactory(final ObjectType<T> type) {
-        return GenericUtil.uncheck(this.unknownFactories.computeIfAbsent(type, it -> new ObjectFactoryMapping<Unknown, Unknown.Factory>() {
+        return GenericUtil.uncheck(this.unknownFactories.computeIfAbsent(type, it -> new ObjectFactoryMapping<Unknown, UnknownFactory>() {
             @Override
-            public Class<Unknown.Factory> type() {
-                return Unknown.Factory.class;
+            public Class<UnknownFactory> type() {
+                return UnknownFactory.class;
             }
 
             @Override
-            public Unknown.Factory of() {
-                return Unknown.Factory.of(type);
+            public UnknownFactory of() {
+                return UnknownFactory.of(type);
             }
         }));
     }
