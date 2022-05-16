@@ -14,7 +14,10 @@ public final class ContentTweakerConstants {
     private ContentTweakerConstants() {}
 
     public static ResourceLocation rl(final String id) {
-
         return new ResourceLocation(MOD_ID, id);
+    }
+
+    public static String ln(final String id) {
+        return "%s.%s".formatted(MOD_ID, id);
     }
 }
