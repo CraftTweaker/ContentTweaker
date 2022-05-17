@@ -1,42 +1,39 @@
 package com.blamejared.contenttweaker.core.resource;
 
+import com.blamejared.contenttweaker.core.ContentTweakerCore;
+import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class RuntimeResourceManager implements ResourceManager {
-    private static final class Resources {
-        private final Map<String, Map<String, byte[]>> resources;
-
-        Resources() {
-            this.resources = new HashMap<>();
+    private record Cleaner(Supplier<? extends Collection<? extends AutoCloseable>> closeables) implements Runnable {
+        @Override
+        public void run() {
+            this.closeables.get().forEach(this::tryClose);
         }
 
-        void provide(final ResourceLocation id, final byte... resource) {
-            this.provide(id.getNamespace(), id.getPath(), resource);
-        }
-
-        Map<String, Map<String, byte[]>> allResources() {
-            return this.resources;
-        }
-
-        private void provide(final String namespace, final String path, final byte... resource) {
-            final Map<String, byte[]> targets = this.resources.computeIfAbsent(namespace, it -> new HashMap<>());
-            if (targets.containsKey(path)) {
-                throw new IllegalStateException("Path " + path + " in " + namespace + " was already associated with a resource");
+        private <T extends AutoCloseable> void tryClose(final T t) {
+            try {
+                t.close();
+            } catch (final Exception e) {
+                ContentTweakerCore.LOGGER.warn("An error occurred while trying to close resource " + t, e);
             }
-            targets.put(path, resource);
         }
     }
 
-    private final Resources[] resources;
+    private final Map<ResourceFragment.Key, RuntimeFragment> fragments;
 
     private RuntimeResourceManager() {
-        this.resources = new Resources[] { new Resources(), new Resources() };
+        this.fragments = new HashMap<>();
+        Runtime.getRuntime().addShutdownHook(new Thread(new Cleaner(this.fragments::values)));
     }
 
     public static RuntimeResourceManager of() {
@@ -44,14 +41,15 @@ public class RuntimeResourceManager implements ResourceManager {
     }
 
     @Override
-    public void provide(final PackType type, final ResourceLocation id, final byte... resource) {
-        Objects.requireNonNull(type);
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(resource);
-        this.resources[type.ordinal()].provide(id, resource);
+    public ResourceFragment fragment(final ResourceFragment.Key key) {
+        Objects.requireNonNull(key);
+        return this.fragments.computeIfAbsent(key, RuntimeFragment::of);
     }
 
-    Map<String, Map<String, byte[]>> allResources(final PackType type) {
-        return this.resources[type.ordinal()].allResources();
+    Map<String, RuntimeFragment> fragments(final PackType type) {
+        return this.fragments.values()
+                .stream()
+                .filter(it -> it.key().type() == type)
+                .collect(Collectors.toMap(it -> it.key().id(), Function.identity()));
     }
 }

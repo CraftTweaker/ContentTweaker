@@ -140,11 +140,7 @@ final class RuntimePack implements PackResources {
 
     @Override
     public void close() {
-        try {
-            this.fs.close();
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        // Do not close file system: it gets managed automatically
     }
 
     private InputStream resource(final String resource) throws IOException {
