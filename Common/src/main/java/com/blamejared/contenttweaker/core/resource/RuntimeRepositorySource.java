@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.core.resource;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.google.gson.JsonObject;
+import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.packs.PackResources;
@@ -38,7 +39,7 @@ public final class RuntimeRepositorySource implements RepositorySource {
 
     private Pack pack(final PackType type, final String id, final RuntimeFragment fragment, final Pack.PackConstructor constructor) {
         final String packId = ContentTweakerConstants.rl("runtime/" + fragment.fsId().replace(':', '/')).toString();
-        final Pack pack = Pack.create(id, true, () -> this.createPack(type, id, packId, fragment), constructor, Pack.Position.TOP, this::decorateSource);
+        final Pack pack = Pack.create(packId, true, () -> this.createPack(type, id, packId, fragment), constructor, Pack.Position.TOP, this::decorateSource);
         if (pack == null) {
             throw new IllegalStateException("An error occurred while generating runtime " + ContentTweakerConstants.MOD_NAME + " pack '" + packId + "'");
         }
@@ -67,10 +68,7 @@ public final class RuntimeRepositorySource implements RepositorySource {
     }
 
     private int makeFormat(final PackType type) {
-        return switch (type) {
-            case CLIENT_RESOURCES -> CLIENT_FORMAT;
-            case SERVER_DATA -> SERVER_FORMAT;
-        };
+        return type.getVersion(SharedConstants.getCurrentVersion());
     }
 
     private Component decorateSource(final Component originalName) {

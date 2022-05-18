@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class RuntimeResourceManager implements ResourceManager {
+public final class RuntimeResourceManager implements ResourceManager {
     private record Cleaner(Supplier<? extends Collection<? extends AutoCloseable>> closeables) implements Runnable {
         @Override
         public void run() {
