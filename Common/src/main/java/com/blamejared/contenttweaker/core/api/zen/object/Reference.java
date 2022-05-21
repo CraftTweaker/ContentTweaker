@@ -17,9 +17,12 @@ public abstract class Reference<T> { // Designed for extension by stuff like Ite
     private final ObjectType<T> type;
     private final ResourceLocation id;
 
+    private T resolved; // TODO("Maybe allow this to get set back to null?")
+
     protected Reference(final ObjectType<T> type, final ResourceLocation id) {
         this.type = type;
         this.id = id;
+        this.resolved = null;
     }
 
     @ZenCodeType.Getter("registryId")
@@ -37,6 +40,17 @@ public abstract class Reference<T> { // Designed for extension by stuff like Ite
     }
 
     public final T get() {
-        return GenericUtil.uncheck(Objects.requireNonNull(Registry.REGISTRY.get(this.registryId())).get(this.id()));
+        if (this.resolved == null) {
+            this.resolved = GenericUtil.uncheck(Objects.requireNonNull(Registry.REGISTRY.get(this.registryId())).get(this.id()));
+        }
+        if (this.resolved == null) {
+            throw new IllegalStateException("Cannot resolve object at this time in %s".formatted(this));
+        }
+        return this.resolved;
+    }
+
+    @Override
+    public String toString() {
+        return "Ref(%s/%s)".formatted(this.id(), this.type());
     }
 }
