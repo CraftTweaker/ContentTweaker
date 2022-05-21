@@ -23,7 +23,7 @@ public interface ObjectType<T> {
 
             @Override
             public String toString() {
-                return "[%s]{%s}".formatted(this.id().location(), this.type().getName());
+                return "%s{%s}".formatted(this.id().location(), this.type().getName());
             }
         };
     }

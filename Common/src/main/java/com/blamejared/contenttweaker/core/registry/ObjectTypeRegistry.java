@@ -34,7 +34,7 @@ public final class ObjectTypeRegistry {
 
         @Override
         public String toString() {
-            return "[%s]{?}".formatted(this.id().location());
+            return "%s{?}".formatted(this.id().location());
         }
     }
 
