@@ -2,14 +2,11 @@ package com.blamejared.contenttweaker.core.resource;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -28,7 +25,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-final class RuntimePack implements PackResources {
+final class RuntimePack {
     private static final class ResourceGatherer extends SimpleFileVisitor<Path> {
         private final Path root;
         private final Consumer<Path> consumer;
@@ -75,9 +72,7 @@ final class RuntimePack implements PackResources {
         throw new IllegalArgumentException("Invalid metadata sections " + invalid + ": not a JsonObject");
     }
 
-    @Nullable
-    @Override
-    public InputStream getRootResource(final String s) throws IOException {
+    InputStream rootResource(final String s) throws IOException {
         Objects.requireNonNull(s);
         if (s.contains("/") || s.contains("\\")) {
             throw new IllegalStateException("Root resources can only be file names");
@@ -85,8 +80,7 @@ final class RuntimePack implements PackResources {
         return this.resource(s);
     }
 
-    @Override
-    public InputStream getResource(final PackType packType, final ResourceLocation resourceLocation) throws IOException {
+    InputStream resource(final PackType packType, final ResourceLocation resourceLocation) throws IOException {
         Objects.requireNonNull(packType);
         Objects.requireNonNull(resourceLocation);
         if (packType != this.type || !this.targetNamespace.equals(resourceLocation.getNamespace())) {
@@ -95,8 +89,7 @@ final class RuntimePack implements PackResources {
         return this.resource(resourceLocation.getPath());
     }
 
-    @Override
-    public Collection<ResourceLocation> getResources(final PackType packType, final String s, final String s1, final int i, final Predicate<String> predicate) {
+    Collection<ResourceLocation> resources(final PackType packType, final String s, final String s1, final int i, final Predicate<String> predicate) {
         Objects.requireNonNull(packType);
         Objects.requireNonNull(s);
         Objects.requireNonNull(s1);
@@ -114,33 +107,23 @@ final class RuntimePack implements PackResources {
         return resources;
     }
 
-    @Override
-    public boolean hasResource(final PackType packType, final ResourceLocation resourceLocation) {
+    boolean knowsResource(final PackType packType, final ResourceLocation resourceLocation) {
         Objects.requireNonNull(packType);
         Objects.requireNonNull(resourceLocation);
         return packType == this.type && this.targetNamespace.equals(resourceLocation.getNamespace()) && Files.exists(this.pathOf(resourceLocation.getPath()));
     }
 
-    @Override
-    public Set<String> getNamespaces(final PackType packType) {
+    Set<String> namespaces(final PackType packType) {
         return this.type == packType? Set.of(this.targetNamespace) : Collections.emptySet();
     }
 
-    @Nullable
-    @Override
-    public <T> T getMetadataSection(final MetadataSectionSerializer<T> metadataSectionSerializer) {
+    <T> T metadataSection(final MetadataSectionSerializer<T> metadataSectionSerializer) {
         final String name = metadataSectionSerializer.getMetadataSectionName();
         return this.metadata.has(name)? metadataSectionSerializer.fromJson(this.metadata.getAsJsonObject(name)) : null;
     }
 
-    @Override
-    public String getName() {
+    String name() {
         return this.name;
-    }
-
-    @Override
-    public void close() {
-        // Do not close file system: it gets managed automatically
     }
 
     private InputStream resource(final String resource) throws IOException {

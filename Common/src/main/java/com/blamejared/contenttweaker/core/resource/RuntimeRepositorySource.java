@@ -14,11 +14,9 @@ import net.minecraft.server.packs.repository.RepositorySource;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class RuntimeRepositorySource implements RepositorySource {
-    private static final int CLIENT_FORMAT = 8;
-    private static final int SERVER_FORMAT = 8;
-
     private final PackType type;
 
     private RuntimeRepositorySource(final PackType type) {
@@ -39,15 +37,16 @@ public final class RuntimeRepositorySource implements RepositorySource {
 
     private Pack pack(final PackType type, final String id, final RuntimeFragment fragment, final Pack.PackConstructor constructor) {
         final String packId = ContentTweakerConstants.rl("runtime/" + fragment.fsId().replace(':', '/')).toString();
-        final Pack pack = Pack.create(packId, true, () -> this.createPack(type, id, packId, fragment), constructor, Pack.Position.TOP, this::decorateSource);
+        final Pack pack = Pack.create(packId, true, this.createPack(type, id, packId, fragment), constructor, Pack.Position.TOP, this::decorateSource);
         if (pack == null) {
             throw new IllegalStateException("An error occurred while generating runtime " + ContentTweakerConstants.MOD_NAME + " pack '" + packId + "'");
         }
         return pack;
     }
 
-    private PackResources createPack(final PackType type, final String target, final String packId, final RuntimeFragment fragment) {
-        return new RuntimePack(packId, target, type, this.makeMetadata(type, packId, target), fragment::fs);
+    private Supplier<PackResources> createPack(final PackType type, final String target, final String packId, final RuntimeFragment fragment) {
+        final RuntimePack pack = new RuntimePack(packId, target, type, this.makeMetadata(type, packId, target), fragment::fs);
+        return () -> new RuntimePackResources(pack);
     }
 
     private JsonObject makeMetadata(final PackType type, final String packId, final String target) {
