@@ -7,6 +7,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.invoke.WrongMethodTypeException;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -38,6 +39,9 @@ public final class ClassArchitect<T> {
     public <U extends T> U construct(final Class<U> clazz, final Object... constructorParameters) {
         try {
             Objects.requireNonNull(clazz);
+            if (Modifier.isAbstract(clazz.getModifiers())) {
+                throw new ClassCastException(Integer.toString(clazz.getModifiers()));
+            }
             final MethodHandle target = this.constructors.computeIfAbsent(clazz, this::findConstructor);
             return GenericUtil.uncheck(target.invokeWithArguments(constructorParameters));
         } catch (final WrongMethodTypeException | ClassCastException e) {
