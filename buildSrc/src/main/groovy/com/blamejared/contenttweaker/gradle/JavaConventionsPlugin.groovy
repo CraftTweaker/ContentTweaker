@@ -18,6 +18,7 @@ import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
 import org.gradle.api.publish.tasks.GenerateModuleMetadata
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.gradle.plugins.ide.idea.model.IdeaModel
@@ -55,6 +56,9 @@ class JavaConventionsPlugin implements Plugin<Project> {
         project.tasks.withType(JavaCompile).configureEach {
             it.options.encoding = StandardCharsets.UTF_8.toString()
             it.options.release.set(ext['java.version'].toInteger())
+        }
+        project.tasks.withType(Javadoc).configureEach {
+            it.options.encoding = StandardCharsets.UTF_8.toString()
         }
 
         configureJar(project, ext)
