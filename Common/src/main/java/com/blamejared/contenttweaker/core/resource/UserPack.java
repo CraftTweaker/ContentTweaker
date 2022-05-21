@@ -22,11 +22,13 @@ final class UserPack implements PackResources {
     private static final String METADATA = "pack.mcmeta";
 
     private final Gson gson;
+    private final String name;
     private final PackResources resources;
     private final JsonObject metadata;
 
-    UserPack(final Gson gson, final PackResources resources, final JsonObject metadata) {
+    UserPack(final Gson gson, final String name, final PackResources resources, final JsonObject metadata) {
         this.gson = Objects.requireNonNull(gson);
+        this.name = Objects.requireNonNull(name);
         this.resources = Objects.requireNonNull(resources);
         this.metadata = Objects.requireNonNull(metadata);
     }
@@ -69,7 +71,7 @@ final class UserPack implements PackResources {
 
     @Override
     public String getName() {
-        return this.resources.getName();
+        return this.name;
     }
 
     @Override

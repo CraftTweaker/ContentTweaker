@@ -71,7 +71,7 @@ public final class UserRepositorySource implements RepositorySource {
         final Path metadataPath = TARGET.resolve("pack.mcmeta");
         final JsonObject metadata = this.readMetadata(metadataPath);
         final String packId = ContentTweakerConstants.rl("user/" + this.type.name().toLowerCase(Locale.ENGLISH)).toString();
-        final Pack pack = Pack.create(packId, true, () -> this.resources(TARGET, metadata), constructor, Pack.Position.TOP, this::decorateSource);
+        final Pack pack = Pack.create(packId, true, () -> this.resources(metadata), constructor, Pack.Position.TOP, this::decorateSource);
         if (pack == null) {
             throw new IOException("Unable to create pack due to an unknown IO error", new NullPointerException());
         }
@@ -98,9 +98,9 @@ public final class UserRepositorySource implements RepositorySource {
         return meta;
     }
 
-    private PackResources resources(final Path target, final JsonObject metadata) {
-        final PackResources resources = new FolderPackResources(target.toFile());
-        return new UserPack(GSON, resources, metadata);
+    private PackResources resources(final JsonObject metadata) {
+        final PackResources resources = new FolderPackResources(TARGET.toFile());
+        return new UserPack(GSON, "User Resources", resources, metadata);
     }
 
     private Component decorateSource(final Component originalName) {
