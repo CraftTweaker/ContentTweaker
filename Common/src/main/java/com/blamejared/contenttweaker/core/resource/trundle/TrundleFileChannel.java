@@ -32,7 +32,7 @@ final class TrundleFileChannel extends FileChannel {
         this.read = read;
         this.write = write;
         this.position = position;
-        this.appending = position == 0L;
+        this.appending = position != 0L;
     }
 
     @Override
