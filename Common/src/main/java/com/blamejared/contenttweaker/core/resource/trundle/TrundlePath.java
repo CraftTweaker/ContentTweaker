@@ -176,7 +176,7 @@ final class TrundlePath implements Path {
         }
         final int[] components = this.components();
         final int parentEnd = components[components.length - 2];
-        final String pathPortion = this.path.substring(0, parentEnd);
+        final String pathPortion = parentEnd == -1? this.root : this.path.substring(0, parentEnd); // If this is child of root, then there's a single component: parent is root or empty
         return new TrundlePath(this.fs, this.pathType, this.root, pathPortion);
     }
 
@@ -303,8 +303,7 @@ final class TrundlePath implements Path {
         if (path.isEmptyPath()) {
             return this;
         }
-        final String thisPath = this.isRoot()? "" : this.path;
-        final String resolvedPath = thisPath + '/' + path.path;
+        final String resolvedPath = this.isRoot()? path.path : this.path + '/' + path.path;
         return new TrundlePath(this.fs, this.pathType, this.root, resolvedPath);
     }
 
@@ -341,7 +340,7 @@ final class TrundlePath implements Path {
         }
 
         if (divergenceIndex == -1) { // The two paths never diverged, so one is a parent of the other
-            if (theirComponents > ourComponents) { // They are a parent
+            if (theirComponents < ourComponents) { // They are a parent
                 final String upwardsWalker = elide("../".repeat(theirComponents - ourComponents));
                 return new TrundlePath(this.fs, TrundlePathType.RELATIVE, REL_ROOT, upwardsWalker);
             }
@@ -409,7 +408,7 @@ final class TrundlePath implements Path {
 
     @Override
     public String toString() {
-        return this.isAbsolute()? ABS_ROOT + this.path : this.path;
+        return this.isAbsolute()? ABS_ROOT + (this.isRoot()? "" : this.path) : this.path;
     }
 
     @Override
@@ -517,7 +516,7 @@ final class TrundlePath implements Path {
             }
 
             final String path = this.path;
-            int components = 0;
+            int components = this.isEmptyPath()? 0 : 1; // By default, every non-empty path has at least one component
             for (final char c : path.toCharArray()) {
                 if (c == '/') {
                     ++components;
