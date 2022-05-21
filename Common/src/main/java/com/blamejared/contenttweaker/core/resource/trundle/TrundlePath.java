@@ -208,10 +208,10 @@ final class TrundlePath implements Path {
         if (beginIndex < 0 || beginIndex >= (components.length - 1)) {
             throw new IllegalArgumentException(Integer.toString(beginIndex));
         }
-        if (endIndex < 0 || endIndex >= (components.length - 1)) {
+        if (endIndex < 0 || endIndex > (components.length - 1)) {
             throw new IllegalArgumentException(Integer.toString(endIndex));
         }
-        final String portion = this.path.substring(components[beginIndex] + 1, components[endIndex + 1]);
+        final String portion = this.path.substring(components[beginIndex] + 1, components[endIndex]);
         return new TrundlePath(this.fs, TrundlePathType.RELATIVE, REL_ROOT, portion);
     }
 
