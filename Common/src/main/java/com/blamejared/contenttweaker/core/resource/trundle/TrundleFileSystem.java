@@ -301,6 +301,10 @@ final class TrundleFileSystem extends FileSystem {
 
     private TrundlePathResolutionResult resolve(final TrundlePath path) {
         try {
+            if (path.getParent() == null) { // If this is the root path, resolution is immediate with this.root
+                return new TrundlePathResolutionResult(path, null, "/", this.root);
+            }
+
             final String[] portions = path.pathPortions();
             final int last = portions.length - 1;
             final String name = portions[last];
@@ -321,6 +325,8 @@ final class TrundleFileSystem extends FileSystem {
             return runnable.run();
         } catch (final TrundleException e) {
             throw e.asIoException();
+        } catch (final NullPointerException e) { // NPE can occur when manipulating the root path in unexpected ways: this is never intended
+            throw new IOException("A critical error has been encountered while handling the file system", e);
         }
     }
 }
