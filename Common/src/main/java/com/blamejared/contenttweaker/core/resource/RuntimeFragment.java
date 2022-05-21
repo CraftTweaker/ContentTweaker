@@ -111,6 +111,10 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
     private void provide(final String path, final byte... resource) {
         try {
             final Path target = this.fs().getPath(path).toAbsolutePath().normalize();
+            final Path parent = target.getParent();
+            if (parent != null) {
+                Files.createDirectories(parent);
+            }
             if (Files.exists(target)) {
                 throw new IllegalArgumentException("A resource for path " + path + " has already been provided for fragment " + this.key());
             }
