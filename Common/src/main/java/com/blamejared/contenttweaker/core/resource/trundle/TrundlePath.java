@@ -50,7 +50,7 @@ final class TrundlePath implements Path {
         this.fs = Objects.requireNonNull(fs);
         this.pathType = Objects.requireNonNull(pathType);
         this.root = Objects.requireNonNull(root);
-        this.path = elide(Objects.requireNonNull(path));
+        this.path = elideIfNeeded(root, Objects.requireNonNull(path));
         this.componentIndexes = null;
         this.hash = 0;
     }
@@ -127,9 +127,13 @@ final class TrundlePath implements Path {
         return builder.substring(1);
     }
 
+    private static String elideIfNeeded(final String root, final String path) {
+        return root.equals(path)? path : elide(path); // if root == path, then we are either in empty or root, which are special cased
+    }
+
     private static String elide(final String path) {
-        final int last = path.length() - 1;
-        return path.charAt(last) == '/'? path.substring(0, last) : path; // TODO("Verify if this makes sense")
+        final int last;
+        return !path.isEmpty() && path.charAt(last = path.length() - 1) == '/'? path.substring(0, last) : path; // TODO("Verify if this makes sense")
     }
 
     @NotNull
