@@ -8,6 +8,9 @@ val mcVersion = extra["minecraft.version"] as String
 base.archivesName.set("${extra["mod.name"]}-fabric-$mcVersion")
 
 loom {
+    mixin {
+        defaultRefmapName.convention("${extra["mod.id"]}.refmap.json")
+    }
     runs {
         named("client") {
             client()
@@ -60,8 +63,6 @@ tasks {
     processResources {
         outputs.upToDateWhen { false }
 
-        sequenceOf(project, project(":Common")).map { it.sourceSets.main.get().resources }.forEach { from(it) }
-
         inputs.property("version", project.version)
 
         filesMatching("fabric.mod.json") {
@@ -81,6 +82,7 @@ tasks {
         dependsOn(project.tasks.remapJar)
     }
     jar {
-        sequenceOf(project, project(":Common")).map { it.sourceSets.main.get().output }.forEach { from(it) }
+        from(project(":Common").sourceSets.main.get().output)
+        duplicatesStrategy = DuplicatesStrategy.FAIL
     }
 }

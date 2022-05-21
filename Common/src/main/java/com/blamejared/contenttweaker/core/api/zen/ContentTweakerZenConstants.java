@@ -8,6 +8,7 @@ public final class ContentTweakerZenConstants {
     public static final String RT_PACKAGE = MAIN_PACKAGE + "._rt";
     public static final String OBJECT_PACKAGE = MAIN_PACKAGE + ".object";
     public static final String FACTORY_PACKAGE = MAIN_PACKAGE + ".factory";
+    public static final String UTIL_PACKAGE = MAIN_PACKAGE + ".util";
 
     public static final String NATIVE_PACKAGE = RT_PACKAGE + ".natives";
     public static final String UNKNOWN_CLASS_MARKER = RT_PACKAGE + ".Unknown";
