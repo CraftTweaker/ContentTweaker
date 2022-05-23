@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.core.resource;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.ResourceSerializer;
 import com.blamejared.contenttweaker.core.resource.trundle.TrundleFileSystemProvider;
+import com.blamejared.crafttweaker.api.util.GenericUtil;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -19,7 +20,14 @@ import java.nio.file.ProviderNotFoundException;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 final class RuntimeFragment implements ResourceFragment, AutoCloseable {
     private static final class FileSystemOnDemand implements AutoCloseable {
@@ -59,6 +67,15 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
             return this.fsId;
         }
 
+        void finalize(final Map<String, LazyResource<?>> lazies, final AtomicBoolean finalizedOut, final BiConsumer<String, byte[]> provider) {
+            if (finalizedOut.get()) {
+                throw new IllegalStateException();
+            }
+            lazies.forEach((path, res) -> provider.accept(path, res.provide(ResourceSerializer::serialize)));
+            lazies.clear();
+            finalizedOut.set(true);
+        }
+
         private FileSystem create() {
             try {
                 return FileSystems.newFileSystem(new URI("%s:%s@".formatted(TrundleFileSystemProvider.SCHEME, this.fsId)), Collections.emptyMap());
@@ -68,12 +85,42 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
         }
     }
 
+    private static final class LazyResource<T> {
+        private final ResourceSerializer<T> serializer;
+        private T current;
+
+        private LazyResource(final ResourceSerializer<T> serializer, final T current) {
+            this.serializer = serializer;
+            this.current = current;
+        }
+
+        ResourceSerializer<T> serializer() {
+            return this.serializer;
+        }
+
+        void update(final Function<T, T> function) {
+            this.current = function.apply(this.current);
+        }
+
+        T resource() {
+            return this.current;
+        }
+
+        byte[] provide(final BiFunction<ResourceSerializer<T>, T, byte[]> provider) {
+            return provider.apply(this.serializer(), this.resource());
+        }
+    }
+
     private final ResourceFragment.Key key;
     private final FileSystemOnDemand fs;
+    private final Map<String, LazyResource<?>> lazyResources;
+    private final AtomicBoolean finalized;
 
     private RuntimeFragment(final ResourceFragment.Key key, final FileSystemOnDemand fs) {
         this.key = key;
         this.fs = fs;
+        this.lazyResources = new HashMap<>();
+        this.finalized = new AtomicBoolean(false);
     }
 
     static RuntimeFragment of(final ResourceFragment.Key key) {
@@ -87,8 +134,28 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
     }
 
     @Override
-    public <T> void provide(final String path, final T resource, final ResourceSerializer<T> serializer) {
+    public <T> void provideFixed(final String path, final T resource, final ResourceSerializer<T> serializer) {
+        if (this.finalized.get()) {
+            throw new IllegalStateException("Unable to provide more resources when the file system has been finalized");
+        }
         this.provide(Objects.requireNonNull(path), Objects.requireNonNull(Objects.requireNonNull(serializer).serialize(Objects.requireNonNull(resource))));
+    }
+
+    @Override
+    public <T> void provideOrAlter(final String path, final Supplier<T> creator, final Function<T, T> alterationFunction, final ResourceSerializer<T> serializer) {
+        if (this.finalized.get()) {
+            throw new IllegalStateException("Unable to provide more resources when the file system has been finalized");
+        }
+        Objects.requireNonNull(path);
+        Objects.requireNonNull(creator);
+        Objects.requireNonNull(alterationFunction);
+        Objects.requireNonNull(serializer);
+        final LazyResource<?> resource = this.lazyResources.computeIfAbsent(path, it -> new LazyResource<>(serializer, creator.get()));
+        if (resource.serializer() != serializer) {
+            throw new IllegalStateException("Given serializer " + serializer + " does not match previous " + resource.serializer());
+        }
+        final LazyResource<T> typedResource = GenericUtil.uncheck(resource);
+        typedResource.update(alterationFunction);
     }
 
     @Override
@@ -101,6 +168,9 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
     }
 
     FileSystem fs() {
+        if (!this.finalized.get()) {
+            this.fs.finalize(this.lazyResources, this.finalized, this::provide);
+        }
         return this.fs.get();
     }
 
