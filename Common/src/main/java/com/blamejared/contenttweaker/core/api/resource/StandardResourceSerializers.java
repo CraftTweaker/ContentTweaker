@@ -11,7 +11,7 @@ public final class StandardResourceSerializers {
 
     public static final ResourceSerializer<byte[]> BYTE_ARRAY = it -> it;
     public static final ResourceSerializer<String> STRING = it -> it.getBytes(StandardCharsets.UTF_8);
-    public static final ResourceSerializer<? extends JsonElement> JSON = it -> STRING.serialize(GSON.toJson(it));
+    public static final ResourceSerializer<? super JsonElement> JSON = it -> STRING.serialize(GSON.toJson(it));
 
     private StandardResourceSerializers() {}
 }
