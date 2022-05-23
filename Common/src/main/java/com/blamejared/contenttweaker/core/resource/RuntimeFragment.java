@@ -171,16 +171,20 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
         if (!this.finalized.get()) {
             this.fs.finalize(this.lazyResources, this.finalized, this::provide);
         }
-        return this.fs.get();
+        return this.fs0();
     }
 
     String fsId() {
         return this.fs.id();
     }
 
+    private FileSystem fs0() {
+        return this.fs.get();
+    }
+
     private void provide(final String path, final byte... resource) {
         try {
-            final Path target = this.fs().getPath(path).toAbsolutePath().normalize();
+            final Path target = this.fs0().getPath(path).toAbsolutePath().normalize();
             final Path parent = target.getParent();
             if (parent != null) {
                 Files.createDirectories(parent);
