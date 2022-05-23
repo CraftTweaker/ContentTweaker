@@ -4,6 +4,7 @@ import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
+import com.blamejared.contenttweaker.core.api.resource.ResourceTemplateHelper;
 import com.blamejared.contenttweaker.core.api.resource.StandardResourceFragmentKeys;
 import com.blamejared.contenttweaker.vanilla.api.resource.ItemModel;
 import com.blamejared.contenttweaker.vanilla.api.resource.Language;
@@ -56,11 +57,11 @@ public final class BasicItemBuilder extends ItemBuilder<BasicItemBuilder> {
 
     @Override
     public void provideResources(final ResourceLocation name, final ResourceManager manager) {
+        final ResourceTemplateHelper templateHelper = manager.templateHelper();
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
-        cotAssets.provideFixed("textures/item/test.png", test, com.blamejared.contenttweaker.core.api.resource.StandardResourceSerializers.BYTE_ARRAY);
-        cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.ofGenerated().layer(0, new ResourceLocation("contenttweaker:item/test")), ItemModel.SERIALIZER);
+        templateHelper.provideFrom("basic_item_texture.png", "textures/item/test.png", cotAssets); // TODO("")
+        cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.ofGenerated().layer(0, new ResourceLocation("contenttweaker:item/test")), ItemModel.SERIALIZER); // TODO("")
         cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Example Item"), Language.SERIALIZER);
-        // TODO("")
     }
 
     private Item build(final Item.Properties properties) {

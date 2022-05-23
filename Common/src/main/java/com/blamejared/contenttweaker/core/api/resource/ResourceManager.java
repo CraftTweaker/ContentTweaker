@@ -9,6 +9,7 @@ public interface ResourceManager {
     }
 
     ResourceFragment fragment(final ResourceFragment.Key key);
+    ResourceTemplateHelper templateHelper();
 
     default ResourceFragment fragment(final PackType type, final String id) {
         return this.fragment(new ResourceFragment.Key(type, id));
