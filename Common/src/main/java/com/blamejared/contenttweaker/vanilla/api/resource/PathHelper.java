@@ -28,6 +28,10 @@ public final class PathHelper {
         return "models/item/%s.json".formatted(Objects.requireNonNull(name).getPath());
     }
 
+    public static String texture(final ResourceLocation name) {
+        return "textures/%s.png".formatted(Objects.requireNonNull(name).getPath());
+    }
+
     public static String tag(final ObjectType<?> type, final ResourceLocation name) {
         final String path = SPECIAL_TAGS.get().containsKey(Objects.requireNonNull(type))? SPECIAL_TAGS.get().get(type) : type.id().location().getPath();
         return "tags/%s/%s.json".formatted(path, Objects.requireNonNull(name).getPath());
