@@ -1,5 +1,10 @@
 package com.blamejared.contenttweaker.vanilla.util;
 
+import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
+import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
+import com.blamejared.contenttweaker.core.api.resource.StandardResourceFragmentKeys;
+import com.blamejared.contenttweaker.vanilla.api.resource.Language;
+import com.blamejared.contenttweaker.vanilla.api.resource.PathHelper;
 import com.blamejared.contenttweaker.vanilla.api.util.ContentTweakerCreativeTab;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
 import com.blamejared.contenttweaker.vanilla.mixin.CreativeModeTabAccessor;
@@ -21,7 +26,10 @@ public final class CustomCreativeTab extends CreativeModeTab implements ContentT
     public static CreativeModeTab of(final String name) {
         Objects.requireNonNull(name);
         final int id = expand();
-        return new CustomCreativeTab(id, name, ItemReference.AIR);
+        final ResourceFragment assets = ResourceManager.get().fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
+        final CreativeModeTab tab = new CustomCreativeTab(id, name, ItemReference.AIR);
+        assets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.tab(name, "Example Tab"), Language.SERIALIZER);
+        return tab;
     }
 
     private static int expand() {

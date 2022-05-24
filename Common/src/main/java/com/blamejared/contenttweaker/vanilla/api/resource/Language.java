@@ -35,6 +35,10 @@ public final class Language {
         return this.add("item.%s.%s".formatted(Objects.requireNonNull(name).getNamespace(), name.getPath()), Objects.requireNonNull(text));
     }
 
+    public Language tab(final String name, final String text) {
+        return this.add("itemGroup.%s".formatted(Objects.requireNonNull(name)), Objects.requireNonNull(text));
+    }
+
     private byte[] serialize() {
         final JsonObject object = new JsonObject();
         this.keys.forEach(object::addProperty);
