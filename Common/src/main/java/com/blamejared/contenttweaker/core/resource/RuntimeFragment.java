@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.core.resource;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.ResourceSerializer;
 import com.blamejared.contenttweaker.core.resource.trundle.TrundleFileSystemProvider;
+import com.blamejared.contenttweaker.core.service.ServiceManager;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystemAlreadyExistsException;
@@ -111,6 +113,11 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
         }
     }
 
+    @FunctionalInterface
+    private interface ExceptionalConsumer<T, E extends Exception> {
+        void accept(final T t) throws E;
+    }
+
     private final ResourceFragment.Key key;
     private final FileSystemOnDemand fs;
     private final Map<String, LazyResource<?>> lazyResources;
@@ -131,6 +138,22 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
         final String fsId = "%s:%s".formatted(key.id(), typeId);
         final FileSystemOnDemand fs = new FileSystemOnDemand(fsId);
         return new RuntimeFragment(key, fs);
+    }
+
+    @Override
+    public void provideTemplated(final String path, final String template) {
+        Objects.requireNonNull(path);
+        Objects.requireNonNull(template);
+        final Path base = ServiceManager.platform().locateResource("meta", "template");
+        final Path target = base.resolve(template);
+        this.provideTemplated(path, target);
+    }
+
+    @Override
+    public void provideTemplated(final String path, final Path template) {
+        Objects.requireNonNull(path);
+        Objects.requireNonNull(template);
+        this.provide(path, channel -> this.provide(channel, template));
     }
 
     @Override
@@ -183,22 +206,36 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
     }
 
     private void provide(final String path, final byte... resource) {
+        this.provide(path, channel -> channel.write(ByteBuffer.wrap(Arrays.copyOf(resource, resource.length))));
+    }
+
+    private void provide(final String path, final ExceptionalConsumer<SeekableByteChannel, IOException> consumer) {
         try {
             final Path target = this.fs0().getPath(path).toAbsolutePath().normalize();
             final Path parent = target.getParent();
             if (parent != null) {
                 Files.createDirectories(parent);
             }
-            if (Files.exists(target)) {
-                throw new IllegalArgumentException("A resource for path " + path + " has already been provided for fragment " + this.key());
-            }
-            final ByteBuffer contents = ByteBuffer.wrap(Arrays.copyOf(resource, resource.length)); // Defensive copy just in case
             try (final SeekableByteChannel channel = Files.newByteChannel(target, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE)) {
-                channel.position(0L);
-                channel.write(contents);
+                consumer.accept(channel);
             }
         } catch (final IOException e) {
-            throw new UncheckedIOException("Unable to provide resource for path " + path, e);
+            throw new UncheckedIOException("Unable to provide resource for path " + path + " in fragment " + this.key(), e);
+        }
+    }
+
+    private void provide(final SeekableByteChannel outChannel, final Path template) throws IOException {
+        try (final SeekableByteChannel inChannel = Files.newByteChannel(template, StandardOpenOption.READ)) {
+            int read = 0;
+            final int estimatedLength = (int) Math.min(inChannel.size(), Integer.MAX_VALUE);
+            final ByteBuffer buffer = ByteBuffer.allocate(estimatedLength).order(ByteOrder.nativeOrder());
+            while (read != -1) {
+                if ((read = inChannel.read(buffer)) > 0) {
+                    buffer.flip();
+                    outChannel.write(buffer);
+                }
+                buffer.clear();
+            }
         }
     }
 }

@@ -3,7 +3,6 @@ package com.blamejared.contenttweaker.core.resource;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
-import com.blamejared.contenttweaker.core.api.resource.ResourceTemplateHelper;
 import net.minecraft.server.packs.PackType;
 
 import java.util.Collection;
@@ -30,11 +29,9 @@ public final class RuntimeResourceManager implements ResourceManager {
         }
     }
 
-    private final TemplateHelper templateHelper;
     private final Map<ResourceFragment.Key, RuntimeFragment> fragments;
 
     private RuntimeResourceManager() {
-        this.templateHelper = TemplateHelper.of();
         this.fragments = new HashMap<>();
         Runtime.getRuntime().addShutdownHook(new Thread(new Cleaner(this.fragments::values)));
     }
@@ -47,11 +44,6 @@ public final class RuntimeResourceManager implements ResourceManager {
     public ResourceFragment fragment(final ResourceFragment.Key key) {
         Objects.requireNonNull(key);
         return this.fragments.computeIfAbsent(key, RuntimeFragment::of);
-    }
-
-    @Override
-    public ResourceTemplateHelper templateHelper() {
-        return this.templateHelper;
     }
 
     Map<String, RuntimeFragment> fragments(final PackType type) {
