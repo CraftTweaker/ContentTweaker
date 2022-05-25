@@ -37,7 +37,7 @@ public final class BasicItemBuilder extends ItemBuilder<BasicItemBuilder> {
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
         final ResourceLocation textureName = new ResourceLocation(name.getNamespace(), "item/%s".formatted(name.getPath()));
 
-        cotAssets.provideTemplated(PathHelper.texture(textureName), "basic_item_texture.png"); // TODO("")
+        cotAssets.provideTemplated(PathHelper.texture(textureName), ContentTweakerVanillaConstants.ITEM_TEXTURE_TEMPLATE);
         cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.ofGenerated().layer(0, textureName), ItemModel.SERIALIZER);
         cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Example Item"), Language.SERIALIZER);
     }

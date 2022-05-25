@@ -13,4 +13,7 @@ public final class ContentTweakerVanillaConstants {
     public static final String VANILLA_UTIL_PACKAGE = ContentTweakerZenConstants.UTIL_PACKAGE + VANILLA_PACKAGE_MARKER;
 
     public static final String ITEM_BUILDER_PACKAGE = VANILLA_BUILDER_PACKAGE + ".item";
+
+    public static final String BLOCK_TEXTURE_TEMPLATE = "missing_block.png";
+    public static final String ITEM_TEXTURE_TEMPLATE = "missing_item.png";
 }
