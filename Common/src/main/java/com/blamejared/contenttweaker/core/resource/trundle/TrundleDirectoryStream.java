@@ -14,13 +14,20 @@ import java.util.Objects;
 final class TrundleDirectoryStream implements DirectoryStream<Path> {
     private static final class TrundleDirectoryStreamIterator implements Iterator<Path> {
         private TrundleFileSystem fs;
+        private TrundlePath parent;
         private Iterator<Map.Entry<String, TrundleResource>> directoryIterator;
         private Filter<? super Path> filter;
         private boolean closed;
         private Path nextEntry;
 
-        TrundleDirectoryStreamIterator(final TrundleFileSystem fs, final Iterator<Map.Entry<String, TrundleResource>> directoryIterator, final Filter<? super Path> filter) {
+        TrundleDirectoryStreamIterator(
+                final TrundleFileSystem fs,
+                final TrundlePath parent,
+                final Iterator<Map.Entry<String, TrundleResource>> directoryIterator,
+                final Filter<? super Path> filter
+        ) {
             this.fs = fs;
+            this.parent = parent;
             this.directoryIterator = directoryIterator;
             this.filter = filter;
             this.closed = false;
@@ -52,6 +59,7 @@ final class TrundleDirectoryStream implements DirectoryStream<Path> {
 
         void close() {
             this.fs = null;
+            this.parent = null;
             this.directoryIterator = null;
             this.filter = null;
             this.nextEntry = null;
@@ -74,7 +82,7 @@ final class TrundleDirectoryStream implements DirectoryStream<Path> {
         }
 
         private TrundlePath from(final Map.Entry<String, TrundleResource> entry) {
-            return (TrundlePath) this.fs.getPath(entry.getKey());
+            return (TrundlePath) (this.parent == null? this.fs.getPath(entry.getKey()) : this.parent.resolve(entry.getKey()));
         }
     }
 
@@ -99,8 +107,9 @@ final class TrundleDirectoryStream implements DirectoryStream<Path> {
         if (target.type() != TrundleResource.Type.DIRECTORY) {
             throw new NotDirectoryException(result.elementName());
         }
+        final TrundlePath parent = result.originalPath();
         final Iterator<Map.Entry<String, TrundleResource>> entries = ((TrundleDirectory) target).children().entrySet().iterator();
-        final TrundleDirectoryStreamIterator iterator = new TrundleDirectoryStreamIterator(fs, entries, filter);
+        final TrundleDirectoryStreamIterator iterator = new TrundleDirectoryStreamIterator(fs, parent, entries, filter);
         return new TrundleDirectoryStream(iterator);
     }
 
