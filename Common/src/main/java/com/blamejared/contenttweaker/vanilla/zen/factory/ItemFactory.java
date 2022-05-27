@@ -7,7 +7,7 @@ import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
-import com.blamejared.contenttweaker.vanilla.api.zen.builder.ItemBuilder;
+import com.blamejared.contenttweaker.vanilla.api.zen.builder.item.ItemBuilder;
 import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.core.api.util.ClassArchitect;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
