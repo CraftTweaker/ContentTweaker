@@ -66,7 +66,7 @@ final class TrundlePath implements Path {
         final TrundlePathType type = path.length() > 0 && path.charAt(0) == '/'? TrundlePathType.ABSOLUTE : TrundlePathType.RELATIVE;
         final String root = parseRoot(type, path);
         final String rawPath = path.length() > 0 && type.isAbsolute()? path.substring(1) : path;
-        return new ParsedPath(type, root, rawPath);
+        return new ParsedPath(type, root, rawPath.isEmpty() && type.isAbsolute()? root : rawPath);
     }
 
     private static String parseRoot(final TrundlePathType type, @SuppressWarnings("unused") final String path) {
@@ -371,6 +371,9 @@ final class TrundlePath implements Path {
             return this;
         }
         // TODO("Maybe something else?")
+        if (this.isEmptyPath()) {
+            return new TrundlePath(this.fs, TrundlePathType.ABSOLUTE, ABS_ROOT, ABS_ROOT);
+        }
         return new TrundlePath(this.fs, TrundlePathType.ABSOLUTE, ABS_ROOT, this.path);
     }
 
