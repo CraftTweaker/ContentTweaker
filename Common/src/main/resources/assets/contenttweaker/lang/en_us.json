@@ -1,3 +1,5 @@
 {
+  "contenttweaker.command.dump_resources.desc": "Dump all resources generated at runtime by ContentTweaker",
+  "contenttweaker.command.dump_resources.log": "Runtime Resources",
   "contenttweaker.pack_source.runtime": "Runtime Generation"
 }
