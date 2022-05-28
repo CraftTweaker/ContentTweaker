@@ -1,5 +1,6 @@
 package com.blamejared.contenttweaker.fabric.util;
 
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -17,6 +18,8 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public final class ContentTweakerTierRegistry {
     private static final Supplier<ContentTweakerTierRegistry> INSTANCE = Suppliers.memoize(
@@ -62,19 +65,37 @@ public final class ContentTweakerTierRegistry {
         }
         final Tier tier = new ContentTweakerTier(uses, speed, attackDamageBonus, level, enchantmentValue, Objects.requireNonNull(repairItem));
         this.knownTiers.put(name, tier);
-        if (!this.tiersByLevel.containsKey(level)) { // In Fabric, all tiers with the same level are the same
+        if (!this.tiersByLevel.containsKey(level)) { // In Fabric, all tiers with the same level are the same: warn and skip
             this.tiersByLevel.put(level, tier);
+        } else {
+            CraftTweakerAPI.LOGGER.warn("A tier with the same level " + level + " as " + name + " already exists: lookup with level will be inaccurate");
         }
         return tier;
+    }
+
+    public Tier find(final ResourceLocation name) {
+        return this.knownTiers.computeIfAbsent(Objects.requireNonNull(name), it -> {
+            throw new IllegalStateException("No such tier with name " + it + " is known: either it does not exist or it was not found");
+        });
+    }
+
+    public Tier find(final int level) {
+        return this.tiersByLevel.computeIfAbsent(level, it -> {
+            throw new IllegalStateException("No such tier with level " + it + " was found: you might need to create it first");
+        });
+    }
+
+    public Stream<ResourceLocation> knownNames() {
+        return this.knownTiers.keySet().stream();
+    }
+
+    public IntStream knownLevels() {
+        return this.tiersByLevel.keySet().intStream();
     }
 
     public ResourceLocation nameOf(final Tier tier) {
         return this.inverse.computeIfAbsent(Objects.requireNonNull(tier), it -> {
             throw new IllegalStateException("No such tier with name " + it + " is known: either it does not exist or it was not found");
         });
-    }
-
-    public Tier ofLevel(final int level) {
-        return this.tiersByLevel.get(level);
     }
 }
