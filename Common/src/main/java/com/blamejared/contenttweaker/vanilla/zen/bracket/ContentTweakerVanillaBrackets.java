@@ -11,7 +11,7 @@ public final class ContentTweakerVanillaBrackets {
     private ContentTweakerVanillaBrackets() {}
 
     public static void register(final CustomBracketRegistration registration) {
-        withCommand(registration, "item", new ItemBracketExpressionParser(), "cot:items", ItemBracketExpressionParser::dump);
+        withCommand(registration, "item", new ItemBracketExpressionParser(), "contenttweaker_items", ItemBracketExpressionParser::dump);
         registration.registerBracket("tab", new CreativeTabBracketExpressionParser(), CreativeTabBracketExpressionParser::dump);
     }
 
