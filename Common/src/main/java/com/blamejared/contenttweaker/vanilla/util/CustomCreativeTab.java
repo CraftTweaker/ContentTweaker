@@ -28,7 +28,7 @@ public final class CustomCreativeTab extends CreativeModeTab implements ContentT
         final int id = expand();
         final ResourceFragment assets = ResourceManager.get().fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
         final CreativeModeTab tab = new CustomCreativeTab(id, name, ItemReference.AIR);
-        assets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.tab(name, "Example Tab"), Language.SERIALIZER);
+        assets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.tab(name, "Custom Tab"), Language.SERIALIZER);
         return tab;
     }
 

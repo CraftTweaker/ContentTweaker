@@ -39,7 +39,7 @@ public final class BasicItemBuilder extends ItemBuilder<BasicItemBuilder> {
 
         cotAssets.provideTemplated(PathHelper.texture(textureName), ContentTweakerVanillaConstants.ITEM_TEXTURE_TEMPLATE);
         cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.ofGenerated().layer(0, textureName), ItemModel.SERIALIZER);
-        cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Example Item"), Language.SERIALIZER);
+        cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Custom Item"), Language.SERIALIZER);
     }
 
     private Item build(final Item.Properties properties) {
