@@ -8,6 +8,7 @@ import com.blamejared.contenttweaker.core.registry.MetaRegistry;
 import com.blamejared.contenttweaker.core.registry.ObjectTypeRegistry;
 import com.blamejared.contenttweaker.core.util.FreezableList;
 import com.blamejared.contenttweaker.core.util.NonApiCraftTweakerWrapper;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.plugin.IBracketParserRegistrationHandler;
 import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Pair;
@@ -81,6 +82,7 @@ public final class PluginManager {
             final ResourceLocation id = data.getFirst();
             final ContentTweakerPluginProvider provider = data.getSecond().getConstructor().newInstance();
             ContentTweakerCore.LOGGER.info("Successfully identified and loaded plugin {}", id);
+            CraftTweakerAPI.LOGGER.info("CoT: Successfully identified and loaded ContentTweaker plugin {}", id);
             return new DecoratedContentTweakerPlugin(id, provider);
         } catch(final InstantiationException | NoSuchMethodException | IllegalAccessException |
                       InvocationTargetException e) {
