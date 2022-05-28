@@ -37,8 +37,8 @@ public final class ForgeTierExpansions {
             final int enchantmentValue,
             final ResourceLocation tag,
             final ItemReference repairItem, // TODO("Figure out ingredients")
-            @ZenCodeType.Optional(value = "[]") final TierSortingStruct[] lowerTiers,
-            @ZenCodeType.Optional(value = "[]") final TierSortingStruct[] higherTiers
+            @ZenCodeType.Optional(value = "[] as " + ContentTweakerVanillaConstants.VANILLA_RT_PACKAGE + ".TierSortingStruct[]") final TierSortingStruct[] lowerTiers,
+            @ZenCodeType.Optional(value = "[] as " + ContentTweakerVanillaConstants.VANILLA_RT_PACKAGE + ".TierSortingStruct[]") final TierSortingStruct[] higherTiers
     ) {
         final ResourceLocation tierName = ContentTweakerConstants.rl(NameUtil.fixing(name, (fixed, mistakes) -> report(name, fixed, mistakes)));
         if (level < 0) {
