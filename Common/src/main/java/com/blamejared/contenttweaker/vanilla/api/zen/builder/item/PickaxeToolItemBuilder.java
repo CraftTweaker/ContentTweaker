@@ -46,11 +46,10 @@ public final class PickaxeToolItemBuilder extends ToolItemBuilder<PickaxeToolIte
     @Override
     public void provideResources(final ResourceLocation name, final ResourceManager manager) {
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
-        final ResourceLocation texture = new ResourceLocation(name.getNamespace(), "item/%s_overlay".formatted(name.getPath()));
-        final ResourceLocation base = new ResourceLocation("item/iron_pickaxe");
+        final ResourceLocation texture = new ResourceLocation(name.getNamespace(), "item/%s".formatted(name.getPath()));
 
-        cotAssets.provideTemplated(PathHelper.texture(texture), "missing_pickaxe_overlay.png");
-        cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.ofGenerated().layer(0, base).layer(1, texture), ItemModel.SERIALIZER);
+        cotAssets.provideTemplated(PathHelper.texture(texture), ContentTweakerVanillaConstants.itemTemplate("pickaxe"));
+        cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.of(new ResourceLocation("item/handheld")).layer(0, texture), ItemModel.SERIALIZER);
         cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Custom Pickaxe"), Language.SERIALIZER);
     }
 

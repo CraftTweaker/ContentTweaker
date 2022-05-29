@@ -2,6 +2,8 @@ package com.blamejared.contenttweaker.vanilla.api.zen;
 
 import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 
+import java.util.Objects;
+
 public final class ContentTweakerVanillaConstants {
     public static final String VANILLA_PACKAGE_MARKER = ".vanilla";
 
@@ -12,8 +14,12 @@ public final class ContentTweakerVanillaConstants {
     public static final String VANILLA_RT_PACKAGE = ContentTweakerZenConstants.RT_PACKAGE + VANILLA_PACKAGE_MARKER;
     public static final String VANILLA_UTIL_PACKAGE = ContentTweakerZenConstants.UTIL_PACKAGE + VANILLA_PACKAGE_MARKER;
 
+    public static final String BLOCK_BUILDER_PACKAGE = VANILLA_BUILDER_PACKAGE + ".block";
     public static final String ITEM_BUILDER_PACKAGE = VANILLA_BUILDER_PACKAGE + ".item";
 
-    public static final String BLOCK_TEXTURE_TEMPLATE = "missing_block.png";
-    public static final String ITEM_TEXTURE_TEMPLATE = "missing_item.png";
+    private ContentTweakerVanillaConstants() {}
+
+    public static String itemTemplate(final String kind) {
+        return "item/missing_%s.png".formatted(Objects.requireNonNull(kind));
+    }
 }
