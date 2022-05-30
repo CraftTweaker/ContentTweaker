@@ -13,34 +13,30 @@ import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
 import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.PickaxeItem;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@ZenCodeType.Name(ContentTweakerVanillaConstants.ITEM_BUILDER_PACKAGE + ".Pickaxe")
+@ZenCodeType.Name(ContentTweakerVanillaConstants.ITEM_BUILDER_PACKAGE + ".Axe")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-public final class PickaxeToolItemBuilder extends ToolItemBuilder<PickaxeToolItemBuilder> {
-    private static final class TotallyNotAPickaxe extends PickaxeItem {
-        TotallyNotAPickaxe(final ToolData data, final Supplier<Properties> properties) {
-            super(data.tier(), (int) data.baseAttackDamage(), data.attackSpeed(), properties.get());
+public final class AxeToolItemBuilder extends ToolItemBuilder<AxeToolItemBuilder> {
+    private static final class TotallyNotAnAxe extends AxeItem {
+        TotallyNotAnAxe(final ToolData data, final Supplier<Properties> properties) {
+            super(data.tier(), data.baseAttackDamage(), data.attackSpeed(), properties.get());
         }
     }
 
-    public PickaxeToolItemBuilder(final BiFunction<ObjectHolder<? extends Item>, Consumer<ResourceManager>, ItemReference> registrationManager) {
+    public AxeToolItemBuilder(final BiFunction<ObjectHolder<? extends Item>, Consumer<ResourceManager>, ItemReference> registrationManager) {
         super(registrationManager);
     }
 
     @Override
     public ObjectHolder<? extends Item> createTool(final ResourceLocation name, final ToolData toolData, final Supplier<Item.Properties> builtProperties) {
-        if (Mth.floor(toolData.baseAttackDamage()) != toolData.baseAttackDamage()) {
-            throw new IllegalStateException("Unable to create a pickaxe item with a non-whole attack damage");
-        }
-        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new TotallyNotAPickaxe(toolData, builtProperties));
+        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new TotallyNotAnAxe(toolData, builtProperties));
     }
 
     @Override
@@ -48,8 +44,8 @@ public final class PickaxeToolItemBuilder extends ToolItemBuilder<PickaxeToolIte
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
         final ResourceLocation texture = new ResourceLocation(name.getNamespace(), "item/%s".formatted(name.getPath()));
 
-        cotAssets.provideTemplated(PathHelper.texture(texture), ContentTweakerVanillaConstants.itemTemplate("pickaxe"));
+        cotAssets.provideTemplated(PathHelper.texture(texture), ContentTweakerVanillaConstants.itemTemplate("axe"));
         cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.of(new ResourceLocation("item/handheld")).layer(0, texture), ItemModel.SERIALIZER);
-        cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Custom Pickaxe"), Language.SERIALIZER);
+        cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Custom Axe"), Language.SERIALIZER);
     }
 }
