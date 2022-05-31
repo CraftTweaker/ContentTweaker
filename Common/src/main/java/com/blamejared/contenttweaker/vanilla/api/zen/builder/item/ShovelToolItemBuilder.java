@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 public final class ShovelToolItemBuilder extends ToolItemBuilder<ShovelToolItemBuilder> {
     private static final class TotallyNotAShovel extends ShovelItem {
         TotallyNotAShovel(final ToolData data, final Supplier<Properties> properties) {
-            super(data.tier(), data.baseAttackDamage(), data.attackSpeed(), properties.get());
+            super(data.tier().get(), data.baseAttackDamage(), data.attackSpeed(), properties.get());
         }
     }
 

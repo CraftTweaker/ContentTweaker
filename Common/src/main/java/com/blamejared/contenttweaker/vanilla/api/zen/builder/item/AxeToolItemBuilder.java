@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 public final class AxeToolItemBuilder extends ToolItemBuilder<AxeToolItemBuilder> {
     private static final class TotallyNotAnAxe extends AxeItem {
         TotallyNotAnAxe(final ToolData data, final Supplier<Properties> properties) {
-            super(data.tier(), data.baseAttackDamage(), data.attackSpeed(), properties.get());
+            super(data.tier().get(), data.baseAttackDamage(), data.attackSpeed(), properties.get());
         }
     }
 

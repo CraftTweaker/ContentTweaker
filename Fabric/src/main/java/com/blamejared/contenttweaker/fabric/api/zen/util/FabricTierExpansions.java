@@ -1,9 +1,12 @@
 package com.blamejared.contenttweaker.fabric.api.zen.util;
 
+import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.fabric.util.ContentTweakerTierRegistry;
+import com.blamejared.contenttweaker.vanilla.api.action.tier.CreateTierAction;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.util.TierReference;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.NameUtil;
@@ -14,13 +17,13 @@ import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.List;
 
-@ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_UTIL_PACKAGE + ".Tier")
+@ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_UTIL_PACKAGE + ".TierReference")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class FabricTierExpansions {
     private FabricTierExpansions() {}
 
     @ZenCodeType.StaticExpansionMethod
-    public static Tier of(
+    public static TierReference of(
             final String name,
             final int level,
             final int uses,
@@ -37,7 +40,11 @@ public final class FabricTierExpansions {
             throw new IllegalArgumentException("Uses for tier " + tierName + " cannot be negative or zero");
         }
         // TODO("Additional checks?")
-        return ContentTweakerTierRegistry.of().create(tierName, level, uses, speed, attackDamageBonus, enchantmentValue, () -> Ingredient.of(repairItem.get()));
+        return TierReference.of(
+                tierName,
+                level,
+                self -> make(self, tierName, level, uses, speed, attackDamageBonus, enchantmentValue, repairItem)
+        );
     }
 
     private static void report(final String original, final String fixed, final List<String> mistakes) {
@@ -48,14 +55,19 @@ public final class FabricTierExpansions {
         ));
     }
 
-    @ZenCodeType.Getter("name")
-    @ZenCodeType.Nullable
-    public static ResourceLocation name(final Tier $this) {
-        try {
-            return ContentTweakerTierRegistry.of().nameOf($this);
-        } catch (final IllegalStateException e) {
-            // Catch because it's rare: users should not have access to a Tier we do not know about in ContentTweaker
-            return null;
-        }
+    private static Tier make(
+            final TierReference reference,
+            final ResourceLocation name,
+            final int level,
+            final int uses,
+            final float speed,
+            final float attack,
+            final int enchantment,
+            final ItemReference repairIngredient
+    ) {
+        final Tier[] tier = new Tier[1];
+        final ContentTweakerTierRegistry registry = ContentTweakerTierRegistry.of();
+        ContentTweakerApi.apply(CreateTierAction.of(reference, () -> tier[0] = registry.create(name, level, uses, speed, attack, enchantment, () -> Ingredient.of(repairIngredient.get()))));
+        return tier[0];
     }
 }

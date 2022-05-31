@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 public final class HoeToolItemBuilder extends ToolItemBuilder<HoeToolItemBuilder> {
     private static final class TotallyNotAHoe extends HoeItem {
         TotallyNotAHoe(final ToolData data, final Supplier<Properties> properties) {
-            super(data.tier(), (int) data.baseAttackDamage(), data.attackSpeed(), properties.get());
+            super(data.tier().get(), (int) data.baseAttackDamage(), data.attackSpeed(), properties.get());
         }
     }
 

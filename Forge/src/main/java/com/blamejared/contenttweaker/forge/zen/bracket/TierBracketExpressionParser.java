@@ -18,7 +18,6 @@ import org.openzen.zenscript.lexer.ZSTokenParser;
 import org.openzen.zenscript.parser.BracketExpressionParser;
 import org.openzen.zenscript.parser.expression.ParsedCallArguments;
 import org.openzen.zenscript.parser.expression.ParsedExpression;
-import org.openzen.zenscript.parser.expression.ParsedExpressionBool;
 import org.openzen.zenscript.parser.expression.ParsedExpressionCall;
 import org.openzen.zenscript.parser.expression.ParsedExpressionMember;
 
@@ -41,8 +40,7 @@ final class TierBracketExpressionParser implements BracketExpressionParser {
             final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, TierMetaFactory.ZEN_NAME);
             final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factory", null);
             final ParsedExpression name = BracketHelper.locationArgument(this.position, this.name);
-            final ParsedExpression marker = new ParsedExpressionBool(this.position, true);
-            final ParsedCallArguments arguments = new ParsedCallArguments(Collections.emptyList(), List.of(name, marker));
+            final ParsedCallArguments arguments = new ParsedCallArguments(Collections.emptyList(), List.of(name));
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, factoryMethod, arguments);
             return invocation.compile(scope);
         }

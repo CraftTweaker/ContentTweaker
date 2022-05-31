@@ -1,9 +1,12 @@
 package com.blamejared.contenttweaker.forge.api.zen.util;
 
+import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.forge.api.zen.rt.TierSortingStruct;
+import com.blamejared.contenttweaker.vanilla.api.action.tier.CreateTierAction;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.util.TierReference;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.NameUtil;
@@ -17,18 +20,18 @@ import net.minecraftforge.common.ForgeTier;
 import net.minecraftforge.common.TierSortingRegistry;
 import org.openzen.zencode.java.ZenCodeType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
-@ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_UTIL_PACKAGE + ".Tier")
+@ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_UTIL_PACKAGE + ".TierReference")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class ForgeTierExpansions {
 
     private ForgeTierExpansions() {}
 
     @ZenCodeType.StaticExpansionMethod
-    public static Tier of(
+    public static TierReference of(
             final String name,
             final int level,
             final int uses,
@@ -49,10 +52,9 @@ public final class ForgeTierExpansions {
         }
         // TODO("Additional checks?")
         final TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, tag);
-        final Tier tier = new ForgeTier(level, uses, speed, attackDamageBonus, enchantmentValue, tagKey, () -> Ingredient.of(repairItem.get()));
-        final List<Object> lowerTiersList = Arrays.stream(lowerTiers).map(TierSortingStruct::get).toList();
-        final List<Object> higherTiersList = Arrays.stream(higherTiers).map(TierSortingStruct::get).toList();
-        return TierSortingRegistry.registerTier(tier, tierName, lowerTiersList, higherTiersList);
+        final List<Supplier<Object>> lowerTiersList = Arrays.stream(lowerTiers).map(TierSortingStruct::get).toList();
+        final List<Supplier<Object>> higherTiersList = Arrays.stream(higherTiers).map(TierSortingStruct::get).toList();
+        return TierReference.of(tierName, level, self -> of(self, tierName, level, uses, speed, attackDamageBonus, enchantmentValue, tagKey, repairItem, lowerTiersList, higherTiersList));
     }
 
     private static void report(final String original, final String fixed, final List<String> mistakes) {
@@ -63,32 +65,41 @@ public final class ForgeTierExpansions {
         ));
     }
 
-    @ZenCodeType.Getter("name")
-    @ZenCodeType.Nullable
-    public static ResourceLocation name(final Tier $this) {
-        return TierSortingRegistry.getName($this);
+    private static Tier of(
+            final TierReference self,
+            final ResourceLocation name,
+            final int level,
+            final int uses,
+            final float speed,
+            final float attack,
+            final int enchantment,
+            final TagKey<Block> tag,
+            final ItemReference repairItem,
+            final List<Supplier<Object>> lowerTiers,
+            final List<Supplier<Object>> higherTiers
+    ) {
+        final Tier[] tier = new Tier[1];
+        ContentTweakerApi.apply(CreateTierAction.of(self, () -> {
+            final Tier forgeTier = new ForgeTier(level, uses, speed, attack, enchantment, tag, () -> Ingredient.of(repairItem.get()));
+            final List<Object> lowerTiersList = lowerTiers.stream().map(Supplier::get).toList();
+            final List<Object> higherTiersList = higherTiers.stream().map(Supplier::get).toList();
+            tier[0] = TierSortingRegistry.registerTier(forgeTier, name, lowerTiersList, higherTiersList);
+        }));
+        return tier[0];
     }
 
-    @ZenCodeType.Getter("tag")
-    @ZenCodeType.Nullable
-    public static ResourceLocation tag(final Tier $this) {
-        final TagKey<Block> tag = $this.getTag();
-        if (tag != null) {
-            return tag.location();
-        }
-        return null;
-    }
-
+    /*
     @ZenCodeType.Getter("lowerTiers")
-    public static Tier[] lowerTiers(final Tier $this) {
-        return TierSortingRegistry.getTiersLowerThan($this).toArray(Tier[]::new);
+    public static Tier[] lowerTiers(final TierReference $this) {
+        return TierSortingRegistry.getTiersLowerThan($this.unwrap()).toArray(Tier[]::new);
     }
 
     @ZenCodeType.Getter("higherTiers")
-    public static Tier[] higherTiers(final Tier $this) {
+    public static Tier[] higherTiers(final TierReference $this) {
         final List<Tier> allTiers = new ArrayList<>(TierSortingRegistry.getSortedTiers());
-        allTiers.removeAll(TierSortingRegistry.getTiersLowerThan($this));
-        allTiers.remove($this);
+        allTiers.removeAll(TierSortingRegistry.getTiersLowerThan($this.unwrap()));
+        allTiers.remove($this.unwrap());
         return allTiers.toArray(Tier[]::new);
     }
+     */
 }

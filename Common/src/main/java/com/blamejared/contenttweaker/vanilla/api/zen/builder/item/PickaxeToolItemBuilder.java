@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 public final class PickaxeToolItemBuilder extends ToolItemBuilder<PickaxeToolItemBuilder> {
     private static final class TotallyNotAPickaxe extends PickaxeItem {
         TotallyNotAPickaxe(final ToolData data, final Supplier<Properties> properties) {
-            super(data.tier(), (int) data.baseAttackDamage(), data.attackSpeed(), properties.get());
+            super(data.tier().get(), (int) data.baseAttackDamage(), data.attackSpeed(), properties.get());
         }
     }
 

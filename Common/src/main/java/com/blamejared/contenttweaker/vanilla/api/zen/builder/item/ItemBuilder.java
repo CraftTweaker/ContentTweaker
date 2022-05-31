@@ -8,7 +8,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.FoodItemProperties;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.ItemProperties;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.StandardItemProperties;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.CreativeTab;
+import com.blamejared.contenttweaker.vanilla.api.zen.util.CreativeTabReference;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
@@ -34,7 +34,7 @@ public abstract class ItemBuilder<T extends ItemBuilder<T>> {
     private Integer maxStackSize;
     private Integer maxDamage;
     private ItemReference remainder;
-    private CreativeTab group;
+    private CreativeTabReference group;
     private Rarity rarity;
     private Boolean fireResistance;
 
@@ -115,7 +115,7 @@ public abstract class ItemBuilder<T extends ItemBuilder<T>> {
     }
 
     @ZenCodeType.Method("tab")
-    public T tab(final CreativeTab tab) {
+    public T tab(final CreativeTabReference tab) {
         this.group = tab;
         return this.self();
     }
@@ -245,7 +245,7 @@ public abstract class ItemBuilder<T extends ItemBuilder<T>> {
             final Integer durability,
             final Integer stack,
             final ItemReference remainder,
-            final CreativeTab tab,
+            final CreativeTabReference tab,
             final Rarity rarity,
             final Boolean fire,
             final Integer nutrition,

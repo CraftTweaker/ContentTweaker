@@ -5,6 +5,7 @@ import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.util.TierReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.minecraft.resources.ResourceLocation;
@@ -20,11 +21,11 @@ import java.util.function.Supplier;
 @ZenCodeType.Name(ContentTweakerVanillaConstants.ITEM_BUILDER_PACKAGE + ".ToolBuilder")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public abstract class ToolItemBuilder<T extends ToolItemBuilder<T>> extends ItemBuilder<T> {
-    protected record ToolData(Tier tier, float baseAttackDamage, float attackSpeed) {}
+    protected record ToolData(Supplier<Tier> tier, float baseAttackDamage, float attackSpeed) {}
 
     private Float attackDamageBase;
     private Float attackDamageSpeed;
-    private Tier tier;
+    private TierReference tier;
 
     protected ToolItemBuilder(final BiFunction<ObjectHolder<? extends Item>, Consumer<ResourceManager>, ItemReference> registrationManager) {
         super(registrationManager);
@@ -46,7 +47,7 @@ public abstract class ToolItemBuilder<T extends ToolItemBuilder<T>> extends Item
     }
 
     @ZenCodeType.Method("tier")
-    public T tier(final Tier tier) {
+    public T tier(final TierReference tier) {
         this.tier = Objects.requireNonNull(tier);
         return this.self();
     }
@@ -62,7 +63,7 @@ public abstract class ToolItemBuilder<T extends ToolItemBuilder<T>> extends Item
         if (this.attackDamageSpeed == null) {
             throw new IllegalStateException("Unable to create a tool item without attack speed");
         }
-        return this.createTool(name, new ToolData(this.tier, this.attackDamageBase, this.attackDamageSpeed), builtProperties);
+        return this.createTool(name, new ToolData(this.tier::unwrap, this.attackDamageBase, this.attackDamageSpeed), builtProperties);
     }
 
     public abstract ObjectHolder<? extends Item> createTool(final ResourceLocation name, final ToolData toolData, final Supplier<Item.Properties> builtProperties);

@@ -1,5 +1,6 @@
 package com.blamejared.contenttweaker.vanilla.zen.factory;
 
+import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.action.RegisterObjectAction;
 import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
@@ -11,7 +12,6 @@ import com.blamejared.contenttweaker.vanilla.api.zen.builder.item.ItemBuilder;
 import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.core.api.util.ClassArchitect;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.world.item.Item;
 import org.openzen.zencode.java.ZenCodeType;
@@ -28,7 +28,7 @@ public final class ItemFactory implements ObjectFactory<Item> {
     public ItemFactory() {}
 
     private static <T extends Item> ItemReference convertAndRegister(final ObjectHolder<T> holder, final Consumer<ResourceManager> resourceProvider) {
-        CraftTweakerAPI.apply(RegisterObjectAction.of(holder, resourceProvider));
+        ContentTweakerApi.apply(RegisterObjectAction.of(holder, resourceProvider));
         return ItemReference.of(holder.id());
     }
 

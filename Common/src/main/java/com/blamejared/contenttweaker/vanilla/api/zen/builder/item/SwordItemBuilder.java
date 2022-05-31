@@ -10,12 +10,12 @@ import com.blamejared.contenttweaker.vanilla.api.resource.Language;
 import com.blamejared.contenttweaker.vanilla.api.resource.PathHelper;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.util.TierReference;
 import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Objects;
@@ -28,7 +28,7 @@ import java.util.function.Supplier;
 public final class SwordItemBuilder extends ItemBuilder<SwordItemBuilder> {
     private Integer attackDamageBase;
     private Float attackDamageSpeed;
-    private Tier tier;
+    private TierReference tier;
 
     public SwordItemBuilder(final BiFunction<ObjectHolder<? extends Item>, Consumer<ResourceManager>, ItemReference> registrationManager) {
         super(registrationManager);
@@ -50,7 +50,7 @@ public final class SwordItemBuilder extends ItemBuilder<SwordItemBuilder> {
     }
 
     @ZenCodeType.Method("tier")
-    public SwordItemBuilder tier(final Tier tier) {
+    public SwordItemBuilder tier(final TierReference tier) {
         this.tier = Objects.requireNonNull(tier);
         return this;
     }
@@ -66,7 +66,7 @@ public final class SwordItemBuilder extends ItemBuilder<SwordItemBuilder> {
         if (this.attackDamageSpeed == null) {
             throw new IllegalStateException("Unable to create a sword item without attack speed");
         }
-        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new SwordItem(this.tier, this.attackDamageBase, this.attackDamageSpeed, builtProperties.get()));
+        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new SwordItem(this.tier.unwrap(), this.attackDamageBase, this.attackDamageSpeed, builtProperties.get()));
     }
 
     @Override
