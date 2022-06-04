@@ -38,7 +38,7 @@ public final class ItemFactory implements ObjectFactory<Item> {
     }
 
     @ZenCodeType.Method("typed")
-    public static <T extends ItemBuilder<T>> T typed(final Class<T> reifiedT) {
+    public <T extends ItemBuilder<T>> T typed(final Class<T> reifiedT) {
         return ARCHITECT.construct(reifiedT, CONVERT_AND_REGISTER);
     }
 }

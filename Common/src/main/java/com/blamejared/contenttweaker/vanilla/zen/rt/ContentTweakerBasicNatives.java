@@ -5,6 +5,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConsta
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.BracketEnum;
 import com.blamejared.crafttweaker_annotations.annotations.NativeTypeRegistration;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 
@@ -21,6 +22,12 @@ public final class ContentTweakerBasicNatives {
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
     public static final class RarityNative {
         private RarityNative() {}
+    }
+
+    @NativeTypeRegistration(value = SoundEvent.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".SoundEvent")
+    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
+    public static final class SoundEventNative {
+        private SoundEventNative() {}
     }
 
     private ContentTweakerBasicNatives() {}

@@ -28,6 +28,10 @@ public final class PathHelper {
         return "models/item/%s.json".formatted(Objects.requireNonNull(name).getPath());
     }
 
+    public static String sound(final ResourceLocation id) {
+        return "sounds/%s.ogg".formatted(Objects.requireNonNull(id).getPath());
+    }
+
     public static String texture(final ResourceLocation name) {
         return "textures/%s.png".formatted(Objects.requireNonNull(name).getPath());
     }
