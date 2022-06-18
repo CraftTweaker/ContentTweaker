@@ -5,6 +5,8 @@
   "package": "com.blamejared.contenttweaker.vanilla.mixin",
   "refmap": "contenttweaker.refmap.json",
   "mixins": [
+    "BlockBehaviorAccessor",
+    "BlockBehaviorPropertiesAccessor",
     "CreativeModeTabAccessor"
   ],
   "injectors": {

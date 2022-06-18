@@ -20,12 +20,28 @@ public final class PathHelper {
 
     private PathHelper() {}
 
-    public static String lang(final String language) {
-        return "lang/%s.json".formatted(Objects.requireNonNull(language));
+    public static String blockLootTable(final ResourceLocation name) {
+        return lootTable(new ResourceLocation(Objects.requireNonNull(name).getNamespace(), "blocks/%s".formatted(name.getPath())));
+    }
+
+    public static String blockModel(final ResourceLocation name) {
+        return "models/block/%s.json".formatted(Objects.requireNonNull(name).getPath());
+    }
+
+    public static String blockState(final ResourceLocation name) {
+        return "blockstates/%s.json".formatted(Objects.requireNonNull(name).getPath());
     }
 
     public static String itemModel(final ResourceLocation name) {
         return "models/item/%s.json".formatted(Objects.requireNonNull(name).getPath());
+    }
+
+    public static String lang(final String language) {
+        return "lang/%s.json".formatted(Objects.requireNonNull(language));
+    }
+
+    public static String lootTable(final ResourceLocation table) {
+        return "loot_tables/%s.json".formatted(Objects.requireNonNull(table).getPath());
     }
 
     public static String sound(final ResourceLocation id) {

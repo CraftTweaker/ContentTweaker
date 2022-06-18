@@ -8,9 +8,16 @@ import com.blamejared.crafttweaker_annotations.annotations.NativeTypeRegistratio
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.PushReaction;
 
 public final class ContentTweakerBasicNatives {
+
+    @NativeTypeRegistration(value = Block.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".Block")
+    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
+    public static final class BlockNative {
+        private BlockNative() {}
+    }
 
     @NativeTypeRegistration(value = Item.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".Item")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)

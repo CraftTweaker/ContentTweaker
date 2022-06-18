@@ -20,6 +20,10 @@ public final class ContentTweakerVanillaConstants {
 
     private ContentTweakerVanillaConstants() {}
 
+    public static String blockTemplate(final String kind) {
+        return "block/missing_%s.png".formatted(Objects.requireNonNull(kind));
+    }
+
     public static String itemTemplate(final String kind) {
         return "item/missing_%s.png".formatted(Objects.requireNonNull(kind));
     }

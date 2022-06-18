@@ -31,6 +31,10 @@ public final class Language {
         return this;
     }
 
+    public Language block(final ResourceLocation name, final String text) {
+        return this.add("block.%s.%s".formatted(Objects.requireNonNull(name).getNamespace(), name.getPath()), Objects.requireNonNull(text));
+    }
+
     public Language item(final ResourceLocation name, final String text) {
         return this.add("item.%s.%s".formatted(Objects.requireNonNull(name).getNamespace(), name.getPath()), Objects.requireNonNull(text));
     }
