@@ -14,6 +14,7 @@ public final class ContentTweakerBrackets {
     public static void registerBrackets(final IBracketParserRegistrationHandler handler) {
         bracket(handler, "factory", new FactoryBracketExpressionParser(), FactoryBracketExpressionParser::dump);
         bracket(handler, "reference", new ReferenceBracketExpressionParser(), ReferenceBracketExpressionParser::dump);
+        handler.registerParserFor(ContentTweakerConstants.CONTENT_LOADER_ID, "resource", new ResourceLocationBracketExpressionParser(), null);
         ContentTweakerCore.core().registerPluginBrackets(handler);
     }
 
