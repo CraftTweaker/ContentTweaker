@@ -1,7 +1,7 @@
 package com.blamejared.contenttweaker.fabric.zen.bracket;
 
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
-import com.blamejared.contenttweaker.fabric.util.ContentTweakerTierRegistry;
+import com.blamejared.contenttweaker.fabric.api.util.ContentTweakerTierRegistry;
 import com.blamejared.contenttweaker.fabric.zen.rt.TierMetaFactory;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import net.minecraft.resources.ResourceLocation;

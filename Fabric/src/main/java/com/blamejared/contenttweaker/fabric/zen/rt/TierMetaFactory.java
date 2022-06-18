@@ -2,7 +2,7 @@ package com.blamejared.contenttweaker.fabric.zen.rt;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.fabric.api.zen.ContentTweakerFabricConstants;
-import com.blamejared.contenttweaker.fabric.util.ContentTweakerTierRegistry;
+import com.blamejared.contenttweaker.fabric.api.util.ContentTweakerTierRegistry;
 import com.blamejared.contenttweaker.vanilla.api.zen.util.TierReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;

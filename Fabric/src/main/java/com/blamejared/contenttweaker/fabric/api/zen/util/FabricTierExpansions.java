@@ -2,7 +2,7 @@ package com.blamejared.contenttweaker.fabric.api.zen.util;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
-import com.blamejared.contenttweaker.fabric.util.ContentTweakerTierRegistry;
+import com.blamejared.contenttweaker.fabric.api.util.ContentTweakerTierRegistry;
 import com.blamejared.contenttweaker.vanilla.api.action.tier.CreateTierAction;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
