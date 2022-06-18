@@ -7,7 +7,6 @@ import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
 import com.blamejared.contenttweaker.core.api.zen.bracket.ReferenceExpression;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
-import com.google.gson.reflect.TypeToken;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -77,12 +76,21 @@ final class ReferenceBracketExpressionParser implements BracketExpressionParser 
         return this.createExpression(position, registry, id);
     }
 
-    private ParsedExpression createExpression(final CodePosition position, final ResourceLocation registry, final ResourceLocation id) {
-        return createExpression(position, this.grabType(ResourceKey.createRegistryKey(registry)), id);
+    private ParsedExpression createExpression(final CodePosition position, final ResourceLocation registry, final ResourceLocation id) throws ParseException {
+        return createExpression(position, registry, this.grabType(ResourceKey.createRegistryKey(registry)), id);
     }
 
-    private <T, U extends Reference<T>> ParsedExpression createExpression(final CodePosition position, final ObjectType<T> type, final ResourceLocation id) {
+    private <T, U extends Reference<T>> ParsedExpression createExpression(
+            final CodePosition position,
+            final ResourceLocation registry,
+            final ObjectType<T> type,
+            final ResourceLocation id
+    ) throws ParseException {
         // Scripts run before registry creation and object registration, so no validation has to be performed
+        if (type == null) {
+            throw new ParseException(position, "The given registry " + registry + " is not known: unable to construct a reference to it");
+        }
+
         final ReferenceFactory<T, U> factory = ContentTweakerCore.core().metaRegistry().referenceFactories().findFactoryFor(type);
         return new ReferenceExpression<>(position, type, factory.type(), id);
     }
@@ -95,6 +103,6 @@ final class ReferenceBracketExpressionParser implements BracketExpressionParser 
     }
 
     private <T> ObjectType<T> grabType(final ResourceKey<? extends Registry<T>> registryKey) {
-        return ContentTweakerCore.core().metaRegistry().objectTypes().getOrUnknown(registryKey);
+        return ContentTweakerCore.core().metaRegistry().objectTypes().get(registryKey);
     }
 }

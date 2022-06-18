@@ -29,5 +29,5 @@ public interface ObjectType<T> {
     }
 
     ResourceKey<? extends Registry<T>> id();
-    Class<?> type();
+    Class<T> type();
 }

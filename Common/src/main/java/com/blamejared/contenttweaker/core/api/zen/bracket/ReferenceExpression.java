@@ -3,7 +3,6 @@ package com.blamejared.contenttweaker.core.api.zen.bracket;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.contenttweaker.core.zen.rt.ReferenceMetaFactory;
-import com.blamejared.contenttweaker.core.api.zen.rt.Unknown;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
@@ -66,8 +65,8 @@ public final class ReferenceExpression<T, U extends Reference<T>> extends Parsed
         final IScriptLoader loader = CraftTweakerAPI.getScriptRunManager().currentRunInfo().loader();
         final IZenClassRegistry classes = CraftTweakerAPI.getRegistry().getZenClassRegistry();
 
-        final Class<?> objectType = this.objectType == null? Unknown.class : this.objectType.type(); // TODO("Find a better way")
-        final String objectName = classes.getNameFor(loader, objectType).orElseThrow();
+        final Class<?> objectType = this.objectType.type();
+        final String objectName = classes.getNameFor(loader, this.objectType.type()).orElseThrow();
 
         final String referenceName = this.buildGenericReferenceName(loader, classes, objectType);
 

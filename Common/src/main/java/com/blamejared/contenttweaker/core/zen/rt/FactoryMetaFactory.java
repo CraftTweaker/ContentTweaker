@@ -25,7 +25,7 @@ public final class FactoryMetaFactory {
     public static <T, U extends ObjectFactory<T>> U factory(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation registryId) {
         final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
         final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
-        final ObjectType<T> type = metaRegistry.objectTypes().getOrUnknown(key);
+        final ObjectType<T> type = metaRegistry.objectTypes().get(key);
         final ObjectFactoryMapping<T, U> factoryClass = metaRegistry.factoryMappings().findMappingFor(type);
         return factoryClass.of();
     }

@@ -3,7 +3,6 @@ package com.blamejared.contenttweaker.core.zen.bracket;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
-import com.blamejared.contenttweaker.core.api.zen.rt.Unknown;
 import com.blamejared.contenttweaker.core.zen.rt.FactoryMetaFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
@@ -102,11 +101,15 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         );
     }
 
-    private <T> ParsedExpression createExpression(final CodePosition position, final ResourceKey<? extends Registry<T>> registryKey) {
-        return new BracketMetaFactoryExpression<>(position, this.grabType(registryKey));
+    private <T> ParsedExpression createExpression(final CodePosition position, final ResourceKey<? extends Registry<T>> registryKey) throws ParseException {
+        return new BracketMetaFactoryExpression<>(position, this.grabType(position, registryKey));
     }
 
-    private <T> ObjectType<T> grabType(final ResourceKey<? extends Registry<T>> registryKey) {
-        return ContentTweakerCore.core().metaRegistry().objectTypes().getOrUnknown(registryKey);
+    private <T> ObjectType<T> grabType(final CodePosition position, final ResourceKey<? extends Registry<T>> registryKey) throws ParseException {
+        final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(registryKey);
+        if (type == null) {
+            throw new ParseException(position, "Type for " + registryKey + " is not known: unable to create a factory for it");
+        }
+        return type;
     }
 }
