@@ -1,6 +1,7 @@
 package com.blamejared.contenttweaker.vanilla;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
+import com.blamejared.contenttweaker.core.api.object.ObjectResolver;
 import com.blamejared.contenttweaker.core.api.object.ReferenceFactory;
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPlugin;
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPluginProvider;
@@ -8,6 +9,7 @@ import com.blamejared.contenttweaker.core.api.plugin.CustomBracketRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.FactoryMappingRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ObjectTypeRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ReferenceFactoryRegistration;
+import com.blamejared.contenttweaker.core.api.plugin.ResolverRegistration;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.SoundEventReference;
 import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
@@ -40,6 +42,13 @@ public final class ContentTweakerVanillaPlugin implements ContentTweakerPluginPr
         registration.register(VanillaObjectTypes.BLOCK, ReferenceFactory.of(new TypeToken<BlockReference>() {}, BlockReference::of));
         registration.register(VanillaObjectTypes.ITEM, ReferenceFactory.of(new TypeToken<ItemReference>() {}, ItemReference::of));
         registration.register(VanillaObjectTypes.SOUND_EVENT, ReferenceFactory.of(new TypeToken<SoundEventReference>() {}, SoundEventReference::of));
+    }
+
+    @Override
+    public void registerResolvers(final ResolverRegistration registration) {
+        registration.register(VanillaObjectTypes.BLOCK, ObjectResolver.of(VanillaObjectTypes.BLOCK));
+        registration.register(VanillaObjectTypes.ITEM, ObjectResolver.of(VanillaObjectTypes.ITEM));
+        registration.register(VanillaObjectTypes.SOUND_EVENT, ObjectResolver.of(VanillaObjectTypes.SOUND_EVENT));
     }
 
     @Override

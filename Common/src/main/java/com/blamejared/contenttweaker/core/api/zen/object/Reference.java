@@ -1,15 +1,16 @@
 package com.blamejared.contenttweaker.core.api.zen.object;
 
+import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
-import com.blamejared.crafttweaker.api.util.GenericUtil;
-import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 import org.openzen.zencode.java.ZenCodeType;
 
-import java.util.Objects;
+import java.util.Optional;
 
 @ZenCodeType.Name(ContentTweakerZenConstants.OBJECT_PACKAGE + ".Reference")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
@@ -25,9 +26,16 @@ public abstract class Reference<T> { // Designed for extension by stuff like Ite
         this.resolved = null;
     }
 
+    @ZenCodeType.Getter("typeId")
+    public final ResourceLocation typeId() {
+        return this.type.id();
+    }
+
+    @Nullable
     @ZenCodeType.Getter("registryId")
+    @ZenCodeType.Nullable
     public final ResourceLocation registryId() {
-        return this.type().id().location();
+        return Optional.ofNullable(this.type().key()).map(ResourceKey::location).orElse(null);
     }
 
     @ZenCodeType.Getter("id")
@@ -41,7 +49,7 @@ public abstract class Reference<T> { // Designed for extension by stuff like Ite
 
     public final T get() {
         if (this.resolved == null) {
-            this.resolved = GenericUtil.uncheck(Objects.requireNonNull(Registry.REGISTRY.get(this.registryId())).get(this.id()));
+            this.resolved = ContentTweakerApi.get().resolve(this.type(), this.id());
         }
         if (this.resolved == null) {
             throw new IllegalStateException("Cannot resolve object at this time in %s".formatted(this));

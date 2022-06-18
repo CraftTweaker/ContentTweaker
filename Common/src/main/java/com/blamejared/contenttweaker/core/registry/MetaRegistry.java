@@ -4,11 +4,13 @@ public final class MetaRegistry {
     private final FactoryMappingsRegistry factoryMappings;
     private final ObjectTypeRegistry objectTypes;
     private final ReferenceFactoryRegistry referenceFactories;
+    private final ResolverRegistry resolverRegistry;
 
     private MetaRegistry() {
         this.factoryMappings = new FactoryMappingsRegistry();
         this.objectTypes = new ObjectTypeRegistry();
         this.referenceFactories = new ReferenceFactoryRegistry();
+        this.resolverRegistry = new ResolverRegistry();
     }
 
     public static MetaRegistry of() {
@@ -25,5 +27,9 @@ public final class MetaRegistry {
 
     public ReferenceFactoryRegistry referenceFactories() {
         return this.referenceFactories;
+    }
+
+    public ResolverRegistry resolvers() {
+        return this.resolverRegistry;
     }
 }

@@ -38,6 +38,7 @@ public final class PluginManager {
         objectTypeRegistry.registerTypes(ObjectTypeRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerObjectTypes)));
         metaRegistry.factoryMappings().registerMappings(objectTypeRegistry, FactoryMappingRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerFactoryMappings)));
         metaRegistry.referenceFactories().registerFactories(objectTypeRegistry, ReferenceFactoryRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerReferenceFactories)));
+        metaRegistry.resolvers().registerResolvers(objectTypeRegistry, ResolverRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerResolvers)));
     }
 
     public void registerPluginBrackets(final IBracketParserRegistrationHandler handler) {

@@ -63,7 +63,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         }
 
         private ParsedExpression findArgument() throws CompileException {
-            return BracketHelper.parseToCompile(this.position, () -> BracketHelper.locationArgument(this.position, this.type.id().location()));
+            return BracketHelper.parseToCompile(this.position, () -> BracketHelper.locationArgument(this.position, this.type.id()));
         }
 
         private <L> IParsedType readParsedType(final Class<L> type) throws CompileException {

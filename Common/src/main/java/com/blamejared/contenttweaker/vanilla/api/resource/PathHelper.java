@@ -53,7 +53,7 @@ public final class PathHelper {
     }
 
     public static String tag(final ObjectType<?> type, final ResourceLocation name) {
-        final String path = SPECIAL_TAGS.get().containsKey(Objects.requireNonNull(type))? SPECIAL_TAGS.get().get(type) : type.id().location().getPath();
+        final String path = SPECIAL_TAGS.get().containsKey(Objects.requireNonNull(type))? SPECIAL_TAGS.get().get(type) : Objects.requireNonNull(type.key()).location().getPath();
         return "tags/%s/%s.json".formatted(path, Objects.requireNonNull(name).getPath());
     }
 

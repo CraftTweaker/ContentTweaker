@@ -97,9 +97,9 @@ public final class ReferenceExpression<T, U extends Reference<T>> extends Parsed
     }
 
     private List<ParsedExpression> arguments() {
-        final ParsedExpression registryId = BracketHelper.locationArgument(this.position, this.objectType.id().location());
+        final ParsedExpression typeId = BracketHelper.locationArgument(this.position, this.objectType.id());
         final ParsedExpression objectId = BracketHelper.locationArgument(this.position, this.objectId);
-        return List.of(registryId, objectId);
+        return List.of(typeId, objectId);
     }
 
     @Override

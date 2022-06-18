@@ -24,20 +24,18 @@ public final class CoreMetaFactory {
 
     @SuppressWarnings("unused") // Reified types need to exist, but we do not use them
     @ZenCodeType.Method("factory")
-    public static <T, U extends ObjectFactory<T>> U factory(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation registryId) {
+    public static <T, U extends ObjectFactory<T>> U factory(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation typeId) {
         final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
-        final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
-        final ObjectType<T> type = metaRegistry.objectTypes().get(key);
+        final ObjectType<T> type = metaRegistry.objectTypes().get(typeId);
         final ObjectFactoryMapping<T, U> factoryClass = metaRegistry.factoryMappings().findMappingFor(type);
         return factoryClass.of();
     }
 
     @SuppressWarnings("unused") // Reified types
     @ZenCodeType.Method("reference")
-    public static <T, U extends Reference<T>> U reference(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation registryId, final ResourceLocation id) {
+    public static <T, U extends Reference<T>> U reference(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation typeId, final ResourceLocation id) {
         final MetaRegistry metaRegistry = ContentTweakerCore.core().metaRegistry();
-        final ResourceKey<? extends Registry<T>> key = ResourceKey.createRegistryKey(registryId);
-        final ObjectType<T> type = metaRegistry.objectTypes().get(key);
+        final ObjectType<T> type = metaRegistry.objectTypes().get(typeId);
         final ReferenceFactory<T, U> factory = metaRegistry.referenceFactories().findFactoryFor(type);
         return factory.of(type, id);
     }

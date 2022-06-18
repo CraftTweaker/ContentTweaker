@@ -7,6 +7,7 @@ import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+// TODO("Find a way to make non-registry backed work: maybe ask Winston? Or rewire GameRegistry and rework resolvers to resolve to it?")
 public final class RegisterObjectAction<T> implements ContentTweakerAction {
     private final ObjectHolder<T> holder;
     private final Consumer<ResourceManager> resourceProvider;
