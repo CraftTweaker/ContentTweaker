@@ -17,15 +17,6 @@ import org.openzen.zenscript.parser.expression.ParsedExpression;
 import java.util.stream.Stream;
 
 public final class ItemBracketExpressionParser implements BracketExpressionParser {
-    static Stream<String> dump() {
-        return Registry.ITEM
-                .keySet()
-                .stream()
-                .sorted()
-                .map(ResourceLocation::toString)
-                .map("<item:%s>"::formatted);
-    }
-
     @Override
     public ParsedExpression parse(final CodePosition position, final ZSTokenParser tokens) throws ParseException {
         final String contents = ParseUtil.readBracketContent(position, tokens);
