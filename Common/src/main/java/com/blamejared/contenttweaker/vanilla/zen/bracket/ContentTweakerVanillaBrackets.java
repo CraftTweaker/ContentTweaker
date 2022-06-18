@@ -10,5 +10,6 @@ public final class ContentTweakerVanillaBrackets {
         registration.registerBracket("tab", new CreativeTabBracketExpressionParser(), CreativeTabBracketExpressionParser::dump);
         registration.registerBracket("material", new MaterialBracketExpressionParser(), MaterialBracketExpressionParser::dump);
         registration.registerBracket("materialcolor", new MaterialColorBracketExpressionParser(), MaterialColorBracketExpressionParser::dump);
+        registration.registerBracket("soundtype", new SoundTypeBracketExpressionParser(), SoundTypeBracketExpressionParser::dump);
     }
 }
