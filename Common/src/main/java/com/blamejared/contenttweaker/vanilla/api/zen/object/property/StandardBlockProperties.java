@@ -9,7 +9,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.util.MaterialReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.util.SoundTypeReference;
 import com.blamejared.contenttweaker.vanilla.mixin.BlockBehaviorAccessor;
 import com.blamejared.contenttweaker.vanilla.mixin.BlockBehaviorPropertiesAccessor;
-import com.blamejared.contenttweaker.vanilla.zen.rt.MaterialColorMetaFactory;
+import com.blamejared.contenttweaker.vanilla.zen.rt.VanillaMetaFactory;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.SoundType;
@@ -29,7 +29,7 @@ public final class StandardBlockProperties extends BlockProperties {
     }
 
     public BlockPropertyFunctions.MaterialColorFinder materialColor() {
-        return this.resolveProperties().contenttweaker$materialColor().andThen(it -> MaterialColorMetaFactory.factory(it.id, it.col))::apply;
+        return this.resolveProperties().contenttweaker$materialColor().andThen(it -> VanillaMetaFactory.materialColor(it.id, it.col))::apply;
     }
 
     public boolean hasCollision() {

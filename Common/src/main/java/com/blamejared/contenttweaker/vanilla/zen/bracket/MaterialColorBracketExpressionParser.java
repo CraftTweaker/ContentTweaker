@@ -1,6 +1,6 @@
 package com.blamejared.contenttweaker.vanilla.zen.bracket;
 
-import com.blamejared.contenttweaker.vanilla.zen.rt.MaterialColorMetaFactory;
+import com.blamejared.contenttweaker.vanilla.zen.rt.VanillaMetaFactory;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.google.common.base.Suppliers;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
@@ -35,8 +35,8 @@ public final class MaterialColorBracketExpressionParser implements BracketExpres
 
         @Override
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
-            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, MaterialColorMetaFactory.ZEN_NAME);
-            final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factory", null);
+            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, VanillaMetaFactory.ZEN_NAME);
+            final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "materialColor", null);
             final ParsedExpression id = new ParsedExpressionInt(this.position, Integer.toString((this.data >> 24) & 0xFF));
             final ParsedExpression color = new ParsedExpressionInt(this.position, Integer.toString(this.data & 0xFFFFFF));
             final ParsedCallArguments arguments = new ParsedCallArguments(Collections.emptyList(), Arrays.asList(id, color));

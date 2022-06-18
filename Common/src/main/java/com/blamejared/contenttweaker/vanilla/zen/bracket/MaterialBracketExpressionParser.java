@@ -2,7 +2,7 @@ package com.blamejared.contenttweaker.vanilla.zen.bracket;
 
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
 import com.blamejared.contenttweaker.vanilla.api.util.MaterialRegistry;
-import com.blamejared.contenttweaker.vanilla.zen.rt.MaterialMetaFactory;
+import com.blamejared.contenttweaker.vanilla.zen.rt.VanillaMetaFactory;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.shared.CodePosition;
@@ -32,8 +32,8 @@ final class MaterialBracketExpressionParser implements BracketExpressionParser {
 
         @Override
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
-            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, MaterialMetaFactory.ZEN_NAME);
-            final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factory", null);
+            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, VanillaMetaFactory.ZEN_NAME);
+            final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "material", null);
             final ParsedExpression id = BracketHelper.locationArgument(this.position, this.id);
             final ParsedCallArguments arguments = new ParsedCallArguments(Collections.emptyList(), Collections.singletonList(id));
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, factoryMethod, arguments);

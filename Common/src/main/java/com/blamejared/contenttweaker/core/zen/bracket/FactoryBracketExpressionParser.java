@@ -3,7 +3,7 @@ package com.blamejared.contenttweaker.core.zen.bracket;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
-import com.blamejared.contenttweaker.core.zen.rt.FactoryMetaFactory;
+import com.blamejared.contenttweaker.core.zen.rt.CoreMetaFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
@@ -38,7 +38,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
 
         @Override
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
-            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, FactoryMetaFactory.ZEN_NAME);
+            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, CoreMetaFactory.ZEN_NAME);
             final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factory", null);
             final ParsedCallArguments arguments = this.makeCall();
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, factoryMethod, arguments);

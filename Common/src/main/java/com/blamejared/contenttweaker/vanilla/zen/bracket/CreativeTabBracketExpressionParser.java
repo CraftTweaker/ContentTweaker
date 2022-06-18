@@ -1,7 +1,7 @@
 package com.blamejared.contenttweaker.vanilla.zen.bracket;
 
 import com.blamejared.contenttweaker.vanilla.mixin.CreativeModeTabAccessor;
-import com.blamejared.contenttweaker.vanilla.zen.rt.TabMetaFactory;
+import com.blamejared.contenttweaker.vanilla.zen.rt.VanillaMetaFactory;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.google.common.base.CaseFormat;
 import net.minecraft.world.item.CreativeModeTab;
@@ -33,8 +33,8 @@ final class CreativeTabBracketExpressionParser implements BracketExpressionParse
 
         @Override
         public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
-            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, TabMetaFactory.ZEN_NAME);
-            final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "factory", null);
+            final ParsedExpression runtimeClass = ParseUtil.staticMemberExpression(this.position, VanillaMetaFactory.ZEN_NAME);
+            final ParsedExpression factoryMethod = new ParsedExpressionMember(this.position, runtimeClass, "tab", null);
             final ParsedExpression name = new ParsedExpressionString(this.position, this.name, false);
             final ParsedCallArguments arguments = new ParsedCallArguments(Collections.emptyList(), Collections.singletonList(name));
             final ParsedExpression invocation = new ParsedExpressionCall(this.position, factoryMethod, arguments);

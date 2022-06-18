@@ -2,7 +2,7 @@ package com.blamejared.contenttweaker.core.api.zen.bracket;
 
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
-import com.blamejared.contenttweaker.core.zen.rt.ReferenceMetaFactory;
+import com.blamejared.contenttweaker.core.zen.rt.CoreMetaFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
@@ -54,7 +54,7 @@ public final class ReferenceExpression<T, U extends Reference<T>> extends Parsed
 
     @Override
     public IPartialExpression compile(final ExpressionScope scope) throws CompileException {
-        final ParsedExpression metaFactory = ParseUtil.staticMemberExpression(this.position, ReferenceMetaFactory.ZEN_NAME);
+        final ParsedExpression metaFactory = ParseUtil.staticMemberExpression(this.position, CoreMetaFactory.ZEN_NAME);
         final ParsedExpression of = new ParsedExpressionMember(this.position, metaFactory, "reference", null);
         final ParsedCallArguments arguments = new ParsedCallArguments(this.generics(), this.arguments());
         final ParsedExpression invocation = new ParsedExpressionCall(this.position, of, arguments);

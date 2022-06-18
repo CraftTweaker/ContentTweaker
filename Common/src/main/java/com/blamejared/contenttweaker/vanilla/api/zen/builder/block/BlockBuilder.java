@@ -3,7 +3,7 @@ package com.blamejared.contenttweaker.vanilla.api.zen.builder.block;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
-import com.blamejared.contenttweaker.core.zen.rt.FactoryMetaFactory;
+import com.blamejared.contenttweaker.core.zen.rt.CoreMetaFactory;
 import com.blamejared.contenttweaker.vanilla.api.resource.LootTable;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.builder.item.BlockItemBuilder;
@@ -479,7 +479,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
 
     private void makeBlockItem(final BlockReference reference) {
         // TODO("This references non-api: fix")
-        FactoryMetaFactory.factory(Item.class, ItemFactory.class, new ResourceLocation("item"))
+        CoreMetaFactory.factory(Item.class, ItemFactory.class, new ResourceLocation("item"))
                 .typed(BlockItemBuilder.class)
                 .block(reference)
                 .tab(this.tab)
