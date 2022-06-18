@@ -14,27 +14,22 @@ public final class FoodItemProperties extends ItemProperties {
         super(reference, "food");
     }
 
-    @ZenCodeType.Getter("nutrition")
     public int nutrition() {
         return this.resolveProperties().getNutrition();
     }
 
-    @ZenCodeType.Getter("saturationModifier")
     public float saturationModifier() {
         return this.resolveProperties().getSaturationModifier();
     }
 
-    @ZenCodeType.Getter("isMeat")
     public boolean isMeat() {
         return this.resolveProperties().isMeat();
     }
 
-    @ZenCodeType.Getter("canAlwaysEat")
     public boolean canAlwaysEat() {
         return this.resolveProperties().canAlwaysEat();
     }
 
-    @ZenCodeType.Getter("fastFood")
     public boolean fastFood() {
         return this.resolveProperties().isFastFood();
     }

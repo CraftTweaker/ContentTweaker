@@ -20,17 +20,14 @@ public final class StandardItemProperties extends ItemProperties {
         super(reference, "standard");
     }
 
-    @ZenCodeType.Getter("maxStackSize")
     public int maxStackSize() {
         return this.resolve().getMaxStackSize();
     }
 
-    @ZenCodeType.Getter("maxDamage")
     public int maxDamage() {
         return this.resolve().getMaxDamage();
     }
 
-    @ZenCodeType.Getter("craftingRemainingItem")
     public ItemReference craftingRemainingItem() {
         return Optional.ofNullable(this.resolve().getCraftingRemainingItem())
                 .map(Registry.ITEM::getKey)
@@ -38,8 +35,6 @@ public final class StandardItemProperties extends ItemProperties {
                 .orElse(ItemReference.AIR);
     }
 
-    @ZenCodeType.Getter("category")
-    @ZenCodeType.Nullable
     public CreativeTabReference category() {
         final CreativeModeTab tab = this.resolve().getItemCategory();
         if (tab == null) {
@@ -48,12 +43,10 @@ public final class StandardItemProperties extends ItemProperties {
         return CreativeTabReference.of(((CreativeModeTabAccessor) tab).contenttweaker$langId(), () -> tab);
     }
 
-    @ZenCodeType.Getter("rarity")
     public Rarity rarity() {
         return this.resolve().getRarity(this.resolve().getDefaultInstance());
     }
 
-    @ZenCodeType.Getter("isFireResistant")
     public boolean isFireResistant() {
         return this.resolve().isFireResistant();
     }
