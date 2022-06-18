@@ -36,7 +36,11 @@ public abstract class RegistryMixin {
     @Unique
     private static <T> void contenttweaker$freezeBuiltins$registerCotObjects0(final Registry<T> registry) {
         final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(registry.key());
-        if (type == null) return;
+        if (type == null) {
+            ContentTweakerCore.LOGGER.info("Unknown registry '{}': are you missing object types for it?", registry.key());
+            return;
+        }
+        ContentTweakerCore.LOGGER.info("Registering objects for type '{}'", type);
         try {
             ContentTweakerCore.core().registryButler().executeForRegistry(FabricGameRegistry.of(registry, type));
         } catch (final Throwable e) {

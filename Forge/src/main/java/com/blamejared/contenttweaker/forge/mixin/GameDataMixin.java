@@ -76,7 +76,11 @@ public abstract class GameDataMixin {
             final BiFunction<ObjectType<T>, U, GameRegistry<T>> creator
     ) {
         final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(key);
-        if (type == null) return;
+        if (type == null) {
+            ContentTweakerCore.LOGGER.info("Unknown registry '{}': are you missing an object type for it?", key);
+            return;
+        }
+        ContentTweakerCore.LOGGER.info("Registering objects for type '{}'", type);
         try {
             ContentTweakerCore.core().registryButler().executeForRegistry(creator.apply(type, registry));
         } catch (final Throwable e) {
