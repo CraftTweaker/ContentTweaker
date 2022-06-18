@@ -100,7 +100,7 @@ final class RuntimePack {
         final Collection<ResourceLocation> resources = new ArrayList<>();
         final Path directory = this.pathOf(s1);
         try {
-            Files.walkFileTree(directory, Set.of(), i, new ResourceGatherer(directory, p -> resources.add(this.resourceOf(p))));
+            Files.walkFileTree(directory, Set.of(), i, new ResourceGatherer(directory, p -> resources.add(this.resourceOf(directory.resolve(p)))));
         } catch (final IOException e) {
             return Collections.emptySet();
         }
@@ -132,10 +132,10 @@ final class RuntimePack {
     }
 
     private Path pathOf(final String resource) {
-        return this.fs.getPath(resource);
+        return this.fs.getPath(resource).toAbsolutePath();
     }
 
     private ResourceLocation resourceOf(final Path path) {
-        return new ResourceLocation(this.targetNamespace, path.toString());
+        return new ResourceLocation(this.targetNamespace, this.fs.getPath("/").relativize(path).toString());
     }
 }
