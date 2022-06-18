@@ -8,5 +8,6 @@ public final class ContentTweakerVanillaBrackets {
     public static void register(final CustomBracketRegistration registration) {
         registration.registerBracket("item", new ItemBracketExpressionParser()); // Dump already available through CT
         registration.registerBracket("tab", new CreativeTabBracketExpressionParser(), CreativeTabBracketExpressionParser::dump);
+        registration.registerBracket("materialcolor", new MaterialColorBracketExpressionParser(), MaterialColorBracketExpressionParser::dump);
     }
 }
