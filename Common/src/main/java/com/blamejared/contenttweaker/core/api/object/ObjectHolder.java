@@ -25,6 +25,11 @@ public interface ObjectHolder<T> extends Supplier<T> {
             public T get() {
                 return objectCreator.get();
             }
+
+            @Override
+            public String toString() {
+                return "%s/%s".formatted(this.type(), this.id());
+            }
         };
     }
 
