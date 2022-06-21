@@ -1,5 +1,8 @@
 package com.blamejared.contenttweaker.core.api.zen.bracket;
 
+import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
+import com.blamejared.contenttweaker.core.api.object.ObjectType;
+import com.blamejared.contenttweaker.core.api.registry.GameRegistry;
 import com.blamejared.contenttweaker.core.api.zen.rt.ResourceLocationNative;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import net.minecraft.ResourceLocationException;
@@ -16,7 +19,9 @@ import org.openzen.zenscript.parser.expression.ParsedExpressionString;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public final class BracketHelper {
     @FunctionalInterface
@@ -59,5 +64,25 @@ public final class BracketHelper {
             exception.initCause(e);
             throw exception;
         }
+    }
+
+    public static <T> Supplier<Stream<String>> dumpAllOf(final String bracket, final ObjectType<T> type) {
+        return dumpAllOf(bracket, type, ResourceLocation::toString);
+    }
+
+    public static <T> Supplier<Stream<String>> dumpAllOf(final String bracket, final ObjectType<T> type, final Function<ResourceLocation, String> idToString) {
+        Objects.requireNonNull(bracket);
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(idToString);
+        final String bracketFormat = '<' + bracket + ":%s>";
+        return () -> {
+            final GameRegistry<T> registry = ContentTweakerApi.get().findResolver(type).registry();
+            return registry.all()
+                    .stream()
+                    .map(registry::nameOf)
+                    .map(idToString)
+                    .filter(Objects::nonNull)
+                    .map(bracketFormat::formatted);
+        };
     }
 }
