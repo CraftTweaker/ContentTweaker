@@ -3,7 +3,7 @@ package com.blamejared.contenttweaker.vanilla.zen.bracket;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
 import com.blamejared.contenttweaker.core.api.zen.bracket.ReferenceExpression;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
-import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.resources.ResourceLocation;

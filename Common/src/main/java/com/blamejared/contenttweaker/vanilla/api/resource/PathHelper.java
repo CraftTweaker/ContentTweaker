@@ -1,7 +1,7 @@
 package com.blamejared.contenttweaker.vanilla.api.resource;
 
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
-import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.google.common.base.Suppliers;
 import net.minecraft.resources.ResourceLocation;
 

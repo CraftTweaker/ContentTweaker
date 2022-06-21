@@ -5,7 +5,7 @@ import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.builder.sound.SoundEventBuilder;
-import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.sounds.SoundEvent;
 import org.openzen.zencode.java.ZenCodeType;

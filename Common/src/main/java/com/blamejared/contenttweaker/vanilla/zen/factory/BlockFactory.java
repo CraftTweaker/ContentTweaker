@@ -11,7 +11,7 @@ import com.blamejared.contenttweaker.core.api.util.ClassArchitect;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.builder.block.BlockBuilder;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
-import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.world.level.block.Block;
 import org.openzen.zencode.java.ZenCodeType;

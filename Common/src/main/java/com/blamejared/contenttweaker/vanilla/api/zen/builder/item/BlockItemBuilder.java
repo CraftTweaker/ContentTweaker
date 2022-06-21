@@ -11,7 +11,7 @@ import com.blamejared.contenttweaker.vanilla.api.resource.PathHelper;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
-import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
