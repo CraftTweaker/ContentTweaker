@@ -5,7 +5,7 @@ import com.blamejared.contenttweaker.core.api.plugin.CustomBracketRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.FactoryMappingRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ObjectTypeRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ReferenceFactoryRegistration;
-import com.blamejared.contenttweaker.core.api.plugin.ResolverRegistration;
+import com.blamejared.contenttweaker.core.api.plugin.RegistryResolverRegistration;
 import net.minecraft.resources.ResourceLocation;
 
 record DecoratedContentTweakerPlugin(ResourceLocation id, ContentTweakerPluginProvider wrapped) implements ContentTweakerPluginProvider {
@@ -26,7 +26,7 @@ record DecoratedContentTweakerPlugin(ResourceLocation id, ContentTweakerPluginPr
     }
 
     @Override
-    public void registerResolvers(final ResolverRegistration registration) {
+    public void registerResolvers(final RegistryResolverRegistration registration) {
         this.wrapped().registerResolvers(registration);
     }
 
