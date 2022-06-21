@@ -13,4 +13,5 @@ public interface ApiBridge {
     ResourceManager resourceManager();
 
     <T> RegistryResolver<T> findResolver(final ObjectType<T> type);
+    <T> GameRegistry<T> findRegistryFromKey(final ObjectType<T> type, final ResourceKey<? extends Registry<T>> key);
 }

@@ -42,7 +42,7 @@ public abstract class RegistryMixin {
         }
         ContentTweakerCore.LOGGER.info("Registering objects for type '{}'", type);
         try {
-            ContentTweakerCore.core().registryButler().executeForRegistry(FabricGameRegistry.of(registry, type));
+            FabricGameRegistry.of(registry, type).doRegistration();
         } catch (final Throwable e) {
             CraftTweakerAPI.LOGGER.error("A critical internal ContentTweaker error occurred", e);
             ContentTweakerCore.LOGGER.error("A critical internal ContentTweaker error occurred", e);

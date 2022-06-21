@@ -2,9 +2,7 @@ package com.blamejared.contenttweaker.forge.mixin;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
-import com.blamejared.contenttweaker.core.registry.GameRegistry;
-import com.blamejared.contenttweaker.forge.registry.ForgeGameRegistry;
-import com.blamejared.contenttweaker.forge.registry.VanillaGameRegistry;
+import com.blamejared.contenttweaker.forge.registry.GameRegistryFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -20,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.function.BiFunction;
 
 @Mixin(GameData.class)
 public abstract class GameDataMixin {
@@ -61,20 +57,16 @@ public abstract class GameDataMixin {
 
     @Unique
     private static <T extends IForgeRegistryEntry<T>> void contenttweaker$postRegistryEventDispatch$registerCotObjects0(final ForgeRegistry<T> registry) {
-        contenttweaker$registerCotObjects0(registry, registry.getRegistryKey(), ForgeGameRegistry::of);
+        contenttweaker$registerCotObjects0(registry.getRegistryKey());
     }
 
     @Unique
     private static <T> void contenttweaker$postVanillaRegisterEvent$registerCotObjects0(final Registry<T> registry) {
-        contenttweaker$registerCotObjects0(registry, registry.key(), VanillaGameRegistry::of);
+        contenttweaker$registerCotObjects0(registry.key());
     }
 
     @Unique
-    private static <T, U> void contenttweaker$registerCotObjects0(
-            final U registry,
-            final ResourceKey<? extends Registry<T>> key,
-            final BiFunction<ObjectType<T>, U, GameRegistry<T>> creator
-    ) {
+    private static <T> void contenttweaker$registerCotObjects0(final ResourceKey<? extends Registry<T>> key) {
         final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(key);
         if (type == null) {
             ContentTweakerCore.LOGGER.info("Unknown registry '{}': are you missing an object type for it?", key);
@@ -82,7 +74,7 @@ public abstract class GameDataMixin {
         }
         ContentTweakerCore.LOGGER.info("Registering objects for type '{}'", type);
         try {
-            ContentTweakerCore.core().registryButler().executeForRegistry(creator.apply(type, registry));
+            GameRegistryFactory.findRegistryFromTypeAlone(type).doRegistration();
         } catch (final Throwable e) {
             CraftTweakerAPI.LOGGER.error("A critical internal ContentTweaker error occurred", e);
             ContentTweakerCore.LOGGER.error("A critical internal ContentTweaker error occurred", e);

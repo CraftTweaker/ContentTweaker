@@ -25,4 +25,9 @@ public final class ContentTweakerApiBridge implements ApiBridge {
     public <T> RegistryResolver<T> findResolver(final ObjectType<T> type) {
         return ContentTweakerCore.core().metaRegistry().registryResolvers().findResolverFor(type);
     }
+
+    @Override
+    public <T> GameRegistry<T> findRegistryFromKey(final ObjectType<T> type, final ResourceKey<? extends Registry<T>> key) {
+        return ServiceManager.platform().findRegistryFromKey(type, key);
+    }
 }
