@@ -8,7 +8,7 @@ version="${file.jarVersion}"
 displayName="ContentTweaker"
 displayURL="https://minecraft.curseforge.com/projects/contenttweaker"
 logoFile= "contenttweaker_logo.png"
-authors="Jaredlll08, kindlich, Skysom and StanH"
+authors="Jaredlll08, kindlich, Skysom, StanH, and TheSilkMiner"
 description="Customize your Minecraft experience with new blocks and items!"
 [[dependencies.contenttweaker]]
     modId="forge"
