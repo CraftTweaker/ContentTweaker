@@ -6,9 +6,14 @@ import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.BracketEnum;
 import com.blamejared.crafttweaker_annotations.annotations.NativeTypeRegistration;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
 
 public final class ContentTweakerBasicNatives {
@@ -19,17 +24,28 @@ public final class ContentTweakerBasicNatives {
         private BlockNative() {}
     }
 
+    @NativeTypeRegistration(value = CreativeModeTab.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".CreativeTab")
+    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
+    public static final class CreativeTabNative {
+        private CreativeTabNative() {}
+    }
+
     @NativeTypeRegistration(value = Item.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".Item")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
     public static final class ItemNative {
         private ItemNative() {}
     }
 
-    @BracketEnum("minecraft:item/rarity")
-    @NativeTypeRegistration(value = Rarity.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".ItemRarity")
+    @NativeTypeRegistration(value = Material.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".Material")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-    public static final class RarityNative {
-        private RarityNative() {}
+    public static final class MaterialNative {
+        private MaterialNative() {}
+    }
+
+    @NativeTypeRegistration(value = MaterialColor.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".MaterialColor")
+    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
+    public static final class MaterialColorNative {
+        private MaterialColorNative() {}
     }
 
     @BracketEnum("minecraft:material/pushreaction")
@@ -39,10 +55,29 @@ public final class ContentTweakerBasicNatives {
         private PushReactionNative() {}
     }
 
+    @BracketEnum("minecraft:item/rarity")
+    @NativeTypeRegistration(value = Rarity.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".ItemRarity")
+    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
+    public static final class RarityNative {
+        private RarityNative() {}
+    }
+
     @NativeTypeRegistration(value = SoundEvent.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".SoundEvent")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
     public static final class SoundEventNative {
         private SoundEventNative() {}
+    }
+
+    @NativeTypeRegistration(value = SoundType.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".SoundType")
+    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
+    public static final class SoundTypeNative {
+        private SoundTypeNative() {}
+    }
+
+    @NativeTypeRegistration(value = Tier.class, zenCodeName = ContentTweakerVanillaConstants.VANILLA_NATIVE_PACKAGE + ".Tier")
+    @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
+    public static final class TierNative {
+        private TierNative() {}
     }
 
     private ContentTweakerBasicNatives() {}

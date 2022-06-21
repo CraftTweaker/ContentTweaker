@@ -2,7 +2,7 @@ package com.blamejared.contenttweaker.vanilla.api.zen.object.property;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.MaterialColorReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.object.MaterialColorReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.world.level.block.state.BlockState;
 import org.openzen.zencode.java.ZenCodeType;

@@ -10,8 +10,8 @@ import com.blamejared.contenttweaker.vanilla.api.resource.Language;
 import com.blamejared.contenttweaker.vanilla.api.resource.PathHelper;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.TierReference;
-import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
+import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -66,7 +66,7 @@ public final class SwordItemBuilder extends ItemBuilder<SwordItemBuilder> {
         if (this.attackDamageSpeed == null) {
             throw new IllegalStateException("Unable to create a sword item without attack speed");
         }
-        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new SwordItem(this.tier.unwrap(), this.attackDamageBase, this.attackDamageSpeed, builtProperties.get()));
+        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new SwordItem(this.tier.get(), this.attackDamageBase, this.attackDamageSpeed, builtProperties.get()));
     }
 
     @Override

@@ -7,11 +7,11 @@ import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import com.blamejared.contenttweaker.core.api.resource.StandardResourceFragmentKeys;
+import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
 import com.blamejared.contenttweaker.vanilla.api.resource.PathHelper;
 import com.blamejared.contenttweaker.vanilla.api.resource.SoundDefinition;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
-import com.blamejared.contenttweaker.vanilla.api.zen.object.SoundEventReference;
-import com.blamejared.contenttweaker.vanilla.object.VanillaObjectTypes;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.NameUtil;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +21,7 @@ import org.openzen.zencode.java.ZenCodeType;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-@ZenCodeType.Name(ContentTweakerVanillaConstants.BLOCK_BUILDER_PACKAGE + ".SoundEventBuilder")
+@ZenCodeType.Name(ContentTweakerVanillaConstants.SOUND_BUILDER_PACKAGE + ".SoundEventBuilder")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class SoundEventBuilder {
     private final String id;
@@ -37,12 +37,12 @@ public final class SoundEventBuilder {
     }
 
     @ZenCodeType.Method("build")
-    public SoundEventReference build(@ZenCodeType.Optional @ZenCodeType.Nullable final String name) {
+    public SimpleReference<SoundEvent> build(@ZenCodeType.Optional @ZenCodeType.Nullable final String name) {
         final ResourceLocation soundId = ContentTweakerConstants.rl(NameUtil.fixing(this.id));
         final ResourceLocation registryId = ContentTweakerConstants.rl(name == null? this.id : name);
         final ObjectHolder<SoundEvent> eventHolder = ObjectHolder.of(VanillaObjectTypes.SOUND_EVENT, registryId, () -> new SoundEvent(soundId));
         ContentTweakerApi.apply(RegisterObjectAction.of(eventHolder, manager -> this.generateResources(soundId, this.exampleSet, manager)));
-        return SoundEventReference.of(registryId);
+        return SimpleReference.of(VanillaObjectTypes.SOUND_EVENT, registryId);
     }
 
     private void generateResources(final ResourceLocation soundId, final boolean exampleSet, final ResourceManager manager) {

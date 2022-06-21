@@ -5,7 +5,7 @@ import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.TierReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.minecraft.resources.ResourceLocation;
@@ -63,7 +63,7 @@ public abstract class ToolItemBuilder<T extends ToolItemBuilder<T>> extends Item
         if (this.attackDamageSpeed == null) {
             throw new IllegalStateException("Unable to create a tool item without attack speed");
         }
-        return this.createTool(name, new ToolData(this.tier::unwrap, this.attackDamageBase, this.attackDamageSpeed), builtProperties);
+        return this.createTool(name, new ToolData(this.tier::get, this.attackDamageBase, this.attackDamageSpeed), builtProperties);
     }
 
     public abstract ObjectHolder<? extends Item> createTool(final ResourceLocation name, final ToolData toolData, final Supplier<Item.Properties> builtProperties);

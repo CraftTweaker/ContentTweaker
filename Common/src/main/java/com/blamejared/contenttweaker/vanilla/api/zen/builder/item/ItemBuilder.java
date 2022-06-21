@@ -4,11 +4,11 @@ import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
+import com.blamejared.contenttweaker.vanilla.api.zen.object.CreativeTabReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.FoodItemProperties;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.ItemProperties;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.StandardItemProperties;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.CreativeTabReference;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
@@ -265,7 +265,7 @@ public abstract class ItemBuilder<T extends ItemBuilder<T>> {
             out.craftRemainder(remainder.get());
         }
         if (tab != null) {
-            out.tab(tab.unwrap());
+            out.tab(tab.get());
         }
         if (rarity != null) {
             out.rarity(rarity);

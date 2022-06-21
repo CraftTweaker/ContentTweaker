@@ -3,7 +3,7 @@ package com.blamejared.contenttweaker.forge.api.zen.rt;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.zen.rt.ResourceLocationNative;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.TierReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
@@ -27,7 +27,7 @@ public final class TierSortingStruct {
         }
     }
 
-    @ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_UTIL_PACKAGE + ".TierReference")
+    @ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".TierReference")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
     public static final class TierCaster {
         private TierCaster() {}
@@ -72,6 +72,6 @@ public final class TierSortingStruct {
     }
 
     public Supplier<Object> get() {
-        return () -> Stream.of(this.rl, this.name, this.tier.unwrap()).filter(Objects::nonNull).findFirst().orElseGet(Object::new);
+        return () -> Stream.of(this.rl, this.name, this.tier.get()).filter(Objects::nonNull).findFirst().orElseGet(Object::new);
     }
 }

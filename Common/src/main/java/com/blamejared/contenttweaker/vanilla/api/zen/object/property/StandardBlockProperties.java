@@ -1,15 +1,15 @@
 package com.blamejared.contenttweaker.vanilla.api.zen.object.property;
 
+import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
-import com.blamejared.contenttweaker.vanilla.api.util.MaterialRegistry;
-import com.blamejared.contenttweaker.vanilla.api.util.SoundTypeRegistry;
+import com.blamejared.contenttweaker.core.api.object.ObjectType;
+import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.MaterialReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.SoundTypeReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.object.MaterialColorReference;
 import com.blamejared.contenttweaker.vanilla.mixin.BlockBehaviorAccessor;
 import com.blamejared.contenttweaker.vanilla.mixin.BlockBehaviorPropertiesAccessor;
-import com.blamejared.contenttweaker.vanilla.zen.rt.VanillaMetaFactory;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.SoundType;
@@ -23,22 +23,25 @@ public final class StandardBlockProperties extends BlockProperties {
         super(reference, "standard");
     }
 
-    public MaterialReference material() {
+    public SimpleReference<Material> material() {
         final Material material = this.resolveProperties().contenttweaker$material();
-        return MaterialReference.of(MaterialRegistry.of().nameOf(material), () -> material);
+        return SimpleReference.of(VanillaObjectTypes.MATERIAL, this.nameOf(VanillaObjectTypes.MATERIAL, material));
     }
 
     public BlockPropertyFunctions.MaterialColorFinder materialColor() {
-        return this.resolveProperties().contenttweaker$materialColor().andThen(it -> VanillaMetaFactory.materialColor(it.id, it.col))::apply;
+        return this.resolveProperties()
+                .contenttweaker$materialColor()
+                .andThen(it -> this.nameOf(VanillaObjectTypes.MATERIAL_COLOR, it))
+                .andThen(MaterialColorReference::of)::apply;
     }
 
     public boolean hasCollision() {
         return this.resolveProperties().contenttweaker$hasCollision();
     }
 
-    public SoundTypeReference soundType() {
+    public SimpleReference<SoundType> soundType() {
         final SoundType type = this.resolveProperties().contenttweaker$soundType();
-        return SoundTypeReference.of(SoundTypeRegistry.of().nameOf(type), () -> type);
+        return SimpleReference.of(VanillaObjectTypes.SOUND_TYPE, this.nameOf(VanillaObjectTypes.SOUND_TYPE, type));
     }
 
     public BlockPropertyFunctions.LightLevelComputer lightEmission() {
@@ -111,5 +114,9 @@ public final class StandardBlockProperties extends BlockProperties {
 
     private BlockBehaviorPropertiesAccessor resolveProperties() {
         return ((BlockBehaviorPropertiesAccessor) ((BlockBehaviorAccessor) this.resolve()).contenttweaker$properties());
+    }
+
+    private <T> ResourceLocation nameOf(final ObjectType<T> type, final T thing) {
+        return ContentTweakerApi.get().findResolver(type).nameOf(thing);
     }
 }

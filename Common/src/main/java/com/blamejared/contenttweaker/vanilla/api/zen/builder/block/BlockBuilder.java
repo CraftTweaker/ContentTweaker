@@ -3,17 +3,16 @@ package com.blamejared.contenttweaker.vanilla.api.zen.builder.block;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
+import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.contenttweaker.core.zen.rt.CoreMetaFactory;
 import com.blamejared.contenttweaker.vanilla.api.resource.LootTable;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.builder.item.BlockItemBuilder;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.object.CreativeTabReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.BlockProperties;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.BlockPropertyFunctions;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.StandardBlockProperties;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.CreativeTabReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.MaterialReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.util.SoundTypeReference;
 import com.blamejared.contenttweaker.vanilla.mixin.BlockBehaviorPropertiesAccessor;
 import com.blamejared.contenttweaker.vanilla.zen.factory.ItemFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
@@ -23,6 +22,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -49,10 +49,10 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
 
     private StandardBlockProperties cloningProperties;
 
-    private MaterialReference material;
+    private Reference<Material> material;
     private BlockPropertyFunctions.MaterialColorFinder materialColor;
     private Boolean hasCollision;
-    private SoundTypeReference soundType;
+    private Reference<SoundType> soundType;
     private BlockPropertyFunctions.LightLevelComputer lightEmission;
     private Float explosionResistance;
     private Float destroyTime;
@@ -109,7 +109,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
     }
 
     @ZenCodeType.Method("material")
-    public T material(final MaterialReference reference) {
+    public T material(final Reference<Material> reference) {
         this.material = reference;
         return this.self();
     }
@@ -132,7 +132,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
     }
 
     @ZenCodeType.Method("sound")
-    public T sound(final SoundTypeReference reference) {
+    public T sound(final Reference<SoundType> reference) {
         this.soundType = reference;
         return this.self();
     }
@@ -405,10 +405,10 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
     }
 
     private BlockBehaviour.Properties make(
-            final MaterialReference materialReference,
+            final Reference<Material> materialReference,
             final BlockPropertyFunctions.MaterialColorFinder materialColorFunction,
             final Boolean hasCollision,
-            final SoundTypeReference soundTypeReference,
+            final Reference<SoundType> soundTypeReference,
             final BlockPropertyFunctions.LightLevelComputer lightEmissionFunction,
             final Float explosionResistance,
             final Float destroyTime,
@@ -423,14 +423,14 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
             // TODO("See StandardBlockProperties")
             final Boolean dynamic
     ) {
-        final Material material = materialReference.unwrap();
-        final Function<BlockState, MaterialColor> colorFunction = materialColorFunction == null? x -> material.getColor() : x -> materialColorFunction.colorOf(x).unwrap();
+        final Material material = materialReference.get();
+        final Function<BlockState, MaterialColor> colorFunction = materialColorFunction == null? x -> material.getColor() : x -> materialColorFunction.colorOf(x).get();
         final BlockBehaviour.Properties properties = BlockBehaviour.Properties.of(material, colorFunction);
         if (hasCollision != null && !hasCollision) {
             properties.noCollission();
         }
         if (soundTypeReference != null) {
-            properties.sound(soundTypeReference.unwrap());
+            properties.sound(soundTypeReference.get());
         }
         if (lightEmissionFunction != null) {
             properties.lightLevel(lightEmissionFunction::lightOf);

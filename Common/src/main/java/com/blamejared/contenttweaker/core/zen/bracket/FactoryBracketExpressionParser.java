@@ -1,6 +1,8 @@
 package com.blamejared.contenttweaker.core.zen.bracket;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
+import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
+import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
 import com.blamejared.contenttweaker.core.zen.rt.CoreMetaFactory;
@@ -8,8 +10,6 @@ import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
 import com.blamejared.crafttweaker.api.zencode.IZenClassRegistry;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.shared.CodePosition;
 import org.openzen.zencode.shared.CompileException;
@@ -28,12 +28,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 final class FactoryBracketExpressionParser implements BracketExpressionParser {
-    private static final class BracketMetaFactoryExpression<T> extends ParsedExpression {
+    private static final class BracketMetaFactoryExpression<T, U extends ObjectFactory<T>> extends ParsedExpression {
         private final ObjectType<T> type;
+        private final ObjectFactoryMapping<T, U> factoryMapping;
 
-        public BracketMetaFactoryExpression(final CodePosition position, final ObjectType<T> type) {
+        BracketMetaFactoryExpression(final CodePosition position, final ObjectType<T> type, final ObjectFactoryMapping<T, U> factoryMapping) {
             super(position);
             this.type = type;
+            this.factoryMapping = factoryMapping;
         }
 
         @Override
@@ -59,7 +61,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         }
 
         private IParsedType findFactoryGeneric() throws CompileException {
-            return this.readParsedType(ContentTweakerCore.core().metaRegistry().factoryMappings().findMappingFor(this.type).type());
+            return this.readParsedType(this.factoryMapping.type());
         }
 
         private ParsedExpression findArgument() throws CompileException {
@@ -78,9 +80,12 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
     }
 
     public static Stream<String> dump() {
-        return Registry.REGISTRY.stream()
-                .map(Registry::key)
-                .map(ResourceKey::location)
+        return ContentTweakerCore.core()
+                .metaRegistry()
+                .objectTypes()
+                .allTypes()
+                .stream()
+                .map(ObjectType::id)
                 .sorted()
                 .map(ResourceLocation::toString)
                 .map("<factory:%s>"::formatted);
@@ -89,7 +94,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
     @Override
     public ParsedExpression parse(final CodePosition position, final ZSTokenParser tokens) throws ParseException {
         final ResourceLocation id = this.findRegistryId(position, tokens);
-        return this.createExpression(position, ResourceKey.createRegistryKey(id));
+        return this.createExpression(position, id);
     }
 
     private ResourceLocation findRegistryId(final CodePosition position, final ZSTokenParser tokens) throws ParseException {
@@ -97,19 +102,24 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         return BracketHelper.locationOrThrow(
                 position,
                 bracketContents,
-                () -> "Expected a registry identifier in the form <factory:modid:name>, but instead found " + bracketContents
+                () -> "Expected an object type identifier in the form <factory:modid:name>, but instead found " + bracketContents
         );
     }
 
-    private <T> ParsedExpression createExpression(final CodePosition position, final ResourceKey<? extends Registry<T>> registryKey) throws ParseException {
-        return new BracketMetaFactoryExpression<>(position, this.grabType(position, registryKey));
+    private <T> ParsedExpression createExpression(final CodePosition position, final ResourceLocation typeId) throws ParseException {
+        final ObjectType<T> type = this.grabType(position, typeId);
+        return new BracketMetaFactoryExpression<>(position, type, this.grabFactoryMapping(type));
     }
 
-    private <T> ObjectType<T> grabType(final CodePosition position, final ResourceKey<? extends Registry<T>> registryKey) throws ParseException {
-        final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(registryKey);
+    private <T> ObjectType<T> grabType(final CodePosition position, final ResourceLocation typeId) throws ParseException {
+        final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(typeId);
         if (type == null) {
-            throw new ParseException(position, "Type for " + registryKey + " is not known: unable to create a factory for it");
+            throw new ParseException(position, "Type for '" + typeId + "' is not known: unable to create a factory for it");
         }
         return type;
+    }
+
+    private <T, U extends ObjectFactory<T>> ObjectFactoryMapping<T, U> grabFactoryMapping(final ObjectType<T> type) {
+        return ContentTweakerCore.core().metaRegistry().factoryMappings().findMappingFor(type);
     }
 }
