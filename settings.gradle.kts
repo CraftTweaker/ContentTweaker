@@ -29,4 +29,4 @@ pluginManagement {
 }
 
 rootProject.name = "ContentTweaker"
-include("Common", "Forge", "Fabric")
+include("core", "vanilla", "forge", "fabric")

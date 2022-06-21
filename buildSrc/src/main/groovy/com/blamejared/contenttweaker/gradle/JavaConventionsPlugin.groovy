@@ -53,6 +53,22 @@ class JavaConventionsPlugin implements Plugin<Project> {
         java.withSourcesJar()
         java.withJavadocJar()
 
+        final apiSourceSet = java.sourceSets.create('api') {}
+        final apiConfiguration = project.configurations.create('apiConfiguration') {}
+
+        project.afterEvaluate {
+            if (project.hasProperty('loom')) {
+                project.afterEvaluate {
+                    project.configurations.apiImplementation.extendsFrom(project.configurations.minecraftNamed, project.configurations.modImplementationMapped)
+                }
+            } else {
+                project.configurations.apiImplementation.extendsFrom(project.configurations.minecraft)
+            }
+        }
+
+        project.dependencies.implementation(apiSourceSet.output)
+        project.dependencies.apiConfiguration(apiSourceSet.output)
+
         project.tasks.withType(JavaCompile).configureEach {
             it.options.encoding = StandardCharsets.UTF_8.toString()
             it.options.release.set(ext['java.version'].toInteger())
@@ -68,16 +84,16 @@ class JavaConventionsPlugin implements Plugin<Project> {
         project.tasks.withType(Jar).configureEach {
             manifest {
                 attributes([
-                        "Specification-Title" : ext['mod.name'],
-                        "Specification-Vendor" : ext['mod.author'],
-                        "Specification-Version" : archiveVersion.toString(),
-                        "Implementation-Title" : project.name,
-                        "Implementation-Version" : archiveVersion.toString(),
-                        "Implementation-Vendor" : ext['mod.author'],
-                        "Implementation-Timestamp" : new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date()),
-                        "Timestamp" : System.currentTimeMillis(),
-                        "Built-On-Java" : "${System.getProperty("java.vm.version")} (${System.getProperty("java.vm.vendor")})",
-                        "Build-On-Minecraft" : ext['minecraft.version']
+                        'Specification-Title' : ext['mod.name'],
+                        'Specification-Vendor' : ext['mod.author'],
+                        'Specification-Version' : archiveVersion.toString(),
+                        'Implementation-Title' : project.name,
+                        'Implementation-Version' : archiveVersion.toString(),
+                        'Implementation-Vendor' : ext['mod.author'],
+                        'Implementation-Timestamp' : new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date()),
+                        'Timestamp' : System.currentTimeMillis(),
+                        'Built-On-Java' : "${System.getProperty("java.vm.version")} (${System.getProperty("java.vm.vendor")})",
+                        'Built-On-Minecraft' : ext['minecraft.version']
                 ])
             }
         }
@@ -96,14 +112,14 @@ class JavaConventionsPlugin implements Plugin<Project> {
         final publishing = project.extensions.findByType PublishingExtension
         project.afterEvaluate {
             final base = project.extensions.findByType BasePluginExtension
-            publishing.publications.register("mavenJava", MavenPublication) {
+            publishing.publications.register('mavenJava', MavenPublication) {
                 artifactId = base.archivesName.get()
                 from(project.components['java'])
             }
         }
         publishing.repositories {
             maven {
-                url = "file:///${System.getenv("local_maven")}"
+                url = "file:///${System.getenv('local_maven')}"
             }
         }
     }
