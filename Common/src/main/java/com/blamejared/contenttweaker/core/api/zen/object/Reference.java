@@ -49,7 +49,7 @@ public abstract class Reference<T> { // Designed for extension by stuff like Ite
 
     public final T get() {
         if (this.resolved == null) {
-            this.resolved = ContentTweakerApi.get().resolve(this.type(), this.id());
+            this.resolved = ContentTweakerApi.get().findResolver(this.type()).resolve(this.id());
         }
         if (this.resolved == null) {
             throw new IllegalStateException("Cannot resolve object at this time in %s".formatted(this));
