@@ -1,10 +1,10 @@
 package com.blamejared.contenttweaker.vanilla.api.zen.object.property;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
+import com.blamejared.contenttweaker.vanilla.api.ContentTweakerVanillaApi;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.CreativeTabReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
-import com.blamejared.contenttweaker.vanilla.mixin.CreativeModeTabAccessor;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
@@ -40,7 +40,7 @@ public final class StandardItemProperties extends ItemProperties {
         if (tab == null) {
             return null;
         }
-        return CreativeTabReference.of(((CreativeModeTabAccessor) tab).contenttweaker$langId());
+        return CreativeTabReference.of(ContentTweakerVanillaApi.get().creativeTabId(tab));
     }
 
     public Rarity rarity() {

@@ -76,7 +76,7 @@ public final class BracketHelper {
         Objects.requireNonNull(idToString);
         final String bracketFormat = '<' + bracket + ":%s>";
         return () -> {
-            final GameRegistry<T> registry = ContentTweakerApi.get().findResolver(type).registry();
+            final GameRegistry<T> registry = ContentTweakerApi.get().registry().findResolver(type).registry();
             return registry.all()
                     .stream()
                     .map(registry::nameOf)

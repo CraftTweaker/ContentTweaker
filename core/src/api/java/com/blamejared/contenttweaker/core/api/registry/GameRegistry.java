@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public interface GameRegistry<T> {
     static <T> GameRegistry<T> findFromKey(final ObjectType<T> type, final ResourceKey<? extends Registry<T>> key) {
-        return ContentTweakerApi.get().findRegistryFromKey(type, key);
+        return ContentTweakerApi.get().getOrCreateRegistryFromKey(type, key);
     }
 
     ObjectType<T> type();

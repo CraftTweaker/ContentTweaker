@@ -21,5 +21,6 @@ dependencies {
 
     compileOnly(group = "org.spongepowered", name = "mixin", version = "0.8.4")
     compileOnly(group = "com.blamejared.crafttweaker", name = "CraftTweaker-common-$mcVersion", version = ctVersion)
+    implementation(project(":core", "apiConfiguration"))
     implementation(project(":core"))
 }

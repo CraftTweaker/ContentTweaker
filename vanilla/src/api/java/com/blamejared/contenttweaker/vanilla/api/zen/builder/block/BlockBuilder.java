@@ -1,26 +1,26 @@
 package com.blamejared.contenttweaker.vanilla.api.zen.builder.block;
 
+import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
-import com.blamejared.contenttweaker.core.zen.rt.CoreMetaFactory;
+import com.blamejared.contenttweaker.vanilla.api.ContentTweakerVanillaApi;
+import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.resource.LootTable;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.builder.item.BlockItemBuilder;
+import com.blamejared.contenttweaker.vanilla.api.zen.factory.ItemFactory;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.CreativeTabReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.BlockProperties;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.BlockPropertyFunctions;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.StandardBlockProperties;
-import com.blamejared.contenttweaker.vanilla.mixin.BlockBehaviorPropertiesAccessor;
-import com.blamejared.contenttweaker.vanilla.zen.factory.ItemFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -461,7 +461,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
                 properties.noDrops();
             } else {
                 // Ugly, but you can only drop like another block, not a custom RL
-                ((BlockBehaviorPropertiesAccessor) properties).contenttweaker$drops(drops);
+                ContentTweakerVanillaApi.get().blockPropertiesDrops(properties, drops);
             }
         }
         if (occlude != null && !occlude) {
@@ -478,8 +478,10 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
     }
 
     private void makeBlockItem(final BlockReference reference) {
-        // TODO("This references non-api: fix")
-        CoreMetaFactory.factory(Item.class, ItemFactory.class, new ResourceLocation("item"))
+        ContentTweakerApi.get()
+                .registry()
+                .findObjectFactory(VanillaObjectTypes.ITEM, ItemFactory.class)
+                .of()
                 .typed(BlockItemBuilder.class)
                 .block(reference)
                 .tab(this.tab)

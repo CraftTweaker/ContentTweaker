@@ -2,8 +2,8 @@ package com.blamejared.contenttweaker.vanilla.api.registry;
 
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.registry.GameRegistry;
+import com.blamejared.contenttweaker.vanilla.api.ContentTweakerVanillaApi;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
-import com.blamejared.contenttweaker.vanilla.mixin.CreativeModeTabAccessor;
 import com.google.common.base.CaseFormat;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -54,7 +54,7 @@ public final class CreativeTabRegistry implements GameRegistry<CreativeModeTab> 
         }
 
         final CreativeModeTab tab = Arrays.stream(CreativeModeTab.TABS)
-                .filter(it -> id.equals(((CreativeModeTabAccessor) it).contenttweaker$langId()))
+                .filter(it -> id.equals(ContentTweakerVanillaApi.get().creativeTabId(it)))
                 .findFirst()
                 .orElse(null);
         this.fastLookup.put(name, tab);
@@ -63,7 +63,7 @@ public final class CreativeTabRegistry implements GameRegistry<CreativeModeTab> 
 
     @Override
     public ResourceLocation nameOf(final CreativeModeTab object) {
-        return fromId(((CreativeModeTabAccessor) Objects.requireNonNull(object)).contenttweaker$langId());
+        return fromId(ContentTweakerVanillaApi.get().creativeTabId(Objects.requireNonNull(object)));
     }
 
     @Override
@@ -91,6 +91,6 @@ public final class CreativeTabRegistry implements GameRegistry<CreativeModeTab> 
         final CreativeModeTab[] newTabs = new CreativeModeTab[length + 1];
         System.arraycopy(tabs, 0, newTabs, 0, length);
         newTabs[length] = null;
-        CreativeModeTabAccessor.contenttweaker$tabs(newTabs);
+        ContentTweakerVanillaApi.get().creativeTabs(newTabs);
     }
 }

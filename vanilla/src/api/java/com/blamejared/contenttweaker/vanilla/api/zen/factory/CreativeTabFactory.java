@@ -1,4 +1,4 @@
-package com.blamejared.contenttweaker.vanilla.zen.factory;
+package com.blamejared.contenttweaker.vanilla.api.zen.factory;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
@@ -13,10 +13,10 @@ import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.registry.CreativeTabRegistry;
 import com.blamejared.contenttweaker.vanilla.api.resource.Language;
 import com.blamejared.contenttweaker.vanilla.api.resource.PathHelper;
+import com.blamejared.contenttweaker.vanilla.api.util.CustomCreativeTab;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.CreativeTabReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
-import com.blamejared.contenttweaker.vanilla.util.CustomCreativeTab;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;

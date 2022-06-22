@@ -1,4 +1,4 @@
-package com.blamejared.contenttweaker.vanilla.util;
+package com.blamejared.contenttweaker.vanilla.api.util;
 
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
 import com.google.common.base.Suppliers;

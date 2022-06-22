@@ -55,7 +55,9 @@ dependencies {
     apiImplementation(project(":vanilla", "apiConfiguration"))
     // CT is implicitly added because Loom does not support per-source-set deobfuscated dependencies
 
+    implementation(project(":core", "apiConfiguration"))
     implementation(project(":core"))
+    implementation(project(":vanilla", "apiConfiguration"))
     implementation(project(":vanilla"))
     modImplementation(group = "com.blamejared.crafttweaker", name = "CraftTweaker-fabric-$mcVersion", version = ctVersion) {
         exclude(module = "Crafttweaker_Annotations")

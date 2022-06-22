@@ -4,48 +4,64 @@ import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
+import com.blamejared.contenttweaker.vanilla.api.ContentTweakerVanillaApi;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.MaterialColorReference;
-import com.blamejared.contenttweaker.vanilla.mixin.BlockBehaviorAccessor;
-import com.blamejared.contenttweaker.vanilla.mixin.BlockBehaviorPropertiesAccessor;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import org.openzen.zencode.java.ZenCodeType;
+
+import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 @ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".property.StandardBlockProperties")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class StandardBlockProperties extends BlockProperties {
+    public interface VanillaAdapter {
+        Material material();
+        Function<BlockState, MaterialColor> materialColor();
+        boolean hasCollision();
+        SoundType soundType();
+        ToIntFunction<BlockState> lightEmission();
+        boolean requiresCorrectToolForDrops();
+        boolean isRandomlyTicking();
+        boolean canOcclude();
+        boolean isAir();
+    }
+
     public StandardBlockProperties(final BlockReference reference) {
         super(reference, "standard");
     }
 
     public SimpleReference<Material> material() {
-        final Material material = this.resolveProperties().contenttweaker$material();
+        final Material material = this.resolveProperties().material();
         return SimpleReference.of(VanillaObjectTypes.MATERIAL, this.nameOf(VanillaObjectTypes.MATERIAL, material));
     }
 
     public BlockPropertyFunctions.MaterialColorFinder materialColor() {
         return this.resolveProperties()
-                .contenttweaker$materialColor()
+                .materialColor()
                 .andThen(it -> this.nameOf(VanillaObjectTypes.MATERIAL_COLOR, it))
                 .andThen(MaterialColorReference::of)::apply;
     }
 
     public boolean hasCollision() {
-        return this.resolveProperties().contenttweaker$hasCollision();
+        return this.resolveProperties().hasCollision();
     }
 
     public SimpleReference<SoundType> soundType() {
-        final SoundType type = this.resolveProperties().contenttweaker$soundType();
+        final SoundType type = this.resolveProperties().soundType();
         return SimpleReference.of(VanillaObjectTypes.SOUND_TYPE, this.nameOf(VanillaObjectTypes.SOUND_TYPE, type));
     }
 
     public BlockPropertyFunctions.LightLevelComputer lightEmission() {
-        return this.resolveProperties().contenttweaker$lightEmission()::applyAsInt;
+        return this.resolveProperties().lightEmission()::applyAsInt;
     }
 
     public float explosionResistance() {
@@ -57,11 +73,11 @@ public final class StandardBlockProperties extends BlockProperties {
     }
 
     public boolean requiresCorrectToolForDrops() {
-        return this.resolveProperties().contenttweaker$requiresCorrectToolForDrops();
+        return this.resolveProperties().requiresCorrectToolForDrops();
     }
 
     public boolean isRandomlyTicking() {
-        return this.resolveProperties().contenttweaker$isRandomlyTicking();
+        return this.resolveProperties().isRandomlyTicking();
     }
 
     public float friction() {
@@ -81,11 +97,11 @@ public final class StandardBlockProperties extends BlockProperties {
     }
 
     public boolean canOcclude() {
-        return this.resolveProperties().contenttweaker$canOcclude();
+        return this.resolveProperties().canOcclude();
     }
 
     public boolean isAir() {
-        return this.resolveProperties().contenttweaker$isAir();
+        return this.resolveProperties().isAir();
     }
 
     // TODO("Figure out all the following, because it requires Level access, for some reason")
@@ -112,11 +128,11 @@ public final class StandardBlockProperties extends BlockProperties {
         return this.resolve().hasDynamicShape();
     }
 
-    private BlockBehaviorPropertiesAccessor resolveProperties() {
-        return ((BlockBehaviorPropertiesAccessor) ((BlockBehaviorAccessor) this.resolve()).contenttweaker$properties());
+    private VanillaAdapter resolveProperties() {
+        return ContentTweakerVanillaApi.get().blockPropertiesAdapterOf(this.resolve());
     }
 
     private <T> ResourceLocation nameOf(final ObjectType<T> type, final T thing) {
-        return ContentTweakerApi.get().findResolver(type).nameOf(thing);
+        return ContentTweakerApi.get().registry().findResolver(type).nameOf(thing);
     }
 }

@@ -1,4 +1,4 @@
-package com.blamejared.contenttweaker.vanilla.zen.factory;
+package com.blamejared.contenttweaker.vanilla.api.zen.factory;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectFactory;

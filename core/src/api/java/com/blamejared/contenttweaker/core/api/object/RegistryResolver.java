@@ -1,6 +1,5 @@
 package com.blamejared.contenttweaker.core.api.object;
 
-import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.registry.GameRegistry;
 import com.google.common.base.Suppliers;
 import net.minecraft.core.Registry;
@@ -32,10 +31,6 @@ public interface RegistryResolver<T> extends Function<ResourceLocation, T> {
                 return resolver.get();
             }
         };
-    }
-
-    static <T> RegistryResolver<T> find(final ObjectType<T> type) {
-        return ContentTweakerApi.get().findResolver(type);
     }
 
     ObjectType<T> type();

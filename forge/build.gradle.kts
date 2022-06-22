@@ -72,7 +72,9 @@ dependencies {
     apiImplementation(project(":vanilla", "apiConfiguration"))
     apiImplementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-$mcVersion:$ctVersion"))
 
+    implementation(project(":core", "apiConfiguration"))
     implementation(project(":core"))
+    implementation(project(":vanilla", "apiConfiguration"))
     implementation(project(":vanilla"))
     implementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-$mcVersion:$ctVersion"))
 

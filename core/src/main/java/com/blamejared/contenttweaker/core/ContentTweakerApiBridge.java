@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.core;
 import com.blamejared.contenttweaker.core.api.ApiBridge;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.object.RegistryResolver;
+import com.blamejared.contenttweaker.core.api.registry.ContentTweakerRegistry;
 import com.blamejared.contenttweaker.core.api.registry.GameRegistry;
 import com.blamejared.contenttweaker.core.api.registry.RegistryButler;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
@@ -22,12 +23,12 @@ public final class ContentTweakerApiBridge implements ApiBridge {
     }
 
     @Override
-    public <T> RegistryResolver<T> findResolver(final ObjectType<T> type) {
-        return ContentTweakerCore.core().metaRegistry().registryResolvers().findResolverFor(type);
+    public ContentTweakerRegistry registry() {
+        return ContentTweakerCore.core().apiWrapper();
     }
 
     @Override
-    public <T> GameRegistry<T> findRegistryFromKey(final ObjectType<T> type, final ResourceKey<? extends Registry<T>> key) {
+    public <T> GameRegistry<T> getOrCreateRegistryFromKey(final ObjectType<T> type, final ResourceKey<? extends Registry<T>> key) {
         return ServiceManager.platform().findRegistryFromKey(type, key);
     }
 }

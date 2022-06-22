@@ -1,7 +1,9 @@
 package com.blamejared.contenttweaker.core;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
+import com.blamejared.contenttweaker.core.api.registry.ContentTweakerRegistry;
 import com.blamejared.contenttweaker.core.plugin.PluginManager;
+import com.blamejared.contenttweaker.core.registry.ContentTweakerRegistryWrapper;
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
 import com.blamejared.contenttweaker.core.registry.Winston;
 import com.blamejared.contenttweaker.core.resource.RuntimeResourceManager;
@@ -19,12 +21,14 @@ public final class ContentTweakerCore {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     private final MetaRegistry metaRegistry;
+    private final ContentTweakerRegistry apiWrapper;
     private final PluginManager pluginManager;
     private final Winston registryButler;
     private final RuntimeResourceManager resourceManager;
 
     private ContentTweakerCore() {
         this.metaRegistry = MetaRegistry.of();
+        this.apiWrapper = ContentTweakerRegistryWrapper.of(this.metaRegistry);
         this.pluginManager = PluginManager.of();
         this.registryButler = Winston.of();
         this.resourceManager = RuntimeResourceManager.of();
@@ -62,6 +66,10 @@ public final class ContentTweakerCore {
 
     public MetaRegistry metaRegistry() {
         return this.metaRegistry;
+    }
+
+    public ContentTweakerRegistry apiWrapper() {
+        return this.apiWrapper;
     }
 
     public Winston registryButler() {

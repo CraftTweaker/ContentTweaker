@@ -1,4 +1,4 @@
-package com.blamejared.contenttweaker.vanilla.util;
+package com.blamejared.contenttweaker.vanilla.api.util;
 
 import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
 import net.minecraft.sounds.SoundEvent;
