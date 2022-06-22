@@ -92,7 +92,7 @@ tasks {
     }
     jar {
         sequenceOf(project(":core"), project(":vanilla")).forEach { p ->
-            sequenceOf(p.sourceSets["api"], p.sourceSets.main.get()).forEach {
+            sequenceOf(p.sourceSets.api.get(), p.sourceSets.main.get()).forEach {
                 from(it.output)
             }
         }

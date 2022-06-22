@@ -22,8 +22,11 @@ minecraft {
             sequenceOf("forge", "core", "vanilla").forEach { arg("-mixin.config=${modId}.$it.mixins.json") }
             mods {
                 create(modId) {
+                    source(sourceSets.api.get())
                     source(sourceSets.main.get())
+                    source(project(":core").sourceSets.api.get())
                     source(project(":core").sourceSets.main.get())
+                    source(project(":vanilla").sourceSets.api.get())
                     source(project(":vanilla").sourceSets.main.get())
                 }
             }
@@ -35,8 +38,11 @@ minecraft {
             arg("nogui")
             mods {
                 create(modId) {
+                    source(sourceSets.api.get())
                     source(sourceSets.main.get())
+                    source(project(":core").sourceSets.api.get())
                     source(project(":core").sourceSets.main.get())
+                    source(project(":vanilla").sourceSets.api.get())
                     source(project(":vanilla").sourceSets.main.get())
                 }
             }
@@ -95,7 +101,7 @@ tasks {
     jar {
         sequenceOf(project, project(":core"), project(":vanilla"))
             .map { it.sourceSets }
-            .flatMap { sequenceOf(it.main.get(), it["api"]) }
+            .flatMap { sequenceOf(it.main.get(), it.api.get()) }
             .forEach { from(it.output) }
     }
 }
