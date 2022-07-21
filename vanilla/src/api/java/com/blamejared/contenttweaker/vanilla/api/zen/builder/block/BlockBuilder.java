@@ -310,7 +310,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
     public abstract void provideResources(final ResourceLocation name, final ResourceManager manager, final GenerateFlags flags);
 
     protected final Optional<LootTable> emptyTable(final ResourceLocation name, final Function<ResourceLocation, String> messageSupplier) {
-        final String message = Objects.requireNonNull(messageSupplier).apply(Objects.requireNonNull(name));
+        final String message = Objects.requireNonNullElseGet(messageSupplier, () -> it -> null).apply(Objects.requireNonNull(name));
         if (message != null) {
             CraftTweakerAPI.LOGGER.warn(message);
         }
