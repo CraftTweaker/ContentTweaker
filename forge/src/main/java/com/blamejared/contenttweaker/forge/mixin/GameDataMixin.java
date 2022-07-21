@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(GameData.class)
+@Mixin(value = GameData.class, remap = false)
 public abstract class GameDataMixin {
 
     @Inject(

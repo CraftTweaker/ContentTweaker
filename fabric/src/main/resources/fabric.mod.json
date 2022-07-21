@@ -28,6 +28,8 @@
     ]
   },
   "mixins": [
+    "contenttweaker.core.mixins.json",
+    "contenttweaker.vanilla.mixins.json",
     "contenttweaker.fabric.mixins.json"
   ],
   "depends": {

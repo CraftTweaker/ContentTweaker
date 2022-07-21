@@ -74,6 +74,8 @@ dependencies {
 
     minecraft(group = "net.minecraftforge", name = "forge", version = "$mcVersion-${project.extra["minecraft.forge.version"]}")
 
+    annotationProcessor(group = "org.spongepowered", name = "mixin", version = "0.8.5-SNAPSHOT", classifier = "processor")
+
     apiImplementation(project(":core", "apiConfiguration"))
     apiImplementation(project(":vanilla", "apiConfiguration"))
     apiImplementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-$mcVersion:$ctVersion"))
@@ -103,6 +105,7 @@ tasks {
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.main.get(), it.api.get()) }
             .forEach { from(it.output) }
+        duplicatesStrategy = DuplicatesStrategy.FAIL
     }
 }
 
