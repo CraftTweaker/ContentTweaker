@@ -82,8 +82,12 @@ public abstract class ItemBuilder<T extends ItemBuilder<T>> {
         if ((standard != null && this.cloningProperties != null) || (food != null && this.cloningFood != null)) {
             throw new IllegalStateException("Already specified properties to clone from");
         }
-        this.cloningProperties = standard;
-        this.cloningFood = food;
+        if (standard != null) {
+            this.cloningProperties = standard;
+        }
+        if (food != null) {
+            this.cloningFood = food;
+        }
         return this.self();
     }
 
