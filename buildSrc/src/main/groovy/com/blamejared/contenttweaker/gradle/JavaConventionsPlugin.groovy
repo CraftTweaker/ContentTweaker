@@ -86,9 +86,9 @@ class JavaConventionsPlugin implements Plugin<Project> {
                 attributes([
                         'Specification-Title' : ext['mod.name'],
                         'Specification-Vendor' : ext['mod.author'],
-                        'Specification-Version' : archiveVersion.toString(),
+                        'Specification-Version' : archiveVersion.get(),
                         'Implementation-Title' : project.name,
-                        'Implementation-Version' : archiveVersion.toString(),
+                        'Implementation-Version' : archiveVersion.get(),
                         'Implementation-Vendor' : ext['mod.author'],
                         'Implementation-Timestamp' : new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date()),
                         'Timestamp' : System.currentTimeMillis(),
