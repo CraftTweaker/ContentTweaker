@@ -64,8 +64,8 @@ modTemplate {
 }
 
 repositories {
-    maven("https://dvs1.progwml6.com/files/maven/") {
-        name = "Progwml6"
+    maven("https://maven.shedaniel.me/") {
+        name = "shedaniel"
     }
 }
 
@@ -86,7 +86,9 @@ dependencies {
     implementation(project(":vanilla"))
     implementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-$mcVersion:$ctVersion"))
 
-    runtimeOnly(fg.deobf("mezz.jei:jei-$mcVersion-forge:${project.extra["jei.forge.version"]}"))
+    runtimeOnly(fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.extra["rei.forge.version"]}"))
+    runtimeOnly(fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.extra["cloth.forge.version"]}"))
+    runtimeOnly(fg.deobf("dev.architectury:architectury-forge:${project.extra["arch.forge.version"]}"))
 }
 
 tasks {
