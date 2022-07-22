@@ -69,6 +69,12 @@ dependencies {
 }
 
 tasks {
+    compileJava {
+        sequenceOf(project(":core"), project(":vanilla"))
+            .map { it.sourceSets }
+            .flatMap { sequenceOf(it.api.get(), it.main.get()) }
+            .forEach { source(it.allSource) }
+    }
     processResources {
         outputs.upToDateWhen { false }
 
@@ -91,11 +97,10 @@ tasks {
         dependsOn(project.tasks.remapJar)
     }
     jar {
-        sequenceOf(project(":core"), project(":vanilla")).forEach { p ->
-            sequenceOf(p.sourceSets.api.get(), p.sourceSets.main.get()).forEach {
-                from(it.output)
-            }
-        }
+        sequenceOf(project(":core"), project(":vanilla"))
+            .map { it.sourceSets }
+            .flatMap { sequenceOf(it.main.get(), it.api.get()) }
+            .forEach { from(it.resources) }
         duplicatesStrategy = DuplicatesStrategy.FAIL
     }
 }

@@ -90,6 +90,12 @@ dependencies {
 }
 
 tasks {
+    compileJava {
+        sequenceOf(project(":core"), project(":vanilla"))
+            .map { it.sourceSets }
+            .flatMap { sequenceOf(it.main.get(), it.api.get()) }
+            .forEach{ source(it.allSource) }
+    }
     publishToCurseForge {
         with(upload(project.extra["mod.curse-id"], project.buildDir.resolve("libs/${base.archivesName.get()}-${project.extra["mod.version"]}.jar"))) {
             changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
@@ -101,10 +107,10 @@ tasks {
         }
     }
     jar {
-        sequenceOf(project, project(":core"), project(":vanilla"))
+        sequenceOf(project(":core"), project(":vanilla"))
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.main.get(), it.api.get()) }
-            .forEach { from(it.output) }
+            .forEach { from(it.resources) }
         duplicatesStrategy = DuplicatesStrategy.FAIL
     }
 }
