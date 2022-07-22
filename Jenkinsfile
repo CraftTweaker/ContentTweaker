@@ -9,13 +9,13 @@ def botUsername = 'crafttweakerbot'
 def botEmail = 'crafttweakerbot@gmail.com'
 
 def documentationDir = 'CrafttweakerDocumentation'
-def exportDirInRepo = 'docs_exported/1.16/contenttweaker'
+def exportDirInRepo = 'docs_exported/1.18/contenttweaker'
 
 pipeline {
     agent any
     
     tools {
-        jdk "jdk8u292-b10"
+        jdk "jdk-17.0.1"
     }
 
     environment {
@@ -101,17 +101,11 @@ pipeline {
                         sh "git config user.email $botEmail"
                         sh 'git add -A'
                         //Either nothing to commit, or we create a commit
-                        sh "git diff-index --quiet HEAD || git commit -m 'CI Doc export for build ${env.BRANCH_NAME}-${env.BUILD_NUMBER}\n\nMatches git commit ${env.GIT_COMMIT}'"
+                        sh "git diff-index --quiet HEAD || git commit -m 'CI Doc export for ContentTweaker build ${env.BRANCH_NAME}-${env.BUILD_NUMBER}\n\nMatches git commit ${env.GIT_COMMIT}'"
                         sh "git push origin $docsRepositoryBranch"
                     }
                 }
             }
-        }
-    }
-    post {
-        always {
-            archiveArtifacts 'build/libs/**.jar'
-            archiveArtifacts 'changelog.md'
         }
     }
 }
