@@ -5,7 +5,8 @@
   "package": "com.blamejared.contenttweaker.forge.mixin",
   "refmap": "contenttweaker.refmap.json",
   "mixins": [
-    "GameDataMixin"
+    "GameDataMixin",
+    "PackRepositoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

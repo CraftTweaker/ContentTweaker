@@ -5,6 +5,9 @@
   "package": "com.blamejared.contenttweaker.fabric.mixin",
   "refmap": "contenttweaker.refmap.json",
   "mixins": [
+    "MinecraftMixin",
+    "PackRepositoryAccessor",
+    "PackRepositoryMixin",
     "RegistryMixin"
   ],
   "injectors": {
