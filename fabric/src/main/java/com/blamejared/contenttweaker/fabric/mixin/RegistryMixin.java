@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Iterator;
 
-@Mixin(Registry.class)
+@Mixin(value = Registry.class, priority = Integer.MAX_VALUE)
 public abstract class RegistryMixin {
 
     @Inject(
