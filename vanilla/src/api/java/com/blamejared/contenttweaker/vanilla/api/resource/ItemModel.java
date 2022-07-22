@@ -260,7 +260,7 @@ public final class ItemModel {
         this.textures = new HashMap<>();
         this.elements = new ArrayList<>();
         this.overrides = new ArrayList<>();
-        this.light = GuiLight.SIDE;
+        this.light = null;
     }
 
     public static ItemModel of(final ResourceLocation parent) {
@@ -357,7 +357,9 @@ public final class ItemModel {
             this.textures.forEach((name, id) -> textures.addProperty(name, id.toString()));
             object.add("textures", textures);
         }
-        object.addProperty("gui_light", this.light.toString());
+        if (this.light != null) { // Turns out defaults are not really defaults
+            object.addProperty("gui_light", this.light.toString());
+        }
         if (!this.elements.isEmpty()) {
             final JsonArray elements = new JsonArray();
             this.elements.forEach(element -> elements.add(element.serialize(this::serializeVector, this::serializeVector)));
