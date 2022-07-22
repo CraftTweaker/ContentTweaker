@@ -78,6 +78,11 @@ tasks {
     processResources {
         outputs.upToDateWhen { false }
 
+        sequenceOf(project(":core"), project(":vanilla"))
+            .map { it.sourceSets }
+            .flatMap { sequenceOf(it.api.get(), it.main.get()) }
+            .forEach { from(it.resources) }
+
         inputs.property("version", project.version)
 
         filesMatching("fabric.mod.json") {
@@ -97,10 +102,6 @@ tasks {
         dependsOn(project.tasks.remapJar)
     }
     jar {
-        sequenceOf(project(":core"), project(":vanilla"))
-            .map { it.sourceSets }
-            .flatMap { sequenceOf(it.main.get(), it.api.get()) }
-            .forEach { from(it.resources) }
         duplicatesStrategy = DuplicatesStrategy.FAIL
     }
 }

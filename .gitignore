@@ -1,6 +1,7 @@
 build/
 docsOut/
 run/
+run_server/
 out/
 changelog.md
 runServer
@@ -17,7 +18,7 @@ changelog_cot.md
 
 *.classpath
 *.project
-/.gradle
+**/.gradle
 /.settings
 /.idea
 *.iml
@@ -25,9 +26,6 @@ changelog_cot.md
 *.iws
 /.metadata/*
 *.eml
-/run
-/runServer
-/run_server
 *.stackdump
 *.log
 */.settings
@@ -38,10 +36,6 @@ changelog_cot.md
 *.db
 /classes/
 desktop.ini
-runServer/
 cot_changelog.md
 
 secrets.json
-
-buildSrc/.gradle/
-Fabric/.gradle/
