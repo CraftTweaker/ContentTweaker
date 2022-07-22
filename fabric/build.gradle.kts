@@ -93,7 +93,12 @@ tasks {
         with(upload(project.extra["mod.curse-id"], project.buildDir.resolve("libs/${base.archivesName.get()}-${project.extra["mod.version"]}.jar"))) {
             changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
             changelog = project.file("changelog.md")
-            releaseType = net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_RELEASE
+            releaseType = when (project.extra["release.fabric.status"]) {
+                null, "release" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_RELEASE
+                "beta" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_BETA
+                "alpha" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_ALPHA
+                else -> throw IllegalStateException()
+            }
             addJavaVersion("Java ${project.extra["java.version"]}")
             addGameVersion("Fabric")
             addGameVersion(mcVersion)
