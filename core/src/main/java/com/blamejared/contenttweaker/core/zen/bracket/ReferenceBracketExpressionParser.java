@@ -3,12 +3,11 @@ package com.blamejared.contenttweaker.core.zen.bracket;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.object.ReferenceFactory;
+import com.blamejared.contenttweaker.core.api.registry.GameRegistry;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
 import com.blamejared.contenttweaker.core.api.zen.bracket.ReferenceExpression;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.crafttweaker.api.util.ParseUtil;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.shared.CodePosition;
 import org.openzen.zenscript.lexer.ParseException;
@@ -29,17 +28,30 @@ final class ReferenceBracketExpressionParser implements BracketExpressionParser 
     }
 
     public static Stream<String> dump() {
-        return Registry.REGISTRY.stream()
-                .sorted(Comparator.comparing(it -> it.key().location()))
+        return ContentTweakerCore.core()
+                .metaRegistry()
+                .objectTypes()
+                .allTypes()
+                .stream()
                 .flatMap(ReferenceBracketExpressionParser::makeEntryData)
+                .sorted()
                 .map(EntryData::toString);
     }
 
-    private static <T> Stream<EntryData> makeEntryData(final Registry<T> registry) {
-        final ResourceLocation id = registry.key().location();
-        return registry.keySet()
-                .stream()
+    private static <T> Stream<EntryData> makeEntryData(final ObjectType<T> type) {
+        final ResourceLocation id = type.id();
+        final GameRegistry<T> registry = registryOf(type);
+        return registry.stream()
+                .map(registry::nameOf)
                 .map(it -> new EntryData(id, it));
+    }
+
+    private static <T> GameRegistry<T> registryOf(final ObjectType<T> type) {
+        return ContentTweakerCore.core()
+                .metaRegistry()
+                .registryResolvers()
+                .findResolverFor(type)
+                .registry();
     }
 
     @Override
@@ -76,19 +88,19 @@ final class ReferenceBracketExpressionParser implements BracketExpressionParser 
         return this.createExpression(position, registry, id);
     }
 
-    private ParsedExpression createExpression(final CodePosition position, final ResourceLocation registry, final ResourceLocation id) throws ParseException {
-        return createExpression(position, registry, this.grabType(ResourceKey.createRegistryKey(registry)), id);
+    private ParsedExpression createExpression(final CodePosition position, final ResourceLocation typeId, final ResourceLocation id) throws ParseException {
+        return createExpression(position, typeId, this.grabType(typeId), id);
     }
 
     private <T, U extends Reference<T>> ParsedExpression createExpression(
             final CodePosition position,
-            final ResourceLocation registry,
+            final ResourceLocation typeId,
             final ObjectType<T> type,
             final ResourceLocation id
     ) throws ParseException {
         // Scripts run before registry creation and object registration, so no validation has to be performed
         if (type == null) {
-            throw new ParseException(position, "The given registry " + registry + " is not known: unable to construct a reference to it");
+            throw new ParseException(position, "The given type " + typeId + " is not known: unable to construct a reference to it");
         }
 
         final ReferenceFactory<T, U> factory = ContentTweakerCore.core().metaRegistry().referenceFactories().findFactoryFor(type);
@@ -97,12 +109,12 @@ final class ReferenceBracketExpressionParser implements BracketExpressionParser 
 
     private ParseException fail(final CodePosition position, final String contents) throws ParseException {
         final String message = "Invalid contents \"" + contents +
-                "\" for reference bracket: expected bracket in format <reference:registryNamespace:registryId:objectNamespace:objectId>" +
-                " or one of the following short-hand forms: <reference:registryId:objectId>, <reference:registryId:objectNamespace:objectId>";
+                "\" for reference bracket: expected bracket in format <reference:typeNamespace:typeId:objectNamespace:objectId>" +
+                " or one of the following short-hand forms: <reference:typeId:objectId>, <reference:typeId:objectNamespace:objectId>";
         throw new ParseException(position, message);
     }
 
-    private <T> ObjectType<T> grabType(final ResourceKey<? extends Registry<T>> registryKey) {
-        return ContentTweakerCore.core().metaRegistry().objectTypes().get(registryKey);
+    private <T> ObjectType<T> grabType(final ResourceLocation typeId) {
+        return ContentTweakerCore.core().metaRegistry().objectTypes().get(typeId);
     }
 }
