@@ -37,7 +37,7 @@ import java.util.function.Supplier;
 public final class ForgeTierFactoryExpansions {
     private ForgeTierFactoryExpansions() {}
 
-    @ZenCodeType.Method
+    @ZenCodeType.Method("create")
     public static TierReference of(
             @SuppressWarnings("unused") final TierFactory $this,
             final String name,

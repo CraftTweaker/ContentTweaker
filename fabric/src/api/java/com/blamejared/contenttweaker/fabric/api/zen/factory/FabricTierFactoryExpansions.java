@@ -25,7 +25,7 @@ import java.util.List;
 public final class FabricTierFactoryExpansions {
     private FabricTierFactoryExpansions() {}
 
-    @ZenCodeType.Method
+    @ZenCodeType.Method("create")
     public static TierReference of(
             @SuppressWarnings("unused") final TierFactory $this,
             final String name,
