@@ -20,10 +20,20 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 final class ReferenceBracketExpressionParser implements BracketExpressionParser {
-    private record EntryData(ResourceLocation registry, ResourceLocation object) {
+    private record EntryData(ResourceLocation type, ResourceLocation object) implements Comparable<EntryData> {
+        private static final Comparator<ResourceLocation> BETTER_RL_COMPARATOR = Comparator.comparing(ResourceLocation::getNamespace)
+                .thenComparing(ResourceLocation::getPath);
+        private static final Comparator<EntryData> ENTRY_DATA_COMPARATOR = Comparator.comparing(EntryData::type, BETTER_RL_COMPARATOR)
+                .thenComparing(EntryData::object, BETTER_RL_COMPARATOR);
+
+        @Override
+        public int compareTo(final ReferenceBracketExpressionParser.EntryData o) {
+            return ENTRY_DATA_COMPARATOR.compare(this, o);
+        }
+
         @Override
         public String toString() {
-            return "<reference:%s:%s>".formatted(this.registry(), this.object());
+            return "<reference:%s:%s>".formatted(this.type(), this.object());
         }
     }
 

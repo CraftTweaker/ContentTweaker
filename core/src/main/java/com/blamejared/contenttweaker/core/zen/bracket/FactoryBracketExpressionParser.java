@@ -86,8 +86,8 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
                 .allTypes()
                 .stream()
                 .map(ObjectType::id)
-                .sorted()
                 .map(ResourceLocation::toString)
+                .sorted()
                 .map("<factory:%s>"::formatted);
     }
 
