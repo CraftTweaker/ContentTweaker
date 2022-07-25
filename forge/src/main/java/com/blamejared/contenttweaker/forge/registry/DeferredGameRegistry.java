@@ -5,7 +5,7 @@ import net.minecraft.Util;
 
 import java.util.List;
 
-public interface BulletGameRegistry<T> extends GameRegistry<T> {
+public interface DeferredGameRegistry<T> extends GameRegistry<T> {
     List<Runnable> commands();
 
     default void doRegistration() {

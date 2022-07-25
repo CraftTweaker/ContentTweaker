@@ -43,7 +43,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
 
     // Compare with equality
     private static final ResourceLocation DO_NOT_CLONE_DROPS = ContentTweakerConstants.rl("do_not_clone_drops");
-    private static final ResourceLocation DO_NOT_DROP_SHIT = ContentTweakerConstants.rl("do_not_drop_shit");
+    private static final ResourceLocation DO_NOT_DROP_DROPS = ContentTweakerConstants.rl("do_not_drop_drops");
 
     private final BiFunction<ObjectHolder<? extends Block>, Consumer<ResourceManager>, BlockReference> registrationManager;
 
@@ -234,7 +234,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
 
     @ZenCodeType.Method("noDrops")
     public T noDrops() {
-        return this.dropsFrom(DO_NOT_DROP_SHIT);
+        return this.dropsFrom(DO_NOT_DROP_DROPS);
     }
 
     @ZenCodeType.Method("dropsNormally")
@@ -457,7 +457,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
             properties.jumpFactor(jump);
         }
         if (drops != null && drops != DO_NOT_CLONE_DROPS) {
-            if (drops == DO_NOT_DROP_SHIT) {
+            if (drops == DO_NOT_DROP_DROPS) {
                 properties.noDrops();
             } else {
                 // Ugly, but you can only drop like another block, not a custom RL

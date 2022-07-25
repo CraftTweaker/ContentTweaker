@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public final class ForgeGameRegistry<T extends IForgeRegistryEntry<T>> implements BulletGameRegistry<T> {
+public final class ForgeGameRegistry<T extends IForgeRegistryEntry<T>> implements DeferredGameRegistry<T> {
     private static final Map<ObjectType<?>, ForgeGameRegistry<?>> INSTANCES = new HashMap<>();
     private static final Supplier<ModContainer> COT_CONTAINER = Suppliers.memoize(() -> ModList.get().getModContainerById(ContentTweakerConstants.MOD_ID).orElseThrow());
 
@@ -76,7 +76,7 @@ public final class ForgeGameRegistry<T extends IForgeRegistryEntry<T>> implement
 
     @Override
     public void doRegistration() {
-        this.withContainer(BulletGameRegistry.super::doRegistration);
+        this.withContainer(DeferredGameRegistry.super::doRegistration);
     }
 
     private void withContainer(final Runnable runnable) {

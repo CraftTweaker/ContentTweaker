@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public final class VanillaGameRegistry<T> implements BulletGameRegistry<T> {
+public final class VanillaGameRegistry<T> implements DeferredGameRegistry<T> {
     private static final Map<ObjectType<?>, VanillaGameRegistry<?>> INSTANCES = new HashMap<>();
 
     private final Registry<T> registry;
