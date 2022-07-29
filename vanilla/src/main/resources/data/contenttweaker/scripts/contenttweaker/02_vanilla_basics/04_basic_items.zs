@@ -10,7 +10,7 @@
 // ContentTweaker let's you create many different types of items, and allows CraftTweaker addons to provide additional
 // personalization options. For this reason, creating items is slightly less straight-forward than the previous two
 // examples and requires you to specify a "type".
-// The "type" of an item essentially represents what kind of things the items is supposed to do and what data is
+// The "type" of an item essentially represents what kind of things the item is supposed to do and what data is
 // required for it to behave correctly. Each "type" might require different information, so you have to look at the
 // documentation for the type you desire.
 // In this script, we will only be dealing with basic item types, meaning items that have no special behavior except for

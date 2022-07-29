@@ -16,7 +16,7 @@
 
 // As we have explained previously, to create something we all need a factory. The sound event factory can be obtained
 // unsurprisingly through `<factory:sound_event>`.
-// The factory exposes us a single method to create an event, asking us for an ID. The ID is a string that identifies
+// The factory exposes to us a single method to create an event, asking us for an ID. The ID is a string that identifies
 // the name we want to give to the event. It has to follow all resource location conventions.
 // Last but not least, we have to `build` the created sound event. This will give us a reference to use later.
 // Let me now show you some commented examples.
