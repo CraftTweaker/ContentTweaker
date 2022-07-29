@@ -66,7 +66,7 @@ public final class ReferenceExpression<T, U extends Reference<T>> extends Parsed
         final IZenClassRegistry classes = CraftTweakerAPI.getRegistry().getZenClassRegistry();
 
         final Class<?> objectType = this.objectType.type();
-        final String objectName = classes.getNameFor(loader, this.objectType.type()).orElseThrow();
+        final String objectName = classes.getNameFor(loader, objectType).orElseThrow();
 
         final String referenceName = this.buildGenericReferenceName(loader, classes, objectType);
 

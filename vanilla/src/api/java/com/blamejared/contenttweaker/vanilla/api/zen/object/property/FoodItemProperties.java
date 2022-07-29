@@ -7,6 +7,8 @@ import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.world.food.FoodProperties;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.util.Objects;
+
 @ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".property.FoodItemProperties")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class FoodItemProperties extends ItemProperties {
@@ -37,6 +39,6 @@ public final class FoodItemProperties extends ItemProperties {
     // TODO("Effects")
 
     private FoodProperties resolveProperties() {
-        return this.resolve().getFoodProperties();
+        return Objects.requireNonNull(this.resolve().getFoodProperties(), () -> "The item " + this.reference().id() + " is not a food");
     }
 }
