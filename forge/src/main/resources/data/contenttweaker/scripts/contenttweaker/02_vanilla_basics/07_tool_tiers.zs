@@ -11,7 +11,7 @@
 
 // As you might already be aware, ContentTweaker is available on more than one mod loader, to give you more freedom on
 // your choice. Nevertheless, the two mod loaders are different from one another and this means that some stuff has to
-// be different between them, too. We strive to make sure our scripts are portable, allowing both mod loaders to run the
+// be different between them. We strive to make sure our scripts are portable, allowing both mod loaders to run the
 // same set of scripts without changes, but unfortunately some things are just different.
 // When this is the case, we will mark our examples with the `modloader` preprocessor and the mod loader they are
 // intended for.
