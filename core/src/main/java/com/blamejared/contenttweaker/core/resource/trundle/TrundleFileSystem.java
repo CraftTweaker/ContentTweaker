@@ -16,6 +16,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.FileStore;
 import java.nio.file.FileSystem;
 import java.nio.file.LinkOption;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
@@ -228,7 +229,7 @@ final class TrundleFileSystem extends FileSystem {
         if (this.closed) {
             throw new ClosedFileSystemException();
         }
-        this.catching(() -> TrundleResources.access(this.resolve(path), modes));
+        this.catching(() -> TrundleResources.access(this.resolveOrNoSuchFile(path), modes));
     }
 
     <V extends FileAttributeView> V fileAttributeView(final TrundlePath path, final Class<V> type, final LinkOption... options) {
@@ -297,6 +298,23 @@ final class TrundleFileSystem extends FileSystem {
             throw new ClosedFileSystemException();
         }
         return this.catching(() -> TrundleResources.deleteIfExists(this.resolve(path)));
+    }
+
+    private TrundlePathResolutionResult resolveOrNoSuchFile(final TrundlePath path) throws IOException {
+        try {
+            return this.resolve(path);
+        } catch (final TrundleException e) {
+            if (e.code() != TrundleException.Code.RESOLUTION_ERROR) {
+                throw e;
+            }
+
+            final String[] portions = path.pathPortions();
+            final int last = portions.length - 1;
+            final String name = portions[last];
+            final IOException noFileException = new NoSuchFileException(name);
+            noFileException.initCause(e);
+            throw noFileException;
+        }
     }
 
     private TrundlePathResolutionResult resolve(final TrundlePath path) {
