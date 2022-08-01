@@ -14,7 +14,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class CreativeTabReference extends Reference<CreativeModeTab> {
     private CreativeTabReference(final String id) {
-        super(VanillaObjectTypes.CREATIVE_TAB, new ResourceLocation(id));
+        super(VanillaObjectTypes.CREATIVE_TAB, CreativeTabRegistry.fromId(id));
     }
 
     @ZenCodeType.Method("of")
