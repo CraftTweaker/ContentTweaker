@@ -36,7 +36,8 @@ val electricBoogaloo = <factory:sound_event> // Let's grab the factory for creat
     .build("the_earth"); // Note how we specified another string in `build`. This means we want to register the event
                          // with a different name than the one we specified in the `event` method. While this is
                          // possible, you will still be referring to the event with the name specified in `event` most
-                         // of the time. Specifying a different name is thus discouraged and only creates confusion.
+                         // of the time. Specifying a different name is thus discouraged and only creates confusion. The
+                         // possibility is still provided though, just in case you need it to solve corner cases.
 
 <factory:sound_event>.event("custom.modpack.voice.question").build();
 
@@ -50,9 +51,9 @@ val electricBoogaloo = <factory:sound_event> // Let's grab the factory for creat
 val vanillaEvent = <soundevent:minecraft:entity.puffer_fish.blow_out>;
 val customEvent = <soundevent:contenttweaker:custom.modpack.voice.question>;
 
-<soundevent:contenttweaker:electrict.boogaloo>; // We can always reference stuff in-line, without requiring a variable.
-                                                // This will come in handy if we need to pass a reference to a sound
-                                                // event as a variable, but we do not have any already-made references
-                                                // on-hand.
+<soundevent:contenttweaker:electric.boogaloo>; // We can always reference stuff in-line, without requiring a variable.
+                                               // This will come in handy if we need to pass a reference to a sound
+                                               // event as a variable, but we do not have any already-made references
+                                               // on-hand.
 
 // All clear? Great, then it's time to move on to the next topic!
