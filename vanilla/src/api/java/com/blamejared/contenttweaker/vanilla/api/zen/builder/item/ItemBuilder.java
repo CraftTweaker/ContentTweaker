@@ -138,7 +138,7 @@ public abstract class ItemBuilder<T extends ItemBuilder<T>> {
 
     @ZenCodeType.Method("nutrition")
     public T nutrition(final int nutrition) {
-        if (this.nutrition <= 0) {
+        if (nutrition <= 0) {
             throw new IllegalArgumentException("Invalid nutrition " + nutrition);
         }
         this.nutrition = nutrition;
