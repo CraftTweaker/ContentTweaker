@@ -33,3 +33,8 @@ for i in 0 .. 4 {
 // You can check out the CraftTweaker log with `/ct log`: you'll notice the strings above appearing. Feel free to tinker
 // around with them and see what the results are. Remember that to apply ContentTweaker scripts, you **have to** restart
 // the game.
+
+// The resource location bracket handler is also retained, allowing you to create resource locations the same way you
+// would do with CraftTweaker:
+
+<resource:minecraft:hello>;
