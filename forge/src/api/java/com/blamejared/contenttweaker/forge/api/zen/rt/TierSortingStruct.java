@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -72,6 +73,9 @@ public final class TierSortingStruct {
     }
 
     public Supplier<Object> get() {
-        return () -> Stream.of(this.rl, this.name, this.tier.get()).filter(Objects::nonNull).findFirst().orElseGet(Object::new);
+        return () -> Stream.of(this.rl, this.name, Optional.ofNullable(this.tier).map(TierReference::get).orElse(null))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElseGet(Object::new);
     }
 }
