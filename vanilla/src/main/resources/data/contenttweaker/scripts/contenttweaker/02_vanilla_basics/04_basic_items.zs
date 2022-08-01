@@ -7,7 +7,7 @@
 // We'll now be looking at the creation of items. First, though, we have to get through a bit of boilerplate, so this
 // bit will feel a little bit out of order.
 
-// ContentTweaker let's you create many different types of items, and allows CraftTweaker addons to provide additional
+// ContentTweaker let's you create many different types of items, and allows ContentTweaker addons to provide additional
 // personalization options. For this reason, creating items is slightly less straight-forward than the previous two
 // examples and requires you to specify a "type".
 // The "type" of an item essentially represents what kind of things the item is supposed to do and what data is
@@ -122,7 +122,7 @@ val carrotProperties = <item:minecraft:carrot>.findProperties<FoodItemProperties
     .cloning(veryBasicItem.properties) // Note how we do not have to specify which type of properties we want to clone,
                                        // as ContentTweaker will automatically determine the correct type and behave
                                        // accordingly
-   .rarity(<constant:minecraft:item/rarity:epic>)
-   .build("epic_basic_item");
+    .rarity(<constant:minecraft:item/rarity:epic>)
+    .build("epic_basic_item");
 
 // And with this, we have the basics of item creation in ContentTweaker done.
