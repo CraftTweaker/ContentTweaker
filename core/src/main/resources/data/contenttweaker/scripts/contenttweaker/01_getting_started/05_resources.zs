@@ -29,3 +29,6 @@
 // curious or because they want to use it as an example structure. For this reason, using the command
 // `/ct dump contenttweaker_resources file` will dump everything we created into "ct_dumps/contenttweaker_resources".
 // What you'll get is a ready-made resource and data pack, which you are free to use as you desire.
+
+// Nevertheless, what ContentTweaker uses is the normal resource and data pack system, so if you want to customize any
+// of those resources, you should look into the resources provided by vanilla and on the Minecraft wiki over on Fandom.
