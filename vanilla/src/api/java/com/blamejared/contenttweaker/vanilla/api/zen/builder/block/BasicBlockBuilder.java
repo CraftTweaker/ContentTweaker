@@ -26,8 +26,6 @@ import java.util.function.Supplier;
 @ZenCodeType.Name(ContentTweakerVanillaConstants.BLOCK_BUILDER_PACKAGE + ".Basic")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class BasicBlockBuilder extends BlockBuilder<BasicBlockBuilder> {
-    private static final String WARN = "Unable to automatically generate loot table for block '%s' because the automatic block item has been disabled: an empty one will be generated instead";
-
     public BasicBlockBuilder(final BiFunction<ObjectHolder<? extends Block>, Consumer<ResourceManager>, BlockReference> registrationManager) {
         super(registrationManager);
     }
@@ -50,8 +48,10 @@ public final class BasicBlockBuilder extends BlockBuilder<BasicBlockBuilder> {
 
         if (flags.generateLootTable()) {
             final ResourceFragment cotData = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_DATA);
+
+            // TODO("Maybe include this in BlockBuilder")
             this.selfLootTable(name, flags)
-                    .or(() -> this.emptyTable(name, WARN::formatted))
+                    .or(() -> this.emptyTable(name, LOOT_GEN_FAILURE_DUE_TO_NO_ITEM::formatted))
                     .ifPresent(it -> cotData.provideFixed(PathHelper.blockLootTable(name), it, LootTable.SERIALIZER));
         }
     }

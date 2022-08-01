@@ -41,9 +41,13 @@ import java.util.function.Supplier;
 public abstract class BlockBuilder<T extends BlockBuilder<T>> {
     protected record GenerateFlags(boolean generateLootTable, boolean generateBlockItem) {}
 
+    protected static final String LOOT_GEN_FAILURE_DUE_TO_NO_ITEM =
+            "Unable to automatically generate loot table for block '%s' because the automatic block item has been disabled: an empty one will be generated instead";
+
     // Compare with equality
     private static final ResourceLocation DO_NOT_CLONE_DROPS = ContentTweakerConstants.rl("do_not_clone_drops");
     private static final ResourceLocation DO_NOT_DROP_DROPS = ContentTweakerConstants.rl("do_not_drop_drops");
+    private static final ResourceLocation FORCE_GENERATION_OF_DROPS = ContentTweakerConstants.rl("force_generation_of_drops");
 
     private final BiFunction<ObjectHolder<? extends Block>, Consumer<ResourceManager>, BlockReference> registrationManager;
 
@@ -242,6 +246,11 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.cloningProperties != null? this.dropsFrom(DO_NOT_CLONE_DROPS) : this.self();
     }
 
+    @ZenCodeType.Method("dropsItselfRegardless")
+    public T dropsItselfRegardless() {
+        return this.dropsFrom(FORCE_GENERATION_OF_DROPS);
+    }
+
     @ZenCodeType.Method("occludes")
     public T occludes(final boolean occlude) {
         this.occlude = occlude;
@@ -319,7 +328,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
 
     protected final Optional<LootTable> selfLootTable(final ResourceLocation name, final GenerateFlags flags) {
         Objects.requireNonNull(name);
-        if (!Objects.requireNonNull(flags).generateBlockItem()) {
+        if (!Objects.requireNonNull(flags).generateBlockItem() && this.drops != FORCE_GENERATION_OF_DROPS) {
             return Optional.empty();
         }
         final LootTable table = LootTable.ofBlock()
@@ -456,7 +465,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         if (jump != null) {
             properties.jumpFactor(jump);
         }
-        if (drops != null && drops != DO_NOT_CLONE_DROPS) {
+        if (drops != null && drops != DO_NOT_CLONE_DROPS && drops != FORCE_GENERATION_OF_DROPS) {
             if (drops == DO_NOT_DROP_DROPS) {
                 properties.noDrops();
             } else {
