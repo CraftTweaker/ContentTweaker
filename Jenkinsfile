@@ -92,41 +92,41 @@ pipeline {
                     }
                 }
 
-                stage('Exporting Documentation') {
-                    when {
-                        branch branchName
-                    }
-                    steps {
-                        echo "Cloning Repository at Branch main"
-
-                        dir(documentationDir) {
-                            git credentialsId: gitSshCredentialsId, url: docsRepositoryUrl, branch: "main", changelog: false
-                        }
-
-
-                        echo "Clearing existing Documentation export"
-                        dir(documentationDir) {
-                            sh "rm --recursive --force ./$exportDirInRepo"
-                        }
-
-
-                        echo "Moving Generated Documentation to Local Clone"
-                        sh "mkdir --parents ./$documentationDir/$exportDirInRepo"
-                        sh "mv ./$docsOutDir/* ./$documentationDir/$exportDirInRepo/"
-
-                        echo "Committing and Pushing to the repository"
-                        dir(documentationDir) {
-                            sshagent([gitSshCredentialsId]) {
-                                sh "git config user.name $botUsername"
-                                sh "git config user.email $botEmail"
-                                sh 'git add -A'
-                                //Either nothing to commit, or we create a commit
-                                sh "git diff-index --quiet HEAD || git commit -m 'CI Doc export for ContentTweaker build ${env.BRANCH_NAME}-${env.BUILD_NUMBER}\n\nMatches git commit ${env.GIT_COMMIT}'"
-                                sh "git push origin main"
-                            }
-                        }
-                    }
-                }
+//                stage('Exporting Documentation') {
+//                    when {
+//                        branch branchName
+//                    }
+//                    steps {
+//                        echo "Cloning Repository at Branch main"
+//
+//                        dir(documentationDir) {
+//                            git credentialsId: gitSshCredentialsId, url: docsRepositoryUrl, branch: "main", changelog: false
+//                        }
+//
+//
+//                        echo "Clearing existing Documentation export"
+//                        dir(documentationDir) {
+//                            sh "rm --recursive --force ./$exportDirInRepo"
+//                        }
+//
+//
+//                        echo "Moving Generated Documentation to Local Clone"
+//                        sh "mkdir --parents ./$documentationDir/$exportDirInRepo"
+//                        sh "mv ./$docsOutDir/* ./$documentationDir/$exportDirInRepo/"
+//
+//                        echo "Committing and Pushing to the repository"
+//                        dir(documentationDir) {
+//                            sshagent([gitSshCredentialsId]) {
+//                                sh "git config user.name $botUsername"
+//                                sh "git config user.email $botEmail"
+//                                sh 'git add -A'
+//                                //Either nothing to commit, or we create a commit
+//                                sh "git diff-index --quiet HEAD || git commit -m 'CI Doc export for ContentTweaker build ${env.BRANCH_NAME}-${env.BUILD_NUMBER}\n\nMatches git commit ${env.GIT_COMMIT}'"
+//                                sh "git push origin main"
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
     }
