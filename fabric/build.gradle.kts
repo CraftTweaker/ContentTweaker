@@ -89,7 +89,7 @@ tasks {
         }
     }
     publishToCurseForge {
-        with(upload(project.extra["mod.curse-id"], project.buildDir.resolve("libs/${base.archivesName.get()}-${project.extra["mod.version"]}.jar"))) {
+        with(upload(project.extra["mod.curse-id"], project.buildDir.resolve("libs/${base.archivesName.get()}-${version}.jar"))) {
             changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
             changelog = project.file("changelog.md")
             releaseType = when (project.extra["release.fabric.status"]) {
