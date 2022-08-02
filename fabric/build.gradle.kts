@@ -6,6 +6,7 @@ plugins {
 evaluationDependsOn(":vanilla")
 
 val mcVersion = extra["minecraft.version"] as String
+val modCurse = extra["mod.curse"] as String
 
 base.archivesName.set("${extra["mod.name"]}-fabric-$mcVersion")
 
@@ -102,6 +103,9 @@ tasks {
             addGameVersion("Fabric")
             addGameVersion(mcVersion)
             addRequirement("crafttweaker")
+            doLast {
+                project.ext.set("curse_file_url", "${modCurse}/files/${curseFileId}")
+            }
         }
         dependsOn(project.tasks.remapJar)
     }

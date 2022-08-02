@@ -9,6 +9,7 @@ evaluationDependsOn(":vanilla")
 
 val modId = project.extra["mod.id"] as String
 val mcVersion = extra["minecraft.version"] as String
+val modCurse = extra["mod.curse"] as String
 
 base.archivesName.set("${extra["mod.name"]}-forge-$mcVersion")
 
@@ -110,6 +111,10 @@ tasks {
             addJavaVersion("Java ${project.extra["java.version"]}")
             addGameVersion(mcVersion)
             addRequirement("crafttweaker")
+
+            doLast {
+                project.ext.set("curse_file_url", "${modCurse}/files/${curseFileId}")
+            }
         }
     }
     jar {
