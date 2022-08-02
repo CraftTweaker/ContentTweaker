@@ -118,12 +118,11 @@ class JavaConventionsPlugin implements Plugin<Project> {
 
                 if (project.name.equals("Forge")) {
                     pom.withXml {
-                        val depNodeList = asNode()["dependencies"] as NodeList
-                        depNodeList.map { it as Node }.forEach { depList ->
-                            val deps = depList.getAt(QName("http://maven.apache.org/POM/4.0.0", "dependency"))
-                            deps.map { it as Node }.forEach { dep ->
-                                dep.parent().remove(dep)
-                            }
+
+                        // Go through all the dependencies.
+                        asNode().dependencies.dependency.each { dep ->
+
+                            assert dep.parent().remove(dep)
                         }
                     }
                 }
