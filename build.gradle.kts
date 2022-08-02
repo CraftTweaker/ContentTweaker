@@ -45,14 +45,14 @@ tasks.create("postDiscord") {
             val embed = Embed()
             val downloadSources = StringJoiner("\n")
 
-            if (project(":Fabric").ext.has("curse_file_url")) {
+            if (project(":fabric").ext.has("curse_file_url")) {
 
-                downloadSources.add("<:fabric:932163720568782878> [Fabric](${project(":Fabric").ext.get("curse_file_url")})")
+                downloadSources.add("<:fabric:932163720568782878> [Fabric](${project(":fabric").ext.get("curse_file_url")})")
             }
 
-            if (project(":Forge").ext.has("curse_file_url")) {
+            if (project(":forge").ext.has("curse_file_url")) {
 
-                downloadSources.add("<:forge:932163698003443804> [Forge](${project(":Forge").ext.get("curse_file_url")})")
+                downloadSources.add("<:forge:932163698003443804> [Forge](${project(":forge").ext.get("curse_file_url")})")
             }
 
             downloadSources.add(
@@ -62,13 +62,13 @@ tasks.create("postDiscord") {
             )
 
             downloadSources.add(
-                "<:maven:932165250738970634> `\"${project(":Fabric").group}:${project(":Fabric").base.archivesName.get()}:${
-                    project(":Fabric").version
+                "<:maven:932165250738970634> `\"${project(":fabric").group}:${project(":fabric").base.archivesName.get()}:${
+                    project(":fabric").version
                 }\"`"
             )
             downloadSources.add(
-                "<:maven:932165250738970634> `\"${project(":Forge").group}:${project(":Forge").base.archivesName.get()}:${
-                    project(":Forge").version
+                "<:maven:932165250738970634> `\"${project(":forge").group}:${project(":forge").base.archivesName.get()}:${
+                    project(":forge").version
                 }\"`"
             )
 

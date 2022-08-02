@@ -116,7 +116,7 @@ class JavaConventionsPlugin implements Plugin<Project> {
                 artifactId = base.archivesName.get()
                 from(project.components['java'])
 
-                if (project.name.equals("Forge")) {
+                if (project.name.equals("forge")) {
                     pom.withXml {
 
                         // Go through all the dependencies.
