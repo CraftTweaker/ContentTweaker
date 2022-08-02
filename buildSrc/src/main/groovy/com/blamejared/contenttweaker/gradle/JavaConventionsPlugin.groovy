@@ -115,6 +115,18 @@ class JavaConventionsPlugin implements Plugin<Project> {
             publishing.publications.register('mavenJava', MavenPublication) {
                 artifactId = base.archivesName.get()
                 from(project.components['java'])
+
+                if (project.name.equals("Forge")) {
+                    pom.withXml {
+                        val depNodeList = asNode()["dependencies"] as NodeList
+                        depNodeList.map { it as Node }.forEach { depList ->
+                            val deps = depList.getAt(QName("http://maven.apache.org/POM/4.0.0", "dependency"))
+                            deps.map { it as Node }.forEach { dep ->
+                                dep.parent().remove(dep)
+                            }
+                        }
+                    }
+                }
             }
         }
         publishing.repositories {
@@ -141,11 +153,6 @@ class JavaConventionsPlugin implements Plugin<Project> {
             author(ext['mod.author'])
             projectName(ext['mod.name'])
             homepage(ext['mod.curse'])
-        }
-        modTemplate.webhook.with {
-            url(System.getenv('discordCFWebhook'))
-            curseId(ext['mod.curse-id'])
-            avatarUrl(ext['mod.avatar'])
         }
     }
 

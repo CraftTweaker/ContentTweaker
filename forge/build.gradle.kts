@@ -60,7 +60,6 @@ modTemplate {
     modLoader("Forge")
     changelog.enabled(true)
     versionTracker.enabled(true)
-    webhook.enabled(true)
 }
 
 repositories {
