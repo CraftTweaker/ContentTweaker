@@ -72,6 +72,7 @@ class JavaConventionsPlugin implements Plugin<Project> {
         project.tasks.withType(JavaCompile).configureEach {
             it.options.encoding = StandardCharsets.UTF_8.toString()
             it.options.release.set(ext['java.version'].toInteger())
+            it.outputs.upToDateWhen { false }
         }
         project.tasks.withType(Javadoc).configureEach {
             it.options.encoding = StandardCharsets.UTF_8.toString()

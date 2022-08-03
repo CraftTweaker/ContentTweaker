@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MainMixin {
     @Inject(
             method = "main",
-            remap = false,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/Util;startTimerHackThread()V",
