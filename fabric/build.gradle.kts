@@ -73,6 +73,7 @@ tasks {
         sequenceOf(project(":core"), project(":vanilla"))
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.api.get(), it.main.get()) }
+            .plusElement(sourceSets.api.get())
             .forEach { source(it.allSource) }
     }
     processResources {
@@ -81,6 +82,7 @@ tasks {
         sequenceOf(project(":core"), project(":vanilla"))
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.api.get(), it.main.get()) }
+            .plusElement(sourceSets.api.get())
             .forEach { from(it.resources) }
 
         inputs.property("version", project.version)

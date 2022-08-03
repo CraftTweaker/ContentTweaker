@@ -96,6 +96,7 @@ tasks {
         sequenceOf(project(":core"), project(":vanilla"))
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.main.get(), it.api.get()) }
+            .plusElement(sourceSets.api.get())
             .forEach{ source(it.allSource) }
     }
     publishToCurseForge {
@@ -121,6 +122,7 @@ tasks {
         sequenceOf(project(":core"), project(":vanilla"))
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.main.get(), it.api.get()) }
+            .plusElement(sourceSets.api.get())
             .forEach { from(it.resources) }
         duplicatesStrategy = DuplicatesStrategy.FAIL
     }
