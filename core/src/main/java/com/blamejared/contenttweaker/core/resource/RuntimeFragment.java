@@ -80,7 +80,8 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
 
         private FileSystem create() {
             try {
-                return FileSystems.newFileSystem(new URI("%s:%s@".formatted(TrundleFileSystemProvider.SCHEME, this.fsId)), Collections.emptyMap());
+                // TODO("Test if Forge/Fabric/Java ever fixes the issue of FileSystems being discovered at a weird time")
+                return FileSystems.newFileSystem(new URI("%s:%s@".formatted(TrundleFileSystemProvider.SCHEME, this.fsId)), Collections.emptyMap(), this.getClass().getClassLoader());
             } catch (final URISyntaxException | IOException | FileSystemAlreadyExistsException | ProviderNotFoundException e) {
                 throw new RuntimeException("Unable to create file system " + this.fsId, e);
             }
