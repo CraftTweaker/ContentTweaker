@@ -82,7 +82,7 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
             try {
                 return FileSystems.newFileSystem(new URI("%s:%s@".formatted(TrundleFileSystemProvider.SCHEME, this.fsId)), Collections.emptyMap());
             } catch (final URISyntaxException | IOException | FileSystemAlreadyExistsException | ProviderNotFoundException e) {
-                throw new RuntimeException("Unable to create file system " + this.fsId);
+                throw new RuntimeException("Unable to create file system " + this.fsId, e);
             }
         }
     }
