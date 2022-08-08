@@ -7,6 +7,7 @@ import com.blamejared.contenttweaker.core.registry.ContentTweakerRegistryWrapper
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
 import com.blamejared.contenttweaker.core.registry.Winston;
 import com.blamejared.contenttweaker.core.resource.RuntimeResourceManager;
+import com.blamejared.contenttweaker.core.resource.trundle.TrundleFileSystemProviderInjector;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.plugin.IBracketParserRegistrationHandler;
 import com.blamejared.crafttweaker.api.zencode.scriptrun.IScriptRun;
@@ -39,7 +40,7 @@ public final class ContentTweakerCore {
     }
 
     public void initialize() {
-
+        TrundleFileSystemProviderInjector.inject();
     }
 
     public void initializePlugins() {
