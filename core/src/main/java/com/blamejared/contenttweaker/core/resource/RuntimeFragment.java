@@ -5,9 +5,15 @@ import com.blamejared.contenttweaker.core.api.resource.ResourceSerializer;
 import com.blamejared.contenttweaker.core.resource.trundle.TrundleFileSystemProvider;
 import com.blamejared.contenttweaker.core.service.ServiceManager;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
+import com.google.common.base.Suppliers;
+import net.minecraft.Util;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -20,9 +26,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.ProviderNotFoundException;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.spi.FileSystemProvider;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -33,6 +42,38 @@ import java.util.function.Supplier;
 
 final class RuntimeFragment implements ResourceFragment, AutoCloseable {
     private static final class FileSystemOnDemand implements AutoCloseable {
+        private static final Supplier<MethodHandles.Lookup> TRUSTED_LOOKUP = Suppliers.memoize(() -> {
+            try {
+                final Class<?> unsafeClass = Class.forName("sun.misc.Unsafe");
+                final Field unsafeField = unsafeClass.getDeclaredField("theUnsafe");
+                unsafeField.setAccessible(true);
+                final Object unsafe = unsafeField.get(null);
+                final Method getObject = unsafeClass.getDeclaredMethod("getObject", Object.class, long.class);
+                final Method staticFieldBase = unsafeClass.getDeclaredMethod("staticFieldBase", Field.class);
+                final Method staticFieldOffset = unsafeClass.getDeclaredMethod("staticFieldOffset", Field.class);
+
+                final Class<?> methodHandlesLookupClass = MethodHandles.Lookup.class;
+                final Field[] declaredFields = methodHandlesLookupClass.getDeclaredFields();
+
+                for (final Field declaredField : declaredFields) {
+                    if (declaredField.getType() != MethodHandles.Lookup.class) continue;
+
+                    final Object base = staticFieldBase.invoke(unsafe, declaredField);
+                    final long offset = (Long) staticFieldOffset.invoke(unsafe, declaredField);
+                    final MethodHandles.Lookup lookup = (MethodHandles.Lookup) getObject.invoke(unsafe, base, offset);
+
+                    if (lookup.lookupModes() != 127) continue;
+
+                    return lookup;
+                }
+
+            } catch (final ReflectiveOperationException e) {
+                throw new IllegalStateException("Unable to find lookup", e);
+            }
+
+            throw new IllegalStateException("Unable to find lookup");
+        });
+
         private final String fsId;
 
         private volatile boolean initialized;
@@ -79,11 +120,26 @@ final class RuntimeFragment implements ResourceFragment, AutoCloseable {
         }
 
         private FileSystem create() {
+            this.injectProviderIfNeeded();
             try {
-                // TODO("Test if Forge/Fabric/Java ever fixes the issue of FileSystems being discovered at a weird time")
-                return FileSystems.newFileSystem(new URI("%s:%s@".formatted(TrundleFileSystemProvider.SCHEME, this.fsId)), Collections.emptyMap(), this.getClass().getClassLoader());
+                return FileSystems.newFileSystem(new URI("%s:%s@".formatted(TrundleFileSystemProvider.SCHEME, this.fsId)), Collections.emptyMap());
             } catch (final URISyntaxException | IOException | FileSystemAlreadyExistsException | ProviderNotFoundException e) {
-                throw new RuntimeException("Unable to create file system " + this.fsId, e);
+                final Throwable cause = e instanceof ProviderNotFoundException? new IllegalStateException("Injection failed: " + FileSystemProvider.installedProviders(), e) : e;
+                throw new RuntimeException("Unable to create file system " + this.fsId, cause);
+            }
+        }
+
+        private void injectProviderIfNeeded() {
+            final List<FileSystemProvider> providers = FileSystemProvider.installedProviders();
+            final boolean exists = providers.stream().anyMatch(it -> TrundleFileSystemProvider.SCHEME.equals(it.getScheme()));
+            if (exists) return;
+
+            try {
+                final VarHandle providersHandle = TRUSTED_LOOKUP.get().findStaticVarHandle(FileSystemProvider.class, "installedProviders", List.class);
+                final List<FileSystemProvider> newProviders = Collections.unmodifiableList(Util.make(new ArrayList<>(providers), it -> it.add(new TrundleFileSystemProvider())));
+                providersHandle.setVolatile(newProviders);
+            } catch (final Throwable e) {
+                throw new RuntimeException("Unable to inject provider in list", e);
             }
         }
     }
