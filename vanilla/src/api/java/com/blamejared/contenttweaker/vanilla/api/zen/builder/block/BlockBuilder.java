@@ -306,7 +306,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
     @ZenCodeType.Method("build")
     public final BlockReference build(final String name) {
         final ResourceLocation id = ContentTweakerConstants.rl(name);
-        final GenerateFlags flags = new GenerateFlags(this.drops == null, this.blockItem);
+        final GenerateFlags flags = this.flags();
         final BlockReference reference = this.registrationManager.apply(this.create(id, this.checkAndMakeProperties(), flags), manager -> this.provideResources(id, manager, flags));
         if (flags.generateBlockItem()) {
             this.makeBlockItem(reference);
@@ -341,6 +341,11 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
                 .finish()
                 .finish();
         return Optional.of(table);
+    }
+
+    private GenerateFlags flags() {
+        final boolean generateLootTable = this.drops == null || this.drops == FORCE_GENERATION_OF_DROPS || this.drops == DO_NOT_CLONE_DROPS;
+        return new GenerateFlags(generateLootTable, this.blockItem);
     }
 
     private Supplier<BlockBehaviour.Properties> checkAndMakeProperties() {
