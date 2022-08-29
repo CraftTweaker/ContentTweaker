@@ -1,5 +1,6 @@
 package com.blamejared.contenttweaker.core.resource.trundle;
 
+import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.minecraft.Util;
 
@@ -29,18 +30,30 @@ public final class TrundleFileSystemProviderInjector {
             final MethodHandle putObject = unsafeLookup.findVirtual(unsafeClass, "putObject", MethodType.methodType(void.class, Object.class, long.class, Object.class));
 
             final Field providersField = FileSystemProvider.class.getDeclaredField("installedProviders");
+            final Field lockField = FileSystemProvider.class.getDeclaredField("lock");
 
             final Object unsafe = unsafeField.get();
+
             final Object providersBase = staticFieldBase.invoke(unsafe, providersField);
             final long providersOffset = (long) staticFieldOffset.invoke(unsafe, providersField);
-            final Object providersObject = getObject.invoke(unsafe, providersBase, providersOffset);
-            final List<FileSystemProvider> providers = GenericUtil.uncheck(providersObject);
+            final Object lockBase = staticFieldBase.invoke(unsafe, lockField);
+            final long lockOffset = (long) staticFieldOffset.invoke(unsafe, lockField);
 
-            final List<FileSystemProvider> newProviders = Collections.unmodifiableList(Util.make(new ArrayList<>(providers), it -> it.add(new TrundleFileSystemProvider())));
-            putObject.invoke(unsafe, providersBase, providersOffset, newProviders);
+            final Object lock = getObject.invoke(unsafe, lockBase, lockOffset);
+
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
+            synchronized (lock) {
+                final Object providersObject = getObject.invoke(unsafe, providersBase, providersOffset);
+                final List<FileSystemProvider> providers = GenericUtil.uncheck(providersObject);
+
+                final List<FileSystemProvider> newProviders = Collections.unmodifiableList(Util.make(new ArrayList<>(providers), it -> it.add(new TrundleFileSystemProvider())));
+                putObject.invoke(unsafe, providersBase, providersOffset, newProviders);
+            }
 
             if (!exists()) {
                 throw new RuntimeException("Unable to inject file system provider: discovered " + FileSystemProvider.installedProviders());
+            } else {
+                ContentTweakerCore.LOGGER.info("Successfully injected Trundle file system");
             }
         } catch (final Throwable e) {
             throw new RuntimeException("An error occurred when attempting to inject Trundle file system provider", e);
