@@ -35,8 +35,8 @@
   "depends": {
     "fabricloader": ">=0.13.3",
     "fabric": "*",
-    "minecraft": "~1.18.2",
+    "minecraft": "~1.19.2",
     "java": ">=17",
-    "crafttweaker": "9.1.*"
+    "crafttweaker": "10.1.*"
   }
 }
