@@ -31,9 +31,10 @@ final class RuntimePackResources implements PackResources {
         return this.pack.resource(packType, resourceLocation);
     }
 
+
     @Override
-    public Collection<ResourceLocation> getResources(final PackType packType, final String s, final String s1, final int i, final Predicate<String> predicate) {
-        return this.pack.resources(packType, s, s1, i, predicate);
+    public Collection<ResourceLocation> getResources(final PackType packType, final String s, final String s1, final Predicate<ResourceLocation> predicate) {
+        return this.pack.resources(packType, s, s1,  predicate);
     }
 
     @Override

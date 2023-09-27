@@ -14,7 +14,7 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 
 import java.io.IOException;
@@ -80,7 +80,7 @@ public final class RuntimeResourceDumpingCommand {
     public static void register(final ICommandRegistrationHandler handler) {
         handler.registerDump(
                 "contenttweaker_resources",
-                new TranslatableComponent(ContentTweakerConstants.ln("command.dump_resources.desc")),
+                Component.translatable(ContentTweakerConstants.ln("command.dump_resources.desc")),
                 RuntimeResourceDumpingCommand::buildCommand
         );
     }
@@ -111,9 +111,9 @@ public final class RuntimeResourceDumpingCommand {
 
         CommandUtilities.send(
                 CommandUtilities.openingLogFile(
-                        new TranslatableComponent(
+                        Component.translatable(
                                 "crafttweaker.command.list.check.log",
-                                CommandUtilities.makeNoticeable(new TranslatableComponent(ContentTweakerConstants.ln("command.dump_resources.log"))),
+                                CommandUtilities.makeNoticeable(Component.translatable(ContentTweakerConstants.ln("command.dump_resources.log"))),
                                 CommandUtilities.getFormattedLogFile()
                         ).withStyle(ChatFormatting.GREEN)),
                 context.getSource()

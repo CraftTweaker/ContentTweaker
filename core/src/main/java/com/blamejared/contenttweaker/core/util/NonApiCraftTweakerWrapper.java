@@ -14,14 +14,14 @@ public final class NonApiCraftTweakerWrapper {
     private NonApiCraftTweakerWrapper() {}
 
     public static <T extends Annotation> Stream<? extends Class<?>> findClassesWithAnnotation(final Class<T> annotationCls) {
-        return Services.PLATFORM.findClassesWithAnnotation(annotationCls);
+        return Services.PLATFORM.findClassesWithAnnotation(annotationCls, mod -> {}, tMapEither -> true);
     }
 
     public static <T extends Annotation> Stream<? extends Class<?>> findClassesWithAnnotation(
             final Class<T> annotationCls,
             final Consumer<Mod> consumer
     ) {
-        return Services.PLATFORM.findClassesWithAnnotation(annotationCls, consumer);
+        return Services.PLATFORM.findClassesWithAnnotation(annotationCls, consumer, tMapEither -> true);
     }
 
     public static <T extends Annotation> Stream<? extends Class<?>> findClassesWithAnnotation(

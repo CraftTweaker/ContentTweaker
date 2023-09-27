@@ -48,8 +48,8 @@ final class UserPack implements PackResources {
     }
 
     @Override
-    public Collection<ResourceLocation> getResources(final PackType packType, final String s, final String s1, final int i, final Predicate<String> predicate) {
-        return this.resources.getResources(packType, s, s1, i, predicate);
+    public Collection<ResourceLocation> getResources(final PackType packType, final String s, final String s1, final Predicate<ResourceLocation> predicate) {
+        return this.resources.getResources(packType, s, s1, predicate);
     }
 
     @Override

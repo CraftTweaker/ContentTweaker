@@ -13,7 +13,6 @@ import com.blamejared.crafttweaker.api.plugin.ILoaderRegistrationHandler;
 import com.blamejared.crafttweaker.api.plugin.IScriptLoadSourceRegistrationHandler;
 import com.blamejared.crafttweaker.api.plugin.IScriptRunModuleConfiguratorRegistrationHandler;
 import com.blamejared.crafttweaker.api.zencode.scriptrun.IScriptRunModuleConfigurator;
-import net.minecraft.network.chat.TranslatableComponent;
 
 @CraftTweakerPlugin(ContentTweakerConstants.MOD_ID + ":core")
 @SuppressWarnings("unused")

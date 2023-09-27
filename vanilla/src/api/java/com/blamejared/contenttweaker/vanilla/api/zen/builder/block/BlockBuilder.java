@@ -472,7 +472,7 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         }
         if (drops != null && drops != DO_NOT_CLONE_DROPS && drops != FORCE_GENERATION_OF_DROPS) {
             if (drops == DO_NOT_DROP_DROPS) {
-                properties.noDrops();
+                properties.noLootTable();
             } else {
                 // Ugly, but you can only drop like another block, not a custom RL
                 ContentTweakerVanillaApi.get().blockPropertiesDrops(properties, drops);

@@ -38,9 +38,9 @@ public final class ContentTweakerVanillaBrackets {
     private static final Collection<ReferenceBracketData<?, ?>> BRACKETS = List.of(
             b("block", VanillaObjectTypes.BLOCK, null, new TypeToken<BlockReference>() {}, null, false),
             b("item", VanillaObjectTypes.ITEM, null, new TypeToken<ItemReference>() {}, null, false),
-            b("material", VanillaObjectTypes.MATERIAL, null, new TypeToken<SimpleReference<Material>>() {}, null, true),
+            b("material", VanillaObjectTypes.MATERIAL, null, new TypeToken<SimpleReference<Material>>() {}, null, false),
             b("materialcolor", VanillaObjectTypes.MATERIAL_COLOR, "material color", new TypeToken<MaterialColorReference>() {}, null, true),
-            b("soundevent", VanillaObjectTypes.SOUND_EVENT, "sound event", new TypeToken<SimpleReference<SoundEvent>>() {}, null, true),
+            b("soundevent", VanillaObjectTypes.SOUND_EVENT, "sound event", new TypeToken<SimpleReference<SoundEvent>>() {}, null, false),
             b("soundtype", VanillaObjectTypes.SOUND_TYPE, "sound type", new TypeToken<SimpleReference<SoundType>>() {}, null, true),
             b("tooltier", VanillaObjectTypes.TIER, "tool tier", new TypeToken<TierReference>() {}, null, true)
     );

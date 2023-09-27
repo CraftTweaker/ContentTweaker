@@ -19,12 +19,12 @@ description="Customize your Minecraft experience with new blocks and items!"
 [[dependencies.contenttweaker]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.2,1.19)"
+    versionRange="[1.19.2,1.19.3)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.contenttweaker]]
     modId="crafttweaker"
     mandatory=true
-    versionRange="[9.1.94,)"
+    versionRange="[10.1.50,)"
     ordering="BEFORE"
     side="BOTH"

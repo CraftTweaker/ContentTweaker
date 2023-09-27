@@ -9,17 +9,11 @@ import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 
-public final class ForgeGameRegistry<T extends IForgeRegistryEntry<T>> implements DeferredGameRegistry<T> {
+public final class ForgeGameRegistry<T> implements DeferredGameRegistry<T> {
     private static final Map<ObjectType<?>, ForgeGameRegistry<?>> INSTANCES = new HashMap<>();
     private static final Supplier<ModContainer> COT_CONTAINER = Suppliers.memoize(() -> ModList.get().getModContainerById(ContentTweakerConstants.MOD_ID).orElseThrow());
 
@@ -33,12 +27,9 @@ public final class ForgeGameRegistry<T extends IForgeRegistryEntry<T>> implement
         this.commands = new ArrayList<>();
     }
 
-    static <T extends IForgeRegistryEntry<T>> ForgeGameRegistry<T> of(final ObjectType<T> type, final ForgeRegistry<T> registry) {
+    static <T> ForgeGameRegistry<T> of(final ObjectType<T> type, final ForgeRegistry<T> registry) {
         Objects.requireNonNull(type, "type");
         Objects.requireNonNull(registry, "registry");
-        if (registry.getRegistrySuperType() != type.type()) {
-            throw new IllegalArgumentException("Mismatched types between registry (" + registry.getRegistrySuperType().getName() + ") and type (" + type.type().getName() + ")");
-        }
         return GenericUtil.uncheck(INSTANCES.computeIfAbsent(type, it -> new ForgeGameRegistry<>(type, registry)));
     }
 
@@ -54,14 +45,16 @@ public final class ForgeGameRegistry<T extends IForgeRegistryEntry<T>> implement
 
     @Override
     public ResourceLocation nameOf(final T object) {
-        return Objects.requireNonNull(object).getRegistryName();
+        return forgeRegistry.getKey(Objects.requireNonNull(object));
     }
 
     @Override
     public void enqueueRegistration(final ResourceLocation name, final Supplier<T> object) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(object, "object");
-        this.commands.add(() -> this.forgeRegistry.register(Objects.requireNonNull(object.get(), "get").setRegistryName(name)));
+        this.commands.add(() -> {
+            this.forgeRegistry.register(name, Objects.requireNonNull(object.get(), "get"));
+        });
     }
 
     @Override

@@ -7,11 +7,9 @@ import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.IModStateTransition;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegisterEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,50 +17,43 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Iterator;
+import java.util.Set;
+
 @Mixin(value = GameData.class, remap = false, priority = Integer.MAX_VALUE)
 public abstract class GameDataMixin {
 
     @Inject(
-            method = "lambda$postRegistryEventDispatch$19(Lnet/minecraftforge/fml/IModStateTransition$EventGenerator;)V",
+            method = "postRegisterEvents",
             locals = LocalCapture.CAPTURE_FAILHARD,
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraftforge/registries/ForgeRegistry;freeze()V"
+                    target = "Lnet/minecraftforge/fml/ModLoader;postEventWithWrapInModOrder(Lnet/minecraftforge/eventbus/api/Event;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;)V",
+                    shift = At.Shift.AFTER
             )
     )
     private static void contenttweaker$postRegistryEventDispatch$registerCotObjects(
-            final IModStateTransition.EventGenerator<?> $$0,
-            final CallbackInfo info,
-            final RegistryEvent.Register<?> $$1,
-            final ResourceLocation $$2,
-            final ForgeRegistry<?> $$3
-    ) {
-        contenttweaker$postRegistryEventDispatch$registerCotObjects0($$3);
-    }
 
-    @Inject(
-            method = "postVanillaRegisterEvent(Lnet/minecraft/core/Registry;)V",
-            locals = LocalCapture.NO_CAPTURE,
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraftforge/registries/GameData;applyHolderLookups(Lnet/minecraft/resources/ResourceLocation;)V"
-            )
-    )
-    private static void contenttweaker$postVanillaRegisterEvent$registerCotObjects(
-            final Registry<?> $$0,
-            final CallbackInfo info
-    ) {
-        contenttweaker$postVanillaRegisterEvent$registerCotObjects0($$0);
+            CallbackInfo ci,
+            Set<ResourceLocation> keySet,
+            Set<ResourceLocation> ordered,
+            RuntimeException aggregate,
+            Iterator<?> var3,
+            ResourceLocation rootRegistryName,
+            ResourceKey<?> registryKey,
+            ForgeRegistry<?> forgeRegistry,
+            Registry<?> vanillaRegistry,
+            RegisterEvent registerEvent) {
+        if (forgeRegistry != null) {
+            contenttweaker$postRegistryEventDispatch$registerCotObjects0(forgeRegistry);
+        }
     }
 
     @Unique
-    private static <T extends IForgeRegistryEntry<T>> void contenttweaker$postRegistryEventDispatch$registerCotObjects0(final ForgeRegistry<T> registry) {
-        contenttweaker$registerCotObjects0(registry.getRegistryKey());
-    }
-
-    @Unique
-    private static <T> void contenttweaker$postVanillaRegisterEvent$registerCotObjects0(final Registry<T> registry) {
-        contenttweaker$registerCotObjects0(registry.key());
+    private static <T> void contenttweaker$postRegistryEventDispatch$registerCotObjects0(final ForgeRegistry<T> registry) {
+        if (registry != null) {
+            contenttweaker$registerCotObjects0(registry.getRegistryKey());
+        }
     }
 
     @Unique

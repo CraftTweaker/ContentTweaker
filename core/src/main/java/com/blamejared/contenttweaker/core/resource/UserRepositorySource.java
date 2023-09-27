@@ -8,7 +8,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.packs.FolderPackResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
@@ -104,10 +103,10 @@ public final class UserRepositorySource implements RepositorySource {
     }
 
     private Component decorateSource(final Component originalName) {
-        return new TranslatableComponent(
+        return Component.translatable(
                 "pack.nameAndSource",
                 originalName,
-                new TranslatableComponent(ContentTweakerConstants.ln("pack_source.runtime"))
+                Component.translatable(ContentTweakerConstants.ln("pack_source.runtime"))
         );
     }
 }

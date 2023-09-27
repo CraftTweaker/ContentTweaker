@@ -89,7 +89,7 @@ final class RuntimePack {
         return this.resource(resourceLocation.getPath());
     }
 
-    Collection<ResourceLocation> resources(final PackType packType, final String s, final String s1, final int i, final Predicate<String> predicate) {
+    Collection<ResourceLocation> resources(final PackType packType, final String s, final String s1, final Predicate<ResourceLocation> predicate) {
         Objects.requireNonNull(packType);
         Objects.requireNonNull(s);
         Objects.requireNonNull(s1);
@@ -100,7 +100,7 @@ final class RuntimePack {
         final Collection<ResourceLocation> resources = new ArrayList<>();
         final Path directory = this.pathOf(s1);
         try {
-            Files.walkFileTree(directory, Set.of(), i, new ResourceGatherer(directory, p -> resources.add(this.resourceOf(directory.resolve(p)))));
+            Files.walkFileTree(directory, Set.of(), Integer.MAX_VALUE, new ResourceGatherer(directory, p -> resources.add(this.resourceOf(directory.resolve(p)))));
         } catch (final IOException e) {
             return Collections.emptySet();
         }

@@ -5,7 +5,6 @@ import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.google.gson.JsonObject;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
@@ -71,10 +70,10 @@ public final class RuntimeRepositorySource implements RepositorySource {
     }
 
     private Component decorateSource(final Component originalName) {
-        return new TranslatableComponent(
+        return Component.translatable(
                 "pack.nameAndSource",
                 originalName,
-                new TranslatableComponent(ContentTweakerConstants.ln("pack_source.runtime"))
+                Component.translatable(ContentTweakerConstants.ln("pack_source.runtime"))
         );
     }
 }
