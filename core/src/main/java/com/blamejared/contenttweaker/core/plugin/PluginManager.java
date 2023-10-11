@@ -7,9 +7,9 @@ import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPluginProvide
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
 import com.blamejared.contenttweaker.core.registry.ObjectTypeRegistry;
 import com.blamejared.contenttweaker.core.util.FreezableList;
-import com.blamejared.contenttweaker.core.util.NonApiCraftTweakerWrapper;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.plugin.IBracketParserRegistrationHandler;
+import com.blamejared.crafttweaker.api.util.ClassUtil;
 import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.ResourceLocationException;
@@ -51,7 +51,7 @@ public final class PluginManager {
     }
 
     private List<? extends ContentTweakerPluginProvider> discoverPlugins() {
-        return NonApiCraftTweakerWrapper.findClassesWithAnnotation(ContentTweakerPlugin.class)
+        return ClassUtil.findClassesWithAnnotation(ContentTweakerPlugin.class)
                 .map(this::checkAndCast)
                 .map(this::initPlugin)
                 .filter(Objects::nonNull)
