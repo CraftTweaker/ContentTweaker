@@ -52,9 +52,7 @@ public final class ForgeGameRegistry<T> implements DeferredGameRegistry<T> {
     public void enqueueRegistration(final ResourceLocation name, final Supplier<T> object) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(object, "object");
-        this.commands.add(() -> {
-            this.forgeRegistry.register(name, Objects.requireNonNull(object.get(), "get"));
-        });
+        this.commands.add(() -> this.forgeRegistry.register(name, Objects.requireNonNull(object.get(), "get")));
     }
 
     @Override

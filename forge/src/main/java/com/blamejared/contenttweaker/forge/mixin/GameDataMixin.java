@@ -4,6 +4,7 @@ import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.forge.registry.GameRegistryFactory;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +34,6 @@ public abstract class GameDataMixin {
             )
     )
     private static void contenttweaker$postRegistryEventDispatch$registerCotObjects(
-
             CallbackInfo ci,
             Set<ResourceLocation> keySet,
             Set<ResourceLocation> ordered,
@@ -42,22 +42,17 @@ public abstract class GameDataMixin {
             ResourceLocation rootRegistryName,
             ResourceKey<?> registryKey,
             ForgeRegistry<?> forgeRegistry,
-            Registry<?> vanillaRegistry,
-            RegisterEvent registerEvent) {
-        if (forgeRegistry != null) {
-            contenttweaker$postRegistryEventDispatch$registerCotObjects0(forgeRegistry);
+            Registry<?> vanillaRegistry
+    ) {
+        if (forgeRegistry == null && vanillaRegistry == null) {
+            ContentTweakerCore.LOGGER.warn("No registry exists for key '{}': this makes no sense; registration will not be carried out", registryKey);
+        } else {
+            contenttweaker$postRegistryEventDispatch$registerCotObjects0(GenericUtil.uncheck(registryKey));
         }
     }
 
     @Unique
-    private static <T> void contenttweaker$postRegistryEventDispatch$registerCotObjects0(final ForgeRegistry<T> registry) {
-        if (registry != null) {
-            contenttweaker$registerCotObjects0(registry.getRegistryKey());
-        }
-    }
-
-    @Unique
-    private static <T> void contenttweaker$registerCotObjects0(final ResourceKey<? extends Registry<T>> key) {
+    private static <T> void contenttweaker$postRegistryEventDispatch$registerCotObjects0(final ResourceKey<? extends Registry<T>> key) {
         final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(key);
         if (type == null) {
             ContentTweakerCore.LOGGER.info("Unknown registry '{}': are you missing an object type for it?", key);
