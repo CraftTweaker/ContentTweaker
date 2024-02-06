@@ -2,13 +2,51 @@ import com.blamejared.modtemplate.Utils
 import com.diluv.schoomp.Webhook
 import com.diluv.schoomp.message.Message
 import com.diluv.schoomp.message.embed.Embed
-import java.io.IOException
-import java.util.*
 
 plugins {
-    // Need to know about base for posting to CF
     base
     id("com.blamejared.modtemplate")
+}
+
+abstract class PostDiscordUpdateMessageTask @Inject constructor(private val project: Project) : DefaultTask() {
+    @TaskAction
+    fun run() {
+        // Create a new webhook instance for Discord
+        val webhook = Webhook(System.getenv("discordCFWebhook"), "${Constants.MOD_NAME} CurseForge Gradle Upload")
+
+        // Craft a message to send to Discord using the webhook.
+        val message = Message().apply {
+            username = Constants.MOD_NAME
+            avatarUrl = "https://i.blamejared.com/cot.png"
+            content = "${Constants.MOD_NAME} ${project.version} for Minecraft ${project.libs.versions.minecraft.get()} has been published!"
+
+            val embed = Embed().apply {
+                val sources = buildList {
+                    fun MutableList<String>.projectSource(project: Project, friendlyName: String, emoji: String) {
+                        project.ext.properties["curse_file_url"]?.let { this += "$emoji [$friendlyName]($it)" }
+                    }
+                    fun MutableList<String>.mavenSource(project: Project) {
+                        this += "<:maven:932165250738970634> `${project.group}:${project.base.archivesName.get()}:${project.version}`"
+                    }
+
+                    projectSource(project.project(":fabric"), "Fabric", "<:fabric:932163720568782878>")
+                    projectSource(project.project(":forge"), "Forge", "<:forge:932163698003443804>")
+
+                    listOf("core", "fabric", "forge", "vanilla").forEach { mavenSource(project.project(":$it")) }
+                }.joinToString(separator = "\n")
+
+                if (sources.isNotBlank()) {
+                    addField("Download", sources, false)
+                }
+
+                addField("Changelog", Utils.getCIChangelog(project, "https://github.com/CraftTweaker/ContentTweaker").take(1000), false)
+                color = 0xF16436
+            }
+            addEmbed(embed)
+        }
+
+        webhook.sendMessageUnsafely(message)
+    }
 }
 
 buildscript {
@@ -20,83 +58,8 @@ buildscript {
     }
 }
 
-val modName = extra["mod.name"] as String
-val mcVersion = extra["minecraft.version"] as String
-val modRepo = extra["mod.repo"] as String
-val modAvatar = extra["mod.avatar"] as String
-
-tasks.create("postDiscord") {
-
-    doLast {
-        try {
-
-            // Create a new webhook instance for Discord
-            val webhook = Webhook(
-                System.getenv("discordCFWebhook"),
-                "${modName} CurseForge Gradle Upload"
-            )
-
-            // Craft a message to send to Discord using the webhook.
-            val message = Message()
-            message.username = modName
-            message.avatarUrl = modAvatar
-            message.content = "${modName} $version for Minecraft ${mcVersion} has been published!"
-
-            val embed = Embed()
-            val downloadSources = StringJoiner("\n")
-
-            if (project(":fabric").ext.has("curse_file_url")) {
-
-                downloadSources.add("<:fabric:932163720568782878> [Fabric](${project(":fabric").ext.get("curse_file_url")})")
-            }
-
-            if (project(":forge").ext.has("curse_file_url")) {
-
-                downloadSources.add("<:forge:932163698003443804> [Forge](${project(":forge").ext.get("curse_file_url")})")
-            }
-
-            downloadSources.add(
-                "<:maven:932165250738970634> `\"${project(":core").group}:${project(":core").base.archivesName.get()}:${
-                    project(":core").version
-                }\"`"
-            )
-
-            downloadSources.add(
-                "<:maven:932165250738970634> `\"${project(":fabric").group}:${project(":fabric").base.archivesName.get()}:${
-                    project(":fabric").version
-                }\"`"
-            )
-            downloadSources.add(
-                "<:maven:932165250738970634> `\"${project(":forge").group}:${project(":forge").base.archivesName.get()}:${
-                    project(":forge").version
-                }\"`"
-            )
-
-            downloadSources.add(
-                "<:maven:932165250738970634> `\"${project(":vanilla").group}:${project(":vanilla").base.archivesName.get()}:${
-                    project(":vanilla").version
-                }\"`"
-            )
-
-            // Add Curseforge DL link if available.
-            val downloadString = downloadSources.toString()
-
-            if (downloadString.isNotEmpty()) {
-
-                embed.addField("Download", downloadString, false)
-            }
-
-            // Just use the Forge changelog for now, the files are the same anyway.
-            embed.addField("Changelog", Utils.getCIChangelog(project, modRepo).take(1000), false)
-
-            embed.color = 0xF16436
-            message.addEmbed(embed)
-
-            webhook.sendMessage(message)
-        } catch (e: IOException) {
-
-            project.logger.error("Failed to push CF Discord webhook.")
-        }
+tasks {
+    register<PostDiscordUpdateMessageTask>("postDiscordUpdateMessage") {
+        group = "publishing"
     }
-
 }

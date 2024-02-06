@@ -1,18 +1,16 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+import java.util.Locale
+
 plugins {
     id("com.blamejared.contenttweaker.java-conventions")
-    id("fabric-loom") version "0.12-SNAPSHOT"
+    alias(libs.plugins.fabric.loom)
 }
 
 evaluationDependsOn(":vanilla")
 
-val mcVersion = extra["minecraft.version"] as String
-val modCurse = extra["mod.curse"] as String
-
-base.archivesName.set("${extra["mod.name"]}-fabric-$mcVersion")
-
 loom {
     mixin {
-        defaultRefmapName.convention("${extra["mod.id"]}.refmap.json")
+        defaultRefmapName.convention("${Constants.MOD_NAME.lowercase(Locale.ENGLISH)}.refmap.json")
     }
     runs {
         named("client") {
@@ -36,19 +34,11 @@ modTemplate {
     versionTracker.enabled(true)
 }
 
-repositories {
-    maven("https://maven.shedaniel.me") {
-        name = "shedaniel"
-    }
-}
-
 dependencies {
-    val ctVersion = project.extra["ct.version"] as String
-
-    minecraft(group = "com.mojang", name = "minecraft", version = mcVersion)
+    minecraft(libs.minecraft.fabric)
     mappings(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-$mcVersion:${project.extra["minecraft.fabric.mappings"]}@zip")
+        parchment("${libs.parchment.fabric.get()}@zip")
     })
 
     apiImplementation(project(":core", "apiConfiguration"))
@@ -59,24 +49,33 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":vanilla", "apiConfiguration"))
     implementation(project(":vanilla"))
-    modImplementation(group = "com.blamejared.crafttweaker", name = "CraftTweaker-fabric-$mcVersion", version = ctVersion) {
-        exclude(module = "Crafttweaker_Annotations")
-    }
-    modImplementation(group = "net.fabricmc", name = "fabric-loader", version = project.extra["fl.version"] as String)
-    modImplementation(group = "net.fabricmc.fabric-api", name = "fabric-api", version = project.extra["fapi.version"] as String)
+    implementation(libs.never.winter)
+    include(libs.never.winter)
 
-    modRuntimeOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version = project.extra["rei.fabric.version"] as String)
+    modImplementation(libs.crafttweaker.fabric) {
+        exclude(module = "CraftTweaker_Annotations")
+    }
+    modImplementation(libs.fabric.api)
+    modImplementation(libs.fabric.loader)
+
+    modRuntimeOnly(libs.rei.fabric)
+}
+
+afterEvaluate {
+    configurations.apiImplementation.configure {
+        extendsFrom(configurations.modCompileClasspathMapped.get(), configurations.named("minecraftNamedCompile").get())
+    }
 }
 
 tasks {
-    compileJava {
+    named<JavaCompile>("compileJava") {
         sequenceOf(project(":core"), project(":vanilla"))
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.api.get(), it.main.get()) }
             .plusElement(sourceSets.api.get())
             .forEach { source(it.allSource) }
     }
-    processResources {
+    withType<ProcessResources> {
         outputs.upToDateWhen { false }
 
         sequenceOf(project(":core"), project(":vanilla"))
@@ -91,27 +90,20 @@ tasks {
             expand("version" to project.version)
         }
     }
-    publishToCurseForge {
-        with(upload(project.extra["mod.curse-id"], project.buildDir.resolve("libs/${base.archivesName.get()}-${version}.jar"))) {
+    withType<TaskPublishCurseForge> {
+        with(upload(Constants.CURSE_ID, project.layout.buildDirectory.file("libs/${base.archivesName.get()}-${version}.jar"))) {
             changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
             changelog = project.file("changelog.md")
-            releaseType = when (project.extra["release.fabric.status"]) {
-                null, "release" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_RELEASE
-                "beta" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_BETA
-                "alpha" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_ALPHA
-                else -> throw IllegalStateException()
-            }
-            addJavaVersion("Java ${project.extra["java.version"]}")
+            releaseType = net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_BETA
+
+            addJavaVersion("Java 17")
             addGameVersion("Fabric")
-            addGameVersion(mcVersion)
+            addGameVersion(libs.versions.minecraft.get())
             addRequirement("crafttweaker")
             doLast {
-                project.ext.set("curse_file_url", "${modCurse}/files/${curseFileId}")
+                project.ext.set("curse_file_url", "${modTemplate.curseHomepage}/files/${curseFileId}")
             }
         }
-        dependsOn(project.tasks.remapJar)
-    }
-    jar {
-        duplicatesStrategy = DuplicatesStrategy.FAIL
+        dependsOn(project.tasks.named("remapJar"))
     }
 }

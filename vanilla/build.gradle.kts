@@ -1,26 +1,26 @@
 plugins {
     id("com.blamejared.contenttweaker.java-conventions")
-    id("org.spongepowered.gradle.vanilla") version "0.2.1-SNAPSHOT"
+    alias(libs.plugins.vanillaGradle)
 }
 
 evaluationDependsOn(":core")
 
-val mcVersion = extra["minecraft.version"] as String
-
-base.archivesName.set("${extra["mod.name"]}-vanilla-$mcVersion")
-
 minecraft {
-    version(mcVersion)
+    version(libs.versions.minecraft.get())
+}
+
+configurations.apiImplementation.configure {
+    extendsFrom(configurations.minecraft.get())
 }
 
 dependencies {
-    val ctVersion = project.extra["ct.version"] as String
-
-    apiCompileOnly(group = "com.blamejared.crafttweaker", name = "CraftTweaker-common-$mcVersion", version = ctVersion)
+    apiCompileOnly(libs.crafttweaker.common)
+    apiCompileOnly(libs.never.winter)
     apiImplementation(project(":core", "apiConfiguration"))
 
-    compileOnly(group = "org.spongepowered", name = "mixin", version = "0.8.4")
-    compileOnly(group = "com.blamejared.crafttweaker", name = "CraftTweaker-common-$mcVersion", version = ctVersion)
+    compileOnly(libs.crafttweaker.common)
+    compileOnly(libs.mixin)
+    compileOnly(libs.never.winter)
     implementation(project(":core", "apiConfiguration"))
     implementation(project(":core"))
 }

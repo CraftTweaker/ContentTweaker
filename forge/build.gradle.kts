@@ -1,28 +1,28 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+import net.minecraftforge.gradle.userdev.tasks.JarJar
+import java.util.Locale
+
 plugins {
     id("com.blamejared.contenttweaker.java-conventions")
-    id("net.minecraftforge.gradle") version "5.1.+"
-    id("org.parchmentmc.librarian.forgegradle") version "1.+"
-    id("org.spongepowered.mixin") version "0.7-SNAPSHOT"
+    alias(libs.plugins.forgeGradle)
+    alias(libs.plugins.librarian)
+    alias(libs.plugins.mixinGradle)
 }
 
 evaluationDependsOn(":vanilla")
 
-val modId = project.extra["mod.id"] as String
-val mcVersion = extra["minecraft.version"] as String
-val modCurse = extra["mod.curse"] as String
-
-base.archivesName.set("${extra["mod.name"]}-forge-$mcVersion")
-
 minecraft {
-    mappings(project.extra["minecraft.forge.mappings.channel"] as String, project.extra["minecraft.forge.mappings.version"] as String)
+    mappings("parchment", libs.versions.parchmentDecorated.get())
 
     runs {
         create("client") {
             workingDirectory(project.file("run"))
             ideaModule("${rootProject.name}.${project.name}.main")
-            sequenceOf("forge", "core", "vanilla").forEach { arg("-mixin.config=${modId}.$it.mixins.json") }
+            sequenceOf("forge", "core", "vanilla").forEach {
+                arg("-mixin.config=${Constants.MOD_NAME.lowercase(Locale.ENGLISH)}.$it.mixins.json")
+            }
             mods {
-                create(modId) {
+                create(Constants.MOD_NAME.lowercase(Locale.ENGLISH)) {
                     source(sourceSets.api.get())
                     source(sourceSets.main.get())
                     source(project(":core").sourceSets.api.get())
@@ -35,10 +35,12 @@ minecraft {
         create("server") {
             workingDirectory(project.file("run_server"))
             ideaModule("${rootProject.name}.${project.name}.main")
-            sequenceOf("forge", "core", "vanilla").forEach { arg("-mixin.config=${modId}.$it.mixins.json") }
+            sequenceOf("forge", "core", "vanilla").forEach {
+                arg("-mixin.config=${Constants.MOD_NAME.lowercase(Locale.ENGLISH)}.$it.mixins.json")
+            }
             arg("nogui")
             mods {
-                create(modId) {
+                create(Constants.MOD_NAME.lowercase(Locale.ENGLISH)) {
                     source(sourceSets.api.get())
                     source(sourceSets.main.get())
                     source(project(":core").sourceSets.api.get())
@@ -52,9 +54,9 @@ minecraft {
 }
 
 mixin {
-    add(sourceSets.main.get(), "${modId}.refmap.json")
+    add(sourceSets.main.get(), "${Constants.MOD_NAME.lowercase(Locale.ENGLISH)}.refmap.json")
 
-    sequenceOf("forge", "core", "vanilla").forEach { config("${modId}.$it.mixins.json") }
+    sequenceOf("forge", "core", "vanilla").forEach { config("${Constants.MOD_NAME.lowercase(Locale.ENGLISH)}.$it.mixins.json") }
 }
 
 modTemplate {
@@ -63,71 +65,86 @@ modTemplate {
     versionTracker.enabled(true)
 }
 
-repositories {
-    maven("https://maven.shedaniel.me/") {
-        name = "shedaniel"
-    }
+jarJar.enable()
+
+configurations.apiImplementation.configure {
+    extendsFrom(configurations.minecraft.get())
 }
 
 dependencies {
-    val ctVersion = project.extra["ct.version"] as String
+    minecraft(libs.forge)
 
-    minecraft(group = "net.minecraftforge", name = "forge", version = "$mcVersion-${project.extra["minecraft.forge.version"]}")
-
-    annotationProcessor(group = "org.spongepowered", name = "mixin", version = "0.8.5-SNAPSHOT", classifier = "processor")
+    annotationProcessor("${libs.mixin.get()}:processor")
 
     apiImplementation(project(":core", "apiConfiguration"))
     apiImplementation(project(":vanilla", "apiConfiguration"))
-    apiImplementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-$mcVersion:$ctVersion"))
+    apiImplementation(fg.deobf(libs.crafttweaker.forge.get()))
+    apiImplementation(libs.never.winter)
 
     implementation(project(":core", "apiConfiguration"))
     implementation(project(":core"))
     implementation(project(":vanilla", "apiConfiguration"))
     implementation(project(":vanilla"))
-    implementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-$mcVersion:$ctVersion"))
+    implementation(fg.deobf(libs.crafttweaker.forge.get()))
 
-    runtimeOnly(fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.extra["rei.forge.version"]}"))
-    runtimeOnly(fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.extra["cloth.forge.version"]}"))
-    runtimeOnly(fg.deobf("dev.architectury:architectury-forge:${project.extra["arch.forge.version"]}"))
+    jarJar.ranged(implementation(libs.never.winter), "[${libs.versions.neverWinter.get()},)")
+
+    runtimeOnly(fg.deobf(libs.architectury.forge.get()))
+    runtimeOnly(fg.deobf(libs.cloth.config.forge.get()))
+    runtimeOnly(fg.deobf(libs.rei.forge.get()))
+}
+
+publishing {
+    publications {
+        named<MavenPublication>("mavenJava") {
+            fg.component(this)
+        }
+    }
+}
+
+reobf {
+    register("jarJar") {}
 }
 
 tasks {
-    compileJava {
+    named<JavaCompile>("compileJava") {
         sequenceOf(project(":core"), project(":vanilla"))
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.main.get(), it.api.get()) }
             .plusElement(sourceSets.api.get())
             .forEach{ source(it.allSource) }
     }
-    publishToCurseForge {
-        with(upload(project.extra["mod.curse-id"], project.buildDir.resolve("libs/${base.archivesName.get()}-${version}.jar"))) {
+    withType<TaskPublishCurseForge> {
+        with(upload(Constants.CURSE_ID, project.layout.buildDirectory.file("libs/${base.archivesName.get()}-${version}-all.jar"))) {
             changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
             changelog = project.file("changelog.md")
-            releaseType = when (project.extra["release.forge.status"]) {
-                null, "release" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_RELEASE
-                "beta" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_BETA
-                "alpha" -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_ALPHA
-                else -> throw IllegalStateException()
-            }
-            addJavaVersion("Java ${project.extra["java.version"]}")
-            addGameVersion(mcVersion)
+            releaseType = net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_BETA
+            addJavaVersion("Java 17")
+            addGameVersion(libs.versions.minecraft.get())
             addRequirement("crafttweaker")
 
             doLast {
-                project.ext.set("curse_file_url", "${modCurse}/files/${curseFileId}")
+                project.ext.set("curse_file_url", "${modTemplate.curseHomepage}/files/${curseFileId}")
             }
         }
     }
-    jar {
+    withType<Jar> {
         sequenceOf(project(":core"), project(":vanilla"))
             .map { it.sourceSets }
             .flatMap { sequenceOf(it.main.get(), it.api.get()) }
             .plusElement(sourceSets.api.get())
             .forEach { from(it.resources) }
-        duplicatesStrategy = DuplicatesStrategy.FAIL
+    }
+    withType<JarJar> {
+        archiveClassifier.set("all")
     }
 }
 
 afterEvaluate {
-    tasks.jar.get().finalizedBy(tasks.findByName("reobfJar"))
+    tasks.named("jar").configure {
+        finalizedBy(tasks.named("reobfJar"))
+    }
+    tasks.named("jarJar").configure {
+        finalizedBy(tasks.named("reobfJarJar"))
+    }
 }
