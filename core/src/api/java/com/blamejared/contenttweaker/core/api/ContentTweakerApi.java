@@ -17,7 +17,7 @@ public final class ContentTweakerApi {
     }
 
     public static void apply(final ContentTweakerAction action) {
-        CraftTweakerAPI.apply(action);
+        get().apply(action);
     }
 
     private static ApiBridge find() {

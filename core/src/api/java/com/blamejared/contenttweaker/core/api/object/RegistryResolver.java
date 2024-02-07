@@ -44,10 +44,6 @@ public interface RegistryResolver<T> extends Function<ResourceLocation, T> {
         return this.registry().nameOf(Objects.requireNonNull(object));
     }
 
-    default void enqueueRegistration(final ResourceLocation name, final Supplier<T> objectCreator) {
-        this.registry().enqueueRegistration(name, objectCreator);
-    }
-
     default void enqueueRegistration(final ObjectHolder<T> holder) {
         this.registry().enqueueRegistration(holder);
     }

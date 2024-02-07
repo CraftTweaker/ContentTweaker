@@ -1,7 +1,6 @@
 package com.blamejared.contenttweaker.core.registry;
 
 import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
-import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.object.ReferenceFactory;
 import com.blamejared.contenttweaker.core.api.object.RegistryResolver;
@@ -37,15 +36,15 @@ public final class ContentTweakerRegistryWrapper implements ContentTweakerRegist
     }
 
     @Override
-    public <T, U extends ObjectFactory<T>> ObjectFactoryMapping<T, U> findObjectFactory(final ObjectType<T> type, final Class<U> factoryType) {
+    public <T, U extends ObjectFactory<T>> U findObjectFactory(final ObjectType<T> type, final Class<U> factoryType) {
         Objects.requireNonNull(type);
         Objects.requireNonNull(factoryType);
-        final ObjectFactoryMapping<T, U> candidate = this.registry.factoryMappings().findMappingFor(type);
+        final U candidate = this.registry.factoryMappings().findFactoryFor(type);
         if (candidate == null) {
             return null;
         }
-        if (candidate.type() != factoryType) {
-            throw new IllegalStateException("Found factory for " + type + " but built type does not match");
+        if (!factoryType.isInstance(candidate)) {
+            throw new IllegalStateException("Found factory for " + type + " but corresponding type does not match");
         }
         return candidate;
     }

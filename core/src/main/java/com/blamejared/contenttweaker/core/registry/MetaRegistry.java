@@ -1,13 +1,13 @@
 package com.blamejared.contenttweaker.core.registry;
 
 public final class MetaRegistry {
-    private final FactoryMappingsRegistry factoryMappings;
+    private final ObjectFactoryRegistry factoryMappings;
     private final ObjectTypeRegistry objectTypes;
     private final ReferenceFactoryRegistry referenceFactories;
     private final RegistryResolverRegistry registryResolverRegistry;
 
     private MetaRegistry() {
-        this.factoryMappings = new FactoryMappingsRegistry();
+        this.factoryMappings = new ObjectFactoryRegistry();
         this.objectTypes = new ObjectTypeRegistry();
         this.referenceFactories = new ReferenceFactoryRegistry();
         this.registryResolverRegistry = new RegistryResolverRegistry();
@@ -17,7 +17,7 @@ public final class MetaRegistry {
         return new MetaRegistry();
     }
 
-    public FactoryMappingsRegistry factoryMappings() {
+    public ObjectFactoryRegistry factoryMappings() {
         return this.factoryMappings;
     }
 

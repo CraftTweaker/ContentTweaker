@@ -1,6 +1,6 @@
 package com.blamejared.contenttweaker.core.resource;
 
-import com.blamejared.contenttweaker.core.ContentTweakerCore;
+import com.blamejared.contenttweaker.core.api.ContentTweakerLoggers;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import net.minecraft.server.packs.PackType;
@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class RuntimeResourceManager implements ResourceManager {
+    // TODO("Move to actual java.lang.ref.Cleaner")
     private record Cleaner(Supplier<? extends Collection<? extends AutoCloseable>> closeables) implements Runnable {
         @Override
         public void run() {
@@ -24,7 +25,7 @@ public final class RuntimeResourceManager implements ResourceManager {
             try {
                 t.close();
             } catch (final Exception e) {
-                ContentTweakerCore.LOGGER.warn("An error occurred while trying to close resource " + t, e);
+                ContentTweakerLoggers.resources().warn("An error occurred while trying to close resource " + t, e);
             }
         }
     }

@@ -3,11 +3,13 @@ package com.blamejared.contenttweaker.core.resource;
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.google.gson.JsonObject;
+import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.server.packs.repository.RepositorySource;
 
 import java.util.Map;
@@ -28,24 +30,27 @@ public final class RuntimeRepositorySource implements RepositorySource {
     }
 
     @Override
-    public void loadPacks(final Consumer<Pack> consumer, final Pack.PackConstructor packConstructor) {
+    public void loadPacks(final Consumer<Pack> consumer) {
         final RuntimeResourceManager manager = ContentTweakerCore.core().resourceManager();
         final Map<String, RuntimeFragment> resources = manager.fragments(this.type);
-        resources.forEach((namespace, fragment) -> consumer.accept(this.pack(this.type, namespace, fragment, packConstructor)));
+        resources.forEach((namespace, fragment) -> consumer.accept(this.pack(this.type, namespace, fragment)));
     }
 
-    private Pack pack(final PackType type, final String id, final RuntimeFragment fragment, final Pack.PackConstructor constructor) {
+    private Pack pack(final PackType type, final String id, final RuntimeFragment fragment) {
         final String packId = ContentTweakerConstants.rl("runtime/" + fragment.fsId().replace(':', '/')).toString();
-        final Pack pack = Pack.create(packId, true, this.createPack(type, id, packId, fragment), constructor, Pack.Position.TOP, this::decorateSource);
+        final Component packTitle = Component.translatable(ContentTweakerConstants.ln("pack.title.runtime"), fragment.fsId());
+        final Pack.ResourcesSupplier resources = this.createPack(type, id, packId, fragment);
+        final PackSource source = PackSource.create(this::decorateSource, true);
+        final Pack pack = Pack.readMetaAndCreate(packId, packTitle, true, resources, type, Pack.Position.TOP, source);
         if (pack == null) {
             throw new IllegalStateException("An error occurred while generating runtime " + ContentTweakerConstants.MOD_NAME + " pack '" + packId + "'");
         }
         return pack;
     }
 
-    private Supplier<PackResources> createPack(final PackType type, final String target, final String packId, final RuntimeFragment fragment) {
+    private Pack.ResourcesSupplier createPack(final PackType type, final String target, final String packId, final RuntimeFragment fragment) {
         final RuntimePack pack = new RuntimePack(packId, target, type, this.makeMetadata(type, packId, target), fragment::fs);
-        return () -> new RuntimePackResources(pack);
+        return name -> new RuntimePackResources(pack);
     }
 
     private JsonObject makeMetadata(final PackType type, final String packId, final String target) {
@@ -66,14 +71,14 @@ public final class RuntimeRepositorySource implements RepositorySource {
     }
 
     private int makeFormat(final PackType type) {
-        return type.getVersion(SharedConstants.getCurrentVersion());
+        return SharedConstants.getCurrentVersion().getPackVersion(type);
     }
 
     private Component decorateSource(final Component originalName) {
         return Component.translatable(
                 "pack.nameAndSource",
                 originalName,
-                Component.translatable(ContentTweakerConstants.ln("pack_source.runtime"))
-        );
+                Component.translatable(ContentTweakerConstants.ln("pack.source.runtime"))
+        ).withStyle(ChatFormatting.GRAY);
     }
 }

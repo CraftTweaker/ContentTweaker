@@ -11,4 +11,5 @@ public interface PlatformService {
     Path gameDirectory();
     Path locateResource(final String... components);
     <T> GameRegistry<T> findRegistryFromKey(final ObjectType<T> type, final ResourceKey<? extends Registry<T>> key);
+    String pickNameFromChoices(final String intermediary, final String srg, final String mapped);
 }

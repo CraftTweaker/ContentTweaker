@@ -4,8 +4,8 @@ import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.service.ServiceManager;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.command.CommandUtilities;
+import com.blamejared.crafttweaker.api.logging.CommonLoggers;
 import com.blamejared.crafttweaker.api.plugin.ICommandRegistrationHandler;
 import com.google.common.base.Suppliers;
 import com.mojang.brigadier.Command;
@@ -89,11 +89,15 @@ public final class RuntimeResourceDumpingCommand {
         builder.requires(p -> p.hasPermission(2))
                 .then(Commands.literal("log").executes(RuntimeResourceDumpingCommand::executeLog))
                 .then(Commands.literal("file").executes(RuntimeResourceDumpingCommand::executeFile))
-                .executes(RuntimeResourceDumpingCommand::executeLog);
+                .executes(RuntimeResourceDumpingCommand::executeBoth);
+    }
+
+    private static int executeBoth(final CommandContext<CommandSourceStack> context) {
+        return executeLog(context) + executeFile(context);
     }
 
     private static int executeLog(final CommandContext<CommandSourceStack> context) {
-        return execute(context, CraftTweakerAPI.LOGGER::info);
+        return execute(context, CommonLoggers.commands()::info);
     }
 
     private static int executeFile(final CommandContext<CommandSourceStack> context) {
@@ -146,7 +150,7 @@ public final class RuntimeResourceDumpingCommand {
             Files.createDirectories(parent);
             Files.copy(result.path(), dumpPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (final IOException e) {
-            CraftTweakerAPI.LOGGER.error(() -> "Unable to correctly dump resource %s due to an error".formatted(result.name()), e);
+            CommonLoggers.commands().error(() -> "Unable to correctly dump resource %s due to an error".formatted(result.name()), e);
         }
     }
 }

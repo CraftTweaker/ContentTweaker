@@ -3,7 +3,6 @@ package com.blamejared.contenttweaker.core.zen.rt;
 import com.blamejared.contenttweaker.core.api.ContentTweakerApi;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
-import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.object.ReferenceFactory;
 import com.blamejared.contenttweaker.core.api.registry.ContentTweakerRegistry;
@@ -22,8 +21,7 @@ public final class CoreMetaFactory {
     public static <T, U extends ObjectFactory<T>> U factory(final Class<T> reifiedT, final Class<U> reifiedU, final ResourceLocation typeId) {
         final ContentTweakerRegistry registry = ContentTweakerApi.get().registry();
         final ObjectType<T> type = registry.findType(typeId, reifiedT);
-        final ObjectFactoryMapping<T, U> factoryClass = registry.findObjectFactory(type, reifiedU);
-        return factoryClass.of();
+        return registry.findObjectFactory(type, reifiedU);
     }
 
     @ZenCodeType.Method("reference")

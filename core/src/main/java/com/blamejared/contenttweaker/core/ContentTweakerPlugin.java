@@ -18,8 +18,10 @@ import com.blamejared.crafttweaker.api.zencode.scriptrun.IScriptRunModuleConfigu
 @SuppressWarnings("unused")
 public final class ContentTweakerPlugin implements ICraftTweakerPlugin {
 
-    public ContentTweakerPlugin() {
-        ContentTweakerCore.LOGGER.info("CrT plugin initialized: bootstrapping CoT plugins");
+    public ContentTweakerPlugin() {}
+
+    @Override
+    public void initialize() {
         ContentTweakerCore.core().initializePlugins();
     }
 

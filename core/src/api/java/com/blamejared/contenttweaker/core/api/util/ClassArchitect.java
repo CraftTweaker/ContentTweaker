@@ -1,5 +1,6 @@
 package com.blamejared.contenttweaker.core.api.util;
 
+import com.blamejared.contenttweaker.core.api.ContentTweakerLoggers;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 
@@ -13,8 +14,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class ClassArchitect<T> {
-    private static final MethodHandles.Lookup LOOKUP = MethodHandles.publicLookup();
-
     private final Map<Class<? extends T>, MethodHandle> constructors;
     private final MethodType constructorTarget;
 
@@ -45,10 +44,10 @@ public final class ClassArchitect<T> {
             final MethodHandle target = this.constructors.computeIfAbsent(clazz, this::findConstructor);
             return GenericUtil.uncheck(target.invokeWithArguments(constructorParameters));
         } catch (final WrongMethodTypeException | ClassCastException e) {
-            CraftTweakerAPI.LOGGER.error(() -> "Unable to construct class '" + clazz.getName() + "' due to an invocation error", e);
+            ContentTweakerLoggers.core().error(() -> "Unable to construct class '" + clazz.getName() + "' due to an invocation error", e);
             throw e;
         } catch (final Throwable e) {
-            CraftTweakerAPI.LOGGER.error(() -> "Unable to construct class '" + clazz.getName() + "' due to a construction error", e);
+            ContentTweakerLoggers.core().error(() -> "Unable to construct class '" + clazz.getName() + "' due to a construction error", e);
             if (e instanceof RuntimeException re) throw re;
             throw new RuntimeException("%s: %s".formatted(e.getClass().getName(), e.getMessage()), e);
         }
@@ -56,9 +55,9 @@ public final class ClassArchitect<T> {
 
     private <U extends T> MethodHandle findConstructor(final Class<U> clazz) {
         try {
-            return LOOKUP.findConstructor(clazz, this.constructorTarget);
-        } catch (final NoSuchMethodException | IllegalAccessException | SecurityException e) {
-            CraftTweakerAPI.LOGGER.error(() -> "Unable to identify constructor for class '" + clazz.getName() + "' due to a reflective error", e);
+            return Handles.publicOnly().linkConstructor(clazz, this.constructorTarget);
+        } catch (final Handles.HandleLinkageFailure | SecurityException e) {
+            ContentTweakerLoggers.core().error(() -> "Unable to identify constructor for class '" + clazz.getName() + "' due to a reflective error", e);
             throw new RuntimeException(e);
         }
     }

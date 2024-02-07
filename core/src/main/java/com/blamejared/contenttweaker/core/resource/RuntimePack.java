@@ -1,36 +1,36 @@
 package com.blamejared.contenttweaker.core.resource;
 
 import com.google.gson.JsonObject;
+import net.minecraft.FileUtil;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
+import net.minecraft.server.packs.resources.IoSupplier;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 final class RuntimePack {
-    private static final class ResourceGatherer extends SimpleFileVisitor<Path> {
+    private static final class ResourceWalker extends SimpleFileVisitor<Path> {
         private final Path root;
         private final Consumer<Path> consumer;
 
-        ResourceGatherer(final Path root, final Consumer<Path> consumer) {
+        ResourceWalker(final Path root, final Consumer<Path> consumer) {
             this.root = Objects.requireNonNull(root);
             Objects.requireNonNull(consumer);
             this.consumer = p -> consumer.accept(p.normalize());
@@ -72,15 +72,13 @@ final class RuntimePack {
         throw new IllegalArgumentException("Invalid metadata sections " + invalid + ": not a JsonObject");
     }
 
-    InputStream rootResource(final String s) throws IOException {
-        Objects.requireNonNull(s);
-        if (s.contains("/") || s.contains("\\")) {
-            throw new IllegalStateException("Root resources can only be file names");
-        }
-        return this.resource(s);
+    IoSupplier<InputStream> rootResource(final String... strings) {
+        Objects.requireNonNull(strings);
+        FileUtil.validatePath(strings);
+        return this.resource(strings);
     }
 
-    InputStream resource(final PackType packType, final ResourceLocation resourceLocation) throws IOException {
+    IoSupplier<InputStream> resource(final PackType packType, final ResourceLocation resourceLocation) {
         Objects.requireNonNull(packType);
         Objects.requireNonNull(resourceLocation);
         if (packType != this.type || !this.targetNamespace.equals(resourceLocation.getNamespace())) {
@@ -89,28 +87,20 @@ final class RuntimePack {
         return this.resource(resourceLocation.getPath());
     }
 
-    Collection<ResourceLocation> resources(final PackType packType, final String s, final String s1, final Predicate<ResourceLocation> predicate) {
+    void resources(final PackType packType, final String s, final String s1, final PackResources.ResourceOutput output) {
         Objects.requireNonNull(packType);
         Objects.requireNonNull(s);
         Objects.requireNonNull(s1);
-        Objects.requireNonNull(predicate);
+        Objects.requireNonNull(output);
         if (packType != this.type || !this.targetNamespace.equals(s)) {
-            return Collections.emptySet();
+            return;
         }
-        final Collection<ResourceLocation> resources = new ArrayList<>();
         final Path directory = this.pathOf(s1);
         try {
-            Files.walkFileTree(directory, Set.of(), Integer.MAX_VALUE, new ResourceGatherer(directory, p -> resources.add(this.resourceOf(directory.resolve(p)))));
+            Files.walkFileTree(directory, Set.of(), Integer.MAX_VALUE, new ResourceWalker(directory, p -> output.accept(this.resourceOf(directory.resolve(p)), this.resource(p))));
         } catch (final IOException e) {
-            return Collections.emptySet();
+            throw new UncheckedIOException(e);
         }
-        return resources;
-    }
-
-    boolean knowsResource(final PackType packType, final ResourceLocation resourceLocation) {
-        Objects.requireNonNull(packType);
-        Objects.requireNonNull(resourceLocation);
-        return packType == this.type && this.targetNamespace.equals(resourceLocation.getNamespace()) && Files.exists(this.pathOf(resourceLocation.getPath()));
     }
 
     Set<String> namespaces(final PackType packType) {
@@ -122,17 +112,20 @@ final class RuntimePack {
         return this.metadata.has(name)? metadataSectionSerializer.fromJson(this.metadata.getAsJsonObject(name)) : null;
     }
 
-    String name() {
+    String packId() {
         return this.name;
     }
 
-    private InputStream resource(final String resource) throws IOException {
-        final Path path = this.pathOf(resource);
-        return Files.exists(path)? Files.newInputStream(path, StandardOpenOption.READ) : null;
+    private IoSupplier<InputStream> resource(final String... resourcePath) {
+        return this.resource(this.pathOf(resourcePath));
     }
 
-    private Path pathOf(final String resource) {
-        return this.fs.getPath(resource).toAbsolutePath();
+    private IoSupplier<InputStream> resource(final Path path) {
+        return Files.exists(path)? IoSupplier.create(path) : null;
+    }
+
+    private Path pathOf(final String... resourcePath) {
+        return FileUtil.resolvePath(this.fs.getPath("/"), List.of(resourcePath));
     }
 
     private ResourceLocation resourceOf(final Path path) {

@@ -1,7 +1,6 @@
 package com.blamejared.contenttweaker.core.registry;
 
 import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
-import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.util.FreezableMap;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
@@ -10,14 +9,14 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public final class FactoryMappingsRegistry {
-    private final FreezableMap<ObjectType<?>, ObjectFactoryMapping<?, ?>> factories;
+public final class ObjectFactoryRegistry {
+    private final FreezableMap<ObjectType<?>, ObjectFactory<?>> factories;
 
-    FactoryMappingsRegistry() {
+    ObjectFactoryRegistry() {
         this.factories = FreezableMap.of();
     }
 
-    public void registerMappings(final ObjectTypeRegistry objectTypeRegistry, final Map<ObjectType<?>, ObjectFactoryMapping<?, ?>> map) {
+    public void registerFactories(final ObjectTypeRegistry objectTypeRegistry, final Map<ObjectType<?>, ObjectFactory<?>> map) {
         final Collection<ObjectType<?>> objectTypes = objectTypeRegistry.allTypes();
         final Collection<ObjectType<?>> unregisteredTypes = map.keySet()
                 .stream()
@@ -30,7 +29,7 @@ public final class FactoryMappingsRegistry {
         this.factories.freeze();
     }
 
-    public <T, U extends ObjectFactory<T>> ObjectFactoryMapping<T, U> findMappingFor(final ObjectType<T> type) {
+    public <T, U extends ObjectFactory<T>> U findFactoryFor(final ObjectType<T> type) {
         return GenericUtil.uncheck(this.factories.get(type));
     }
 }

@@ -1,5 +1,8 @@
 {
   "contenttweaker.command.dump_resources.desc": "Dump all resources generated at runtime by ContentTweaker",
   "contenttweaker.command.dump_resources.log": "Runtime Resources",
-  "contenttweaker.pack_source.runtime": "Runtime Generation"
+  "contenttweaker.pack.source.runtime": "Runtime Generation",
+  "contenttweaker.pack.source.user": "\"resources\" Directory",
+  "contenttweaker.pack.title.runtime": "ContentTweaker Runtime Pack (%s)"
+  "contenttweaker.pack.title.user": "ContentTweaker User Pack"
 }

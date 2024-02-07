@@ -2,6 +2,7 @@ package com.blamejared.contenttweaker.core.plugin;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
+import com.blamejared.contenttweaker.core.api.ContentTweakerLoggers;
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPlugin;
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPluginProvider;
 import com.blamejared.contenttweaker.core.registry.MetaRegistry;
@@ -36,7 +37,7 @@ public final class PluginManager {
     public void initializePlugins(final MetaRegistry metaRegistry) {
         final ObjectTypeRegistry objectTypeRegistry = metaRegistry.objectTypes();
         objectTypeRegistry.registerTypes(ObjectTypeRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerObjectTypes)));
-        metaRegistry.factoryMappings().registerMappings(objectTypeRegistry, FactoryMappingRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerFactoryMappings)));
+        metaRegistry.factoryMappings().registerFactories(objectTypeRegistry, ObjectFactoryRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerObjectFactories)));
         metaRegistry.referenceFactories().registerFactories(objectTypeRegistry, ReferenceFactoryRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerReferenceFactories)));
         metaRegistry.registryResolvers().registerResolvers(objectTypeRegistry, RegistryResolverRegistrationManager.get(this.each(ContentTweakerPluginProvider::registerResolvers)));
     }
@@ -82,13 +83,10 @@ public final class PluginManager {
         try {
             final ResourceLocation id = data.getFirst();
             final ContentTweakerPluginProvider provider = data.getSecond().getConstructor().newInstance();
-            ContentTweakerCore.LOGGER.info("Successfully identified and loaded plugin {}", id);
-            CraftTweakerAPI.LOGGER.info("CoT: Successfully identified and loaded ContentTweaker plugin {}", id);
+            ContentTweakerLoggers.plugin().info("Successfully identified and loaded plugin {}", id);
             return new DecoratedContentTweakerPlugin(id, provider);
-        } catch(final InstantiationException | NoSuchMethodException | IllegalAccessException |
-                      InvocationTargetException e) {
-            ContentTweakerCore.LOGGER.error("Unable to load plugin class '" + data.getSecond()
-                    .getName() + "' due to an error", e);
+        } catch(final InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            ContentTweakerLoggers.plugin().error(() -> "Unable to load plugin class '" + data.getSecond().getName() + "' due to an error", e);
             return null;
         }
     }

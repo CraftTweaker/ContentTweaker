@@ -2,7 +2,7 @@ package com.blamejared.contenttweaker.core.plugin;
 
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPluginProvider;
 import com.blamejared.contenttweaker.core.api.plugin.CustomBracketRegistration;
-import com.blamejared.contenttweaker.core.api.plugin.FactoryMappingRegistration;
+import com.blamejared.contenttweaker.core.api.plugin.ObjectFactoryRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ObjectTypeRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ReferenceFactoryRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.RegistryResolverRegistration;
@@ -16,8 +16,8 @@ record DecoratedContentTweakerPlugin(ResourceLocation id, ContentTweakerPluginPr
     }
 
     @Override
-    public void registerFactoryMappings(final FactoryMappingRegistration registration) {
-        this.wrapped().registerFactoryMappings(registration);
+    public void registerObjectFactories(final ObjectFactoryRegistration registration) {
+        this.wrapped().registerObjectFactories(registration);
     }
 
     @Override

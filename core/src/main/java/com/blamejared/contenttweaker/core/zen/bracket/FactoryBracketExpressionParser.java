@@ -2,7 +2,6 @@ package com.blamejared.contenttweaker.core.zen.bracket;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
 import com.blamejared.contenttweaker.core.api.object.ObjectFactory;
-import com.blamejared.contenttweaker.core.api.object.ObjectFactoryMapping;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.contenttweaker.core.api.zen.bracket.BracketHelper;
@@ -30,9 +29,9 @@ import java.util.stream.Stream;
 final class FactoryBracketExpressionParser implements BracketExpressionParser {
     private static final class BracketMetaFactoryExpression<T, U extends ObjectFactory<T>> extends ParsedExpression {
         private final ObjectType<T> type;
-        private final ObjectFactoryMapping<T, U> factoryMapping;
+        private final U factoryMapping;
 
-        BracketMetaFactoryExpression(final CodePosition position, final ObjectType<T> type, final ObjectFactoryMapping<T, U> factoryMapping) {
+        BracketMetaFactoryExpression(final CodePosition position, final ObjectType<T> type, final U factoryMapping) {
             super(position);
             this.type = type;
             this.factoryMapping = factoryMapping;
@@ -61,7 +60,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         }
 
         private IParsedType findFactoryGeneric() throws CompileException {
-            return this.readParsedType(this.factoryMapping.type());
+            return this.readParsedType(this.factoryMapping.getClass());
         }
 
         private ParsedExpression findArgument() throws CompileException {
@@ -119,7 +118,7 @@ final class FactoryBracketExpressionParser implements BracketExpressionParser {
         return type;
     }
 
-    private <T, U extends ObjectFactory<T>> ObjectFactoryMapping<T, U> grabFactoryMapping(final ObjectType<T> type) {
-        return ContentTweakerCore.core().metaRegistry().factoryMappings().findMappingFor(type);
+    private <T, U extends ObjectFactory<T>> U grabFactoryMapping(final ObjectType<T> type) {
+        return ContentTweakerCore.core().metaRegistry().factoryMappings().findFactoryFor(type);
     }
 }
