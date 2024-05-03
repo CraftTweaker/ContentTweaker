@@ -9,8 +9,9 @@ import java.util.Objects;
 
 public interface Handles {
     interface Provider {
-        Handles publicOnly();
-        Handles fullTrust();
+        Handles publicOnlyHandles();
+        Handles fullTrustHandles();
+        <T> T handleInvocation(final Invoker<T> invoker);
     }
 
     interface Names {
@@ -69,11 +70,19 @@ public interface Handles {
     }
 
     static Handles trusted() {
-        return ContentTweakerApi.get().handles().fullTrust();
+        return ContentTweakerApi.get().handles().fullTrustHandles();
     }
 
     static Handles publicOnly() {
-        return ContentTweakerApi.get().handles().publicOnly();
+        return ContentTweakerApi.get().handles().publicOnlyHandles();
+    }
+
+    static <T> T invoke(final Invoker<T> invoker) {
+        return ContentTweakerApi.get().handles().handleInvocation(invoker);
+    }
+
+    static void invokeVoid(final VoidInvoker invoker) {
+        invoke(invoker);
     }
 
     MethodHandle linkMethod(final HandleAccess access, final Class<?> owner, final Names names, final MethodType methodType);
@@ -102,11 +111,5 @@ public interface Handles {
 
     default VarHandle linkField(final HandleAccess access, final Class<?> owner, final String name, final Class<?> type) {
         return this.linkField(access, owner, Names.of(name), type);
-    }
-
-    <T> T invoke(final Invoker<T> invoker);
-
-    default void invokeVoid(final VoidInvoker invoker) {
-        this.invoke(invoker);
     }
 }

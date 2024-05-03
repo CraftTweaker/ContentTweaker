@@ -32,11 +32,6 @@ public final class NeverWinterBackedHandles implements Handles.Provider {
             }
         }
 
-        @Override
-        public <T> T invoke(final Invoker<T> invoker) {
-            return com.dwarveddonuts.neverwinter.handle.Handles.invokeHandle(invoker::invoke);
-        }
-
         private AccessType neverWinterAccess(final HandleAccess access) {
             return switch (access.type()) {
                 case STATIC -> AccessType.staticAccess();
@@ -65,12 +60,17 @@ public final class NeverWinterBackedHandles implements Handles.Provider {
     }
 
     @Override
-    public Handles publicOnly() {
+    public Handles publicOnlyHandles() {
         return this.publicOnly;
     }
 
     @Override
-    public Handles fullTrust() {
+    public Handles fullTrustHandles() {
         return this.fullTrust;
+    }
+
+    @Override
+    public <T> T handleInvocation(final Handles.Invoker<T> invoker) {
+        return com.dwarveddonuts.neverwinter.handle.Handles.invokeHandle(invoker::invoke);
     }
 }
