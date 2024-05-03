@@ -102,10 +102,6 @@ publishing {
     }
 }
 
-reobf {
-    register("jarJar") {}
-}
-
 tasks {
     named<JavaCompile>("compileJava") {
         sequenceOf(project(":core"), project(":vanilla"))
