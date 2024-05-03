@@ -5,11 +5,13 @@ import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @ZenCodeType.Name(ContentTweakerZenConstants.OBJECT_PACKAGE + ".Reference")
@@ -55,6 +57,26 @@ public abstract class Reference<T> { // Designed for extension by stuff like Ite
             throw new IllegalStateException("Cannot resolve object at this time in %s".formatted(this));
         }
         return this.resolved;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        final Reference<?> that = GenericUtil.uncheck(obj);
+        return Objects.equals(this.type(), that.type()) && Objects.equals(this.id(), that.id());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id(), this.type());
     }
 
     @Override
