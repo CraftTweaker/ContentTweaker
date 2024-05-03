@@ -24,6 +24,11 @@ public final class Color {
         return packedRgba((color << 8) | 0xFF);
     }
 
+    @ZenCodeType.Method
+    public static Color packedArgb(final int color) {
+        return packedRgba((color >>> 24) | ((color & 0xFFFFFF) << 8));
+    }
+
     @ZenCodeType.Method("rgba")
     public static Color rgba(final int r, final int g, final int b, final int a) {
         return packedRgba(((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF));
@@ -32,6 +37,11 @@ public final class Color {
     @ZenCodeType.Method("rgb")
     public static Color rgb(final int r, final int g, final int b) {
         return rgba(r, g, b, 0xFF);
+    }
+
+    @ZenCodeType.Method
+    public static Color argb(final int a, final int r, final int g, final int b) {
+        return rgba(r, g, b, a);
     }
 
     @ZenCodeType.Getter("r")
