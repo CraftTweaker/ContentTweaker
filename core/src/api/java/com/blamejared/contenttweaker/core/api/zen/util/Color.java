@@ -63,4 +63,19 @@ public final class Color {
     public int a() {
         return this.color & 0xFF;
     }
+
+    @ZenCodeType.Method("asPackedRgba")
+    public int asPackedRgba() {
+        return this.color;
+    }
+
+    @ZenCodeType.Method("asPackedRgb")
+    public int asPackedRgb() {
+        return this.color >>> 8;
+    }
+
+    @ZenCodeType.Method("asPackedArgb")
+    public int asPackedArgb() {
+        return ((this.color & 0xFF) << 24) | (this.color >>> 8);
+    }
 }
