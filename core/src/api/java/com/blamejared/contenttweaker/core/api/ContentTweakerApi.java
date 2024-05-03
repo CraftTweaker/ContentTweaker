@@ -1,14 +1,12 @@
 package com.blamejared.contenttweaker.core.api;
 
 import com.blamejared.contenttweaker.core.api.action.ContentTweakerAction;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.google.common.base.Suppliers;
+import com.blamejared.contenttweaker.core.api.util.ServiceArchitect;
 
-import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
 public final class ContentTweakerApi {
-    private static final Supplier<ApiBridge> BRIDGE = Suppliers.memoize(ContentTweakerApi::find);
+    private static final Supplier<ApiBridge> BRIDGE = ServiceArchitect.find(ApiBridge.class);
 
     private ContentTweakerApi() {}
 
@@ -18,10 +16,6 @@ public final class ContentTweakerApi {
 
     public static void apply(final ContentTweakerAction action) {
         get().apply(action);
-    }
-
-    private static ApiBridge find() {
-        return ServiceLoader.load(ApiBridge.class).findFirst().orElseThrow();
     }
 
 }
