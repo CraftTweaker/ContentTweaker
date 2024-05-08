@@ -1,12 +1,11 @@
 package com.blamejared.contenttweaker.vanilla.api;
 
-import com.google.common.base.Suppliers;
+import com.blamejared.contenttweaker.core.api.util.ServiceArchitect;
 
-import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
 public final class ContentTweakerVanillaApi {
-    private static final Supplier<VanillaBridge> BRIDGE = Suppliers.memoize(() -> ServiceLoader.load(VanillaBridge.class).findFirst().orElseThrow());
+    private static final Supplier<VanillaBridge> BRIDGE = ServiceArchitect.find(VanillaBridge.class);
 
     private ContentTweakerVanillaApi() {}
 

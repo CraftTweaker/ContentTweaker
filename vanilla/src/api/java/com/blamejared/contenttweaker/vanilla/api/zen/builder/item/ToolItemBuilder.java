@@ -53,7 +53,7 @@ public abstract class ToolItemBuilder<T extends ToolItemBuilder<T>> extends Item
     }
 
     @Override
-    public final ObjectHolder<? extends Item> create(final ResourceLocation name, final Supplier<Item.Properties> builtProperties) {
+    protected final ObjectHolder<? extends Item> create(final ResourceLocation name, final Supplier<Item.Properties> builtProperties) {
         if (this.tier == null) {
             throw new IllegalStateException("Unable to create a tool item without a tier");
         }
@@ -66,7 +66,7 @@ public abstract class ToolItemBuilder<T extends ToolItemBuilder<T>> extends Item
         return this.createTool(name, new ToolData(this.tier::get, this.attackDamageBase, this.attackDamageSpeed), builtProperties);
     }
 
-    public abstract ObjectHolder<? extends Item> createTool(final ResourceLocation name, final ToolData toolData, final Supplier<Item.Properties> builtProperties);
+    protected abstract ObjectHolder<? extends Item> createTool(final ResourceLocation name, final ToolData toolData, final Supplier<Item.Properties> builtProperties);
 
     private T self() {
         return GenericUtil.uncheck(this);

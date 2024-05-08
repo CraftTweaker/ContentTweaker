@@ -26,12 +26,6 @@ import java.util.function.Supplier;
 @ZenCodeType.Name(ContentTweakerVanillaConstants.ITEM_BUILDER_PACKAGE + ".BlockItem")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class BlockItemBuilder extends ItemBuilder<BlockItemBuilder> {
-    private static final class ReferencingBlockItem extends BlockItem {
-        public ReferencingBlockItem(final BlockReference reference, final Supplier<Properties> properties) {
-            super(reference.get(), properties.get());
-        }
-    }
-
     private BlockReference block;
 
     public BlockItemBuilder(final BiFunction<ObjectHolder<? extends Item>, Consumer<ResourceManager>, ItemReference> registrationManager) {
@@ -46,17 +40,21 @@ public final class BlockItemBuilder extends ItemBuilder<BlockItemBuilder> {
     }
 
     @Override
-    public ObjectHolder<? extends Item> create(final ResourceLocation name, final Supplier<Item.Properties> builtProperties) {
+    protected ObjectHolder<? extends Item> create(final ResourceLocation name, final Supplier<Item.Properties> builtProperties) {
         Objects.requireNonNull(this.block);
-        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new ReferencingBlockItem(this.block, builtProperties));
+        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> this.build(this.block, builtProperties.get()));
     }
 
     @Override
-    public void provideResources(final ResourceLocation name, final ResourceManager manager) {
+    protected void provideResources(final ResourceLocation name, final ResourceManager manager) {
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
         final ResourceLocation blockModel = new ResourceLocation(this.block.id().getNamespace(), "block/%s".formatted(this.block.id().getPath()));
 
         cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.of(blockModel), ItemModel.SERIALIZER);
         cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Custom Block"), Language.SERIALIZER);
+    }
+
+    private Item build(final BlockReference blockReference, final Item.Properties properties) {
+        return new BlockItem(blockReference.get(), properties);
     }
 }

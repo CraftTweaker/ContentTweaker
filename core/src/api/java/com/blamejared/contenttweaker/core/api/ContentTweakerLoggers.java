@@ -10,6 +10,7 @@ public final class ContentTweakerLoggers {
     private static final Supplier<Logger> CORE = logger("Core");
     private static final Supplier<Logger> PLUGIN = logger("Plugin");
     private static final Supplier<Logger> RESOURCES = logger("Resources");
+    private static final Supplier<Logger> USER = logger("UserScripts");
 
     private ContentTweakerLoggers() {}
 
@@ -23,6 +24,10 @@ public final class ContentTweakerLoggers {
 
     public static Logger resources() {
         return RESOURCES.get();
+    }
+
+    public static Logger user() {
+        return USER.get();
     }
 
     private static Supplier<Logger> logger(final String subSystem) {

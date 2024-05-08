@@ -5,6 +5,7 @@ import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import com.blamejared.contenttweaker.core.api.resource.StandardResourceFragmentKeys;
+import com.blamejared.contenttweaker.core.api.util.Handles;
 import com.blamejared.contenttweaker.vanilla.api.resource.ItemModel;
 import com.blamejared.contenttweaker.vanilla.api.resource.Language;
 import com.blamejared.contenttweaker.vanilla.api.resource.PathHelper;
@@ -13,13 +14,16 @@ import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConsta
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.level.block.Block;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.lang.invoke.MethodHandle;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -29,10 +33,10 @@ import java.util.function.Supplier;
 @ZenCodeType.Name(ContentTweakerVanillaConstants.ITEM_BUILDER_PACKAGE + ".CustomTool")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class CustomToolItemBuilder extends ToolItemBuilder<CustomToolItemBuilder> {
-    private static final class CustomDiggerItem extends DiggerItem {
-        CustomDiggerItem(final ToolData data, final ResourceLocation tag, final Supplier<Properties> properties) {
-            super(data.baseAttackDamage(), data.attackSpeed(), data.tier().get(), TagKey.create(Registry.BLOCK_REGISTRY, tag), properties.get());
-        }
+    private static final class DiggerHandles {
+        static final MethodHandle INIT = Handles.trusted().linkConstructor(DiggerItem.class, float.class, float.class, Tier.class, TagKey.class, Item.Properties.class);
+
+        private DiggerHandles() {}
     }
 
     private ResourceLocation tag;
@@ -49,15 +53,15 @@ public final class CustomToolItemBuilder extends ToolItemBuilder<CustomToolItemB
     }
 
     @Override
-    public ObjectHolder<? extends Item> createTool(final ResourceLocation name, final ToolData toolData, final Supplier<Item.Properties> builtProperties) {
+    protected ObjectHolder<? extends Item> createTool(final ResourceLocation name, final ToolData toolData, final Supplier<Item.Properties> builtProperties) {
         if (this.tag == null) {
             throw new IllegalStateException("Unable to create a custom tool without a tag for blocks to mine");
         }
-        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new CustomDiggerItem(toolData, this.tag, builtProperties));
+        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> this.build(toolData, () -> TagKey.create(Registries.BLOCK, this.tag), builtProperties));
     }
 
     @Override
-    public void provideResources(final ResourceLocation name, final ResourceManager manager) {
+    protected void provideResources(final ResourceLocation name, final ResourceManager manager) {
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
         final ResourceFragment cotData = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_DATA);
         final ResourceLocation texture = new ResourceLocation(name.getNamespace(), "item/%s".formatted(name.getPath()));
@@ -67,5 +71,11 @@ public final class CustomToolItemBuilder extends ToolItemBuilder<CustomToolItemB
         cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Custom Tool"), Language.SERIALIZER);
 
         cotData.provideOrAlter(PathHelper.tag(VanillaObjectTypes.BLOCK, this.tag), Tag::of, Function.identity(), Tag.SERIALIZER);
+    }
+
+    private Item build(final ToolData data, final Supplier<TagKey<Block>> tag, final Supplier<Item.Properties> properties) {
+        return Handles.invoke(
+                () -> (DiggerItem) DiggerHandles.INIT.invokeExact(data.baseAttackDamage(), data.attackSpeed(), data.tier().get(), tag.get(), properties.get())
+        );
     }
 }

@@ -6,9 +6,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.mojang.math.Vector3d;
-import com.mojang.math.Vector4f;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Vector3d;
+import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.HashMap;

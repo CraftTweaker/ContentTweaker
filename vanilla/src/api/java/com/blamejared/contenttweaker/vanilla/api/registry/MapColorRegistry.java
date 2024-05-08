@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -16,17 +16,17 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public final class MaterialColorRegistry implements GameRegistry<MaterialColor> {
+public final class MapColorRegistry implements GameRegistry<MapColor> {
     private final Object2IntMap<String> colors;
     private final Int2ObjectMap<String> inverseLookup;
 
-    private MaterialColorRegistry(final Supplier<Object2IntMap<String>> gatherer, final Function<Object2IntMap<String>, Int2ObjectMap<String>> inverter) {
+    private MapColorRegistry(final Supplier<Object2IntMap<String>> gatherer, final Function<Object2IntMap<String>, Int2ObjectMap<String>> inverter) {
         this.colors = Objects.requireNonNull(gatherer).get();
         this.inverseLookup = Objects.requireNonNull(inverter).apply(this.colors);
     }
 
-    public static MaterialColorRegistry of() {
-        return new MaterialColorRegistry(MaterialColorRegistry::gather, MaterialColorRegistry::invert);
+    public static MapColorRegistry of() {
+        return new MapColorRegistry(MapColorRegistry::gather, MapColorRegistry::invert);
     }
 
     private static Object2IntMap<String> gather() {
@@ -116,31 +116,31 @@ public final class MaterialColorRegistry implements GameRegistry<MaterialColor> 
     }
 
     @Override
-    public ObjectType<MaterialColor> type() {
-        return VanillaObjectTypes.MATERIAL_COLOR;
+    public ObjectType<MapColor> type() {
+        return VanillaObjectTypes.MAP_COLOR;
     }
 
     @Override
-    public MaterialColor get(final ResourceLocation name) {
-        return MaterialColor.byId(id(this.colors.getInt(Objects.requireNonNull(name).getPath())));
+    public MapColor get(final ResourceLocation name) {
+        return MapColor.byId(id(this.colors.getInt(Objects.requireNonNull(name).getPath())));
     }
 
     @Override
-    public ResourceLocation nameOf(final MaterialColor object) {
+    public ResourceLocation nameOf(final MapColor object) {
         return new ResourceLocation(this.inverseLookup.get(Objects.requireNonNull(object).id));
     }
 
     @Override
-    public Collection<MaterialColor> all() {
+    public Collection<MapColor> all() {
         return this.colors.values()
                 .intStream()
-                .map(MaterialColorRegistry::id)
-                .mapToObj(MaterialColor::byId)
+                .map(MapColorRegistry::id)
+                .mapToObj(MapColor::byId)
                 .toList();
     }
 
     @Override
-    public void enqueueRegistration(final ResourceLocation name, final Supplier<MaterialColor> objectCreator) {
+    public void enqueueRegistration(final ResourceLocation name, final Supplier<MapColor> objectCreator) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(objectCreator);
         throw new IllegalStateException("Unable to register new material colors");

@@ -7,16 +7,13 @@ import com.blamejared.contenttweaker.core.api.zen.bracket.ReferenceBracketExpres
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
-import com.blamejared.contenttweaker.vanilla.api.registry.CreativeTabRegistry;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.object.MaterialColorReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
 import org.openzen.zenscript.parser.BracketExpressionParser;
 
 import java.util.Collection;
@@ -38,10 +35,9 @@ public final class ContentTweakerVanillaBrackets {
     private static final Collection<ReferenceBracketData<?, ?>> BRACKETS = List.of(
             b("block", VanillaObjectTypes.BLOCK, null, new TypeToken<BlockReference>() {}, null, false),
             b("item", VanillaObjectTypes.ITEM, null, new TypeToken<ItemReference>() {}, null, false),
-            b("material", VanillaObjectTypes.MATERIAL, null, new TypeToken<SimpleReference<Material>>() {}, null, false),
-            b("materialcolor", VanillaObjectTypes.MATERIAL_COLOR, "material color", new TypeToken<MaterialColorReference>() {}, null, true),
             b("soundevent", VanillaObjectTypes.SOUND_EVENT, "sound event", new TypeToken<SimpleReference<SoundEvent>>() {}, null, false),
             b("soundtype", VanillaObjectTypes.SOUND_TYPE, "sound type", new TypeToken<SimpleReference<SoundType>>() {}, null, true),
+            b("tab", VanillaObjectTypes.CREATIVE_TAB, "creative tab", new TypeToken<>() {}, null, true),
             b("tooltier", VanillaObjectTypes.TIER, "tool tier", new TypeToken<TierReference>() {}, null, true)
     );
 
@@ -49,7 +45,6 @@ public final class ContentTweakerVanillaBrackets {
 
     public static void register(final CustomBracketRegistration registration) {
         BRACKETS.forEach(data -> register(registration, data));
-        registration.registerBracket("tab", new CreativeTabBracketExpressionParser(), BracketHelper.dumpAllOf("tab", VanillaObjectTypes.CREATIVE_TAB, CreativeTabRegistry::toId));
     }
 
     private static <T, U extends Reference<T>> void register(final CustomBracketRegistration registration, final ReferenceBracketData<T, U> data) {
@@ -59,8 +54,8 @@ public final class ContentTweakerVanillaBrackets {
         final BracketExpressionParser parser = ReferenceBracketExpressionParser.of(data.format(), type, data.token());
 
         if (data.doDump()) {
-            final Function<ResourceLocation, String> converter;
-            final Supplier<Stream<String>> dumper = (converter = data.converter()) != null? BracketHelper.dumpAllOf(name, type, converter) : BracketHelper.dumpAllOf(name, type);
+            final Function<ResourceLocation, String> converter = data.converter();
+            final Supplier<Stream<String>> dumper = converter != null? BracketHelper.dumpAllOf(name, type, converter) : BracketHelper.dumpAllOf(name, type);
 
             registration.registerBracket(name, parser, dumper);
         } else {

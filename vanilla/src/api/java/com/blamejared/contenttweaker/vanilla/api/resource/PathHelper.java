@@ -10,12 +10,12 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public final class PathHelper {
-    private static final Supplier<Map<ObjectType<?>, String>> SPECIAL_TAGS = Suppliers.memoize(() -> Map.of(
-            VanillaObjectTypes.BLOCK, "blocks",
-            // entity_type -> "entity_types",
-            // fluid -> "fluids",
-            // game_event -> "game_events",
-            VanillaObjectTypes.ITEM, "items"
+    private static final Supplier<Map<ObjectType<?>, String>> SPECIAL_TAGS = Suppliers.memoize(() -> Map.ofEntries(
+            Map.entry(VanillaObjectTypes.BLOCK, "blocks"),
+            // Map.entry(entity_type, "entity_types"),
+            // Map.entry(fluid, "fluids"),
+            // Map.entry(game_event, "game_events"),
+            Map.entry(VanillaObjectTypes.ITEM, "items")
     ));
 
     private PathHelper() {}

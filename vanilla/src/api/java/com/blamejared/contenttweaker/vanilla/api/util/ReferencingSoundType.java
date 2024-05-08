@@ -1,6 +1,6 @@
 package com.blamejared.contenttweaker.vanilla.api.util;
 
-import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
+import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.SoundType;
 
@@ -8,20 +8,20 @@ import java.util.Objects;
 
 // TODO("Remove in 1.19 as this is now not needed anymore because Forge grew to its senses")
 public final class ReferencingSoundType extends SoundType {
-    private final SimpleReference<SoundEvent> breakSound;
-    private final SimpleReference<SoundEvent> stepSound;
-    private final SimpleReference<SoundEvent> placeSound;
-    private final SimpleReference<SoundEvent> hitSound;
-    private final SimpleReference<SoundEvent> fallSound;
+    private final Reference<SoundEvent> breakSound;
+    private final Reference<SoundEvent> stepSound;
+    private final Reference<SoundEvent> placeSound;
+    private final Reference<SoundEvent> hitSound;
+    private final Reference<SoundEvent> fallSound;
 
     private ReferencingSoundType(
             final float volume,
             final float pitch,
-            final SimpleReference<SoundEvent> breakSound,
-            final SimpleReference<SoundEvent> stepSound,
-            final SimpleReference<SoundEvent> placeSound,
-            final SimpleReference<SoundEvent> hitSound,
-            final SimpleReference<SoundEvent> fallSound
+            final Reference<SoundEvent> breakSound,
+            final Reference<SoundEvent> stepSound,
+            final Reference<SoundEvent> placeSound,
+            final Reference<SoundEvent> hitSound,
+            final Reference<SoundEvent> fallSound
     ) {
         super(volume, pitch, null, null, null, null, null);
         this.breakSound = breakSound;
@@ -34,11 +34,11 @@ public final class ReferencingSoundType extends SoundType {
     public static ReferencingSoundType of(
             final float volume,
             final float pitch,
-            final SimpleReference<SoundEvent> breakSound,
-            final SimpleReference<SoundEvent> stepSound,
-            final SimpleReference<SoundEvent> placeSound,
-            final SimpleReference<SoundEvent> hitSound,
-            final SimpleReference<SoundEvent> fallSound
+            final Reference<SoundEvent> breakSound,
+            final Reference<SoundEvent> stepSound,
+            final Reference<SoundEvent> placeSound,
+            final Reference<SoundEvent> hitSound,
+            final Reference<SoundEvent> fallSound
     ) {
         return new ReferencingSoundType(
                 volume,

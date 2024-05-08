@@ -20,20 +20,20 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@ZenCodeType.Name(ContentTweakerVanillaConstants.ITEM_BUILDER_PACKAGE + ".Basic")
+@ZenCodeType.Name(ContentTweakerVanillaConstants.ITEM_BUILDER_PACKAGE + ".Simple")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-public final class BasicItemBuilder extends ItemBuilder<BasicItemBuilder> {
-    public BasicItemBuilder(final BiFunction<ObjectHolder<? extends Item>, Consumer<ResourceManager>, ItemReference> registrationManager) {
+public final class SimpleItemBuilder extends ItemBuilder<SimpleItemBuilder> {
+    public SimpleItemBuilder(final BiFunction<ObjectHolder<? extends Item>, Consumer<ResourceManager>, ItemReference> registrationManager) {
         super(registrationManager);
     }
 
     @Override
-    public ObjectHolder<? extends Item> create(final ResourceLocation name, final Supplier<Item.Properties> builtProperties) {
+    protected ObjectHolder<? extends Item> create(final ResourceLocation name, final Supplier<Item.Properties> builtProperties) {
         return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> this.build(builtProperties.get()));
     }
 
     @Override
-    public void provideResources(final ResourceLocation name, final ResourceManager manager) {
+    protected void provideResources(final ResourceLocation name, final ResourceManager manager) {
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
         final ResourceLocation textureName = new ResourceLocation(name.getNamespace(), "item/%s".formatted(name.getPath()));
 

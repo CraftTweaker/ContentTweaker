@@ -16,6 +16,9 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class BlockReference extends Reference<Block> {
     private static final ClassArchitect<BlockProperties> BLOCK_PROPERTIES_ARCHITECT = ClassArchitect.of(BlockReference.class);
+    private static final ResourceLocation AIR_RL = new ResourceLocation("air");
+
+    public static final BlockReference AIR = BlockReference.of(AIR_RL);
 
     private BlockReference(final ResourceLocation id) {
         super(VanillaObjectTypes.BLOCK, id);
@@ -23,7 +26,7 @@ public final class BlockReference extends Reference<Block> {
 
     @ZenCodeType.Method("of")
     public static BlockReference of(final ResourceLocation id) {
-        return new BlockReference(id);
+        return AIR_RL.equals(id)? AIR : new BlockReference(id);
     }
 
     @ZenCodeType.Getter("properties")

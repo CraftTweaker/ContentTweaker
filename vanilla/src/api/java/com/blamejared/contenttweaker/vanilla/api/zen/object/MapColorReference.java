@@ -8,32 +8,25 @@ import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConsta
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.google.common.base.Suppliers;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
-@ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".MaterialColorReference")
+@ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".MapColorReference")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-public final class MaterialColorReference extends Reference<MaterialColor> {
-    private final Supplier<Integer> numericalId;
+public final class MapColorReference extends Reference<MapColor> {
     private final Supplier<Color> color;
 
-    private MaterialColorReference(final ResourceLocation id) {
-        super(VanillaObjectTypes.MATERIAL_COLOR, id);
-        this.numericalId = Suppliers.memoize(this::lookupId);
+    private MapColorReference(final ResourceLocation id) {
+        super(VanillaObjectTypes.MAP_COLOR, id);
         this.color = Suppliers.memoize(this::lookupColor);
     }
 
     @ZenCodeType.Method("of")
-    public static MaterialColorReference of(final ResourceLocation id) {
-        return new MaterialColorReference(Objects.requireNonNull(id));
-    }
-
-    @ZenCodeType.Getter("numericalId")
-    public int numericalId() {
-        return this.numericalId.get();
+    public static MapColorReference of(final ResourceLocation id) {
+        return new MapColorReference(Objects.requireNonNull(id));
     }
 
     @ZenCodeType.Getter("color")
@@ -41,13 +34,7 @@ public final class MaterialColorReference extends Reference<MaterialColor> {
         return this.color.get();
     }
 
-    private int lookupId() {
-        // TODO("")
-        return 0;
-    }
-
     private Color lookupColor() {
-        // TODO("")
-        return Color.packedRgb(0);
+        return Color.packedRgb(this.get().col);
     }
 }

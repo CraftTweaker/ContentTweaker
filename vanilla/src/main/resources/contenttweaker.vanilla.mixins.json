@@ -4,11 +4,7 @@
   "minVersion": "0.8",
   "package": "com.blamejared.contenttweaker.vanilla.mixin",
   "refmap": "contenttweaker.refmap.json",
-  "mixins": [
-    "BlockBehaviorAccessor",
-    "BlockBehaviorPropertiesAccessor",
-    "CreativeModeTabAccessor"
-  ],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   }

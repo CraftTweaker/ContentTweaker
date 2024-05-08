@@ -56,7 +56,7 @@ public final class SwordItemBuilder extends ItemBuilder<SwordItemBuilder> {
     }
 
     @Override
-    public ObjectHolder<? extends Item> create(final ResourceLocation name, final Supplier<Item.Properties> builtProperties) {
+    protected ObjectHolder<? extends Item> create(final ResourceLocation name, final Supplier<Item.Properties> builtProperties) {
         if (this.tier == null) {
             throw new IllegalStateException("Unable to create a sword item without a tier");
         }
@@ -66,16 +66,20 @@ public final class SwordItemBuilder extends ItemBuilder<SwordItemBuilder> {
         if (this.attackDamageSpeed == null) {
             throw new IllegalStateException("Unable to create a sword item without attack speed");
         }
-        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> new SwordItem(this.tier.get(), this.attackDamageBase, this.attackDamageSpeed, builtProperties.get()));
+        return ObjectHolder.of(VanillaObjectTypes.ITEM, name, () -> this.build(builtProperties.get()));
     }
 
     @Override
-    public void provideResources(final ResourceLocation name, final ResourceManager manager) {
+    protected void provideResources(final ResourceLocation name, final ResourceManager manager) {
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
         final ResourceLocation texture = new ResourceLocation(name.getNamespace(), "item/%s".formatted(name.getPath()));
 
         cotAssets.provideTemplated(PathHelper.texture(texture), ContentTweakerVanillaConstants.itemTemplate("katana"));
         cotAssets.provideFixed(PathHelper.itemModel(name), ItemModel.of(new ResourceLocation("item/handheld")).layer(0, texture), ItemModel.SERIALIZER);
         cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.item(name, "Custom Sword"), Language.SERIALIZER);
+    }
+
+    private Item build(final Item.Properties properties) {
+        return new SwordItem(this.tier.get(), this.attackDamageBase, this.attackDamageSpeed, properties);
     }
 }

@@ -23,36 +23,31 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@ZenCodeType.Name(ContentTweakerVanillaConstants.BLOCK_BUILDER_PACKAGE + ".Basic")
+@ZenCodeType.Name(ContentTweakerVanillaConstants.BLOCK_BUILDER_PACKAGE + ".Cube")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-public final class BasicBlockBuilder extends BlockBuilder<BasicBlockBuilder> {
-    public BasicBlockBuilder(final BiFunction<ObjectHolder<? extends Block>, Consumer<ResourceManager>, BlockReference> registrationManager) {
+public final class CubeBlockBuilder extends BlockBuilder<CubeBlockBuilder> {
+    public CubeBlockBuilder(final BiFunction<ObjectHolder<? extends Block>, Consumer<ResourceManager>, BlockReference> registrationManager) {
         super(registrationManager);
     }
 
     @Override
-    public ObjectHolder<? extends Block> create(final ResourceLocation name, final Supplier<BlockBehaviour.Properties> builtProperties, final GenerateFlags flags) {
+    protected ObjectHolder<? extends Block> create(final ResourceLocation name, final Supplier<BlockBehaviour.Properties> builtProperties, final GenerateFlags flags) {
         return ObjectHolder.of(VanillaObjectTypes.BLOCK, name, () -> new Block(builtProperties.get()));
     }
 
     @Override
-    public void provideResources(final ResourceLocation name, final ResourceManager manager, final GenerateFlags flags) {
+    protected void provideResources(final ResourceLocation name, final ResourceManager manager, final GenerateFlags flags) {
         final ResourceFragment cotAssets = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_ASSETS);
+        final ResourceFragment cotData = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_DATA);
+
         final ResourceLocation assetName = new ResourceLocation(name.getNamespace(), "block/%s".formatted(name.getPath()));
         final ResourceLocation cubeAll = new ResourceLocation("block/cube_all");
 
         cotAssets.provideTemplated(PathHelper.texture(assetName), ContentTweakerVanillaConstants.blockTemplate("block"));
         cotAssets.provideFixed(PathHelper.blockState(name), BlockState.variant().singleModelFor("", assetName).finish(), BlockState.SERIALIZER);
         cotAssets.provideFixed(PathHelper.blockModel(name), BlockModel.of(cubeAll).texture("all", assetName), BlockModel.SERIALIZER);
-        cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.block(name, "Custom Block"), Language.SERIALIZER);
+        cotAssets.provideOrAlter(PathHelper.usLang(), Language::of, it -> it.block(name, "Custom Block (" + name + ")"), Language.SERIALIZER);
 
-        if (flags.generateLootTable()) {
-            final ResourceFragment cotData = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_DATA);
-
-            // TODO("Maybe include this in BlockBuilder")
-            this.selfLootTable(name, flags)
-                    .or(() -> this.emptyTable(name, LOOT_GEN_FAILURE_DUE_TO_NO_ITEM::formatted))
-                    .ifPresent(it -> cotData.provideFixed(PathHelper.blockLootTable(name), it, LootTable.SERIALIZER));
-        }
+        this.generateTable(name, flags, it -> cotData.provideFixed(PathHelper.blockLootTable(name), it, LootTable.SERIALIZER));
     }
 }

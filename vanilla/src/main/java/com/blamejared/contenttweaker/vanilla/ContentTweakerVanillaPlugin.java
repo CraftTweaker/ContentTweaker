@@ -6,34 +6,20 @@ import com.blamejared.contenttweaker.core.api.object.ReferenceFactory;
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPlugin;
 import com.blamejared.contenttweaker.core.api.plugin.ContentTweakerPluginProvider;
 import com.blamejared.contenttweaker.core.api.plugin.CustomBracketRegistration;
-import com.blamejared.contenttweaker.core.api.plugin.FactoryMappingRegistration;
+import com.blamejared.contenttweaker.core.api.plugin.ObjectFactoryRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ObjectTypeRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.ReferenceFactoryRegistration;
 import com.blamejared.contenttweaker.core.api.plugin.RegistryResolverRegistration;
 import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
-import com.blamejared.contenttweaker.vanilla.api.registry.CreativeTabRegistry;
-import com.blamejared.contenttweaker.vanilla.api.registry.MaterialColorRegistry;
-import com.blamejared.contenttweaker.vanilla.api.registry.MaterialRegistry;
+import com.blamejared.contenttweaker.vanilla.api.registry.MapColorRegistry;
 import com.blamejared.contenttweaker.vanilla.api.registry.SoundTypeRegistry;
-import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.object.CreativeTabReference;
+import com.blamejared.contenttweaker.vanilla.api.zen.factory.*;
+import com.blamejared.contenttweaker.vanilla.api.zen.object.*;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
-import com.blamejared.contenttweaker.vanilla.api.zen.object.MaterialColorReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
 import com.blamejared.contenttweaker.vanilla.zen.bracket.ContentTweakerVanillaBrackets;
-import com.blamejared.contenttweaker.vanilla.api.zen.factory.BlockFactory;
-import com.blamejared.contenttweaker.vanilla.api.zen.factory.CreativeTabFactory;
-import com.blamejared.contenttweaker.vanilla.api.zen.factory.ItemFactory;
-import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
-import com.blamejared.contenttweaker.vanilla.api.zen.factory.MaterialColorFactory;
-import com.blamejared.contenttweaker.vanilla.api.zen.factory.MaterialFactory;
-import com.blamejared.contenttweaker.vanilla.api.zen.factory.SoundEventFactory;
-import com.blamejared.contenttweaker.vanilla.api.zen.factory.SoundTypeFactory;
-import com.blamejared.contenttweaker.vanilla.api.zen.factory.TierFactory;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
 
 @ContentTweakerPlugin(ContentTweakerConstants.MOD_ID + ":vanilla")
 public final class ContentTweakerVanillaPlugin implements ContentTweakerPluginProvider {
@@ -42,23 +28,21 @@ public final class ContentTweakerVanillaPlugin implements ContentTweakerPluginPr
         registration.registerType(VanillaObjectTypes.BLOCK);
         registration.registerType(VanillaObjectTypes.CREATIVE_TAB);
         registration.registerType(VanillaObjectTypes.ITEM);
-        registration.registerType(VanillaObjectTypes.MATERIAL);
-        registration.registerType(VanillaObjectTypes.MATERIAL_COLOR);
+        registration.registerType(VanillaObjectTypes.MAP_COLOR);
         registration.registerType(VanillaObjectTypes.SOUND_EVENT);
         registration.registerType(VanillaObjectTypes.SOUND_TYPE);
         registration.registerType(VanillaObjectTypes.TIER);
     }
 
     @Override
-    public void registerFactoryMappings(final FactoryMappingRegistration registration) {
-        registration.registerMapping(VanillaObjectTypes.BLOCK, BlockFactory.class);
-        registration.registerMapping(VanillaObjectTypes.CREATIVE_TAB, CreativeTabFactory.class);
-        registration.registerMapping(VanillaObjectTypes.ITEM, ItemFactory.class);
-        registration.registerMapping(VanillaObjectTypes.MATERIAL, MaterialFactory.class);
-        registration.registerMapping(VanillaObjectTypes.MATERIAL_COLOR, MaterialColorFactory.class);
-        registration.registerMapping(VanillaObjectTypes.SOUND_EVENT, SoundEventFactory.class);
-        registration.registerMapping(VanillaObjectTypes.SOUND_TYPE, SoundTypeFactory.class);
-        registration.registerMapping(VanillaObjectTypes.TIER, TierFactory.class);
+    public void registerObjectFactories(final ObjectFactoryRegistration registration) {
+        registration.registerFactory(VanillaObjectTypes.BLOCK, new BlockFactory());
+        registration.registerFactory(VanillaObjectTypes.CREATIVE_TAB, new CreativeTabFactory());
+        registration.registerFactory(VanillaObjectTypes.ITEM, new ItemFactory());
+        registration.registerFactory(VanillaObjectTypes.MAP_COLOR, new MapColorFactory());
+        registration.registerFactory(VanillaObjectTypes.SOUND_EVENT, new SoundEventFactory());
+        registration.registerFactory(VanillaObjectTypes.SOUND_TYPE, new SoundTypeFactory());
+        registration.registerFactory(VanillaObjectTypes.TIER, new TierFactory());
     }
 
     @Override
@@ -67,8 +51,7 @@ public final class ContentTweakerVanillaPlugin implements ContentTweakerPluginPr
         registration.register(VanillaObjectTypes.BLOCK, ReferenceFactory.of(new TypeToken<BlockReference>() {}, BlockReference::of));
         registration.register(VanillaObjectTypes.CREATIVE_TAB, ReferenceFactory.of(new TypeToken<CreativeTabReference>() {}, CreativeTabReference::of));
         registration.register(VanillaObjectTypes.ITEM, ReferenceFactory.of(new TypeToken<ItemReference>() {}, ItemReference::of));
-        registration.register(VanillaObjectTypes.MATERIAL, ReferenceFactory.of(new TypeToken<SimpleReference<Material>>() {}, SimpleReference::of));
-        registration.register(VanillaObjectTypes.MATERIAL_COLOR, ReferenceFactory.of(new TypeToken<MaterialColorReference>() {}, MaterialColorReference::of));
+        registration.register(VanillaObjectTypes.MAP_COLOR, ReferenceFactory.of(new TypeToken<MapColorReference>() {}, MapColorReference::of));
         registration.register(VanillaObjectTypes.SOUND_EVENT, ReferenceFactory.of(new TypeToken<SimpleReference<SoundEvent>>() {}, SimpleReference::of));
         registration.register(VanillaObjectTypes.SOUND_TYPE, ReferenceFactory.of(new TypeToken<SimpleReference<SoundType>>() {}, SimpleReference::of));
         registration.register(VanillaObjectTypes.TIER, ReferenceFactory.of(new TypeToken<TierReference>() {}, TierReference::of));
@@ -77,10 +60,9 @@ public final class ContentTweakerVanillaPlugin implements ContentTweakerPluginPr
     @Override
     public void registerResolvers(final RegistryResolverRegistration registration) {
         registration.register(VanillaObjectTypes.BLOCK, RegistryResolver.of(VanillaObjectTypes.BLOCK));
-        registration.register(VanillaObjectTypes.CREATIVE_TAB, RegistryResolver.of(VanillaObjectTypes.CREATIVE_TAB, CreativeTabRegistry::of));
+        registration.register(VanillaObjectTypes.CREATIVE_TAB, RegistryResolver.of(VanillaObjectTypes.CREATIVE_TAB));
         registration.register(VanillaObjectTypes.ITEM, RegistryResolver.of(VanillaObjectTypes.ITEM));
-        registration.register(VanillaObjectTypes.MATERIAL, RegistryResolver.of(VanillaObjectTypes.MATERIAL, MaterialRegistry::of));
-        registration.register(VanillaObjectTypes.MATERIAL_COLOR, RegistryResolver.of(VanillaObjectTypes.MATERIAL_COLOR, MaterialColorRegistry::of));
+        registration.register(VanillaObjectTypes.MAP_COLOR, RegistryResolver.of(VanillaObjectTypes.MAP_COLOR, MapColorRegistry::of));
         registration.register(VanillaObjectTypes.SOUND_EVENT, RegistryResolver.of(VanillaObjectTypes.SOUND_EVENT));
         registration.register(VanillaObjectTypes.SOUND_TYPE, RegistryResolver.of(VanillaObjectTypes.SOUND_TYPE, SoundTypeRegistry::of));
         // The tier resolver will be registered by the Forge/Fabric specific integration due to the different systems

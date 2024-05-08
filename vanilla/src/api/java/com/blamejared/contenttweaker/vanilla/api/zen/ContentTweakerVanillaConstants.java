@@ -17,6 +17,7 @@ public final class ContentTweakerVanillaConstants {
     public static final String BLOCK_BUILDER_PACKAGE = VANILLA_BUILDER_PACKAGE + ".block";
     public static final String ITEM_BUILDER_PACKAGE = VANILLA_BUILDER_PACKAGE + ".item";
     public static final String SOUND_BUILDER_PACKAGE = VANILLA_BUILDER_PACKAGE + ".sound";
+    public static final String TAB_BUILDER_PACKAGE = VANILLA_BUILDER_PACKAGE + ".tab";
 
     private ContentTweakerVanillaConstants() {}
 
