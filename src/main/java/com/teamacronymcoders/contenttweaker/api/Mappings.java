@@ -18,6 +18,7 @@ public class Mappings {
             soundEventMappings.put("field_185852_e", "metal");
             soundEventMappings.put("field_185850_c", "plant");
             soundEventMappings.put("field_185855_h", "sand");
+            soundEventMappings.put("field_185859_l", "slime");
             soundEventMappings.put("field_185856_i", "snow");
             soundEventMappings.put("field_185851_d", "stone");
             soundEventMappings.put("field_185848_a", "wood");
