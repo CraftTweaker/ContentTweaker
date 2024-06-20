@@ -2,6 +2,7 @@ package com.blamejared.contenttweaker.forge.api.zen.rt;
 
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.zen.rt.ResourceLocationNative;
+import com.blamejared.contenttweaker.forge.api.zen.ContentTweakerForgeConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
@@ -13,7 +14,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-@ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_RT_PACKAGE + ".TierSortingStruct")
+@ZenCodeType.Name(ContentTweakerForgeConstants.FORGE_RT_PACKAGE + ".TierSortingStruct")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class TierSortingStruct {
 

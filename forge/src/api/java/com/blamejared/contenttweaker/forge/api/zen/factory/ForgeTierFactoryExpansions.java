@@ -6,6 +6,7 @@ import com.blamejared.contenttweaker.core.api.action.RegisterObjectAction;
 import com.blamejared.contenttweaker.core.api.object.ObjectHolder;
 import com.blamejared.contenttweaker.core.api.resource.ResourceFragment;
 import com.blamejared.contenttweaker.core.api.resource.StandardResourceFragmentKeys;
+import com.blamejared.contenttweaker.forge.api.zen.ContentTweakerForgeConstants;
 import com.blamejared.contenttweaker.forge.api.zen.rt.TierSortingStruct;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.resource.PathHelper;
@@ -14,10 +15,8 @@ import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConsta
 import com.blamejared.contenttweaker.vanilla.api.zen.factory.TierFactory;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
-import com.blamejared.crafttweaker.api.util.NameUtil;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
@@ -48,10 +47,10 @@ public final class ForgeTierFactoryExpansions {
             final int enchantmentValue,
             final ResourceLocation tag,
             final ItemReference repairItem, // TODO("Figure out ingredients")
-            @ZenCodeType.Optional(value = "[] as " + ContentTweakerVanillaConstants.VANILLA_RT_PACKAGE + ".TierSortingStruct[]") final TierSortingStruct[] lowerTiers,
-            @ZenCodeType.Optional(value = "[] as " + ContentTweakerVanillaConstants.VANILLA_RT_PACKAGE + ".TierSortingStruct[]") final TierSortingStruct[] higherTiers
+            @ZenCodeType.Optional(value = "[] as " + ContentTweakerForgeConstants.FORGE_RT_PACKAGE + ".TierSortingStruct[]") final TierSortingStruct[] lowerTiers,
+            @ZenCodeType.Optional(value = "[] as " + ContentTweakerForgeConstants.FORGE_RT_PACKAGE + ".TierSortingStruct[]") final TierSortingStruct[] higherTiers
     ) {
-        final ResourceLocation tierName = ContentTweakerConstants.rl(NameUtil.fixing(name, (fixed, mistakes) -> report(name, fixed, mistakes)));
+        final ResourceLocation tierName = ContentTweakerConstants.rl(name);
         if (level < 0) {
             throw new IllegalArgumentException("Level for tier " + tierName + " cannot be negative");
         }
@@ -59,7 +58,7 @@ public final class ForgeTierFactoryExpansions {
             throw new IllegalArgumentException("Uses for tier " + tierName + " cannot be negative or zero");
         }
         // TODO("Additional checks?")
-        final TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, tag);
+        final TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, tag);
 
         final ObjectHolder<Tier> holder = ObjectHolder.of(VanillaObjectTypes.TIER, tierName, () -> {
             final Tier forgeTier = new ForgeTier(level, uses, speed, attackDamageBonus, enchantmentValue, tagKey, () -> Ingredient.of(repairItem.get()));
@@ -73,13 +72,5 @@ public final class ForgeTierFactoryExpansions {
         }));
 
         return TierReference.of(tierName);
-    }
-
-    private static void report(final String original, final String fixed, final List<String> mistakes) {
-        CraftTweakerAPI.LOGGER.warn(() -> "The given name '%s' is not valid: it has been fixed to '%s'.\nMistakes:%s".formatted(
-                original,
-                fixed,
-                String.join("\n", mistakes)
-        ));
     }
 }

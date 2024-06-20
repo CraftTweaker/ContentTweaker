@@ -8,6 +8,7 @@ import com.blamejared.contenttweaker.forge.registry.GameRegistryFactory;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
@@ -34,5 +35,10 @@ public final class ForgePlatformService implements PlatformService {
     @Override
     public <T> GameRegistry<T> findRegistryFromKey(final ObjectType<T> type, final ResourceKey<? extends Registry<T>> key) {
         return GameRegistryFactory.findRegistryFromKey(type, key);
+    }
+
+    @Override
+    public String pickNameFromChoices(final String intermediary, final String srg, final String mapped) {
+        return FMLEnvironment.production? srg : mapped;
     }
 }

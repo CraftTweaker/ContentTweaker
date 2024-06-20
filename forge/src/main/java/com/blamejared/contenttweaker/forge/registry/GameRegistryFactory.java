@@ -3,6 +3,7 @@ package com.blamejared.contenttweaker.forge.registry;
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistry;
@@ -51,7 +52,7 @@ public final class GameRegistryFactory {
     }
 
     private static <T> DeferredGameRegistry<T> findVanillaRegistry(final ObjectType<T> type, final ResourceLocation registryId) {
-        final Registry<T> registry = GenericUtil.uncheck(Registry.REGISTRY.get(registryId));
+        final Registry<T> registry = GenericUtil.uncheck(BuiltInRegistries.REGISTRY.get(registryId));
         return VanillaGameRegistry.of(type, registry);
     }
 }
