@@ -35,9 +35,9 @@ import java.util.function.Function;
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
     protected record GenerateFlags(Position position) {
-        protected record Position(CreativeModeTab.Row row, int column) {}
+        public record Position(CreativeModeTab.Row row, int column) {}
 
-        boolean placeAutomatically() {
+        public boolean placeAutomatically() {
             return this.position() == null;
         }
     }
