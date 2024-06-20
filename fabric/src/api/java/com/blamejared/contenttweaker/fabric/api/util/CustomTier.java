@@ -7,7 +7,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-@SuppressWarnings("ClassCanBeRecord") // remapping
 public final class CustomTier implements Tier {
     private final int uses;
     private final float speed;

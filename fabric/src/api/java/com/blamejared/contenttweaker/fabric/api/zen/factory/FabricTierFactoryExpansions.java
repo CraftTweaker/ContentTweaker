@@ -36,7 +36,7 @@ public final class FabricTierFactoryExpansions {
             final int enchantmentValue,
             final ItemReference repairItem // TODO("Figure out ingredients")
     ) {
-        final ResourceLocation tierName = ContentTweakerConstants.rl(NameUtil.fixing(name, (fixed, mistakes) -> report(name, fixed, mistakes)));
+        final ResourceLocation tierName = ContentTweakerConstants.rl(name);
         if (level < 0) {
             throw new IllegalArgumentException("Level for tier " + tierName + " cannot be negative");
         }
@@ -52,13 +52,5 @@ public final class FabricTierFactoryExpansions {
         ContentTweakerApi.apply(RegisterObjectAction.of(holder));
 
         return TierReference.of(tierName);
-    }
-
-    private static void report(final String original, final String fixed, final List<String> mistakes) {
-        CraftTweakerAPI.LOGGER.warn(() -> "The given name '%s' is not valid: it has been fixed to '%s'.\nMistakes:%s".formatted(
-                original,
-                fixed,
-                String.join("\n", mistakes)
-        ));
     }
 }

@@ -8,6 +8,7 @@ import com.blamejared.contenttweaker.fabric.registry.FabricGameRegistry;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 
 import java.nio.file.Files;
@@ -42,6 +43,13 @@ public final class FabricPlatformService implements PlatformService {
 
     @Override
     public <T> GameRegistry<T> findRegistryFromKey(final ObjectType<T> type, final ResourceKey<? extends Registry<T>> key) {
-        return FabricGameRegistry.of(GenericUtil.uncheck(Objects.requireNonNull(Registry.REGISTRY.get(Objects.requireNonNull(key).location()))), Objects.requireNonNull(type));
+        Objects.requireNonNull(key);
+        Objects.requireNonNull(type);
+        return FabricGameRegistry.of(GenericUtil.uncheck(Objects.requireNonNull(BuiltInRegistries.REGISTRY.get(key.location()))), type);
+    }
+
+    @Override
+    public String pickNameFromChoices(final String intermediary, final String srg, final String mapped) {
+        return FabricLoader.getInstance().isDevelopmentEnvironment()? mapped : intermediary;
     }
 }

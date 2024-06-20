@@ -2,6 +2,7 @@ package com.blamejared.contenttweaker.fabric.mixin;
 
 import com.blamejared.contenttweaker.fabric.registry.FabricRegistrationManager;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.Main;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,7 +19,7 @@ public abstract class MainMixin {
                     shift = At.Shift.AFTER
             )
     )
-    private static void contenttweaker$main$freezeRegistries(final String[] args, final CallbackInfo info) {
-        FabricRegistrationManager.registerAll(Registry.REGISTRY);
+    private static void contenttweaker$main$triggerRegistration(final String[] args, final CallbackInfo info) {
+        FabricRegistrationManager.registerAll(BuiltInRegistries.REGISTRY);
     }
 }
