@@ -11,7 +11,6 @@ import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.util.ReferencingSoundType;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
-import com.blamejared.contenttweaker.vanilla.api.zen.builder.sound.SoundTypeBuilder;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -24,11 +23,6 @@ import java.util.Objects;
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class SoundTypeFactory implements ObjectFactory<SoundType> {
     public SoundTypeFactory() {}
-
-    @ZenCodeType.Method("type")
-    public SoundTypeBuilder builder() {
-        return SoundTypeBuilder.of();
-    }
 
     @ZenCodeType.Method("create")
     public SimpleReference<SoundType> create(
