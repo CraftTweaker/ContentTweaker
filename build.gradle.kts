@@ -58,8 +58,14 @@ buildscript {
     }
 }
 
+group = "com.blamejared.contenttweaker"
+
 tasks {
     register<PostDiscordUpdateMessageTask>("postDiscordUpdateMessage") {
         group = "publishing"
+    }
+    withType<Wrapper>().configureEach {
+        gradleVersion = "8.8"
+        distributionType = Wrapper.DistributionType.ALL
     }
 }

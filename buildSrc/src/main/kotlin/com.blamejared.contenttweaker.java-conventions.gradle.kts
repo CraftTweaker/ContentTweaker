@@ -50,10 +50,10 @@ modTemplate {
 repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/repository/maven-public/")
-    maven("https://maven.parchmentmc.org")
-    maven("https://maven.blamejared.com")
-    maven("https://maven.shedaniel.me")
-    maven("https://gitlab.com/api/v4/projects/40584103/packages/maven")
+    maven("https://maven.parchmentmc.org/")
+    maven("https://maven.blamejared.com/")
+    maven("https://maven.shedaniel.me/")
+    maven("https://gitlab.com/api/v4/projects/40584103/packages/maven/")
 }
 
 dependencies {
