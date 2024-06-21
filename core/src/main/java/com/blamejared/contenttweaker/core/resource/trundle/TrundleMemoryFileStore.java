@@ -1,6 +1,7 @@
 package com.blamejared.contenttweaker.core.resource.trundle;
 
 import com.blamejared.contenttweaker.core.ContentTweakerCore;
+import com.blamejared.contenttweaker.core.api.ContentTweakerLoggers;
 import sun.misc.Unsafe;
 
 import java.lang.invoke.MethodHandles;
@@ -90,7 +91,7 @@ final class TrundleMemoryFileStore extends FileStore {
             final Unsafe unsafe = (Unsafe) handle.get();
             return unsafe.pageSize();
         } catch (final IllegalAccessException | NoSuchFieldException e) {
-            ContentTweakerCore.LOGGER.error("Unable to perform unsafe lookup: not a big deal", e);
+            ContentTweakerLoggers.core().error("Unable to perform unsafe lookup: not a big deal", e);
             return -1;
         }
     }
