@@ -119,7 +119,7 @@ public final class StandardBlockProperties extends BlockProperties {
     }
 
     public Reference<SoundType> soundType() {
-        final SoundType type = PropertyReferences.resolve(PropertyReferences.SOUND_TYPE, this.resolveProperties());
+        final SoundType type = PropertyReferences.resolve(PropertyReferences.SOUND_TYPE, this.resolve());
         return SimpleReference.of(VanillaObjectTypes.SOUND_TYPE, this.nameOf(VanillaObjectTypes.SOUND_TYPE, type));
     }
 
@@ -141,7 +141,7 @@ public final class StandardBlockProperties extends BlockProperties {
     }
 
     public boolean isRandomlyTicking() {
-        return PropertyReferences.resolve(PropertyReferences.IS_RANDOMLY_TICKING, this.resolveProperties());
+        return PropertyReferences.resolve(PropertyReferences.IS_RANDOMLY_TICKING, this.resolve());
     }
 
     public float friction() {
