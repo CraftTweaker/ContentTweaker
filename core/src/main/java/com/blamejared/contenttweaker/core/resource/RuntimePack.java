@@ -96,8 +96,17 @@ final class RuntimePack {
             return;
         }
         final Path directory = this.pathOf(s1);
+        if (Files.notExists(directory)) {
+            return;
+        }
         try {
-            Files.walkFileTree(directory, Set.of(), Integer.MAX_VALUE, new ResourceWalker(directory, p -> output.accept(this.resourceOf(directory.resolve(p)), this.resource(p))));
+            Files.walkFileTree(directory, Set.of(), Integer.MAX_VALUE, new ResourceWalker(directory, p -> {
+                IoSupplier<InputStream> resource = this.resource(p);
+                if (resource == null) {
+                    return;
+                }
+                output.accept(this.resourceOf(directory.resolve(p)), resource);
+            }));
         } catch (final IOException e) {
             throw new UncheckedIOException(e);
         }

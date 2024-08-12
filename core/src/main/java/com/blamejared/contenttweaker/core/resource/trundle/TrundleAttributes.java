@@ -78,9 +78,6 @@ final class TrundleAttributes {
             @SuppressWarnings("unused") final LinkOption... options
     ) {
         final TrundleResource resource = path.element();
-        if (resource == null) {
-            return null;
-        }
 
         if (type == BasicFileAttributeView.class || type == DosFileAttributeView.class) {
             return reinterpret(TrundleFileAttributesView.of(resource, type));

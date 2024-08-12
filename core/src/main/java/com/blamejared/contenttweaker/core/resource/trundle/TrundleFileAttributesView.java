@@ -50,7 +50,6 @@ final class TrundleFileAttributesView implements DosFileAttributeView {
     }
 
     static <A extends FileAttributeView> TrundleFileAttributesView of(final TrundleResource resource, final Class<A> type) {
-        Objects.requireNonNull(resource);
         Objects.requireNonNull(type);
         return new TrundleFileAttributesView(classToName(type), () -> TrundleFileAttributes.of(resource));
     }
