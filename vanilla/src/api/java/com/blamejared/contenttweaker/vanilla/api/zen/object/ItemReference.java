@@ -18,7 +18,7 @@ public final class ItemReference extends Reference<Item> {
     private static final ClassArchitect<ItemProperties> ITEM_PROPERTIES_ARCHITECT = ClassArchitect.of(ItemReference.class);
     private static final ResourceLocation AIR_RL = new ResourceLocation("air");
 
-    public static final ItemReference AIR = ItemReference.of(AIR_RL);
+    public static final ItemReference AIR = new ItemReference(AIR_RL);
 
     private ItemReference(final ResourceLocation id) {
         super(VanillaObjectTypes.ITEM, id);

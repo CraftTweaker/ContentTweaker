@@ -18,7 +18,7 @@ public final class BlockReference extends Reference<Block> {
     private static final ClassArchitect<BlockProperties> BLOCK_PROPERTIES_ARCHITECT = ClassArchitect.of(BlockReference.class);
     private static final ResourceLocation AIR_RL = new ResourceLocation("air");
 
-    public static final BlockReference AIR = BlockReference.of(AIR_RL);
+    public static final BlockReference AIR = new BlockReference(AIR_RL);
 
     private BlockReference(final ResourceLocation id) {
         super(VanillaObjectTypes.BLOCK, id);
