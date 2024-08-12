@@ -16,7 +16,7 @@ public final class FabricRegistrationManager {
     private static <T> void registerFor(final Registry<T> registry) {
         final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(registry.key());
         if (type == null) {
-            ContentTweakerLoggers.core().info("Unknown registry '{}': are you missing object types for it?", registry.key());
+            ContentTweakerLoggers.core().debug("Unknown registry '{}': are you missing object types for it?", registry.key());
             return;
         }
         ContentTweakerLoggers.core().info("Registering objects for type '{}'", type);

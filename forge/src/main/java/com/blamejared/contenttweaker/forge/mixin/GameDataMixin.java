@@ -58,7 +58,7 @@ public abstract class GameDataMixin {
     private static <T> void contenttweaker$postRegistryEventDispatch$registerCotObjects0(final ResourceKey<? extends Registry<T>> key) {
         final ObjectType<T> type = ContentTweakerCore.core().metaRegistry().objectTypes().get(key);
         if (type == null) {
-            ContentTweakerLoggers.core().info("Unknown registry '{}': are you missing an object type for it?", key);
+            ContentTweakerLoggers.core().debug("Unknown registry '{}': are you missing an object type for it?", key);
             return;
         }
         ContentTweakerLoggers.core().info("Registering objects for type '{}'", type);
