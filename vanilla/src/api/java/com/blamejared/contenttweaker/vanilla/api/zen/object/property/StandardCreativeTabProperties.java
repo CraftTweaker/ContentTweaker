@@ -53,7 +53,7 @@ public final class StandardCreativeTabProperties extends CreativeTabProperties {
                 if (method.isDefault()) {
                     return InvocationHandler.invokeDefault(proxy, method, args);
                 }
-                if (method == this.target()) {
+                if (method.equals(this.target())) {
                     final var reference = this.itemConverter().apply(GenericUtil.uncheck(args[0]));
                     final var visibility = this.visibilityConverter().apply(GenericUtil.uncheck(args[1]));
                     this.stream().accept(reference, visibility);
