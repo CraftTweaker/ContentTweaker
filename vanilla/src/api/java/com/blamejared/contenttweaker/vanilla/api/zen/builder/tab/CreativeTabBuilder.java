@@ -194,13 +194,13 @@ public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
         this.registrationHandler = registrationHandler;
         this.cloningProperties = null;
         this.title = null;
-        this.backgroundSuffix = null;
+        this.backgroundSuffix = "items.png"; //TODO remove hardcoding
         this.canScroll = null;
         this.showTitle = null;
         this.alignedRight = null;
         this.row = null;
         this.column = null;
-        this.type = null;
+        this.type = CreativeModeTab.Type.CATEGORY; //TODO remove hardcoding
         this.icon = null;
         this.displayItems = null;
         this.autoPlace = true;
@@ -351,6 +351,9 @@ public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
         }
         if (this.displayItems == null && this.cloningProperties == null) {
             throw new IllegalStateException("Creative tab must contain at least one item to be visible");
+        }
+        if (this.icon == null && this.cloningProperties == null) {
+            throw new IllegalStateException("Creative tab must have an icon");
         }
     }
 
