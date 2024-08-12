@@ -39,7 +39,7 @@ dependencyResolutionManagement {
             val crafttweaker = version("crafttweaker", "14.0.32")
             val fabricApi = version("fabricApi", "0.91.0+$minecraftVersion")
             val fabricLoader = version("fabricLoader", "0.15.6")
-            val fabricLoom = version("fabricLoom", "1.5.7")
+            val fabricLoom = version("fabricLoom", "1.7-SNAPSHOT")
             val forge = version("forge", "$minecraftVersion-47.1.3")
             val forgeGradle = version("forgeGradle", "6.0.+")
             val librarian = version("librarian", "1.+")

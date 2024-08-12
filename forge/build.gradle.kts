@@ -87,7 +87,7 @@ dependencies {
     implementation(project(":vanilla"))
     implementation(fg.deobf(libs.crafttweaker.forge.get()))
 
-    jarJar.ranged(implementation(libs.never.winter), "[${libs.versions.neverWinter.get()},)")
+    jarJar.ranged(minecraftLibrary(libs.never.winter), "[${libs.versions.neverWinter.get()},)")
 
     runtimeOnly(fg.deobf(libs.architectury.forge.get()))
     runtimeOnly(fg.deobf(libs.cloth.config.forge.get()))
