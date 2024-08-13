@@ -42,7 +42,7 @@ final class RuntimePack {
             if (result != FileVisitResult.CONTINUE) {
                 return result;
             }
-            this.consumer.accept(this.root.relativize(file));
+            this.consumer.accept(file);
             return FileVisitResult.CONTINUE;
         }
     }
