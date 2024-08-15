@@ -3,9 +3,11 @@ package com.blamejared.contenttweaker.core.api.zen.util;
 import com.blamejared.contenttweaker.core.api.ContentTweakerConstants;
 import com.blamejared.contenttweaker.core.api.zen.ContentTweakerZenConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import org.openzen.zencode.java.ZenCodeType;
 
 @ZenCodeType.Name(ContentTweakerZenConstants.UTIL_PACKAGE + ".Color")
+@Document("mods/ContentTweaker/util/Color")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class Color {
     private final int color;
