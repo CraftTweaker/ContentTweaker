@@ -69,3 +69,23 @@ tasks {
         distributionType = Wrapper.DistributionType.ALL
     }
 }
+
+val apDir = "CraftTweaker-Annotation-Processors"
+
+tasks.create("checkoutAP") {
+    doFirst {
+        if (!rootProject.file(apDir).exists() || (rootProject.file(apDir).listFiles() ?: arrayOf()).isEmpty()) {
+            exec {
+                commandLine("git", "clone", "https://github.com/CraftTweaker/CraftTweaker-Annotation-Processors.git")
+            }
+        } else {
+            throw GradleException("$apDir folder already exists and is not empty!")
+        }
+    }
+}
+
+tasks.create<Delete>("clearAP") {
+    doFirst {
+        delete(rootProject.file(apDir))
+    }
+}

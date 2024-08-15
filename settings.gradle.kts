@@ -37,6 +37,8 @@ dependencyResolutionManagement {
             val architecturyApi = version("architecturyApi", "9.1.13")
             val clothConfig = version("clothConfig", "11.1.118")
             val crafttweaker = version("crafttweaker", "14.0.32")
+            val crafttweakerAp = version("crafttweakerAp", "3.0.0.15")
+
             val fabricApi = version("fabricApi", "0.91.0+$minecraftVersion")
             val fabricLoader = version("fabricLoader", "0.15.6")
             val fabricLoom = version("fabricLoom", "1.7-SNAPSHOT")
@@ -57,6 +59,7 @@ dependencyResolutionManagement {
             library("crafttweaker.common", "com.blamejared.crafttweaker", "CraftTweaker-common-$minecraftVersion").versionRef(crafttweaker)
             library("crafttweaker.fabric", "com.blamejared.crafttweaker", "CraftTweaker-fabric-$minecraftVersion").versionRef(crafttweaker)
             library("crafttweaker.forge", "com.blamejared.crafttweaker", "CraftTweaker-forge-$minecraftVersion").versionRef(crafttweaker)
+            library("crafttweaker.ap", "com.blamejared.crafttweaker", "Crafttweaker_Annotation_Processors").versionRef(crafttweakerAp)
             library("fabric.api", "net.fabricmc.fabric-api", "fabric-api").versionRef(fabricApi)
             library("fabric.loader", "net.fabricmc", "fabric-loader").versionRef(fabricLoader)
             library("forge", "net.minecraftforge", "forge").versionRef(forge)
@@ -73,6 +76,14 @@ dependencyResolutionManagement {
             plugin("librarian", "org.parchmentmc.librarian.forgegradle").versionRef(librarian)
             plugin("mixinGradle", "org.spongepowered.mixin").versionRef(mixinGradle)
             plugin("vanillaGradle", "org.spongepowered.gradle.vanilla").versionRef(vanillaGradle)
+        }
+    }
+}
+
+if (file("CraftTweaker-Annotation-Processors").exists()) {
+    includeBuild("CraftTweaker-Annotation-Processors") {
+        dependencySubstitution {
+            substitute(module("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors")).using(project(":"))
         }
     }
 }

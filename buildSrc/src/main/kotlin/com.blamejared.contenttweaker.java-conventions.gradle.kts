@@ -1,7 +1,7 @@
 import com.blamejared.modtemplate.Utils
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
 import java.nio.charset.StandardCharsets
-import java.util.Locale
+import java.util.*
 
 plugins {
     idea
@@ -11,7 +11,8 @@ plugins {
     id("net.darkhax.curseforgegradle")
 }
 
-val minecraftVersion = versionCatalogs.named("libs").findVersion("minecraft").get().requiredVersion
+val libs = versionCatalogs.named("libs");
+val minecraftVersion = libs.findVersion("minecraft").get().requiredVersion
 
 val api: SourceSet by java.sourceSets.creating
 val apiConfiguration: Configuration by configurations.creating
@@ -59,6 +60,7 @@ repositories {
 dependencies {
     implementation(api.output)
     apiConfiguration(api.output)
+    annotationProcessor("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:${libs.findVersion("crafttweakerAp").get().requiredVersion}")
 }
 
 publishing {
@@ -87,6 +89,11 @@ tasks {
         options.release.set(JavaVersion.VERSION_17.majorVersion.toInt())
 
         outputs.upToDateWhen { false }
+
+    }
+    named<JavaCompile>("compileJava") {
+        this.options.compilerArgs.add("-Acrafttweaker.processor.document.output_directory=${rootProject.file("docsOut")}")
+        this.options.compilerArgs.add("-Acrafttweaker.processor.document.multi_source=true")
     }
     withType<Javadoc> {
         options.encoding = StandardCharsets.UTF_8.name()
