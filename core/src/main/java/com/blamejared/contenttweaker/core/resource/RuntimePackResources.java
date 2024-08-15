@@ -31,8 +31,8 @@ final class RuntimePackResources implements PackResources {
     }
 
     @Override
-    public void listResources(final PackType packType, final String s, final String s1, final ResourceOutput resourceOutput) {
-        this.pack.resources(packType, s, s1, resourceOutput);
+    public void listResources(final PackType packType, final String namespace, final String path, final ResourceOutput resourceOutput) {
+        this.pack.resources(packType, namespace, path, resourceOutput);
     }
 
     @Override
