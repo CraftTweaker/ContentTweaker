@@ -24,3 +24,4 @@
 // With that out of the way, the creation process is similar for a lot of objects. In this set of examples, we will
 // only cover the basics. You are referred to the documentation to know the full capabilities of the mod.
 // We will start with the basics with sound events, and then move on to more complex stuff later.
+

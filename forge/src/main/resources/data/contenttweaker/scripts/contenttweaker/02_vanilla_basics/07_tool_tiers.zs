@@ -51,7 +51,9 @@
     16, // The enchantment value is essentially a value that describes the affinity of the tier to enchants. The higher
         // the number is, the more likely good enchants will be chosen by the enchantment table for a tool with this
         // tier
-    <resource:forge:needs_emerald_tool>, // The resource location that identifies the tag which will be used to identify
+    #onlyIf modloader forge
+    <resource:forge:needs_emerald_tool>,
+     #endIf// The resource location that identifies the tag which will be used to identify
                                          // the set of blocks that can be mined by this tool tier. Note the usage of the
                                          // resource location bracket, probably for the first time in the entirety of
                                          // ContentTweaker. The tag you will be specifying is a block tag, thus you can

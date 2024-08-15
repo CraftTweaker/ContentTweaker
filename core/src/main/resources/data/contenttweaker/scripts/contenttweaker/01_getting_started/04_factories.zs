@@ -19,7 +19,7 @@
 
 <factory:block>; // The factory to create blocks.
 
-<factory:creative_tab>; // The factory to create custom creative tabs.
+<factory:minecraft:creative_mode_tab>; // The factory to create custom creative tabs.
 
 // As you can see, this is much easier than references. Every time you use a bracket handler, a new factory is created.
 // This means you can create as many as you want for as many different objects as you want, and each factory will be
