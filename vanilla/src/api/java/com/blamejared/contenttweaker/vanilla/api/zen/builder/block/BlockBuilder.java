@@ -8,6 +8,7 @@ import com.blamejared.contenttweaker.core.api.resource.ResourceManager;
 import com.blamejared.contenttweaker.core.api.util.HandleAccess;
 import com.blamejared.contenttweaker.core.api.util.Handles;
 import com.blamejared.contenttweaker.core.api.zen.object.Reference;
+import com.blamejared.contenttweaker.core.api.zen.object.SimpleReference;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.resource.LootTable;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
@@ -20,6 +21,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.object.property.StandardBlo
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlagSet;
@@ -641,7 +643,8 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
             final Function<StandardBlockProperties, BlockPropertyFunctions.ValidSpawnPredicate> getter,
             final Consumer<BlockBehaviour.StateArgumentPredicate<EntityType<?>>> consumer
     ) {
-        this.apply(property, getter, consumer, it -> (state, bGetter, pos, type) -> it.isValidSpawn(state, bGetter, pos, null /* TODO("") */));
+        this.apply(property, getter, consumer, it -> (state, bGetter, pos, type) -> it.isValidSpawn(state, bGetter, pos,
+                SimpleReference.of(VanillaObjectTypes.ENTITY_TYPE, BuiltInRegistries.ENTITY_TYPE.getKey(type))));
     }
 
     private void applyPredicate(

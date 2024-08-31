@@ -1,9 +1,11 @@
 package com.blamejared.contenttweaker.vanilla.api.object;
 
 import com.blamejared.contenttweaker.core.api.object.ObjectType;
+import com.blamejared.crafttweaker.api.util.GenericUtil;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.material.MapColor;
 public final class VanillaObjectTypes {
     public static ObjectType<Block> BLOCK = ObjectType.of(Registries.BLOCK, Block.class);
     public static ObjectType<CreativeModeTab> CREATIVE_TAB = ObjectType.of(Registries.CREATIVE_MODE_TAB, CreativeModeTab.class);
+    public static ObjectType<EntityType<?>> ENTITY_TYPE = ObjectType.of(Registries.ENTITY_TYPE, GenericUtil.uncheck(EntityType.class));
     public static ObjectType<Item> ITEM = ObjectType.of(Registries.ITEM, Item.class);
     public static ObjectType<MapColor> MAP_COLOR = ObjectType.of(new ResourceLocation("map_color"), MapColor.class);
     public static ObjectType<SoundEvent> SOUND_EVENT = ObjectType.of(Registries.SOUND_EVENT, SoundEvent.class);

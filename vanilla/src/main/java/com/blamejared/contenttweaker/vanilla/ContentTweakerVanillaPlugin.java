@@ -27,6 +27,7 @@ public final class ContentTweakerVanillaPlugin implements ContentTweakerPluginPr
     public void registerObjectTypes(final ObjectTypeRegistration registration) {
         registration.registerType(VanillaObjectTypes.BLOCK);
         registration.registerType(VanillaObjectTypes.CREATIVE_TAB);
+        registration.registerType(VanillaObjectTypes.ENTITY_TYPE);
         registration.registerType(VanillaObjectTypes.ITEM);
         registration.registerType(VanillaObjectTypes.MAP_COLOR);
         registration.registerType(VanillaObjectTypes.SOUND_EVENT);
@@ -61,6 +62,7 @@ public final class ContentTweakerVanillaPlugin implements ContentTweakerPluginPr
     public void registerResolvers(final RegistryResolverRegistration registration) {
         registration.register(VanillaObjectTypes.BLOCK, RegistryResolver.of(VanillaObjectTypes.BLOCK));
         registration.register(VanillaObjectTypes.CREATIVE_TAB, RegistryResolver.of(VanillaObjectTypes.CREATIVE_TAB));
+        registration.register(VanillaObjectTypes.ENTITY_TYPE, RegistryResolver.of(VanillaObjectTypes.ENTITY_TYPE));
         registration.register(VanillaObjectTypes.ITEM, RegistryResolver.of(VanillaObjectTypes.ITEM));
         registration.register(VanillaObjectTypes.MAP_COLOR, RegistryResolver.of(VanillaObjectTypes.MAP_COLOR, MapColorRegistry::of));
         registration.register(VanillaObjectTypes.SOUND_EVENT, RegistryResolver.of(VanillaObjectTypes.SOUND_EVENT));
