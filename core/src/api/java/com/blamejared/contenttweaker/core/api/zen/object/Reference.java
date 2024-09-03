@@ -34,7 +34,7 @@ import java.util.Optional;
  */
 @ZenCodeType.Name(ContentTweakerZenConstants.OBJECT_PACKAGE + ".Reference")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-@Document("mods/ContentTweaker/object/Reference")
+@Document("mods/ContentTweaker/vanilla/object/Reference")
 public abstract class Reference<T> { // Designed for extension by stuff like ItemReference
     private final ObjectType<T> type;
     private final ResourceLocation id;

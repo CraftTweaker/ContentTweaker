@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-@Document("mods/ContentTweaker/Forge/Factory/Vanilla/ExpandForgeTierFactory")
+@Document("mods/ContentTweaker/forge/factory/ExpandForgeTierFactory")
 @ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_FACTORY_PACKAGE + ".TierFactory")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class ForgeTierFactoryExpansions {

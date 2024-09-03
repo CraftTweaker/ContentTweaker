@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 @NativeTypeRegistration(value = ResourceLocation.class, zenCodeName = ResourceLocationNative.CLASS_NAME)
 @SuppressWarnings("unused")
-@Document("mods/ContentTweaker/resource/ResourceLocation")
+@Document("mods/ContentTweaker/vanilla/resource/ResourceLocation")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class ResourceLocationNative {
     public static final String CLASS_NAME = ContentTweakerZenConstants.MAIN_PACKAGE + ".resource.ResourceLocation";

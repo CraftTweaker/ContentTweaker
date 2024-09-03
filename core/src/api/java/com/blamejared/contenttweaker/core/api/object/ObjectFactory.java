@@ -27,7 +27,7 @@ import org.openzen.zencode.java.ZenCodeType;
  */
 @ZenCodeType.Name(ContentTweakerZenConstants.RT_PACKAGE + ".Factory")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-@Document("mods/ContentTweaker/internal/ObjectFactory")
+@Document("mods/ContentTweaker/vanilla/internal/ObjectFactory")
 public interface ObjectFactory<T> {
     ObjectType<T> type();
 }

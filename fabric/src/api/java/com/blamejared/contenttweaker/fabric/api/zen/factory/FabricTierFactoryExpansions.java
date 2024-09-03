@@ -26,7 +26,7 @@ import java.util.List;
  *
  * <pre><code class=language-zenscript>&lt;factory:tier&gt;.create(...);</code></pre>
  */
-@Document("mods/ContentTweaker/Fabric/factory/vanilla/ExpandFabricTierFactory")
+@Document("mods/ContentTweaker/fabric/factory/ExpandFabricTierFactory")
 @ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_FACTORY_PACKAGE + ".TierFactory")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class FabricTierFactoryExpansions {

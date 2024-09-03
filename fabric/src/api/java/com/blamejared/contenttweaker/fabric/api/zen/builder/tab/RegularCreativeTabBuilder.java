@@ -33,7 +33,7 @@ import java.util.function.Consumer;
  *    .build("empty_tab");</code></pre>
  *
  */
-@Document("mods/ContentTweaker/builder/fabric/tab/RegularCreativeTabBuilder")
+@Document("mods/ContentTweaker/fabric/builder/tab/RegularCreativeTabBuilder")
 @ZenCodeType.Name(ContentTweakerFabricConstants.TAB_BUILDER_PACKAGE + ".Regular")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class RegularCreativeTabBuilder extends CreativeTabBuilder<RegularCreativeTabBuilder> {

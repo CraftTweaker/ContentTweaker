@@ -13,7 +13,7 @@ import org.openzen.zencode.java.ZenCodeType;
  * Packed values contain a single color within the 32 bits of the int. Generally, packed values are represented using hexadecimal notation.
  */
 @ZenCodeType.Name(ContentTweakerZenConstants.UTIL_PACKAGE + ".Color")
-@Document("mods/ContentTweaker/util/Color")
+@Document("mods/ContentTweaker/vanilla/util/Color")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class Color {
     private final int color;

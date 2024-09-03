@@ -42,7 +42,7 @@ import java.util.function.Function;
  *    //... other methods here
  *    .build("my_tab");</code></pre>
  */
-@Document("mods/ContentTweaker/builder/vanilla/tab/CreativeTabBuilder")
+@Document("mods/ContentTweaker/vanilla/builder/tab/CreativeTabBuilder")
 @ZenCodeType.Name(ContentTweakerVanillaConstants.TAB_BUILDER_PACKAGE + ".CreativeTabBuilder")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {

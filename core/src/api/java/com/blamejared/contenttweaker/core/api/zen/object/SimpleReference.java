@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @ZenCodeType.Name(ContentTweakerZenConstants.OBJECT_PACKAGE + ".SimpleReference")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-@Document("mods/ContentTweaker/object/SimpleReference")
+@Document("mods/ContentTweaker/vanilla/object/SimpleReference")
 public final class SimpleReference<T> extends Reference<T> {
     private SimpleReference(final ObjectType<T> type, final ResourceLocation id) {
         super(type, id);

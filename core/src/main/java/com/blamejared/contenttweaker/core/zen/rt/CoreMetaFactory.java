@@ -18,7 +18,7 @@ import org.openzen.zencode.java.ZenCodeType;
  */
 @ZenCodeType.Name(ContentTweakerZenConstants.CORE_META_FACTORY_ZEN_NAME)
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
-@Document("mods/ContentTweaker/internal/CoreMetaFactory")
+@Document("mods/ContentTweaker/vanilla/internal/CoreMetaFactory")
 public final class CoreMetaFactory {
     private CoreMetaFactory() {}
 
