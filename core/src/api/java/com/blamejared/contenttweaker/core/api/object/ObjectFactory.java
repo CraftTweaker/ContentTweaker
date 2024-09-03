@@ -18,11 +18,9 @@ import org.openzen.zencode.java.ZenCodeType;
  * <p>
  * An example can be seen here:
  * <pre>
- * <code>```zenscript
- * factory:sound_event>
- *   .typed&lt;VariableRangeEvent&gt;("generic.ambient.sentence.earth")
- *   .build("the_earth");
- * ```</code></pre>
+ * <code class=language-zenscript>&lt;factory:sound_event&gt;
+ * .typed&lt;VariableRangeEvent&gt;("generic.ambient.sentence.earth")
+ * .build("the_earth");</code></pre>
  *
  * Scripters should not need to import or use this class at all.
  *
