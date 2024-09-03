@@ -38,8 +38,30 @@ import java.util.function.Supplier;
 public final class ForgeTierFactoryExpansions {
     private ForgeTierFactoryExpansions() {}
 
+    /**
+     * Create a new Tier
+     *
+     * @param $this self
+     * @param name The name of the tier. Should match [a-z0-9.-_/], like most ResourceLocations
+     * @param level The level of the tier. It is used for sorting. It is not possible to add a tier in between two existing ones.
+     * @param uses The base durability an item on this tier has
+     * @param speed The mining speed an item on this tier has
+     * @param attackDamageBonus The attack bonus an item on this tier has
+     * @param enchantmentValue The enchantability of the item. Higher is better.
+     * @param repairItem The repair item. Must be an item and not a stack
+     * @return A reference to the created tier
+     *
+     * @docParam $this this
+     * @docParam name "emerald"
+     * @docParam level 2
+     * @docParam uses 581
+     * @docParam speed 5.0f
+     * @docParam attackDamageBonus 1.5
+     * @docParam enchantmentValue 18
+     * @docParam repairItem <item:minecraft:emerald>
+     */
     @ZenCodeType.Method("create")
-    public static TierReference of(
+    public static TierReference create(
             @SuppressWarnings("unused") final TierFactory $this,
             final String name,
             final int level,
@@ -47,7 +69,7 @@ public final class ForgeTierFactoryExpansions {
             final float speed,
             final float attackDamageBonus,
             final int enchantmentValue,
-            final ResourceLocation tag,
+            final ResourceLocation positiveFilterBlockTag,
             final ItemReference repairItem, // TODO("Figure out ingredients")
             @ZenCodeType.Optional(value = "[] as " + ContentTweakerForgeConstants.FORGE_RT_PACKAGE + ".TierSortingStruct[]") final TierSortingStruct[] lowerTiers,
             @ZenCodeType.Optional(value = "[] as " + ContentTweakerForgeConstants.FORGE_RT_PACKAGE + ".TierSortingStruct[]") final TierSortingStruct[] higherTiers
@@ -59,8 +81,7 @@ public final class ForgeTierFactoryExpansions {
         if (uses <= 0) {
             throw new IllegalArgumentException("Uses for tier " + tierName + " cannot be negative or zero");
         }
-        // TODO("Additional checks?")
-        final TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, tag);
+        final TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, positiveFilterBlockTag);
 
         final ObjectHolder<Tier> holder = ObjectHolder.of(VanillaObjectTypes.TIER, tierName, () -> {
             final Tier forgeTier = new ForgeTier(level, uses, speed, attackDamageBonus, enchantmentValue, tagKey, () -> Ingredient.of(repairItem.get()));
@@ -70,7 +91,7 @@ public final class ForgeTierFactoryExpansions {
         });
         ContentTweakerApi.apply(RegisterObjectAction.of(holder, manager -> {
             final ResourceFragment data = manager.fragment(StandardResourceFragmentKeys.CONTENT_TWEAKER_DATA);
-            data.provideOrAlter(PathHelper.tag(VanillaObjectTypes.BLOCK, tag), Tag::of, Function.identity(), Tag.SERIALIZER);
+            data.provideOrAlter(PathHelper.tag(VanillaObjectTypes.BLOCK, positiveFilterBlockTag), Tag::of, Function.identity(), Tag.SERIALIZER);
         }));
 
         return TierReference.of(tierName);

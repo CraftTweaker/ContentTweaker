@@ -55,7 +55,7 @@ public final class FabricTierFactoryExpansions {
      * @docParam repairItem <item:minecraft:emerald>
      */
     @ZenCodeType.Method("create")
-    public static TierReference of(
+    public static TierReference create(
             @SuppressWarnings("unused") final TierFactory $this,
             final String name,
             final int level,
