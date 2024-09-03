@@ -89,3 +89,9 @@ tasks.create<Delete>("clearAP") {
         delete(rootProject.file(apDir))
     }
 }
+
+tasks.create<Delete>("clearDocs") {
+    doFirst {
+        delete(rootProject.file("docsOut"))
+    }
+}
