@@ -26,7 +26,7 @@ import java.util.function.Consumer;
  * <code class=language-zenscript>import contenttweaker.builder.fabric.tab.Regular;
  *
  *val emptyTabsCrash = &lt;factory:minecraft:creative_mode_tab&gt;
- *    .typed&lt;Regular&gt;() //Must be imported
+ *    .typed&lt;Regular&gt;()
  *    .title("The First Apple")
  *    .icon(&lt;item:minecraft:air&gt;)
  *    .display(&lt;item:minecraft:apple&gt;)

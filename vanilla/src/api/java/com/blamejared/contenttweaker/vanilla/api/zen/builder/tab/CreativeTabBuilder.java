@@ -38,7 +38,7 @@ import java.util.function.Function;
  * Like most other builders, it is created through a factory and a concrete type. A concrete example looks like this:
  *
  * <pre><code class=language-zenscript>&lt;factory:minecraft:creative_mode_tab&gt;
- *    .typed&lt;Regular&gt;()
+ *    .typed&lt;Regular&gt;() //Must be imported
  *    //... other methods here
  *    .build("my_tab");</code></pre>
  */
