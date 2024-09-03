@@ -8,6 +8,7 @@ import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.zen.builder.tab.CreativeTabBuilder;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.CreativeTabReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import org.openzen.zencode.java.ZenCodeType;
@@ -31,6 +32,7 @@ import java.util.function.Consumer;
  *    .build("empty_tab");</code></pre>
  *
  */
+@Document("mods/ContentTweaker/forge/builder/tab/RegularCreativeTabBuilder")
 @ZenCodeType.Name(ContentTweakerForgeConstants.TAB_BUILDER_PACKAGE + ".Regular")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class RegularCreativeTabBuilder extends CreativeTabBuilder<RegularCreativeTabBuilder> {
