@@ -13,6 +13,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.object.property.CreativeTab
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.StandardCreativeTabProperties;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -31,6 +32,17 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * <p> An abstract builder used to create CreativeTabs. <p>
+ *
+ * Like most other builders, it is created through a factory and a concrete type. A concrete example looks like this:
+ *
+ * <pre><code class=language-zenscript>&lt;factory:minecraft:creative_mode_tab&gt;
+ *    .typed&lt;Regular&gt;()
+ *    //... other methods here
+ *    .build("my_tab");</code></pre>
+ */
+@Document("mods/ContentTweaker/builder/vanilla/tab/CreativeTabBuilder")
 @ZenCodeType.Name(ContentTweakerVanillaConstants.TAB_BUILDER_PACKAGE + ".CreativeTabBuilder")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
@@ -41,6 +53,8 @@ public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
             return this.position() == null;
         }
     }
+
+    //TODO Document this class
 
     protected record CloningPropertiesReference<P extends CreativeTabProperties>(P properties) {
         <V> V resolve(final Function<P, V> getter) {
@@ -220,6 +234,13 @@ public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
         return this.self();
     }
 
+    /**
+     * Sets the title of the Creative Tab
+     * @param title The title to display
+     * @return The modified creative tab builder
+     *
+     * @docParam title "Weaponry"
+     */
     @ZenCodeType.Method("title")
     public T title(final String title) {
         this.title = title;
@@ -232,55 +253,102 @@ public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
         return this.self();
     }
 
+    /**
+     * Whether to allow scrolling on the creative tab
+     * @param canScroll
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("canScroll")
     public T canScroll(final boolean canScroll) {
         this.canScroll = canScroll;
         return this.self();
     }
 
+    /**
+     * Allow scrolling on the creative tab
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("allowScrolling")
     public T allowScrolling() {
         return this.canScroll(true);
     }
 
+    /**
+     * Forbid scrolling on the creative tab
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("noScrolling")
     public T noScrolling() {
         return this.canScroll(false);
     }
 
+    /**
+     * Whether to show the title on the creative tab
+     * @param showTitle
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("showTitle")
     public T showTitle(final boolean showTitle) {
         this.showTitle = showTitle;
         return this.self();
     }
 
+    /**
+     * Show the title on the creative tab
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("showTitle")
     public T showTitle() {
         return this.showTitle(true);
     }
 
+    /**
+     * Hide the title on the creative tab
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("hideTitle")
     public T hideTitle() {
         return this.showTitle(false);
     }
 
+    /**
+     * Whether to align the creative tab to the right
+     * @param alignedRight
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("alignedRight")
     public T alignedRight(final boolean alignedRight) {
         this.alignedRight = alignedRight;
         return this.self();
     }
 
+    /**
+     * Align the creative tab to the right
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("alignRight")
     public T alignRight() {
         return this.alignedRight(true);
     }
 
+    /**
+     * Set the row in which the creative tab will display
+     * @param row The row
+     * @return The modified creative tab builder
+     *
+     * @docParam row <enum:minecraft:creativetab/row:top>;
+     */
     @ZenCodeType.Method("row")
     public T row(final CreativeModeTab.Row row) {
         this.row = row;
         return this.self();
     }
 
+    /**
+     * Set the column to have the given value. In Fabric, this can be -1 for the special case (position anywhere)
+     * @param column The index of the column
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("column")
     public T column(final int column) {
         // No negative check: some negative values might be special cases (e.g. -1 in Fabric)
@@ -288,24 +356,50 @@ public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
         return this.self();
     }
 
+    /**
+     * Set the type of the CreativeModeTab
+     * @param type The type of the tab
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("type")
     public T type(final CreativeModeTab.Type type) {
         this.type = type;
         return this.self();
     }
 
+    /**
+     * Sets the icon of the creative tab. This only accepts items and not stacks.
+     * @param reference The reference to the item
+     * @return The modified creative tab builder
+     *
+     * @docParam reference <reference:item:minecraft:tnt>
+     */
     @ZenCodeType.Method("icon")
     public T icon(final ItemReference reference) {
         this.icon = reference;
         return this.self();
     }
 
+    /**
+     * Configures how the Creative Tab displays items through a custom function
+     *
+     * @param gatherer The gatherer which takes care of holding the items to display
+     *
+     * @docParam gatherer (featureFlagSet, hasPermission, unused, displayItemsGatheringStream) => displayItemGatheringStream.accept(<reference:item:minecraft:gunpowder>)
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("displayItems")
     public T displayItems(final CreativeTabPropertyFunctions.DisplayItemsGatherer gatherer) {
         this.displayItems = gatherer;
         return this.self();
     }
 
+    /**
+     * Adds an additional item to the display gatherer, and creates it internally if it doesn't exist.
+     * @param item <reference:item:minecraft:gunpowder>
+     * @param visibility <enum:minecraft:tab/visibility:parent_and_search>
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("display")
     public T appendItem(final ItemReference item, final CreativeTabProperties.ItemTabVisibility visibility) {
         final CreativeTabPropertyFunctions.DisplayItemsGatherer gatherer = Objects.requireNonNullElseGet(this.displayItems, () -> (a, b, c, d) -> {});
@@ -315,22 +409,41 @@ public abstract class CreativeTabBuilder<T extends CreativeTabBuilder<T>> {
         });
     }
 
+    /**
+     * Adds an additional item to the display gatherer, and creates it internally if it doesn't exist.
+     * @param item <reference:item:minecraft:gunpowder>
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("display")
     public T appendItem(final ItemReference item) {
         return this.appendItem(item, CreativeTabProperties.ItemTabVisibility.PARENT_AND_SEARCH);
     }
 
+    /**
+     * Whether to place the creative tab automatically in the menu
+     * @param autoPlace
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("placeAutomatically")
     public T autoPlace(final boolean autoPlace) {
         this.autoPlace = autoPlace;
         return this.self();
     }
 
+    /**
+     * Places the creative tab automatically
+     * @return The modified creative tab builder
+     */
     @ZenCodeType.Method("placeAutomatically")
     public T placeAutomatically() {
         return this.autoPlace(true);
     }
 
+    /**
+     * Builds the creative tab
+     * @param name The registry name to assign to the creative tab
+     * @return A {@link CreativeTabReference} to this tab
+     */
     @ZenCodeType.Method("build")
     public final CreativeTabReference build(final String name) {
         this.verifyProperties();

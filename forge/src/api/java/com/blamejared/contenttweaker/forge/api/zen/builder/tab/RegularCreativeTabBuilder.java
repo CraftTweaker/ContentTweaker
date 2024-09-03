@@ -15,6 +15,22 @@ import org.openzen.zencode.java.ZenCodeType;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+/**
+ * <p>The Forge {@link CreativeTabBuilder} implementation.</p>
+ *
+ * Must be imported and used in creative mode tab factorys.
+ *
+ * <pre>
+ * <code class=language-zenscript>import contenttweaker.builder.fabric.tab.Regular;
+ *
+ *val emptyTabsCrash = &lt;factory:minecraft:creative_mode_tab&gt;
+ *    .typed&lt;Regular&gt;() //Must be imported
+ *    .title("The First Apple")
+ *    .icon(&lt;item:minecraft:air&gt;)
+ *    .display(&lt;item:minecraft:apple&gt;)
+ *    .build("empty_tab");</code></pre>
+ *
+ */
 @ZenCodeType.Name(ContentTweakerForgeConstants.TAB_BUILDER_PACKAGE + ".Regular")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class RegularCreativeTabBuilder extends CreativeTabBuilder<RegularCreativeTabBuilder> {

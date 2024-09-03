@@ -8,6 +8,7 @@ import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.zen.builder.tab.CreativeTabBuilder;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.CreativeTabReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -16,6 +17,23 @@ import org.openzen.zencode.java.ZenCodeType;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+/**
+ * <p>The Fabric {@link CreativeTabBuilder} implementation.</p>
+ *
+ * Must be imported and used in creative mode tab factorys.
+ *
+ * <pre>
+ * <code class=language-zenscript>import contenttweaker.builder.fabric.tab.Regular;
+ *
+ *val emptyTabsCrash = &lt;factory:minecraft:creative_mode_tab&gt;
+ *    .typed&lt;Regular&gt;() //Must be imported
+ *    .title("The First Apple")
+ *    .icon(&lt;item:minecraft:air&gt;)
+ *    .display(&lt;item:minecraft:apple&gt;)
+ *    .build("empty_tab");</code></pre>
+ *
+ */
+@Document("mods/ContentTweaker/builder/fabric/tab/RegularCreativeTabBuilder")
 @ZenCodeType.Name(ContentTweakerFabricConstants.TAB_BUILDER_PACKAGE + ".Regular")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class RegularCreativeTabBuilder extends CreativeTabBuilder<RegularCreativeTabBuilder> {
