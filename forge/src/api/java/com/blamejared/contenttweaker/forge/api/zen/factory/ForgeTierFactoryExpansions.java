@@ -16,6 +16,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.factory.TierFactory;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.ItemReference;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+@Document("mods/ContentTweaker/Forge/Factory/Vanilla/ExpandForgeTierFactory")
 @ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_FACTORY_PACKAGE + ".TierFactory")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class ForgeTierFactoryExpansions {

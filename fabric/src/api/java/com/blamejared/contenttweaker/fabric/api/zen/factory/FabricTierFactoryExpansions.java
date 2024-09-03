@@ -13,6 +13,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.NameUtil;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -20,11 +21,39 @@ import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.List;
 
+/**
+ * Adds additional methods into {@link TierFactory}
+ *
+ * <pre><code class=language-zenscript>&lt;factory:tier&gt;.create(...);</code></pre>
+ */
+@Document("mods/ContentTweaker/Fabric/factory/vanilla/ExpandFabricTierFactory")
 @ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_FACTORY_PACKAGE + ".TierFactory")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class FabricTierFactoryExpansions {
     private FabricTierFactoryExpansions() {}
 
+    /**
+     * Create a new Tier
+     *
+     * @param $this self
+     * @param name The name of the tier. Should match [a-z0-9.-_/], like most ResourceLocations
+     * @param level The level of the tier. It is used for sorting. It is not possible to add a tier in between two existing ones.
+     * @param uses The base durability an item on this tier has
+     * @param speed The mining speed an item on this tier has
+     * @param attackDamageBonus The attack bonus an item on this tier has
+     * @param enchantmentValue The enchantability of the item. Higher is better.
+     * @param repairItem The repair item. Must be an item and not a stack
+     * @return A reference to the created tier
+     *
+     * @docParam $this this
+     * @docParam name "emerald"
+     * @docParam level 2
+     * @docParam uses 581
+     * @docParam speed 5.0f
+     * @docParam attackDamageBonus 1.5
+     * @docParam enchantmentValue 18
+     * @docParam repairItem <item:minecraft:emerald>
+     */
     @ZenCodeType.Method("create")
     public static TierReference of(
             @SuppressWarnings("unused") final TierFactory $this,

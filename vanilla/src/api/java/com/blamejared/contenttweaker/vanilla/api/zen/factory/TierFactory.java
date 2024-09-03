@@ -6,9 +6,11 @@ import com.blamejared.contenttweaker.core.api.object.ObjectType;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.world.item.Tier;
 import org.openzen.zencode.java.ZenCodeType;
 
+@Document("mods/ContentTweaker/factory/vanilla/TierFactory")
 @ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_FACTORY_PACKAGE + ".TierFactory")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class TierFactory implements ObjectFactory<Tier> {
