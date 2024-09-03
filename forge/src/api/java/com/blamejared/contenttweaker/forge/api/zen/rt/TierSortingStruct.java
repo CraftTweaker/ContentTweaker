@@ -6,6 +6,7 @@ import com.blamejared.contenttweaker.forge.api.zen.ContentTweakerForgeConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.TierReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -14,10 +15,19 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+/**
+ * <p> A class to control how to sort Tiers. </p>
+ *
+ * <p> Contains a {@link ResourceLocationNative}, a name string or a reference to another Tier as a {@link TierReference} </p>
+ *
+ * <p> As such, it can be created by using implicit casters from any of those three types </p>
+ */
+@Document("mods/ContentTweaker/forge/tier/TierSortingStruct")
 @ZenCodeType.Name(ContentTweakerForgeConstants.FORGE_RT_PACKAGE + ".TierSortingStruct")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class TierSortingStruct {
 
+    //@Document("mods/ContentTweaker/Forge/tier/ExpandResourceLocation")
     @ZenCodeType.Expansion(ResourceLocationNative.CLASS_NAME)
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
     public static final class ResourceLocationCaster {
@@ -29,6 +39,7 @@ public final class TierSortingStruct {
         }
     }
 
+    //@Document("mods/ContentTweaker/Forge/tier/ExpandTierReference")
     @ZenCodeType.Expansion(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".TierReference")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
     public static final class TierCaster {
@@ -40,6 +51,7 @@ public final class TierSortingStruct {
         }
     }
 
+    //@Document("mods/ContentTweaker/Forge/tier/ExpandString")
     @ZenCodeType.Expansion("string")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
     public static final class StringCaster {
@@ -77,6 +89,6 @@ public final class TierSortingStruct {
         return () -> Stream.of(this.rl, this.name, Optional.ofNullable(this.tier).map(TierReference::get).orElse(null))
                 .filter(Objects::nonNull)
                 .findFirst()
-                .orElseGet(Object::new);
+                .orElseThrow();
     }
 }
