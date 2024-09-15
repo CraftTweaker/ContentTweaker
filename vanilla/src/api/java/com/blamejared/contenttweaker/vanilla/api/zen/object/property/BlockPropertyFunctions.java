@@ -5,6 +5,7 @@ import com.blamejared.contenttweaker.core.api.zen.object.Reference;
 import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConstants;
 import com.blamejared.contenttweaker.vanilla.api.zen.object.MapColorReference;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.openzen.zencode.java.ZenCodeType;
 
 public final class BlockPropertyFunctions {
+    @Document("mods/ContentTweaker/vanilla/object/property/fun/LightLevelComputer")
     @FunctionalInterface
     @ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".property.fun.LightLevelComputer")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
@@ -19,6 +21,7 @@ public final class BlockPropertyFunctions {
         int lightOf(final BlockState state);
     }
 
+    @Document("mods/ContentTweaker/vanilla/object/property/fun/MapColorComputer")
     @FunctionalInterface
     @ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".property.fun.MapColorComputer")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
@@ -26,6 +29,7 @@ public final class BlockPropertyFunctions {
         MapColorReference mapColorOf(final BlockState state);
     }
 
+    @Document("mods/ContentTweaker/vanilla/object/property/fun/SimpleStatePredicate")
     @FunctionalInterface
     @ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".property.fun.SimpleStatePredicate")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
@@ -33,6 +37,7 @@ public final class BlockPropertyFunctions {
         boolean test(final BlockState state, final BlockGetter getter, final BlockPos pos);
     }
 
+    @Document("mods/ContentTweaker/vanilla/object/property/fun/ValidSpawnPredicate")
     @FunctionalInterface
     @ZenCodeType.Name(ContentTweakerVanillaConstants.VANILLA_OBJECT_PACKAGE + ".property.fun.ValidSpawnPredicate")
     @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)

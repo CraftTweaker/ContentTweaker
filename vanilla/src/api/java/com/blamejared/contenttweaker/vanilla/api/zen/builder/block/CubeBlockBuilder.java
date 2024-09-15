@@ -14,6 +14,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.ContentTweakerVanillaConsta
 import com.blamejared.contenttweaker.vanilla.api.zen.object.BlockReference;
 import com.blamejared.contenttweaker.vanilla.api.object.VanillaObjectTypes;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -23,6 +24,10 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ * A Basic {@link BlockBuilder} implementation
+ */
+@Document("mods/ContentTweaker/vanilla/builder/block/Cube")
 @ZenCodeType.Name(ContentTweakerVanillaConstants.BLOCK_BUILDER_PACKAGE + ".Cube")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
 public final class CubeBlockBuilder extends BlockBuilder<CubeBlockBuilder> {

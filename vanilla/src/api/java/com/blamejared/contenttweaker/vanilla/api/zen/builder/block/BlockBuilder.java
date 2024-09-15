@@ -20,6 +20,7 @@ import com.blamejared.contenttweaker.vanilla.api.zen.object.property.BlockProper
 import com.blamejared.contenttweaker.vanilla.api.zen.object.property.StandardBlockProperties;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.util.GenericUtil;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.google.gson.JsonObject;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -38,8 +39,19 @@ import java.lang.invoke.VarHandle;
 import java.util.Objects;
 import java.util.function.*;
 
+/**
+ * <p> An abstract builder used to create Blocks. <p>
+ *
+ * Like most other builders, it is created through a factory and a concrete type. A concrete example looks like this:
+ *
+ * <pre><code class=language-zenscript>&lt;factory:minecraft:block&gt;
+ *    .typed&lt;Cube&gt;() //Must be imported
+ *    //... other methods here
+ *    .build("my_block");</code></pre>
+ */
 @ZenCodeType.Name(ContentTweakerVanillaConstants.BLOCK_BUILDER_PACKAGE + ".BlockBuilder")
 @ZenRegister(loaders = ContentTweakerConstants.CONTENT_LOADER_ID)
+@Document("mods/ContentTweaker/vanilla/builder/block/BlockBuilder")
 public abstract class BlockBuilder<T extends BlockBuilder<T>> {
     protected record GenerateFlags(boolean generateLootTable, boolean generateBlockItem) {}
 
@@ -157,35 +169,72 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.self();
     }
 
+    /**
+     * Configure the color which displays on a map for this block using a function.
+     * @param computer A function that computes the map color based on the blockstate
+     * @return The modified block builder
+     *
+     * @docParam computer (state) => MapColorReference.of(ResourceLocation.of("minecraft", "stone"))
+     */
     @ZenCodeType.Method("mapColor")
     public T mapColor(final BlockPropertyFunctions.MapColorComputer computer) {
         this.mapColor = computer;
         return this.self();
     }
 
+    /**
+     * @param collisions Whether to allow collisions
+     * @docParam collisions true
+     *
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("hasCollisions")
     public T hasCollisions(final boolean collisions) {
         this.hasCollision = collisions;
         return this.self();
     }
 
+    /**
+     * Disallows block collisions
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("noCollisions")
     public T noCollisions() {
         return this.hasCollisions(false);
     }
 
+    /**
+     * Configure the sound type of the block
+     * @param reference A reference to a sound type
+     * @docParam reference <reference:minecraft:sound_type:minecraft:polished_deepslate>
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("sound")
     public T sound(final Reference<SoundType> reference) {
         this.soundType = reference;
         return this.self();
     }
 
+    /**
+     * Configures the light level of the block using a function
+     * @param lightLevelComputer The function that computes light level
+     * @return The modified block builder
+     *
+     * @docParam lightLevelComputer (state) => 15
+     */
     @ZenCodeType.Method("lightLevel")
     public T lightLevel(final BlockPropertyFunctions.LightLevelComputer lightLevelComputer) {
         this.lightEmission = lightLevelComputer;
         return this.self();
     }
 
+    /**
+     * Sets the light level of the block directly
+     * @param level The light level this block will emit
+     * @return The modified block builder
+     *
+     * @docParam level 15
+     */
     @ZenCodeType.Method("lightLevel")
     public T lightLevel(final int level) {
         if (level < 0 || level > 15) {
@@ -194,6 +243,13 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.lightLevel(it -> level);
     }
 
+    /**
+     * The explosion resistance this block will have. Obsidian's value is 1200 while Cobblestone's value is 6.
+     * @param explosionResistance The explosion resistance value
+     * @return The modified block builder
+     *
+     * @docParam explosionResistance 10.0f
+     */
     @ZenCodeType.Method("explosionResistance")
     public T explosionResistance(final float explosionResistance) {
         if (explosionResistance < 0.0F) {
@@ -203,33 +259,72 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.self();
     }
 
+    /**
+     * The time it will take to destroy this block. bsidian's value is 50 while Cobblestone's value is 2.
+     * @param destroyTime The time value
+     * @return The modified block builder
+     *
+     * @docParam destroyTime 5.0f
+     */
     @ZenCodeType.Method("destroyTime")
     public T destroyTime(final float destroyTime) {
         this.destroyTime = destroyTime;
         return this.self();
     }
 
+    /**
+     * A combination of both {@link this#destroyTime(float)} and {@link #explosionResistance(float)} in one method.
+     * @param destroyTime The time value
+     * @param explosionResistance The explosion resistance value
+     * @return The modified block builder
+     *
+     * @docParam destroyTime 5.0f
+     * @docParam explosionResistance 10.0f
+     */
     @ZenCodeType.Method("strength")
     public T strength(final float destroyTime, final float explosionResistance) {
         return this.explosionResistance(explosionResistance).destroyTime(destroyTime);
     }
 
+    /**
+     * A single method to call both {@link this#destroyTime(float)} and {@link #explosionResistance(float)} with the same value.
+     * @param strength The destroy time AND explosion resistance to assign to the block.
+     * @return The modified block builder
+     *
+     * @docParam strength 8.0f
+     */
     @ZenCodeType.Method("strength")
     public T strength(final float strength) {
         return this.strength(strength, strength);
     }
 
+    /**
+     * Sets the block to break instantly
+     *
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("breakInstantly")
     public T breakInstantly() {
         return this.strength(0.0F);
     }
 
+    /**
+     * Configures whether the block requires a tool to drop
+     * @param requiresTool The value
+     * @return The modified block builder
+     *
+     * @docParam requiresTool true
+     */
     @ZenCodeType.Method("requiresToolToDrop")
     public T requiresToolToDrop(final boolean requiresTool) {
         this.requiresTool = requiresTool;
         return this.self();
     }
 
+    /**
+     * Sets the block to require a tool to drop
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("requiresToolToDrop")
     public T requiresToolToDrop() {
         return this.requiresToolToDrop(true);
@@ -246,45 +341,103 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.ticksRandomly(true);
     }
 
+    /**
+     * Sets the friction of this block. Friction controls slipperiness.
+     *
+     * The default value is 0.6, blocks like Ice and Slime Block have it set to 0.98
+     *
+     * @param friction The friction value.
+     * @return The modified block builder
+     *
+     * @docParam friction 0.7f
+     */
     @ZenCodeType.Method("friction")
     public T friction(final float friction) {
         this.friction = friction;
         return this.self();
     }
 
+    /**
+     * Sets the speed factor entities have when moving over this block.
+     *
+     * The default value is 1.0, blocks like Soul Sand and Honey have it set to 0.4
+     *
+     * @param speed The speed factor
+     * @return The modified block builder
+     *
+     * @docParam speed 1.2f
+     */
     @ZenCodeType.Method("speedFactor")
     public T speedFactor(final float speed) {
         this.speed = speed;
         return this.self();
     }
 
+    /**
+     * The jump factor entities have when jumping over this block.
+     *
+     * Honey has a jump factor of 0.5
+     *
+     * @param jump The jump factor
+     * @return The modified block builder
+     *
+     * @docParam jump 0.9f
+     */
     @ZenCodeType.Method("jumpFactor")
     public T jumpFactor(final float jump) {
         this.jump = jump;
         return this.self();
     }
 
+    /**
+     * Sets the block to drop from the specified loot table.
+     *
+     * @param drops The resource location for the loot table
+     * @return The modified block builder
+     *
+     * @docParam drops <resource:minecraft:blocks/sand>
+     */
     @ZenCodeType.Method("dropsFrom")
     public T dropsFrom(final ResourceLocation drops) {
         this.drops = drops;
         return this.self();
     }
 
-    @ZenCodeType.Method("dropsLike")
+    /**
+     * Sets the block to drop like the specified block
+     *
+     * @param reference The reference to the other block from which the loot table will be acquired
+     * @return The modified block builder
+     *
+     * @docParam reference <reference:minecraft:block:minecraft:dirt>
+     */
+    //@ZenCodeType.Method("dropsLike")
     public T dropsLike(final BlockReference reference) {
         return this.dropsFrom(reference.id());
     }
 
+    /**
+     * Disables any drops from this block
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("noDrops")
     public T noDrops() {
         return this.dropsFrom(DO_NOT_DROP_DROPS);
     }
 
+    /**
+     * Sets the block to drop itself
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("dropsNormally")
     public T dropsNormally() {
         return this.cloningProperties != null? this.dropsFrom(DO_NOT_CLONE_DROPS) : this.self();
     }
 
+    /**
+     * Sets the block to drop itself evert time.
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("dropsItselfRegardless")
     public T dropsItselfRegardless() {
         return this.dropsFrom(FORCE_GENERATION_OF_DROPS);
@@ -301,28 +454,51 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.occludes(false);
     }
 
+    /**
+     * Whether to set the block to be like air.
+     * @param air The value
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("air")
     public T air(final boolean air) {
         this.air = air;
         return this.self();
     }
 
+    /**
+     * Sets the block to behave like air.
+     * @return The modified block builder.
+     */
     @ZenCodeType.Method("air")
     public T air() {
         return this.air(true);
     }
 
+    /**
+     * Controls whether the block will be ignited by lava when nearby, like wood.
+     * @param ignitedByLava The value
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("ignitedByLava")
     public T ignitedByLava(final boolean ignitedByLava) {
         this.ignitedByLava = ignitedByLava;
         return this.self();
     }
 
+    /**
+     * Sets the block to be set on fire when close to lava
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("ignitedByLava")
     public T ignitedByLava() {
         return this.ignitedByLava(true);
     }
 
+    /**
+     * Set this block to be a liquid. Bubble columns, Water and Lava use this.
+     * @param liquid The value.
+     * @return The modified block builder
+     */
     @Deprecated
     @ZenCodeType.Method("liquid")
     public T liquid(final boolean liquid) {
@@ -330,12 +506,21 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.self();
     }
 
+    /**
+     * Forces this block to be liquid
+     * @return The modified block builder
+     */
     @Deprecated
     @ZenCodeType.Method("liquid")
     public T liquid() {
         return this.liquid(true);
     }
 
+    /**
+     * Controls whether the block is forced to not be solid
+     * @param forceSolidOff
+     * @return The modified block builder
+     */
     @Deprecated
     @ZenCodeType.Method("forceSolidOff")
     public T forceSolidOff(final boolean forceSolidOff) {
@@ -343,96 +528,195 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.self();
     }
 
+    /**
+     * Forces the block to not be solid
+     * @return The modified block builder
+     */
     @Deprecated
     @ZenCodeType.Method("forceSolidOff")
     public T forceSolidOff() {
         return this.forceSolidOff(true);
     }
 
+    /**
+     * Controls whether the block is forced to be solid
+     * @param forceSolidOn
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("forceSolidOn")
     public T forceSolidOn(final boolean forceSolidOn) {
         this.forceSolidOn = true;
         return this.self();
     }
 
+    /**
+     * Forces the block to not be solid
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("forceSolidOn")
     public T forceSolidOn() {
         return this.forceSolidOn(true);
     }
 
+    /**
+     * Whether to force the block to be soluid, or force it to not be solid
+     * @param solid
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("forceSolid")
     public T forceSolid(final boolean solid) {
         return solid? this.forceSolidOn() : this.forceSolidOff();
     }
 
+    /**
+     * Forces the block to be solid
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("forceSolid")
     public T forceSolid() {
         return this.forceSolid(true);
     }
 
+    /**
+     * Sets the {@link PushReaction} of this block, configuring how it reacts to
+     * being pushed by a piston.
+     * @param pushReaction The push reaction value
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("pushReaction")
     public T pushReaction(final PushReaction pushReaction) {
         this.pushReaction = pushReaction;
         return this.self();
     }
 
+    /**
+     * Whether to spawn breaking particles when breaking this block
+     * @param spawnBreakingParticles A boolean
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("spawnBreakingParticles")
     public T spawnBreakingParticles(final boolean spawnBreakingParticles) {
         this.spawnBreakingParticles = spawnBreakingParticles;
         return this.self();
     }
 
+    /**
+     * Force the block to spawn breaking particles
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("spawnBreakingParticles")
     public T spawnBreakingParticles() {
         return this.spawnBreakingParticles(true);
     }
 
+    /**
+     * Sets the Note block instrument thats used when a note block is using this
+     * block as a sound source.
+     * @param instrument
+     * @return The modified block builder
+     *
+     */
     @ZenCodeType.Method("instrument")
     public T instrument(final NoteBlockInstrument instrument) {
         this.instrument = instrument;
         return this.self();
     }
 
+    /**
+     * Whether to set this block as replaceable.
+     * A block is replaceable if it can be replaced by placing another block in its place.
+     * For example, Air, most types of water blocks, Light Blocks, Structure Void
+     * are all examples of replaceable blocks.
+     *
+     * @param replaceable
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("replaceable")
     public T replaceable(final boolean replaceable) {
         this.replaceable = replaceable;
         return this.self();
     }
 
+    /**
+     * Forces this block to be replaceable
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("replaceable")
     public T replaceable() {
         return this.replaceable(true);
     }
 
+    /**
+     * Configures a function to be used when checking if the block is a valid position
+     * for an entity type to spawn at.
+     * @param validSpawn A custom function used to resolve whether the entity can spawn
+     * @return The modified block builder
+     *
+     * @docParam validSpawn (blockState, blockGetter, blockPos, entityType) => true
+     */
     @ZenCodeType.Method("isValidSpawn")
     public T isValidSpawn(final BlockPropertyFunctions.ValidSpawnPredicate validSpawn) {
         this.validSpawn = validSpawn;
         return this.self();
     }
 
+    /**
+     * Configures a function to be used when checking if the block conducts redstone
+     *
+     * @param redstoneConductor The function used for redstone conductivity resolution
+     * @return The modified block builder
+     *
+     * @docParam redstoneConductor (blockState, blockGetter, blockPos) => false
+     */
     @ZenCodeType.Method("isRedstoneConductor")
     public T isRedstoneConductor(final BlockPropertyFunctions.SimpleStatePredicate redstoneConductor) {
         this.redstoneConductor = redstoneConductor;
         return this.self();
     }
 
+    /**
+     * Configures a predicate to be used to determine whether something within a specific Position is suffocating within this block
+     * The default value entails checking if it is within the bounds of the block. Glass, Mud, and other blocks don't suffocate you
+     *
+     * @param suffocating The function to be used when checking whether to suffocate an entity within bounds or not.
+     * @docPparam suffocating (blockState, blockGetter, blockPos) => false
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("isSuffocating")
     public T isSuffocating(final BlockPropertyFunctions.SimpleStatePredicate suffocating) {
         this.suffocating = suffocating;
         return this.self();
     }
 
+    /**
+     * Forces suffocation to happen, regardless of the position.
+     * Using this is probably a bad idea.
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("suffocate")
     public T suffocate() {
         return this.isSuffocating((state, getter, pos) -> true);
     }
 
+    /**
+     * Used to determine if it obstructs the view on the clientside.
+     * The default value entails checking if it is within the bounds of the block. Glass never obstructs the view on the clientside.
+     *
+     * @param viewBlocking A custom function used to calculate that
+     * @return The modified block builder
+     *
+     * @docParam viewBlocking (blockState, blockGetter, blockPos) => false
+     */
     @ZenCodeType.Method("isViewBlocking")
     public T isViewBlocking(final BlockPropertyFunctions.SimpleStatePredicate viewBlocking) {
         this.viewBlocking = viewBlocking;
         return this.self();
     }
 
+    /**
+     * Forces the block to always block vision on the client
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("blockView")
     public T blockView() {
         return this.isViewBlocking((state, getter, pos) -> true);
@@ -459,12 +743,23 @@ public abstract class BlockBuilder<T extends BlockBuilder<T>> {
         return this.isPostProcessingEnabled((state, getter, pos) -> true);
     }
 
+    /**
+     * Configures a function to check whether the block is emissive or not
+     * @param emissive A function that queries whether the block is emissive or not
+     * @return The modified block builder
+     *
+     * @docParam emissive (blockState, blockGetter, blockPos) => true
+     */
     @ZenCodeType.Method("isEmissive")
     public T isEmissive(final BlockPropertyFunctions.SimpleStatePredicate emissive) {
         this.emissive = emissive;
         return this.self();
     }
 
+    /**
+     * Forces the block to be emissive
+     * @return The modified block builder
+     */
     @ZenCodeType.Method("emissive")
     public T emissive() {
         return this.isEmissive((state, getter, pos) -> true);
